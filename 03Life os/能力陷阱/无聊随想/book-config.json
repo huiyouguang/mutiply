@@ -1,0 +1,96 @@
+{
+  "basic": {
+    "author": [
+      "mutiply"
+    ],
+    "cover": "000 life os/日常周记/covers/cover-1751127744304.jpg",
+    "title": "无聊随想",
+    "uuid": "1f554fa0-6e0e-4440-a811-87d6ded8be52",
+    "created_at": "2025-06-28T16:22:42.350Z"
+  },
+  "structure": {
+    "tree": [
+      {
+        "id": "preface",
+        "title": "前言",
+        "type": "file",
+        "path": "前言.md",
+        "order": 0,
+        "default_status": "draft",
+        "created_at": "2025-06-27T14:41:15.509Z",
+        "last_modified": "2025-06-28T16:23:32.031Z"
+      },
+      {
+        "id": "outline",
+        "title": "大纲",
+        "type": "file",
+        "path": "大纲.md",
+        "order": 1,
+        "default_status": "draft",
+        "created_at": "2025-06-27T14:41:15.509Z",
+        "last_modified": "2025-06-28T16:27:21.669Z"
+      },
+      {
+        "id": "volume1",
+        "title": "第一卷",
+        "type": "group",
+        "path": "第一卷",
+        "order": 2,
+        "default_status": "draft",
+        "is_expanded": true,
+        "created_at": "2025-06-27T14:41:15.509Z",
+        "last_modified": "2025-06-27T14:41:15.509Z",
+        "children": [
+          {
+            "id": "chapter1",
+            "title": "第一章 ",
+            "type": "file",
+            "path": "第一卷/第一章 .md",
+            "order": 0,
+            "default_status": "draft",
+            "created_at": "2025-06-27T14:41:15.509Z",
+            "last_modified": "2025-06-28T16:24:58.395Z"
+          },
+          {
+            "id": "chapter2",
+            "title": "第二章",
+            "type": "file",
+            "path": "第一卷/第二章.md",
+            "order": 1,
+            "default_status": "draft",
+            "created_at": "2025-06-27T14:41:15.509Z",
+            "last_modified": "2025-06-27T14:41:15.509Z"
+          }
+        ]
+      },
+      {
+        "id": "afterword",
+        "title": "后记",
+        "type": "file",
+        "path": "后记.md",
+        "order": 3,
+        "default_status": "draft",
+        "created_at": "2025-06-27T14:41:15.509Z",
+        "last_modified": "2025-06-27T14:41:15.509Z"
+      }
+    ]
+  },
+  "stats": {
+    "total_words": 1224,
+    "target_total_words": 10000,
+    "progress_by_words": 0.1224,
+    "progress_by_chapter": 0,
+    "daily_words": {
+      "2025-06-28": 1224
+    },
+    "writing_days": 1,
+    "average_daily_words": 1224,
+    "last_writing_date": "2025-06-28T16:27:21.674Z",
+    "last_modified": "2025-06-28T16:27:21.674Z"
+  },
+  "export": {
+    "default_format": "pdf",
+    "template": "default",
+    "include_cover": true
+  }
+}

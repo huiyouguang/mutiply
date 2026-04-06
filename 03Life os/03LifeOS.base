@@ -1,0 +1,63 @@
+filters:
+  and:
+    - file.inFolder("03Life os")
+    - or:
+        - file.ext == "md"
+        - file.ext == "edtz"
+formulas:
+  category: if(file.folder == "03Life os", "根目錄", file.folder.replace("03Life os/", ""))
+  updated_relative: file.mtime.relative()
+  word_estimate: (file.size / 5).round(0)
+  note_type: if(file.ext == "md", "Markdown", if(file.ext == "edtz", "EDTZ", file.ext))
+properties:
+  file.name:
+    displayName: 標題
+  file.tags:
+    displayName: 標籤
+  file.mtime:
+    displayName: 修改時間
+  file.path:
+    displayName: 路徑
+  formula.category:
+    displayName: 分類
+  formula.note_type:
+    displayName: 類型
+  formula.updated_relative:
+    displayName: 最近更新
+  formula.word_estimate:
+    displayName: 字數估計
+views:
+  - type: table
+    name: 03Life os｜全部筆記
+    order:
+      - file.name
+      - formula.category
+      - formula.note_type
+      - file.tags
+      - formula.updated_relative
+      - file.mtime
+      - file.path
+    limit: 500
+    summaries:
+      file.path: Unique
+      formula.category: Unique
+      formula.note_type: Unique
+  - type: table
+    name: 03Life os｜最近更新（30）
+    order:
+      - file.mtime
+      - file.name
+      - formula.category
+      - formula.note_type
+      - formula.updated_relative
+      - file.path
+    limit: 30
+  - type: list
+    name: 03Life os｜依分類（清單）
+    groupBy:
+      property: formula.category
+      direction: ASC
+    order:
+      - file.name
+      - formula.note_type
+      - formula.updated_relative

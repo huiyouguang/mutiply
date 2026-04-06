@@ -1,0 +1,17 @@
+[
+  {
+    "timestamp": "2026-04-04T13:31:11.844Z",
+    "version": 1,
+    "type": "init",
+    "description": "Init revision",
+    "delta": [
+      {
+        "insert": "\n- 21:31 测试 "
+      }
+    ],
+    "metadata": {
+      "size": 12,
+      "hash": "a37a438ccd0d6ccc626005f4fb4bed9b6ea49fc99dd19538c7065985040970bc"
+    }
+  }
+]
