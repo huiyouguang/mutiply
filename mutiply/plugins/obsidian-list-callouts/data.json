@@ -62,5 +62,11 @@
     "color": "225, 196, 5",
     "icon": null,
     "custom": true
+  },
+  {
+    "char": "！",
+    "color": "249, 6, 6",
+    "icon": null,
+    "custom": true
   }
 ]

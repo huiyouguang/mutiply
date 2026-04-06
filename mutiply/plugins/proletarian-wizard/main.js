@@ -42819,6 +42819,43 @@ var ToggleTodoCommand = class {
   }
 };
 
+// src/Commands/MoveToTodayCommand.ts
+var MoveToTodayCommand = class {
+  constructor(lineOperations, settings, app) {
+    this.lineOperations = lineOperations;
+    this.settings = settings;
+    this.app = app;
+    this.id = "pw-move-todo-to-today-command";
+    this.name = "Mark todo to today";
+    this.icon = "dot";
+    this.mobileOnly = false;
+    this.hotkeys = [];
+  }
+  editorCallback(editor, view) {
+    var _a;
+    const lineNumber = editor.getCursor("from").line;
+    let line = editor.getLine(lineNumber);
+    const todo = this.lineOperations.toTodo(line, lineNumber);
+    if (todo.isTodo) {
+      const dueDateAttribute = ((_a = this.settings) == null ? void 0 : _a.dueDateAttribute) || "due";
+      if (view.file && this.app) {
+        const fileOperations = new FileOperations(this.settings);
+        const obsidianFile = new ObsidianFile(this.app, view.file);
+        const todoWithFile = __spreadProps(__spreadValues({}, todo.todo), {
+          file: obsidianFile,
+          line: lineNumber
+        });
+        fileOperations.updateAttributeAsync(
+          todoWithFile,
+          this.settings.dueDateAttribute,
+          DateTime.now().toISODate()
+        ).then(() => {
+        }).catch(console.error);
+      }
+    }
+  }
+};
+
 // src/Commands/ToggleOngoingTodoCommand.ts
 var ToggleOngoingTodoCommand = class {
   constructor(lineOperations, settings, app) {
@@ -46485,6 +46522,11 @@ function TodoItemComponent({ todo, deps, playSound, dontCrossCompleted, displayP
     });
     menu.addSeparator();
     menu.addItem((item) => {
+      item.setTitle("\u{1F5D3}\uFE0F Move to today");
+      item.setIcon("calendar");
+      item.onClick((evt2) => fileOperations.updateAttributeAsync(todo, settings.dueDateAttribute, DateTime.now().toISODate()).then());
+    });
+    menu.addItem((item) => {
       item.setTitle("\u{1F4CC} Toggle selected");
       item.setIcon("pin");
       item.onClick((evt2) => {
@@ -48195,6 +48237,7 @@ var ProletarianWizard = class extends import_obsidian12.Plugin {
           this.app
         )
       );
+      this.addCommand(new MoveToTodayCommand(lineOperations, this.settings, this.app));
       this.addCommand(openPlanningCommand);
       this.addCommand(openNewPlanningCommand);
       this.addCommand(openPlanningCurrentCommand);

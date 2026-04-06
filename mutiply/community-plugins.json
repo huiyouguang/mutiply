@@ -9,7 +9,6 @@
   "editing-toolbar",
   "obsidian-excel-to-markdown-table",
   "explorer-hider",
-  "i18n",
   "iconic",
   "obsidian-image-auto-upload-plugin",
   "keep-the-rhythm",
@@ -35,7 +34,6 @@
   "obsidian-list-callouts",
   "obsidian-auto-link-title",
   "surfing",
-  "dynamic-theme-background",
   "colored-tags",
   "copilot",
   "obsidian-kanban",
@@ -54,5 +52,9 @@
   "cmdr",
   "obsidian-enhancing-mindmap",
   "block-link-plus",
-  "better-word-count"
+  "better-word-count",
+  "css-editor",
+  "dynamic-theme-background",
+  "pkmer",
+  "i18n"
 ]

@@ -96,7 +96,7 @@ var require_dist = __commonJS({
       waitForAI: () => waitForAI3
     });
     module2.exports = __toCommonJS2(sdk_exports);
-    var import_obsidian4 = require("obsidian");
+    var import_obsidian6 = require("obsidian");
     var FALLBACK_TIMEOUT = 100;
     var REQUIRED_AI_PROVIDERS_VERSION = 3;
     var AI_PROVIDERS_READY_EVENT = "ai-providers-ready";
@@ -212,7 +212,7 @@ var require_dist = __commonJS({
       return waitForAIProviders(manager.getApp(), manager.getPlugin());
     }
     __name(waitForAI3, "waitForAI");
-    var AIProvidersFallbackSettingsTab = class extends import_obsidian4.PluginSettingTab {
+    var AIProvidersFallbackSettingsTab = class extends import_obsidian6.PluginSettingTab {
       constructor(app, plugin) {
         super(app, plugin);
         this.plugin = plugin;
@@ -223,7 +223,7 @@ var require_dist = __commonJS({
         const aiProvidersNotice = containerEl.createEl("div");
         aiProvidersNotice.addClass("ai-providers-notice");
         aiProvidersNotice.appendChild(
-          (0, import_obsidian4.sanitizeHTMLToDom)(`
+          (0, import_obsidian6.sanitizeHTMLToDom)(`
             <p>\u26A0\uFE0F This plugin requires <a href="obsidian://show-plugin?id=ai-providers">AI Providers</a> plugin to be installed.</p>
             <p>Please install and configure AI Providers plugin first.</p>
         `)
@@ -240,10 +240,10 @@ __export(main_exports, {
   default: () => LocalGPT
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian3 = require("obsidian");
+var import_obsidian5 = require("obsidian");
 
 // src/LocalGPTSettingTab.ts
-var import_obsidian = require("obsidian");
+var import_obsidian2 = require("obsidian");
 
 // src/defaultSettings.ts
 var DEFAULT_SETTINGS = {
@@ -251,6 +251,9 @@ var DEFAULT_SETTINGS = {
     main: null,
     embedding: null,
     vision: null
+  },
+  actionPalette: {
+    systemPromptActionId: null
   },
   defaults: {
     creativity: "low",
@@ -298,7 +301,7 @@ Include instructions on the appropriate style and tone (e.g., formal, casual, te
 ANSWER PROMPT AND NOTHING ELSE!`
     }
   ],
-  _version: 8
+  _version: 10
 };
 var CREATIVITY = {
   "": {
@@ -331,12 +334,20 @@ var de_default = {
       placeholder: "Ihr Prompt... | Enter: senden, Esc: abbrechen",
       changeProvider: "KI\u2011Provider wechseln",
       changeModel: "Modell wechseln",
-      changeCreativity: "Kreativit\xE4t \xE4ndern"
+      changeCreativity: "Kreativit\xE4t \xE4ndern",
+      changeSystemPrompt: "System-Prompt wechseln",
+      clearSystemPrompt: "System-Prompt l\xF6schen",
+      unknownModel: "Unbekanntes Modell",
+      hint: "Nutzen Sie / f\xFCr Befehle, @ f\xFCr Dateien"
     }
   },
   statusBar: {
     enhancing: "\u2728 Verbessern",
     enhancingWithProgress: "\u2728 Verbessern {{percent}}%"
+  },
+  thinking: {
+    label: "Denke",
+    placeholder: "\u2026"
   },
   notices: {
     errorGenerating: "Fehler bei der Texterzeugung: {{message}}",
@@ -363,8 +374,10 @@ var de_default = {
     actions: "Aktionen",
     quickAdd: "Schnell hinzuf\xFCgen",
     quickAddPlaceholder: "Aktion einf\xFCgen",
-    quickAddDesc: 'Sie k\xF6nnen die besten S\xE4tze von Prompts teilen oder einen <a href="https://github.com/pfrankov/obsidian-local-gpt/discussions/2">aus der Community</a> erhalten.<br/><strong>Wichtig:</strong> Wenn Sie bereits eine Aktion mit demselben Namen haben, wird sie \xFCberschrieben.',
+    quickAddDesc: "F\xFCgen Sie eine geteilte Aktion ein, um sie schnell hinzuzuf\xFCgen.<br/><strong>Wichtig:</strong> Wenn Sie bereits eine Aktion mit demselben Namen haben, wird sie \xFCberschrieben.",
     addNewManually: "Manuell hinzuf\xFCgen",
+    addAction: "Aktion hinzuf\xFCgen",
+    addSeparator: "Trenner hinzuf\xFCgen",
     actionName: "Aktionsname",
     actionNamePlaceholder: "Auswahl zusammenfassen",
     systemPrompt: "System-Prompt",
@@ -375,9 +388,41 @@ var de_default = {
     replaceSelected: "Ausgew\xE4hlten Text ersetzen",
     replaceSelectedDesc: "Wenn diese Option aktiviert ist, wird der hervorgehobene Text durch eine Antwort des Modells ersetzt.",
     remove: "Entfernen",
+    moveUp: "Nach oben",
+    moveDown: "Nach unten",
     close: "Schlie\xDFen",
     save: "Speichern",
+    separator: "Trenner",
     actionsList: "Aktionsliste",
+    communityActions: "Community-Aktionen",
+    communityActionsDesc: 'Unten findest du Aktionen aus der GitHub-Diskussion. Klicke auf \u201EInstallieren\u201C, um eine Aktion hinzuzuf\xFCgen, oder <a href="https://github.com/pfrankov/obsidian-local-gpt/discussions/89">teile deine eigene</a>.',
+    communityActionsOpen: "Community-Aktionen \xF6ffnen",
+    communityActionsOpenDesc: "Durchsuchen und installieren Sie Community-Aktionen, die von unserer Community erstellt wurden.",
+    communityActionsAutoUpdate: "Community-Aktionen werden beim Aktualisieren der Liste automatisch aktualisiert. Ge\xE4nderte Aktionen bleiben unangetastet.",
+    communityActionsLanguage: "Sprache der Community-Aktionen",
+    communityActionsLanguageDesc: "Standard ist die Obsidian-Sprache.",
+    communityActionsSearch: "Community-Aktionen filtern",
+    communityActionsSearchPlaceholder: "Suche nach Name, Beschreibung, Prompt oder System-Prompt",
+    communityActionsScoreLabel: "Bewertung",
+    communityActionsByAuthor: "von {{author}}",
+    communityActionsReplaceTag: "Ersetzt Auswahl",
+    communityActionsBadge: "Community",
+    communityActionsInstalled: "Installiert",
+    communityActionsModified: "Ge\xE4ndert",
+    communityActionsInList: "Bereits in Aktionen",
+    communityActionsInstall: "Installieren",
+    communityActionsReplace: "Ersetzen",
+    communityActionsUpdate: "Aktualisieren",
+    communityActionsRefresh: "Aktualisieren",
+    communityActionsLoading: "Aktionen werden geladen...",
+    communityActionsEmpty: "F\xFCr diese Sprache gibt es noch keine Aktionen.",
+    communityActionsSearchEmpty: "Keine Aktionen passen zu deiner Suche.",
+    communityActionsError: "Community-Aktionen konnten nicht geladen werden. Bitte sp\xE4ter erneut versuchen.",
+    communityActionsModifiedNote: "Lokal ge\xE4ndert. Auto-Updates pausiert.",
+    communityActionsConflictNote: "Eine Aktion mit diesem Namen existiert bereits. Installation \xFCberschreibt sie.",
+    communityActionsSyncSummary: "{{updated}} Aktionen aktualisiert, {{skipped}} ge\xE4nderte \xFCbersprungen.",
+    communityActionsUpdated: "{{count}} Community-Aktionen aktualisiert.",
+    communityActionsSkipped: "{{count}} ge\xE4nderte Community-Aktionen \xFCbersprungen.",
     changeOrder: "Reihenfolge \xE4ndern",
     done: "Fertig",
     advancedSettings: "Erweiterte Einstellungen",
@@ -406,12 +451,20 @@ var en_default = {
       placeholder: "Your prompt... | Enter: send, Esc: cancel",
       changeProvider: "Change the AI provider",
       changeModel: "Change the model",
-      changeCreativity: "Change creativity"
+      changeCreativity: "Change creativity",
+      changeSystemPrompt: "Change system prompt",
+      clearSystemPrompt: "Clear system prompt",
+      unknownModel: "Unknown model",
+      hint: "Use / for commands, @ for files"
     }
   },
   statusBar: {
     enhancing: "\u2728 Enhancing",
     enhancingWithProgress: "\u2728 Enhancing {{percent}}%"
+  },
+  thinking: {
+    label: "Thinking",
+    placeholder: "\u2026"
   },
   notices: {
     errorGenerating: "Error while generating text: {{message}}",
@@ -438,8 +491,10 @@ var en_default = {
     actions: "Actions",
     quickAdd: "Quick add",
     quickAddPlaceholder: "Paste action",
-    quickAddDesc: 'You can share the best sets prompts or get one <a href="https://github.com/pfrankov/obsidian-local-gpt/discussions/2">from the community</a>.<br/><strong>Important:</strong> if you already have an action with the same name it will be overwritten.',
+    quickAddDesc: "Paste a shared action to add it quickly.<br/><strong>Important:</strong> if you already have an action with the same name it will be overwritten.",
     addNewManually: "Add new manually",
+    addAction: "Add action",
+    addSeparator: "Add separator",
     actionName: "Action name",
     actionNamePlaceholder: "Summarize selection",
     systemPrompt: "System prompt",
@@ -450,9 +505,41 @@ var en_default = {
     replaceSelected: "Replace selected text",
     replaceSelectedDesc: "If checked, the highlighted text will be replaced with a response from the model.",
     remove: "Remove",
+    moveUp: "Move up",
+    moveDown: "Move down",
     close: "Close",
     save: "Save",
+    separator: "Separator",
     actionsList: "Actions list",
+    communityActions: "Community actions",
+    communityActionsDesc: 'Below are actions collected from the GitHub discussion. Click Install to add one or <a href="https://github.com/pfrankov/obsidian-local-gpt/discussions/89">share yours</a>.',
+    communityActionsOpen: "Open community actions",
+    communityActionsOpenDesc: "Browse and install community actions made by our amazing community.",
+    communityActionsAutoUpdate: "Community actions update automatically when the list refreshes. Modified actions are left untouched.",
+    communityActionsLanguage: "Community actions language",
+    communityActionsLanguageDesc: "Defaults to your Obsidian language.",
+    communityActionsSearch: "Filter community actions",
+    communityActionsSearchPlaceholder: "Search by name, description, prompt, or system prompt",
+    communityActionsScoreLabel: "Score",
+    communityActionsByAuthor: "by {{author}}",
+    communityActionsReplaceTag: "Replaces selection",
+    communityActionsBadge: "Community",
+    communityActionsInstalled: "Installed",
+    communityActionsModified: "Modified",
+    communityActionsInList: "In your actions",
+    communityActionsInstall: "Install",
+    communityActionsReplace: "Replace",
+    communityActionsUpdate: "Update",
+    communityActionsRefresh: "Refresh",
+    communityActionsLoading: "Loading actions...",
+    communityActionsEmpty: "No actions for this language yet.",
+    communityActionsSearchEmpty: "No actions match your search.",
+    communityActionsError: "Failed to load community actions. Please try again later.",
+    communityActionsModifiedNote: "Modified locally. Auto-updates are paused.",
+    communityActionsConflictNote: "An action with this name already exists. Installing will overwrite it.",
+    communityActionsSyncSummary: "Updated {{updated}} actions. Skipped {{skipped}} modified.",
+    communityActionsUpdated: "Updated {{count}} community actions.",
+    communityActionsSkipped: "Skipped {{count}} modified community actions.",
     changeOrder: "Change order",
     done: "Done",
     advancedSettings: "Advanced settings",
@@ -472,6 +559,825 @@ var en_default = {
   }
 };
 
+// src/i18n/es.json
+var es_default = {
+  commands: {
+    showContextMenu: "Mostrar men\xFA contextual",
+    actionPalette: {
+      name: "Paleta de acciones",
+      placeholder: "Tu instrucci\xF3n... | Enter: enviar, Esc: cancelar",
+      changeProvider: "Cambiar el proveedor de IA",
+      changeModel: "Cambiar el modelo",
+      changeCreativity: "Cambiar creatividad",
+      changeSystemPrompt: "Cambiar mensaje del sistema",
+      clearSystemPrompt: "Borrar mensaje del sistema",
+      unknownModel: "Modelo desconocido",
+      hint: "Use / para comandos, @ para archivos"
+    }
+  },
+  statusBar: {
+    enhancing: "\u2728 Mejorando",
+    enhancingWithProgress: "\u2728 Mejorando {{percent}}%"
+  },
+  thinking: {
+    label: "Pensando",
+    placeholder: "\u2026"
+  },
+  notices: {
+    errorGenerating: "Error al generar texto: {{message}}",
+    errorProcessingRag: "Error al procesar documentos relacionados: {{message}}. Continuando con el texto original.",
+    importantUpdate: "\uFE0F\u{1F6A8} \xA1IMPORTANTE! \xA1Actualiza la configuraci\xF3n de Local GPT!",
+    newVersion: "\u2B06\uFE0F Local GPT: hay una nueva versi\xF3n disponible",
+    actionNameRequired: "Por favor, introduce un nombre para la acci\xF3n.",
+    actionNameExists: 'Ya existe una acci\xF3n con el nombre "{{name}}".',
+    actionRewritten: 'Acci\xF3n "{{name}}" reescrita',
+    actionAdded: 'Acci\xF3n "{{name}}" a\xF1adida',
+    copied: "Copiado"
+  },
+  settings: {
+    mainProvider: "Proveedor principal de IA",
+    embeddingProvider: "Proveedor de incrustaciones (Embeddings)",
+    embeddingProviderDesc: "Opcional. Se utiliza para \u2728\xA0Acciones\xA0Mejoradas.",
+    visionProvider: "Proveedor de visi\xF3n",
+    visionProviderDesc: "Opcional. Se utiliza para im\xE1genes. Si no se establece, se usar\xE1 el proveedor principal.",
+    creativity: "Creatividad",
+    creativityNone: "\u26AA Ninguna",
+    creativityLow: "\uFE0F\u{1F4A1} Baja",
+    creativityMedium: "\u{1F3A8} Media",
+    creativityHigh: "\u{1F680} Alta",
+    actions: "Acciones",
+    quickAdd: "A\xF1adir r\xE1pido",
+    quickAddPlaceholder: "Pegar acci\xF3n",
+    quickAddDesc: "Pega una acci\xF3n compartida para a\xF1adirla r\xE1pidamente.<br/><strong>Importante:</strong> si ya tienes una acci\xF3n con el mismo nombre, se sobrescribir\xE1.",
+    addNewManually: "A\xF1adir nueva manualmente",
+    addAction: "A\xF1adir acci\xF3n",
+    addSeparator: "A\xF1adir separador",
+    actionName: "Nombre de la acci\xF3n",
+    actionNamePlaceholder: "Resumir selecci\xF3n",
+    systemPrompt: "Mensaje del sistema",
+    systemPromptDesc: "Opcional",
+    systemPromptPlaceholder: "Eres un asistente \xFAtil.",
+    prompt: "Instrucci\xF3n",
+    promptDesc: 'Lee sobre<br/><a href="https://github.com/pfrankov/obsidian-local-gpt/blob/master/docs/prompt-templating.md">Plantillas de instrucciones</a><br/>si quieres personalizar<br/>tus instrucciones resultantes',
+    replaceSelected: "Reemplazar texto seleccionado",
+    replaceSelectedDesc: "Si est\xE1 marcado, el texto resaltado ser\xE1 reemplazado por la respuesta del modelo.",
+    remove: "Eliminar",
+    moveUp: "Mover arriba",
+    moveDown: "Mover abajo",
+    close: "Cerrar",
+    save: "Guardar",
+    separator: "Separador",
+    actionsList: "Lista de acciones",
+    changeOrder: "Cambiar orden",
+    done: "Hecho",
+    advancedSettings: "Configuraci\xF3n avanzada",
+    advancedSettingsDesc: "\u2728 Acciones Mejoradas (RAG), Restablecer todas las acciones",
+    enhancedActions: "Acciones Mejoradas",
+    enhancedActionsLabel: "Contexto RAG",
+    enhancedActionsDesc: "M\xE1s contexto puede mejorar la calidad de respuesta para modelos potentes, pero puede reducirla para modelos m\xE1s d\xE9biles. Un contexto m\xE1s grande tambi\xE9n consume m\xE1s tokens y aumenta el costo para modelos de pago.",
+    contextLimitLocal: "Modelos locales",
+    contextLimitCloud: "Modelos en la nube",
+    contextLimitAdvanced: "Top: GPT, Claude, Gemini",
+    contextLimitMax: "Sin l\xEDmites (peligro)",
+    dangerZone: "Zona de peligro",
+    resetActions: "Restablecer acciones",
+    resetActionsDesc: "\u{1F6A8} Restablecer todas las acciones a los valores predeterminados. Esto no se puede deshacer y eliminar\xE1 todas tus acciones personalizadas.",
+    reset: "Restablecer",
+    confirmReset: "Confirmar restablecimiento",
+    communityActions: "Acciones de la comunidad",
+    communityActionsDesc: `A continuaci\xF3n se muestran acciones recopiladas de la discusi\xF3n en GitHub. Haz clic en 'Instalar' para a\xF1adir una, o <a href="https://github.com/pfrankov/obsidian-local-gpt/discussions/89">comparte la tuya</a>.`,
+    communityActionsOpen: "Abrir acciones de la comunidad",
+    communityActionsOpenDesc: "Explora e instala acciones creadas por nuestra comunidad.",
+    communityActionsAutoUpdate: "Las acciones de la comunidad se actualizan autom\xE1ticamente al refrescar la lista. Las acciones modificadas permanecen intactas.",
+    communityActionsLanguage: "Idioma de las acciones de la comunidad",
+    communityActionsLanguageDesc: "Por defecto es el idioma de tu Obsidian.",
+    communityActionsSearch: "Filtrar acciones de la comunidad",
+    communityActionsSearchPlaceholder: "Busca por nombre, descripci\xF3n, prompt o prompt del sistema",
+    communityActionsScoreLabel: "Puntuaci\xF3n",
+    communityActionsByAuthor: "por {{author}}",
+    communityActionsReplaceTag: "Reemplaza selecci\xF3n",
+    communityActionsBadge: "Comunidad",
+    communityActionsInstalled: "Instalado",
+    communityActionsModified: "Modificado",
+    communityActionsInList: "En tus acciones",
+    communityActionsInstall: "Instalar",
+    communityActionsReplace: "Reemplazar",
+    communityActionsUpdate: "Actualizar",
+    communityActionsRefresh: "Refrescar",
+    communityActionsLoading: "Cargando acciones...",
+    communityActionsEmpty: "A\xFAn no hay acciones para este idioma.",
+    communityActionsSearchEmpty: "No hay acciones que coincidan con tu b\xFAsqueda.",
+    communityActionsError: "Error al cargar acciones de la comunidad. Int\xE9ntalo de nuevo m\xE1s tarde.",
+    communityActionsModifiedNote: "Modificado localmente. Actualizaciones autom\xE1ticas pausadas.",
+    communityActionsConflictNote: "Ya existe una acci\xF3n con este nombre. Instalarla la sobrescribir\xE1.",
+    communityActionsSyncSummary: "{{updated}} acciones actualizadas. {{skipped}} modificadas omitidas.",
+    communityActionsUpdated: "Se actualizaron {{count}} acciones de la comunidad.",
+    communityActionsSkipped: "Se omitieron {{count}} acciones de la comunidad modificadas."
+  }
+};
+
+// src/i18n/fr.json
+var fr_default = {
+  commands: {
+    showContextMenu: "Afficher le menu contextuel",
+    actionPalette: {
+      name: "Palette d'actions",
+      placeholder: "Votre invite... | Entr\xE9e : envoyer, \xC9chap : annuler",
+      changeProvider: "Changer de fournisseur d'IA",
+      changeModel: "Changer de mod\xE8le",
+      changeCreativity: "Changer la cr\xE9ativit\xE9",
+      changeSystemPrompt: "Changer l'invite syst\xE8me",
+      clearSystemPrompt: "Effacer l'invite syst\xE8me",
+      unknownModel: "Mod\xE8le inconnu",
+      hint: "Utilisez / pour les commandes, @ pour les fichiers"
+    }
+  },
+  statusBar: {
+    enhancing: "\u2728 Am\xE9lioration en cours",
+    enhancingWithProgress: "\u2728 Am\xE9lioration {{percent}}%"
+  },
+  thinking: {
+    label: "R\xE9flexion",
+    placeholder: "\u2026"
+  },
+  notices: {
+    errorGenerating: "Erreur lors de la g\xE9n\xE9ration du texte : {{message}}",
+    errorProcessingRag: "Erreur lors du traitement des documents connexes : {{message}}. Continuation avec le texte original.",
+    importantUpdate: "\uFE0F\u{1F6A8} IMPORTANT ! Mettez \xE0 jour les param\xE8tres de Local GPT !",
+    newVersion: "\u2B06\uFE0F Local GPT : une nouvelle version est disponible",
+    actionNameRequired: "Veuillez saisir un nom pour l'action.",
+    actionNameExists: 'Une action nomm\xE9e "{{name}}" existe d\xE9j\xE0.',
+    actionRewritten: 'Action "{{name}}" r\xE9\xE9crite',
+    actionAdded: 'Action "{{name}}" ajout\xE9e',
+    copied: "Copi\xE9"
+  },
+  settings: {
+    mainProvider: "Fournisseur d'IA principal",
+    embeddingProvider: "Fournisseur d'IA d'int\xE9gration (Embedding)",
+    embeddingProviderDesc: "Facultatif. Utilis\xE9 pour les \u2728\xA0Actions\xA0Am\xE9lior\xE9es.",
+    visionProvider: "Fournisseur d'IA de vision",
+    visionProviderDesc: "Facultatif. Utilis\xE9 pour les images. Si non d\xE9fini, le fournisseur principal sera utilis\xE9.",
+    creativity: "Cr\xE9ativit\xE9",
+    creativityNone: "\u26AA Aucune",
+    creativityLow: "\uFE0F\u{1F4A1} Basse",
+    creativityMedium: "\u{1F3A8} Moyenne",
+    creativityHigh: "\u{1F680} \xC9lev\xE9e",
+    actions: "Actions",
+    quickAdd: "Ajout rapide",
+    quickAddPlaceholder: "Coller l'action",
+    quickAddDesc: "Collez une action partag\xE9e pour l'ajouter rapidement.<br/><strong>Important :</strong> si vous avez d\xE9j\xE0 une action portant le m\xEAme nom, elle sera \xE9cras\xE9e.",
+    addNewManually: "Ajouter manuellement",
+    addAction: "Ajouter une action",
+    addSeparator: "Ajouter un s\xE9parateur",
+    actionName: "Nom de l'action",
+    actionNamePlaceholder: "R\xE9sumer la s\xE9lection",
+    systemPrompt: "Invite syst\xE8me",
+    systemPromptDesc: "Facultatif",
+    systemPromptPlaceholder: "Vous \xEAtes un assistant utile.",
+    prompt: "Invite",
+    promptDesc: `Lisez \xE0 propos des<br/><a href="https://github.com/pfrankov/obsidian-local-gpt/blob/master/docs/prompt-templating.md">Mod\xE8les d'invites</a><br/>si vous souhaitez personnaliser<br/>vos invites r\xE9sultantes`,
+    replaceSelected: "Remplacer le texte s\xE9lectionn\xE9",
+    replaceSelectedDesc: "Si coch\xE9, le texte surlign\xE9 sera remplac\xE9 par la r\xE9ponse du mod\xE8le.",
+    remove: "Supprimer",
+    moveUp: "Monter",
+    moveDown: "Descendre",
+    close: "Fermer",
+    save: "Enregistrer",
+    separator: "S\xE9parateur",
+    actionsList: "Liste des actions",
+    changeOrder: "Changer l'ordre",
+    done: "Termin\xE9",
+    advancedSettings: "Param\xE8tres avanc\xE9s",
+    advancedSettingsDesc: "\u2728 Actions Am\xE9lior\xE9es (RAG), R\xE9initialiser toutes les actions",
+    enhancedActions: "Actions Am\xE9lior\xE9es",
+    enhancedActionsLabel: "Contexte RAG",
+    enhancedActionsDesc: "Plus de contexte peut am\xE9liorer la qualit\xE9 des r\xE9ponses pour les mod\xE8les puissants, mais peut la r\xE9duire pour les plus faibles. Un contexte plus large consomme \xE9galement plus de jetons et augmente le co\xFBt pour les mod\xE8les payants.",
+    contextLimitLocal: "Mod\xE8les locaux",
+    contextLimitCloud: "Mod\xE8les cloud",
+    contextLimitAdvanced: "Top : GPT, Claude, Gemini",
+    contextLimitMax: "Sans limites (danger)",
+    dangerZone: "Zone de danger",
+    resetActions: "R\xE9initialiser les actions",
+    resetActionsDesc: "\u{1F6A8} R\xE9initialiser toutes les actions par d\xE9faut. Cela ne peut pas \xEAtre annul\xE9 et supprimera toutes vos actions personnalis\xE9es.",
+    reset: "R\xE9initialiser",
+    confirmReset: "Confirmer la r\xE9initialisation",
+    communityActions: "Actions de la communaut\xE9",
+    communityActionsDesc: 'Vous trouverez ci-dessous des actions collect\xE9es \xE0 partir de la discussion GitHub. Cliquez sur Installer pour en ajouter une ou <a href="https://github.com/pfrankov/obsidian-local-gpt/discussions/89">partagez la v\xF4tre</a>.',
+    communityActionsOpen: "Ouvrir les actions de la communaut\xE9",
+    communityActionsOpenDesc: "Parcourez et installez des actions cr\xE9\xE9es par notre communaut\xE9.",
+    communityActionsAutoUpdate: "Les actions de la communaut\xE9 se mettent \xE0 jour automatiquement lors de l'actualisation de la liste. Les actions modifi\xE9es restent inchang\xE9es.",
+    communityActionsLanguage: "Langue des actions de la communaut\xE9",
+    communityActionsLanguageDesc: "Par d\xE9faut, la langue de votre Obsidian.",
+    communityActionsSearch: "Filtrer les actions de la communaut\xE9",
+    communityActionsSearchPlaceholder: "Rechercher par nom, description, prompt ou prompt syst\xE8me",
+    communityActionsScoreLabel: "Score",
+    communityActionsByAuthor: "par {{author}}",
+    communityActionsReplaceTag: "Remplace la s\xE9lection",
+    communityActionsBadge: "Communaut\xE9",
+    communityActionsInstalled: "Install\xE9",
+    communityActionsModified: "Modifi\xE9",
+    communityActionsInList: "Dans vos actions",
+    communityActionsInstall: "Installer",
+    communityActionsReplace: "Remplacer",
+    communityActionsUpdate: "Mettre \xE0 jour",
+    communityActionsRefresh: "Actualiser",
+    communityActionsLoading: "Chargement des actions...",
+    communityActionsEmpty: "Pas encore d'actions pour cette langue.",
+    communityActionsSearchEmpty: "Aucune action ne correspond \xE0 votre recherche.",
+    communityActionsError: "\xC9chec du chargement des actions de la communaut\xE9. Veuillez r\xE9essayer plus tard.",
+    communityActionsModifiedNote: "Modifi\xE9 localement. Mises \xE0 jour automatiques suspendues.",
+    communityActionsConflictNote: "Une action portant ce nom existe d\xE9j\xE0. L'installation l'\xE9crasera.",
+    communityActionsSyncSummary: "{{updated}} actions mises \xE0 jour. {{skipped}} modifi\xE9es ignor\xE9es.",
+    communityActionsUpdated: "{{count}} actions de la communaut\xE9 mises \xE0 jour.",
+    communityActionsSkipped: "{{count}} actions de la communaut\xE9 modifi\xE9es ignor\xE9es."
+  }
+};
+
+// src/i18n/it.json
+var it_default = {
+  commands: {
+    showContextMenu: "Mostra menu contestuale",
+    actionPalette: {
+      name: "Tavolozza azioni",
+      placeholder: "Il tuo prompt... | Enter: invia, Esc: annulla",
+      changeProvider: "Cambia fornitore AI",
+      changeModel: "Cambia modello",
+      changeCreativity: "Cambia creativit\xE0",
+      changeSystemPrompt: "Cambia prompt di sistema",
+      clearSystemPrompt: "Cancella prompt di sistema",
+      unknownModel: "Modello sconosciuto",
+      hint: "Usa / per i comandi, @ per i file"
+    }
+  },
+  statusBar: {
+    enhancing: "\u2728 Miglioramento in corso",
+    enhancingWithProgress: "\u2728 Miglioramento {{percent}}%"
+  },
+  thinking: {
+    label: "Pensando",
+    placeholder: "\u2026"
+  },
+  notices: {
+    errorGenerating: "Errore durante la generazione del testo: {{message}}",
+    errorProcessingRag: "Errore durante l'elaborazione dei documenti correlati: {{message}}. Continuo con il testo originale.",
+    importantUpdate: "\uFE0F\u{1F6A8} IMPORTANTE! Aggiorna le impostazioni di Local GPT!",
+    newVersion: "\u2B06\uFE0F Local GPT: \xE8 disponibile una nuova versione",
+    actionNameRequired: "Inserisci un nome per l'azione.",
+    actionNameExists: `Esiste gi\xE0 un'azione con il nome "{{name}}".`,
+    actionRewritten: 'Azione "{{name}}" riscritta',
+    actionAdded: 'Azione "{{name}}" aggiunta',
+    copied: "Copiato"
+  },
+  settings: {
+    mainProvider: "Fornitore AI principale",
+    embeddingProvider: "Fornitore AI per Embedding",
+    embeddingProviderDesc: "Opzionale. Usato per \u2728\xA0Azioni\xA0Migliorate.",
+    visionProvider: "Fornitore AI per visione",
+    visionProviderDesc: "Opzionale. Usato per le immagini. Se non impostato, verr\xE0 usato il fornitore principale.",
+    creativity: "Creativit\xE0",
+    creativityNone: "\u26AA Nessuna",
+    creativityLow: "\uFE0F\u{1F4A1} Bassa",
+    creativityMedium: "\u{1F3A8} Media",
+    creativityHigh: "\u{1F680} Alta",
+    actions: "Azioni",
+    quickAdd: "Aggiunta rapida",
+    quickAddPlaceholder: "Incolla azione",
+    quickAddDesc: "Incolla un'azione condivisa per aggiungerla rapidamente.<br/><strong>Importante:</strong> se hai gi\xE0 un'azione con lo stesso nome, verr\xE0 sovrascritta.",
+    addNewManually: "Aggiungi nuova manualmente",
+    addAction: "Aggiungi azione",
+    addSeparator: "Aggiungi separatore",
+    actionName: "Nome azione",
+    actionNamePlaceholder: "Riassumi selezione",
+    systemPrompt: "Prompt di sistema",
+    systemPromptDesc: "Opzionale",
+    systemPromptPlaceholder: "Sei un assistente utile.",
+    prompt: "Prompt",
+    promptDesc: 'Leggi su<br/><a href="https://github.com/pfrankov/obsidian-local-gpt/blob/master/docs/prompt-templating.md">Template dei prompt</a><br/>se vuoi personalizzare<br/>i tuoi prompt risultanti',
+    replaceSelected: "Sostituisci testo selezionato",
+    replaceSelectedDesc: "Se selezionato, il testo evidenziato verr\xE0 sostituito con la risposta del modello.",
+    remove: "Rimuovi",
+    moveUp: "Sposta su",
+    moveDown: "Sposta gi\xF9",
+    close: "Chiudi",
+    save: "Salva",
+    separator: "Separatore",
+    actionsList: "Lista azioni",
+    changeOrder: "Cambia ordine",
+    done: "Fatto",
+    advancedSettings: "Impostazioni avanzate",
+    advancedSettingsDesc: "\u2728 Azioni Migliorate (RAG), Ripristina tutte le azioni",
+    enhancedActions: "Azioni Migliorate",
+    enhancedActionsLabel: "Contesto RAG",
+    enhancedActionsDesc: "Pi\xF9 contesto pu\xF2 migliorare la qualit\xE0 delle risposte per modelli potenti, ma potrebbe ridurla per modelli pi\xF9 deboli. Un contesto pi\xF9 ampio consuma anche pi\xF9 token e aumenta il costo per i modelli a pagamento.",
+    contextLimitLocal: "Modelli locali",
+    contextLimitCloud: "Modelli cloud",
+    contextLimitAdvanced: "Top: GPT, Claude, Gemini",
+    contextLimitMax: "Nessun limite (pericolo)",
+    dangerZone: "Zona pericolosa",
+    resetActions: "Ripristina azioni",
+    resetActionsDesc: "\u{1F6A8} Ripristina tutte le azioni ai valori predefiniti. Questa operazione non pu\xF2 essere annullata ed eliminer\xE0 tutte le tue azioni personalizzate.",
+    reset: "Ripristina",
+    confirmReset: "Conferma ripristino",
+    communityActions: "Azioni della community",
+    communityActionsDesc: 'Di seguito sono riportate le azioni raccolte dalla discussione su GitHub. Clicca su Installa per aggiungerne una o <a href="https://github.com/pfrankov/obsidian-local-gpt/discussions/89">condividi la tua</a>.',
+    communityActionsOpen: "Apri azioni della community",
+    communityActionsOpenDesc: "Sfoglia e installa azioni create dalla community.",
+    communityActionsAutoUpdate: "Le azioni della community si aggiornano automaticamente quando l'elenco viene aggiornato. Le azioni modificate rimangono invariate.",
+    communityActionsLanguage: "Lingua delle azioni della community",
+    communityActionsLanguageDesc: "Predefinito nella lingua di Obsidian.",
+    communityActionsSearch: "Filtra azioni della community",
+    communityActionsSearchPlaceholder: "Cerca per nome, descrizione, prompt o prompt di sistema",
+    communityActionsScoreLabel: "Punteggio",
+    communityActionsByAuthor: "di {{author}}",
+    communityActionsReplaceTag: "Sostituisce la selezione",
+    communityActionsBadge: "Community",
+    communityActionsInstalled: "Installato",
+    communityActionsModified: "Modificato",
+    communityActionsInList: "Nelle tue azioni",
+    communityActionsInstall: "Installa",
+    communityActionsReplace: "Sostituisci",
+    communityActionsUpdate: "Aggiorna",
+    communityActionsRefresh: "Aggiorna",
+    communityActionsLoading: "Caricamento azioni...",
+    communityActionsEmpty: "Nessuna azione ancora per questa lingua.",
+    communityActionsSearchEmpty: "Nessuna azione corrisponde alla tua ricerca.",
+    communityActionsError: "Impossibile caricare le azioni della community. Riprova pi\xF9 tardi.",
+    communityActionsModifiedNote: "Modificato localmente. Aggiornamenti automatici in pausa.",
+    communityActionsConflictNote: "Esiste gi\xE0 un'azione con questo nome. L'installazione la sovrascriver\xE0.",
+    communityActionsSyncSummary: "Aggiornate {{updated}} azioni. Saltate {{skipped}} modificate.",
+    communityActionsUpdated: "Aggiornate {{count}} azioni della community.",
+    communityActionsSkipped: "Saltate {{count}} azioni della community modificate."
+  }
+};
+
+// src/i18n/ja.json
+var ja_default = {
+  commands: {
+    showContextMenu: "\u30B3\u30F3\u30C6\u30AD\u30B9\u30C8\u30E1\u30CB\u30E5\u30FC\u3092\u8868\u793A",
+    actionPalette: {
+      name: "\u30A2\u30AF\u30B7\u30E7\u30F3\u30D1\u30EC\u30C3\u30C8",
+      placeholder: "\u30D7\u30ED\u30F3\u30D7\u30C8\u3092\u5165\u529B... | Enter: \u9001\u4FE1, Esc: \u30AD\u30E3\u30F3\u30BB\u30EB",
+      changeProvider: "AI\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u3092\u5909\u66F4",
+      changeModel: "\u30E2\u30C7\u30EB\u3092\u5909\u66F4",
+      changeCreativity: "\u5275\u9020\u6027\u3092\u5909\u66F4",
+      changeSystemPrompt: "\u30B7\u30B9\u30C6\u30E0\u30D7\u30ED\u30F3\u30D7\u30C8\u3092\u5909\u66F4",
+      clearSystemPrompt: "\u30B7\u30B9\u30C6\u30E0\u30D7\u30ED\u30F3\u30D7\u30C8\u3092\u30AF\u30EA\u30A2",
+      unknownModel: "\u4E0D\u660E\u306A\u30E2\u30C7\u30EB",
+      hint: "\u30B3\u30DE\u30F3\u30C9\u306B\u306F /\u3001\u30D5\u30A1\u30A4\u30EB\u306B\u306F @ \u3092\u4F7F\u7528"
+    }
+  },
+  statusBar: {
+    enhancing: "\u2728 \u5F37\u5316\u4E2D",
+    enhancingWithProgress: "\u2728 \u5F37\u5316\u4E2D {{percent}}%"
+  },
+  thinking: {
+    label: "\u601D\u8003\u4E2D",
+    placeholder: "\u2026"
+  },
+  notices: {
+    errorGenerating: "\u30C6\u30AD\u30B9\u30C8\u751F\u6210\u30A8\u30E9\u30FC: {{message}}",
+    errorProcessingRag: "\u95A2\u9023\u30C9\u30AD\u30E5\u30E1\u30F3\u30C8\u306E\u51E6\u7406\u4E2D\u306B\u30A8\u30E9\u30FC\u304C\u767A\u751F\u3057\u307E\u3057\u305F: {{message}}\u3002\u5143\u306E\u30C6\u30AD\u30B9\u30C8\u3067\u7D9A\u884C\u3057\u307E\u3059\u3002",
+    importantUpdate: "\uFE0F\u{1F6A8} \u91CD\u8981\uFF01Local GPT\u306E\u8A2D\u5B9A\u3092\u66F4\u65B0\u3057\u3066\u304F\u3060\u3055\u3044\uFF01",
+    newVersion: "\u2B06\uFE0F Local GPT: \u65B0\u3057\u3044\u30D0\u30FC\u30B8\u30E7\u30F3\u304C\u5229\u7528\u53EF\u80FD\u3067\u3059",
+    actionNameRequired: "\u30A2\u30AF\u30B7\u30E7\u30F3\u540D\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
+    actionNameExists: '"{{name}}" \u3068\u3044\u3046\u540D\u524D\u306E\u30A2\u30AF\u30B7\u30E7\u30F3\u306F\u65E2\u306B\u5B58\u5728\u3057\u307E\u3059\u3002',
+    actionRewritten: '\u30A2\u30AF\u30B7\u30E7\u30F3 "{{name}}" \u3092\u4E0A\u66F8\u304D\u3057\u307E\u3057\u305F',
+    actionAdded: '\u30A2\u30AF\u30B7\u30E7\u30F3 "{{name}}" \u3092\u8FFD\u52A0\u3057\u307E\u3057\u305F',
+    copied: "\u30B3\u30D4\u30FC\u3057\u307E\u3057\u305F"
+  },
+  settings: {
+    mainProvider: "\u30E1\u30A4\u30F3AI\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC",
+    embeddingProvider: "\u57CB\u3081\u8FBC\u307FAI\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC",
+    embeddingProviderDesc: "\u30AA\u30D7\u30B7\u30E7\u30F3\u3002\u2728\xA0\u5F37\u5316\u30A2\u30AF\u30B7\u30E7\u30F3\u306B\u4F7F\u7528\u3055\u308C\u307E\u3059\u3002",
+    visionProvider: "\u30D3\u30B8\u30E7\u30F3AI\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC",
+    visionProviderDesc: "\u30AA\u30D7\u30B7\u30E7\u30F3\u3002\u753B\u50CF\u306B\u4F7F\u7528\u3055\u308C\u307E\u3059\u3002\u8A2D\u5B9A\u3055\u308C\u3066\u3044\u306A\u3044\u5834\u5408\u306F\u3001\u30E1\u30A4\u30F3\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u304C\u4F7F\u7528\u3055\u308C\u307E\u3059\u3002",
+    creativity: "\u5275\u9020\u6027",
+    creativityNone: "\u26AA \u306A\u3057",
+    creativityLow: "\uFE0F\u{1F4A1} \u4F4E",
+    creativityMedium: "\u{1F3A8} \u4E2D",
+    creativityHigh: "\u{1F680} \u9AD8",
+    actions: "\u30A2\u30AF\u30B7\u30E7\u30F3",
+    quickAdd: "\u30AF\u30A4\u30C3\u30AF\u8FFD\u52A0",
+    quickAddPlaceholder: "\u30A2\u30AF\u30B7\u30E7\u30F3\u3092\u8CBC\u308A\u4ED8\u3051",
+    quickAddDesc: "\u5171\u6709\u3055\u308C\u305F\u30A2\u30AF\u30B7\u30E7\u30F3\u3092\u8CBC\u308A\u4ED8\u3051\u3066\u7D20\u65E9\u304F\u8FFD\u52A0\u3067\u304D\u307E\u3059\u3002<br/><strong>\u91CD\u8981:</strong> \u540C\u3058\u540D\u524D\u306E\u30A2\u30AF\u30B7\u30E7\u30F3\u304C\u65E2\u306B\u3042\u308B\u5834\u5408\u306F\u4E0A\u66F8\u304D\u3055\u308C\u307E\u3059\u3002",
+    addNewManually: "\u624B\u52D5\u3067\u65B0\u898F\u8FFD\u52A0",
+    addAction: "\u30A2\u30AF\u30B7\u30E7\u30F3\u3092\u8FFD\u52A0",
+    addSeparator: "\u533A\u5207\u308A\u7DDA\u3092\u8FFD\u52A0",
+    actionName: "\u30A2\u30AF\u30B7\u30E7\u30F3\u540D",
+    actionNamePlaceholder: "\u9078\u629E\u7BC4\u56F2\u3092\u8981\u7D04",
+    systemPrompt: "\u30B7\u30B9\u30C6\u30E0\u30D7\u30ED\u30F3\u30D7\u30C8",
+    systemPromptDesc: "\u30AA\u30D7\u30B7\u30E7\u30F3",
+    systemPromptPlaceholder: "\u3042\u306A\u305F\u306F\u5F79\u7ACB\u3064\u30A2\u30B7\u30B9\u30BF\u30F3\u30C8\u3067\u3059\u3002",
+    prompt: "\u30D7\u30ED\u30F3\u30D7\u30C8",
+    promptDesc: '\u7D50\u679C\u3068\u3057\u3066\u5F97\u3089\u308C\u308B\u30D7\u30ED\u30F3\u30D7\u30C8\u3092<br/>\u30AB\u30B9\u30BF\u30DE\u30A4\u30BA\u3057\u305F\u3044\u5834\u5408\u306F\u3001<br/><a href="https://github.com/pfrankov/obsidian-local-gpt/blob/master/docs/prompt-templating.md">\u30D7\u30ED\u30F3\u30D7\u30C8\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8</a>\u306B\u3064\u3044\u3066\u8AAD\u3093\u3067\u304F\u3060\u3055\u3044',
+    replaceSelected: "\u9078\u629E\u3057\u305F\u30C6\u30AD\u30B9\u30C8\u3092\u7F6E\u63DB",
+    replaceSelectedDesc: "\u30C1\u30A7\u30C3\u30AF\u3092\u5165\u308C\u308B\u3068\u3001\u30CF\u30A4\u30E9\u30A4\u30C8\u3055\u308C\u305F\u30C6\u30AD\u30B9\u30C8\u304C\u30E2\u30C7\u30EB\u304B\u3089\u306E\u5FDC\u7B54\u306B\u7F6E\u304D\u63DB\u3048\u3089\u308C\u307E\u3059\u3002",
+    remove: "\u524A\u9664",
+    moveUp: "\u4E0A\u306B\u79FB\u52D5",
+    moveDown: "\u4E0B\u306B\u79FB\u52D5",
+    close: "\u9589\u3058\u308B",
+    save: "\u4FDD\u5B58",
+    separator: "\u533A\u5207\u308A\u7DDA",
+    actionsList: "\u30A2\u30AF\u30B7\u30E7\u30F3\u30EA\u30B9\u30C8",
+    changeOrder: "\u9806\u5E8F\u3092\u5909\u66F4",
+    done: "\u5B8C\u4E86",
+    advancedSettings: "\u8A73\u7D30\u8A2D\u5B9A",
+    advancedSettingsDesc: "\u2728 \u5F37\u5316\u30A2\u30AF\u30B7\u30E7\u30F3 (RAG), \u3059\u3079\u3066\u306E\u30A2\u30AF\u30B7\u30E7\u30F3\u3092\u30EA\u30BB\u30C3\u30C8",
+    enhancedActions: "\u5F37\u5316\u30A2\u30AF\u30B7\u30E7\u30F3",
+    enhancedActionsLabel: "RAG\u30B3\u30F3\u30C6\u30AD\u30B9\u30C8",
+    enhancedActionsDesc: "\u30B3\u30F3\u30C6\u30AD\u30B9\u30C8\u304C\u591A\u3044\u307B\u3069\u3001\u5F37\u529B\u306A\u30E2\u30C7\u30EB\u306E\u56DE\u7B54\u54C1\u8CEA\u306F\u5411\u4E0A\u3057\u307E\u3059\u304C\u3001\u5F31\u3044\u30E2\u30C7\u30EB\u306E\u5834\u5408\u306F\u54C1\u8CEA\u304C\u4F4E\u4E0B\u3059\u308B\u53EF\u80FD\u6027\u304C\u3042\u308A\u307E\u3059\u3002\u30B3\u30F3\u30C6\u30AD\u30B9\u30C8\u304C\u5927\u304D\u3044\u307B\u3069\u30C8\u30FC\u30AF\u30F3\u6D88\u8CBB\u91CF\u304C\u5897\u3048\u3001\u6709\u6599\u30E2\u30C7\u30EB\u306E\u30B3\u30B9\u30C8\u304C\u5897\u52A0\u3057\u307E\u3059\u3002",
+    contextLimitLocal: "\u30ED\u30FC\u30AB\u30EB\u30E2\u30C7\u30EB",
+    contextLimitCloud: "\u30AF\u30E9\u30A6\u30C9\u30E2\u30C7\u30EB",
+    contextLimitAdvanced: "\u30C8\u30C3\u30D7: GPT, Claude, Gemini",
+    contextLimitMax: "\u5236\u9650\u306A\u3057 (\u5371\u967A)",
+    dangerZone: "\u5371\u967A\u30BE\u30FC\u30F3",
+    resetActions: "\u30A2\u30AF\u30B7\u30E7\u30F3\u3092\u30EA\u30BB\u30C3\u30C8",
+    resetActionsDesc: "\u{1F6A8} \u3059\u3079\u3066\u306E\u30A2\u30AF\u30B7\u30E7\u30F3\u3092\u30C7\u30D5\u30A9\u30EB\u30C8\u306B\u30EA\u30BB\u30C3\u30C8\u3057\u307E\u3059\u3002\u3053\u308C\u306F\u5143\u306B\u623B\u305B\u307E\u305B\u3093\u3002\u30AB\u30B9\u30BF\u30E0\u30A2\u30AF\u30B7\u30E7\u30F3\u306F\u3059\u3079\u3066\u524A\u9664\u3055\u308C\u307E\u3059\u3002",
+    reset: "\u30EA\u30BB\u30C3\u30C8",
+    confirmReset: "\u30EA\u30BB\u30C3\u30C8\u3092\u78BA\u8A8D",
+    communityActions: "\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30A2\u30AF\u30B7\u30E7\u30F3",
+    communityActionsDesc: '\u4EE5\u4E0B\u306FGitHub\u30C7\u30A3\u30B9\u30AB\u30C3\u30B7\u30E7\u30F3\u304B\u3089\u53CE\u96C6\u3055\u308C\u305F\u30A2\u30AF\u30B7\u30E7\u30F3\u3067\u3059\u3002\u30A4\u30F3\u30B9\u30C8\u30FC\u30EB\u3092\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u8FFD\u52A0\u3059\u308B\u304B\u3001<a href="https://github.com/pfrankov/obsidian-local-gpt/discussions/89">\u3042\u306A\u305F\u306E\u30A2\u30AF\u30B7\u30E7\u30F3\u3092\u5171\u6709</a>\u3057\u3066\u304F\u3060\u3055\u3044\u3002',
+    communityActionsOpen: "\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30A2\u30AF\u30B7\u30E7\u30F3\u3092\u958B\u304F",
+    communityActionsOpenDesc: "\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u304C\u4F5C\u6210\u3057\u305F\u30A2\u30AF\u30B7\u30E7\u30F3\u3092\u95B2\u89A7\u3057\u3066\u30A4\u30F3\u30B9\u30C8\u30FC\u30EB\u3067\u304D\u307E\u3059\u3002",
+    communityActionsAutoUpdate: "\u30EA\u30B9\u30C8\u3092\u66F4\u65B0\u3059\u308B\u3068\u3001\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30A2\u30AF\u30B7\u30E7\u30F3\u306F\u81EA\u52D5\u7684\u306B\u66F4\u65B0\u3055\u308C\u307E\u3059\u3002\u5909\u66F4\u3055\u308C\u305F\u30A2\u30AF\u30B7\u30E7\u30F3\u306F\u305D\u306E\u307E\u307E\u6B8B\u308A\u307E\u3059\u3002",
+    communityActionsLanguage: "\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30A2\u30AF\u30B7\u30E7\u30F3\u306E\u8A00\u8A9E",
+    communityActionsLanguageDesc: "\u30C7\u30D5\u30A9\u30EB\u30C8\u306FObsidian\u306E\u8A00\u8A9E\u3067\u3059\u3002",
+    communityActionsSearch: "\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30A2\u30AF\u30B7\u30E7\u30F3\u3092\u7D5E\u308A\u8FBC\u307F",
+    communityActionsSearchPlaceholder: "\u540D\u524D\u3001\u8AAC\u660E\u3001\u30D7\u30ED\u30F3\u30D7\u30C8\u3001\u30B7\u30B9\u30C6\u30E0\u30D7\u30ED\u30F3\u30D7\u30C8\u3067\u691C\u7D22",
+    communityActionsScoreLabel: "\u30B9\u30B3\u30A2",
+    communityActionsByAuthor: "\u4F5C\u6210\u8005: {{author}}",
+    communityActionsReplaceTag: "\u9078\u629E\u7BC4\u56F2\u3092\u7F6E\u63DB",
+    communityActionsBadge: "\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3",
+    communityActionsInstalled: "\u30A4\u30F3\u30B9\u30C8\u30FC\u30EB\u6E08\u307F",
+    communityActionsModified: "\u5909\u66F4\u6E08\u307F",
+    communityActionsInList: "\u30A2\u30AF\u30B7\u30E7\u30F3\u306B\u8FFD\u52A0\u6E08\u307F",
+    communityActionsInstall: "\u30A4\u30F3\u30B9\u30C8\u30FC\u30EB",
+    communityActionsReplace: "\u7F6E\u63DB",
+    communityActionsUpdate: "\u66F4\u65B0",
+    communityActionsRefresh: "\u66F4\u65B0",
+    communityActionsLoading: "\u30A2\u30AF\u30B7\u30E7\u30F3\u3092\u8AAD\u307F\u8FBC\u3093\u3067\u3044\u307E\u3059...",
+    communityActionsEmpty: "\u3053\u306E\u8A00\u8A9E\u306E\u30A2\u30AF\u30B7\u30E7\u30F3\u306F\u307E\u3060\u3042\u308A\u307E\u305B\u3093\u3002",
+    communityActionsSearchEmpty: "\u691C\u7D22\u306B\u4E00\u81F4\u3059\u308B\u30A2\u30AF\u30B7\u30E7\u30F3\u306F\u3042\u308A\u307E\u305B\u3093\u3002",
+    communityActionsError: "\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30A2\u30AF\u30B7\u30E7\u30F3\u3092\u8AAD\u307F\u8FBC\u3081\u307E\u305B\u3093\u3067\u3057\u305F\u3002\u5F8C\u3067\u3082\u3046\u4E00\u5EA6\u304A\u8A66\u3057\u304F\u3060\u3055\u3044\u3002",
+    communityActionsModifiedNote: "\u30ED\u30FC\u30AB\u30EB\u3067\u5909\u66F4\u3055\u308C\u307E\u3057\u305F\u3002\u81EA\u52D5\u66F4\u65B0\u306F\u4E00\u6642\u505C\u6B62\u3057\u3066\u3044\u307E\u3059\u3002",
+    communityActionsConflictNote: "\u3053\u306E\u540D\u524D\u306E\u30A2\u30AF\u30B7\u30E7\u30F3\u306F\u65E2\u306B\u5B58\u5728\u3057\u307E\u3059\u3002\u30A4\u30F3\u30B9\u30C8\u30FC\u30EB\u3059\u308B\u3068\u4E0A\u66F8\u304D\u3055\u308C\u307E\u3059\u3002",
+    communityActionsSyncSummary: "{{updated}} \u4EF6\u306E\u30A2\u30AF\u30B7\u30E7\u30F3\u3092\u66F4\u65B0\u3057\u307E\u3057\u305F\u3002{{skipped}} \u4EF6\u306E\u5909\u66F4\u3055\u308C\u305F\u30A2\u30AF\u30B7\u30E7\u30F3\u3092\u30B9\u30AD\u30C3\u30D7\u3057\u307E\u3057\u305F\u3002",
+    communityActionsUpdated: "{{count}} \u4EF6\u306E\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30A2\u30AF\u30B7\u30E7\u30F3\u3092\u66F4\u65B0\u3057\u307E\u3057\u305F\u3002",
+    communityActionsSkipped: "{{count}} \u4EF6\u306E\u5909\u66F4\u3055\u308C\u305F\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30A2\u30AF\u30B7\u30E7\u30F3\u3092\u30B9\u30AD\u30C3\u30D7\u3057\u307E\u3057\u305F\u3002"
+  }
+};
+
+// src/i18n/ko.json
+var ko_default = {
+  commands: {
+    showContextMenu: "\uCEE8\uD14D\uC2A4\uD2B8 \uBA54\uB274 \uD45C\uC2DC",
+    actionPalette: {
+      name: "\uC561\uC158 \uD314\uB808\uD2B8",
+      placeholder: "\uD504\uB86C\uD504\uD2B8 \uC785\uB825... | Enter: \uC804\uC1A1, Esc: \uCDE8\uC18C",
+      changeProvider: "AI \uC81C\uACF5\uC5C5\uCCB4 \uBCC0\uACBD",
+      changeModel: "\uBAA8\uB378 \uBCC0\uACBD",
+      changeCreativity: "\uCC3D\uC758\uC131 \uBCC0\uACBD",
+      changeSystemPrompt: "\uC2DC\uC2A4\uD15C \uD504\uB86C\uD504\uD2B8 \uBCC0\uACBD",
+      clearSystemPrompt: "\uC2DC\uC2A4\uD15C \uD504\uB86C\uD504\uD2B8 \uC9C0\uC6B0\uAE30",
+      unknownModel: "\uC54C \uC218 \uC5C6\uB294 \uBAA8\uB378",
+      hint: "\uBA85\uB839\uC5B4\uB294 /, \uD30C\uC77C\uC740 @ \uC0AC\uC6A9"
+    }
+  },
+  statusBar: {
+    enhancing: "\u2728 \uD5A5\uC0C1 \uC911",
+    enhancingWithProgress: "\u2728 \uD5A5\uC0C1 \uC911 {{percent}}%"
+  },
+  thinking: {
+    label: "\uC0DD\uAC01 \uC911",
+    placeholder: "\u2026"
+  },
+  notices: {
+    errorGenerating: "\uD14D\uC2A4\uD2B8 \uC0DD\uC131 \uC911 \uC624\uB958 \uBC1C\uC0DD: {{message}}",
+    errorProcessingRag: "\uAD00\uB828 \uBB38\uC11C\uB97C \uCC98\uB9AC\uD558\uB294 \uC911 \uC624\uB958 \uBC1C\uC0DD: {{message}}. \uC6D0\uBCF8 \uD14D\uC2A4\uD2B8\uB85C \uACC4\uC18D\uD569\uB2C8\uB2E4.",
+    importantUpdate: "\uFE0F\u{1F6A8} \uC911\uC694! Local GPT \uC124\uC815\uC744 \uC5C5\uB370\uC774\uD2B8\uD558\uC138\uC694!",
+    newVersion: "\u2B06\uFE0F Local GPT: \uC0C8 \uBC84\uC804\uC744 \uC0AC\uC6A9\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4",
+    actionNameRequired: "\uC561\uC158 \uC774\uB984\uC744 \uC785\uB825\uD558\uC138\uC694.",
+    actionNameExists: '"{{name}}" \uC774\uB984\uC744 \uAC00\uC9C4 \uC561\uC158\uC774 \uC774\uBBF8 \uC874\uC7AC\uD569\uB2C8\uB2E4.',
+    actionRewritten: '\uB2E4\uC2DC \uC791\uC131\uB41C "{{name}}" \uC561\uC158',
+    actionAdded: '"{{name}}" \uC561\uC158 \uCD94\uAC00\uB428',
+    copied: "\uBCF5\uC0AC\uB428"
+  },
+  settings: {
+    mainProvider: "\uBA54\uC778 AI \uC81C\uACF5\uC5C5\uCCB4",
+    embeddingProvider: "\uC784\uBCA0\uB529 AI \uC81C\uACF5\uC5C5\uCCB4",
+    embeddingProviderDesc: "\uC120\uD0DD \uC0AC\uD56D. \u2728\xA0\uD5A5\uC0C1\uB41C\xA0\uC561\uC158\uC5D0 \uC0AC\uC6A9\uB429\uB2C8\uB2E4.",
+    visionProvider: "\uBE44\uC804 AI \uC81C\uACF5\uC5C5\uCCB4",
+    visionProviderDesc: "\uC120\uD0DD \uC0AC\uD56D. \uC774\uBBF8\uC9C0\uC5D0 \uC0AC\uC6A9\uB429\uB2C8\uB2E4. \uC124\uC815\uD558\uC9C0 \uC54A\uC73C\uBA74 \uBA54\uC778 \uC81C\uACF5\uC5C5\uCCB4\uAC00 \uC0AC\uC6A9\uB429\uB2C8\uB2E4.",
+    creativity: "\uCC3D\uC758\uC131",
+    creativityNone: "\u26AA \uC5C6\uC74C",
+    creativityLow: "\uFE0F\u{1F4A1} \uB0AE\uC74C",
+    creativityMedium: "\u{1F3A8} \uC911\uAC04",
+    creativityHigh: "\u{1F680} \uB192\uC74C",
+    actions: "\uC561\uC158",
+    quickAdd: "\uBE60\uB978 \uCD94\uAC00",
+    quickAddPlaceholder: "\uC561\uC158 \uBD99\uC5EC\uB123\uAE30",
+    quickAddDesc: "\uACF5\uC720\uB41C \uC561\uC158\uC744 \uBD99\uC5EC\uB123\uC5B4 \uBE60\uB974\uAC8C \uCD94\uAC00\uD558\uC138\uC694.<br/><strong>\uC911\uC694:</strong> \uB3D9\uC77C\uD55C \uC774\uB984\uC758 \uC561\uC158\uC774 \uC774\uBBF8 \uC788\uB294 \uACBD\uC6B0 \uB36E\uC5B4\uC50C\uC6CC\uC9D1\uB2C8\uB2E4.",
+    addNewManually: "\uC218\uB3D9\uC73C\uB85C \uC0C8\uB85C \uCD94\uAC00",
+    addAction: "\uC561\uC158 \uCD94\uAC00",
+    addSeparator: "\uAD6C\uBD84\uC120 \uCD94\uAC00",
+    actionName: "\uC561\uC158 \uC774\uB984",
+    actionNamePlaceholder: "\uC120\uD0DD \uD56D\uBAA9 \uC694\uC57D",
+    systemPrompt: "\uC2DC\uC2A4\uD15C \uD504\uB86C\uD504\uD2B8",
+    systemPromptDesc: "\uC120\uD0DD \uC0AC\uD56D",
+    systemPromptPlaceholder: "\uB2F9\uC2E0\uC740 \uB3C4\uC6C0\uC774 \uB418\uB294 \uC5B4\uC2DC\uC2A4\uD134\uD2B8\uC785\uB2C8\uB2E4.",
+    prompt: "\uD504\uB86C\uD504\uD2B8",
+    promptDesc: '\uACB0\uACFC \uD504\uB86C\uD504\uD2B8\uB97C \uC0AC\uC6A9\uC790 \uC9C0\uC815\uD558\uB824\uBA74<br/><a href="https://github.com/pfrankov/obsidian-local-gpt/blob/master/docs/prompt-templating.md">\uD504\uB86C\uD504\uD2B8 \uD15C\uD50C\uB9BF</a>\uC5D0 \uB300\uD574 \uC77D\uC5B4\uBCF4\uC138\uC694',
+    replaceSelected: "\uC120\uD0DD\uD55C \uD14D\uC2A4\uD2B8 \uBC14\uAFB8\uAE30",
+    replaceSelectedDesc: "\uC120\uD0DD\uD558\uBA74 \uAC15\uC870 \uD45C\uC2DC\uB41C \uD14D\uC2A4\uD2B8\uAC00 \uBAA8\uB378\uC758 \uC751\uB2F5\uC73C\uB85C \uB300\uCCB4\uB429\uB2C8\uB2E4.",
+    remove: "\uC81C\uAC70",
+    moveUp: "\uC704\uB85C \uC774\uB3D9",
+    moveDown: "\uC544\uB798\uB85C \uC774\uB3D9",
+    close: "\uB2EB\uAE30",
+    save: "\uC800\uC7A5",
+    separator: "\uAD6C\uBD84\uC120",
+    actionsList: "\uC561\uC158 \uBAA9\uB85D",
+    changeOrder: "\uC21C\uC11C \uBCC0\uACBD",
+    done: "\uC644\uB8CC",
+    advancedSettings: "\uACE0\uAE09 \uC124\uC815",
+    advancedSettingsDesc: "\u2728 \uD5A5\uC0C1\uB41C \uC561\uC158 (RAG), \uBAA8\uB4E0 \uC561\uC158 \uC7AC\uC124\uC815",
+    enhancedActions: "\uD5A5\uC0C1\uB41C \uC561\uC158",
+    enhancedActionsLabel: "RAG \uCEE8\uD14D\uC2A4\uD2B8",
+    enhancedActionsDesc: "\uCEE8\uD14D\uC2A4\uD2B8\uAC00 \uB9CE\uC744\uC218\uB85D \uAC15\uB825\uD55C \uBAA8\uB378\uC758 \uB2F5\uBCC0 \uD488\uC9C8\uC774 \uD5A5\uC0C1\uB420 \uC218 \uC788\uC9C0\uB9CC, \uC57D\uD55C \uBAA8\uB378\uC758 \uACBD\uC6B0 \uD488\uC9C8\uC774 \uC800\uD558\uB420 \uC218 \uC788\uC2B5\uB2C8\uB2E4. \uCEE8\uD14D\uC2A4\uD2B8\uAC00 \uD074\uC218\uB85D \uD1A0\uD070 \uC18C\uBE44\uB7C9\uC774 \uB9CE\uC544\uC9C0\uACE0 \uC720\uB8CC \uBAA8\uB378\uC758 \uBE44\uC6A9\uC774 \uC99D\uAC00\uD569\uB2C8\uB2E4.",
+    contextLimitLocal: "\uB85C\uCEEC \uBAA8\uB378",
+    contextLimitCloud: "\uD074\uB77C\uC6B0\uB4DC \uBAA8\uB378",
+    contextLimitAdvanced: "\uC0C1\uC704: GPT, Claude, Gemini",
+    contextLimitMax: "\uC81C\uD55C \uC5C6\uC74C (\uC704\uD5D8)",
+    dangerZone: "\uC704\uD5D8 \uAD6C\uC5ED",
+    resetActions: "\uC561\uC158 \uC7AC\uC124\uC815",
+    resetActionsDesc: "\u{1F6A8} \uBAA8\uB4E0 \uC561\uC158\uC744 \uAE30\uBCF8\uAC12\uC73C\uB85C \uC7AC\uC124\uC815\uD569\uB2C8\uB2E4. \uC774 \uC791\uC5C5\uC740 \uCDE8\uC18C\uD560 \uC218 \uC5C6\uC73C\uBA70 \uBAA8\uB4E0 \uC0AC\uC6A9\uC790 \uC9C0\uC815 \uC561\uC158\uC774 \uC0AD\uC81C\uB429\uB2C8\uB2E4.",
+    reset: "\uC7AC\uC124\uC815",
+    confirmReset: "\uC7AC\uC124\uC815 \uD655\uC778",
+    communityActions: "\uCEE4\uBBA4\uB2C8\uD2F0 \uC561\uC158",
+    communityActionsDesc: '\uC544\uB798\uB294 GitHub \uD1A0\uB860\uC5D0\uC11C \uC218\uC9D1\uB41C \uC561\uC158\uC785\uB2C8\uB2E4. \uC124\uCE58\uB97C \uD074\uB9AD\uD558\uC5EC \uCD94\uAC00\uD558\uAC70\uB098 <a href="https://github.com/pfrankov/obsidian-local-gpt/discussions/89">\uC790\uC2E0\uC758 \uC561\uC158\uC744 \uACF5\uC720</a>\uD558\uC138\uC694.',
+    communityActionsOpen: "\uCEE4\uBBA4\uB2C8\uD2F0 \uC561\uC158 \uC5F4\uAE30",
+    communityActionsOpenDesc: "\uCEE4\uBBA4\uB2C8\uD2F0\uAC00 \uB9CC\uB4E0 \uC561\uC158\uC744 \uCC3E\uC544\uBCF4\uACE0 \uC124\uCE58\uD558\uC138\uC694.",
+    communityActionsAutoUpdate: "\uBAA9\uB85D\uC774 \uC0C8\uB85C \uACE0\uCE68\uB420 \uB54C \uCEE4\uBBA4\uB2C8\uD2F0 \uC561\uC158\uC774 \uC790\uB3D9\uC73C\uB85C \uC5C5\uB370\uC774\uD2B8\uB429\uB2C8\uB2E4. \uC218\uC815\uB41C \uC561\uC158\uC740 \uADF8\uB300\uB85C \uC720\uC9C0\uB429\uB2C8\uB2E4.",
+    communityActionsLanguage: "\uCEE4\uBBA4\uB2C8\uD2F0 \uC561\uC158 \uC5B8\uC5B4",
+    communityActionsLanguageDesc: "\uAE30\uBCF8\uAC12\uC740 Obsidian \uC5B8\uC5B4\uC785\uB2C8\uB2E4.",
+    communityActionsSearch: "\uCEE4\uBBA4\uB2C8\uD2F0 \uC561\uC158 \uD544\uD130",
+    communityActionsSearchPlaceholder: "\uC774\uB984, \uC124\uBA85, \uD504\uB86C\uD504\uD2B8 \uB610\uB294 \uC2DC\uC2A4\uD15C \uD504\uB86C\uD504\uD2B8\uB85C \uAC80\uC0C9",
+    communityActionsScoreLabel: "\uC810\uC218",
+    communityActionsByAuthor: "\uC791\uC131\uC790: {{author}}",
+    communityActionsReplaceTag: "\uC120\uD0DD \uD56D\uBAA9 \uB300\uCCB4",
+    communityActionsBadge: "\uCEE4\uBBA4\uB2C8\uD2F0",
+    communityActionsInstalled: "\uC124\uCE58\uB428",
+    communityActionsModified: "\uC218\uC815\uB428",
+    communityActionsInList: "\uB0B4 \uC561\uC158\uC5D0 \uC788\uC74C",
+    communityActionsInstall: "\uC124\uCE58",
+    communityActionsReplace: "\uAD50\uCCB4",
+    communityActionsUpdate: "\uC5C5\uB370\uC774\uD2B8",
+    communityActionsRefresh: "\uC0C8\uB85C \uACE0\uCE68",
+    communityActionsLoading: "\uC561\uC158 \uBD88\uB7EC\uC624\uB294 \uC911...",
+    communityActionsEmpty: "\uC544\uC9C1 \uC774 \uC5B8\uC5B4\uC5D0 \uB300\uD55C \uC561\uC158\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.",
+    communityActionsSearchEmpty: "\uAC80\uC0C9\uACFC \uC77C\uCE58\uD558\uB294 \uC561\uC158\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.",
+    communityActionsError: "\uCEE4\uBBA4\uB2C8\uD2F0 \uC561\uC158\uC744 \uBD88\uB7EC\uC624\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4. \uB098\uC911\uC5D0 \uB2E4\uC2DC \uC2DC\uB3C4\uD558\uC138\uC694.",
+    communityActionsModifiedNote: "\uB85C\uCEEC\uC5D0\uC11C \uC218\uC815\uB428. \uC790\uB3D9 \uC5C5\uB370\uC774\uD2B8 \uC77C\uC2DC \uC911\uC9C0\uB428.",
+    communityActionsConflictNote: "\uC774 \uC774\uB984\uC758 \uC561\uC158\uC774 \uC774\uBBF8 \uC874\uC7AC\uD569\uB2C8\uB2E4. \uC124\uCE58\uD558\uBA74 \uB36E\uC5B4\uC501\uB2C8\uB2E4.",
+    communityActionsSyncSummary: "{{updated}}\uAC1C \uC561\uC158 \uC5C5\uB370\uC774\uD2B8\uB428. \uC218\uC815\uB41C {{skipped}}\uAC1C \uAC74\uB108\uB700.",
+    communityActionsUpdated: "{{count}}\uAC1C\uC758 \uCEE4\uBBA4\uB2C8\uD2F0 \uC561\uC158\uC774 \uC5C5\uB370\uC774\uD2B8\uB418\uC5C8\uC2B5\uB2C8\uB2E4.",
+    communityActionsSkipped: "{{count}}\uAC1C\uC758 \uC218\uC815\uB41C \uCEE4\uBBA4\uB2C8\uD2F0 \uC561\uC158\uC774 \uAC74\uB108\uB6F0\uC5B4\uC84C\uC2B5\uB2C8\uB2E4."
+  }
+};
+
+// src/i18n/nl.json
+var nl_default = {
+  commands: {
+    showContextMenu: "Toon contextmenu",
+    actionPalette: {
+      name: "Actiepalet",
+      placeholder: "Jouw prompt... | Enter: verzenden, Esc: annuleren",
+      changeProvider: "Wijzig AI-provider",
+      changeModel: "Wijzig model",
+      changeCreativity: "Wijzig creativiteit",
+      changeSystemPrompt: "Wijzig systeemprompt",
+      clearSystemPrompt: "Systeemprompt wissen",
+      unknownModel: "Onbekend model",
+      hint: "Gebruik / voor commando's, @ voor bestanden"
+    }
+  },
+  statusBar: {
+    enhancing: "\u2728 Verbeteren",
+    enhancingWithProgress: "\u2728 Verbeteren {{percent}}%"
+  },
+  thinking: {
+    label: "Denken",
+    placeholder: "\u2026"
+  },
+  notices: {
+    errorGenerating: "Fout bij genereren tekst: {{message}}",
+    errorProcessingRag: "Fout bij verwerken gerelateerde documenten: {{message}}. Doorgaan met originele tekst.",
+    importantUpdate: "\uFE0F\u{1F6A8} BELANGRIJK! Update Local GPT instellingen!",
+    newVersion: "\u2B06\uFE0F Local GPT: er is een nieuwe versie beschikbaar",
+    actionNameRequired: "Voer een naam in voor de actie.",
+    actionNameExists: 'Er bestaat al een actie met de naam "{{name}}".',
+    actionRewritten: 'Actie "{{name}}" herschreven',
+    actionAdded: 'Actie "{{name}}" toegevoegd',
+    copied: "Gekopieerd"
+  },
+  settings: {
+    mainProvider: "Hoofd AI-provider",
+    embeddingProvider: "Embedding AI-provider",
+    embeddingProviderDesc: "Optioneel. Gebruikt voor \u2728\xA0Verbeterde\xA0Acties.",
+    visionProvider: "Visie AI-provider",
+    visionProviderDesc: "Optioneel. Gebruikt voor afbeeldingen. Indien niet ingesteld, wordt de hoofdprovider gebruikt.",
+    creativity: "Creativiteit",
+    creativityNone: "\u26AA Geen",
+    creativityLow: "\uFE0F\u{1F4A1} Laag",
+    creativityMedium: "\u{1F3A8} Gemiddeld",
+    creativityHigh: "\u{1F680} Hoog",
+    actions: "Acties",
+    quickAdd: "Snel toevoegen",
+    quickAddPlaceholder: "Plak actie",
+    quickAddDesc: "Plak een gedeelde actie om deze snel toe te voegen.<br/><strong>Belangrijk:</strong> als je al een actie met dezelfde naam hebt, wordt deze overschreven.",
+    addNewManually: "Handmatig toevoegen",
+    addAction: "Actie toevoegen",
+    addSeparator: "Scheidingsteken toevoegen",
+    actionName: "Actienaam",
+    actionNamePlaceholder: "Selectie samenvatten",
+    systemPrompt: "Systeemprompt",
+    systemPromptDesc: "Optioneel",
+    systemPromptPlaceholder: "Je bent een behulpzame assistent.",
+    prompt: "Prompt",
+    promptDesc: 'Lees over<br/><a href="https://github.com/pfrankov/obsidian-local-gpt/blob/master/docs/prompt-templating.md">Prompt templating</a><br/>als je je resulterende<br/>prompts wilt aanpassen',
+    replaceSelected: "Geselecteerde tekst vervangen",
+    replaceSelectedDesc: "Indien aangevinkt, wordt de gemarkeerde tekst vervangen door een antwoord van het model.",
+    remove: "Verwijderen",
+    moveUp: "Omhoog verplaatsen",
+    moveDown: "Omlaag verplaatsen",
+    close: "Sluiten",
+    save: "Opslaan",
+    separator: "Scheidingsteken",
+    actionsList: "Actielijst",
+    changeOrder: "Volgorde wijzigen",
+    done: "Klaar",
+    advancedSettings: "Geavanceerde instellingen",
+    advancedSettingsDesc: "\u2728 Verbeterde Acties (RAG), Reset alle acties",
+    enhancedActions: "Verbeterde Acties",
+    enhancedActionsLabel: "RAG context",
+    enhancedActionsDesc: "Meer context kan de antwoordkwaliteit verbeteren voor krachtige modellen, maar kan deze verminderen voor zwakkere. Een grotere context verbruikt ook meer tokens en verhoogt de kosten voor betaalde modellen.",
+    contextLimitLocal: "Lokale modellen",
+    contextLimitCloud: "Cloud modellen",
+    contextLimitAdvanced: "Top: GPT, Claude, Gemini",
+    contextLimitMax: "Geen limieten (gevaar)",
+    dangerZone: "Gevarenzone",
+    resetActions: "Reset acties",
+    resetActionsDesc: "\u{1F6A8} Zet alle acties terug naar de standaard. Dit kan niet ongedaan worden gemaakt en verwijdert al je aangepaste acties.",
+    reset: "Resetten",
+    confirmReset: "Reset bevestigen",
+    communityActions: "Community-acties",
+    communityActionsDesc: 'Hieronder staan acties verzameld uit de GitHub-discussie. Klik op Installeren om er een toe te voegen of <a href="https://github.com/pfrankov/obsidian-local-gpt/discussions/89">deel de jouwe</a>.',
+    communityActionsOpen: "Open community-acties",
+    communityActionsOpenDesc: "Blader en installeer community-acties die door onze community zijn gemaakt.",
+    communityActionsAutoUpdate: "Community-acties worden automatisch bijgewerkt wanneer de lijst wordt vernieuwd. Gewijzigde acties blijven ongemoeid.",
+    communityActionsLanguage: "Taal community-acties",
+    communityActionsLanguageDesc: "Standaard ingesteld op uw Obsidian-taal.",
+    communityActionsSearch: "Community-acties filteren",
+    communityActionsSearchPlaceholder: "Zoek op naam, beschrijving, prompt of systeemprompt",
+    communityActionsScoreLabel: "Score",
+    communityActionsByAuthor: "door {{author}}",
+    communityActionsReplaceTag: "Vervangt selectie",
+    communityActionsBadge: "Community",
+    communityActionsInstalled: "Ge\xEFnstalleerd",
+    communityActionsModified: "Gewijzigd",
+    communityActionsInList: "In jouw acties",
+    communityActionsInstall: "Installeren",
+    communityActionsReplace: "Vervangen",
+    communityActionsUpdate: "Bijwerken",
+    communityActionsRefresh: "Vernieuwen",
+    communityActionsLoading: "Acties laden...",
+    communityActionsEmpty: "Nog geen acties voor deze taal.",
+    communityActionsSearchEmpty: "Geen acties komen overeen met je zoekopdracht.",
+    communityActionsError: "Kan community-acties niet laden. Probeer het later opnieuw.",
+    communityActionsModifiedNote: "Lokaal gewijzigd. Automatische updates gepauzeerd.",
+    communityActionsConflictNote: "Een actie met deze naam bestaat al. Installeren zal deze overschrijven.",
+    communityActionsSyncSummary: "{{updated}} acties bijgewerkt. {{skipped}} gewijzigde overgeslagen.",
+    communityActionsUpdated: "{{count}} community-acties bijgewerkt.",
+    communityActionsSkipped: "{{count}} gewijzigde community-acties overgeslagen."
+  }
+};
+
+// src/i18n/pt.json
+var pt_default = {
+  commands: {
+    showContextMenu: "Mostrar menu de contexto",
+    actionPalette: {
+      name: "Paleta de a\xE7\xF5es",
+      placeholder: "Seu prompt... | Enter: enviar, Esc: cancelar",
+      changeProvider: "Mudar provedor de IA",
+      changeModel: "Mudar modelo",
+      changeCreativity: "Mudar criatividade",
+      changeSystemPrompt: "Mudar prompt do sistema",
+      clearSystemPrompt: "Limpar prompt do sistema",
+      unknownModel: "Modelo desconhecido",
+      hint: "Use / para comandos, @ para arquivos"
+    }
+  },
+  statusBar: {
+    enhancing: "\u2728 Aprimorando",
+    enhancingWithProgress: "\u2728 Aprimorando {{percent}}%"
+  },
+  thinking: {
+    label: "Pensando",
+    placeholder: "\u2026"
+  },
+  notices: {
+    errorGenerating: "Erro ao gerar texto: {{message}}",
+    errorProcessingRag: "Erro ao processar documentos relacionados: {{message}}. Continuando com o texto original.",
+    importantUpdate: "\uFE0F\u{1F6A8} IMPORTANTE! Atualize as configura\xE7\xF5es do Local GPT!",
+    newVersion: "\u2B06\uFE0F Local GPT: uma nova vers\xE3o est\xE1 dispon\xEDvel",
+    actionNameRequired: "Por favor, insira um nome para a a\xE7\xE3o.",
+    actionNameExists: 'J\xE1 existe uma a\xE7\xE3o com o nome "{{name}}".',
+    actionRewritten: 'A\xE7\xE3o "{{name}}" reescrita',
+    actionAdded: 'A\xE7\xE3o "{{name}}" adicionada',
+    copied: "Copiado"
+  },
+  settings: {
+    mainProvider: "Provedor de IA Principal",
+    embeddingProvider: "Provedor de IA de Embedding",
+    embeddingProviderDesc: "Opcional. Usado para \u2728\xA0A\xE7\xF5es\xA0Aprimoradas.",
+    visionProvider: "Provedor de IA de Vis\xE3o",
+    visionProviderDesc: "Opcional. Usado para imagens. Se n\xE3o definido, o provedor principal ser\xE1 usado.",
+    creativity: "Criatividade",
+    creativityNone: "\u26AA Nenhuma",
+    creativityLow: "\uFE0F\u{1F4A1} Baixa",
+    creativityMedium: "\u{1F3A8} M\xE9dia",
+    creativityHigh: "\u{1F680} Alta",
+    actions: "A\xE7\xF5es",
+    quickAdd: "Adi\xE7\xE3o r\xE1pida",
+    quickAddPlaceholder: "Colar a\xE7\xE3o",
+    quickAddDesc: "Cole uma a\xE7\xE3o compartilhada para adicion\xE1-la rapidamente.<br/><strong>Importante:</strong> se voc\xEA j\xE1 tiver uma a\xE7\xE3o com o mesmo nome, ela ser\xE1 substitu\xEDda.",
+    addNewManually: "Adicionar nova manualmente",
+    addAction: "Adicionar a\xE7\xE3o",
+    addSeparator: "Adicionar separador",
+    actionName: "Nome da a\xE7\xE3o",
+    actionNamePlaceholder: "Resumir sele\xE7\xE3o",
+    systemPrompt: "Prompt do sistema",
+    systemPromptDesc: "Opcional",
+    systemPromptPlaceholder: "Voc\xEA \xE9 um assistente \xFAtil.",
+    prompt: "Prompt",
+    promptDesc: 'Leia sobre<br/><a href="https://github.com/pfrankov/obsidian-local-gpt/blob/master/docs/prompt-templating.md">Modelos de prompt</a><br/>se voc\xEA quiser personalizar<br/>seus prompts resultantes',
+    replaceSelected: "Substituir texto selecionado",
+    replaceSelectedDesc: "Se marcado, o texto destacado ser\xE1 substitu\xEDdo por uma resposta do modelo.",
+    remove: "Remover",
+    moveUp: "Mover para cima",
+    moveDown: "Mover para baixo",
+    close: "Fechar",
+    save: "Salvar",
+    separator: "Separador",
+    actionsList: "Lista de a\xE7\xF5es",
+    changeOrder: "Mudar ordem",
+    done: "Feito",
+    advancedSettings: "Configura\xE7\xF5es avan\xE7adas",
+    advancedSettingsDesc: "\u2728 A\xE7\xF5es Aprimoradas (RAG), Redefinir todas as a\xE7\xF5es",
+    enhancedActions: "A\xE7\xF5es Aprimoradas",
+    enhancedActionsLabel: "Contexto RAG",
+    enhancedActionsDesc: "Mais contexto pode melhorar a qualidade da resposta para modelos poderosos, mas pode reduzir para os mais fracos. Um contexto maior tamb\xE9m consome mais tokens e aumenta o custo para modelos pagos.",
+    contextLimitLocal: "Modelos locais",
+    contextLimitCloud: "Modelos na nuvem",
+    contextLimitAdvanced: "Top: GPT, Claude, Gemini",
+    contextLimitMax: "Sem limites (perigo)",
+    dangerZone: "Zona de perigo",
+    resetActions: "Redefinir a\xE7\xF5es",
+    resetActionsDesc: "\u{1F6A8} Redefinir todas as a\xE7\xF5es para o padr\xE3o. Isso n\xE3o pode ser desfeito e excluir\xE1 todas as suas a\xE7\xF5es personalizadas.",
+    reset: "Redefinir",
+    confirmReset: "Confirmar redefini\xE7\xE3o",
+    communityActions: "A\xE7\xF5es da comunidade",
+    communityActionsDesc: 'Abaixo est\xE3o a\xE7\xF5es coletadas da discuss\xE3o no GitHub. Clique em Instalar para adicionar uma ou <a href="https://github.com/pfrankov/obsidian-local-gpt/discussions/89">compartilhe a sua</a>.',
+    communityActionsOpen: "Abrir a\xE7\xF5es da comunidade",
+    communityActionsOpenDesc: "Explore e instale a\xE7\xF5es criadas pela nossa comunidade.",
+    communityActionsAutoUpdate: "As a\xE7\xF5es da comunidade s\xE3o atualizadas automaticamente ao atualizar a lista. A\xE7\xF5es modificadas permanecem intocadas.",
+    communityActionsLanguage: "Idioma das a\xE7\xF5es da comunidade",
+    communityActionsLanguageDesc: "O padr\xE3o \xE9 o idioma do seu Obsidian.",
+    communityActionsSearch: "Filtrar a\xE7\xF5es da comunidade",
+    communityActionsSearchPlaceholder: "Pesquisar por nome, descri\xE7\xE3o, prompt ou prompt do sistema",
+    communityActionsScoreLabel: "Pontua\xE7\xE3o",
+    communityActionsByAuthor: "por {{author}}",
+    communityActionsReplaceTag: "Substitui sele\xE7\xE3o",
+    communityActionsBadge: "Comunidade",
+    communityActionsInstalled: "Instalado",
+    communityActionsModified: "Modificado",
+    communityActionsInList: "Em suas a\xE7\xF5es",
+    communityActionsInstall: "Instalar",
+    communityActionsReplace: "Substituir",
+    communityActionsUpdate: "Atualizar",
+    communityActionsRefresh: "Atualizar",
+    communityActionsLoading: "Carregando a\xE7\xF5es...",
+    communityActionsEmpty: "Ainda n\xE3o h\xE1 a\xE7\xF5es para este idioma.",
+    communityActionsSearchEmpty: "Nenhuma a\xE7\xE3o corresponde \xE0 sua pesquisa.",
+    communityActionsError: "Falha ao carregar a\xE7\xF5es da comunidade. Tente novamente mais tarde.",
+    communityActionsModifiedNote: "Modificado localmente. Atualiza\xE7\xF5es autom\xE1ticas pausadas.",
+    communityActionsConflictNote: "J\xE1 existe uma a\xE7\xE3o com este nome. A instala\xE7\xE3o ir\xE1 substitu\xED-la.",
+    communityActionsSyncSummary: "{{updated}} a\xE7\xF5es atualizadas. {{skipped}} modificadas ignoradas.",
+    communityActionsUpdated: "{{count}} a\xE7\xF5es da comunidade atualizadas.",
+    communityActionsSkipped: "{{count}} a\xE7\xF5es da comunidade modificadas ignoradas."
+  }
+};
+
 // src/i18n/ru.json
 var ru_default = {
   commands: {
@@ -481,12 +1387,20 @@ var ru_default = {
       placeholder: "\u0412\u0430\u0448 \u043F\u0440\u043E\u043C\u043F\u0442... | Enter: \u043E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u044C, Esc: \u043E\u0442\u043C\u0435\u043D\u0430",
       changeProvider: "\u0421\u043C\u0435\u043D\u0438\u0442\u044C AI\u2011\u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440\u0430",
       changeModel: "\u0421\u043C\u0435\u043D\u0438\u0442\u044C \u043C\u043E\u0434\u0435\u043B\u044C",
-      changeCreativity: "\u0421\u043C\u0435\u043D\u0438\u0442\u044C \u043A\u0440\u0435\u0430\u0442\u0438\u0432\u043D\u043E\u0441\u0442\u044C"
+      changeCreativity: "\u0421\u043C\u0435\u043D\u0438\u0442\u044C \u043A\u0440\u0435\u0430\u0442\u0438\u0432\u043D\u043E\u0441\u0442\u044C",
+      changeSystemPrompt: "\u0421\u043C\u0435\u043D\u0438\u0442\u044C \u0441\u0438\u0441\u0442\u0435\u043C\u043D\u0443\u044E \u0438\u043D\u0441\u0442\u0440\u0443\u043A\u0446\u0438\u044E",
+      clearSystemPrompt: "\u041E\u0447\u0438\u0441\u0442\u0438\u0442\u044C \u0441\u0438\u0441\u0442\u0435\u043C\u043D\u0443\u044E \u0438\u043D\u0441\u0442\u0440\u0443\u043A\u0446\u0438\u044E",
+      unknownModel: "\u041D\u0435\u0438\u0437\u0432\u0435\u0441\u0442\u043D\u0430\u044F \u043C\u043E\u0434\u0435\u043B\u044C",
+      hint: "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0439\u0442\u0435 / \u0434\u043B\u044F \u043A\u043E\u043C\u0430\u043D\u0434, @ \u0434\u043B\u044F \u0444\u0430\u0439\u043B\u043E\u0432"
     }
   },
   statusBar: {
     enhancing: "\u2728 \u0423\u043B\u0443\u0447\u0448\u0435\u043D\u0438\u0435",
     enhancingWithProgress: "\u2728 \u0423\u043B\u0443\u0447\u0448\u0435\u043D\u0438\u0435 {{percent}}%"
+  },
+  thinking: {
+    label: "\u0414\u0443\u043C\u0430\u044E",
+    placeholder: "\u2026"
   },
   notices: {
     errorGenerating: "\u041E\u0448\u0438\u0431\u043A\u0430 \u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u0438 \u0442\u0435\u043A\u0441\u0442\u0430: {{message}}",
@@ -513,8 +1427,10 @@ var ru_default = {
     actions: "\u0414\u0435\u0439\u0441\u0442\u0432\u0438\u044F",
     quickAdd: "\u0411\u044B\u0441\u0442\u0440\u043E\u0435 \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0435",
     quickAddPlaceholder: "\u0412\u0441\u0442\u0430\u0432\u044C\u0442\u0435 \u0433\u043E\u0442\u043E\u0432\u043E\u0435 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0435",
-    quickAddDesc: '\u0412\u044B \u043C\u043E\u0436\u0435\u0442\u0435 \u043F\u043E\u0434\u0435\u043B\u0438\u0442\u044C\u0441\u044F \u0441\u0432\u043E\u0438\u043C\u0438 \u043D\u0430\u0431\u043E\u0440\u0430\u043C\u0438 \u043F\u0440\u043E\u043C\u043F\u0442\u043E\u0432 \u0438\u043B\u0438 \u043D\u0430\u0439\u0442\u0438 \u043D\u043E\u0432\u044B\u0435 \u0432 <a href="https://github.com/pfrankov/obsidian-local-gpt/discussions/2">\u0441\u043E\u043E\u0431\u0449\u0435\u0441\u0442\u0432\u0435</a>.<br/><strong>\u0412\u0430\u0436\u043D\u043E:</strong> \u0435\u0441\u043B\u0438 \u0443 \u0432\u0430\u0441 \u0443\u0436\u0435 \u0435\u0441\u0442\u044C \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0435 \u0441 \u0442\u0430\u043A\u0438\u043C \u0436\u0435 \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u0435\u043C, \u043E\u043D\u043E \u0431\u0443\u0434\u0435\u0442 \u043F\u0435\u0440\u0435\u0437\u0430\u043F\u0438\u0441\u0430\u043D\u043E.',
+    quickAddDesc: "\u0412\u0441\u0442\u0430\u0432\u044C\u0442\u0435 \u0433\u043E\u0442\u043E\u0432\u043E\u0435 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0435, \u0447\u0442\u043E\u0431\u044B \u0431\u044B\u0441\u0442\u0440\u043E \u0434\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0435\u0433\u043E.<br/><strong>\u0412\u0430\u0436\u043D\u043E:</strong> \u0435\u0441\u043B\u0438 \u0443 \u0432\u0430\u0441 \u0443\u0436\u0435 \u0435\u0441\u0442\u044C \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0435 \u0441 \u0442\u0430\u043A\u0438\u043C \u0436\u0435 \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u0435\u043C, \u043E\u043D\u043E \u0431\u0443\u0434\u0435\u0442 \u043F\u0435\u0440\u0435\u0437\u0430\u043F\u0438\u0441\u0430\u043D\u043E.",
     addNewManually: "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0432\u0440\u0443\u0447\u043D\u0443\u044E",
+    addAction: "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0435",
+    addSeparator: "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0440\u0430\u0437\u0434\u0435\u043B\u0438\u0442\u0435\u043B\u044C",
     actionName: "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044F",
     actionNamePlaceholder: "\u041A\u0440\u0430\u0442\u043A\u043E \u043F\u0435\u0440\u0435\u0441\u043A\u0430\u0437\u0430\u0442\u044C \u0432\u044B\u0434\u0435\u043B\u0435\u043D\u043D\u043E\u0435",
     systemPrompt: "\u0421\u0438\u0441\u0442\u0435\u043C\u043D\u0430\u044F \u0438\u043D\u0441\u0442\u0440\u0443\u043A\u0446\u0438\u044F",
@@ -525,9 +1441,41 @@ var ru_default = {
     replaceSelected: "\u0417\u0430\u043C\u0435\u043D\u044F\u0442\u044C \u0432\u044B\u0434\u0435\u043B\u0435\u043D\u043D\u044B\u0439 \u0442\u0435\u043A\u0441\u0442",
     replaceSelectedDesc: "\u0415\u0441\u043B\u0438 \u043E\u043F\u0446\u0438\u044F \u0432\u043A\u043B\u044E\u0447\u0435\u043D\u0430, \u0432\u044B\u0434\u0435\u043B\u0435\u043D\u043D\u044B\u0439 \u0442\u0435\u043A\u0441\u0442 \u0431\u0443\u0434\u0435\u0442 \u0437\u0430\u043C\u0435\u043D\u0451\u043D \u043E\u0442\u0432\u0435\u0442\u043E\u043C \u043E\u0442 \u043C\u043E\u0434\u0435\u043B\u0438.",
     remove: "\u0423\u0434\u0430\u043B\u0438\u0442\u044C",
+    moveUp: "\u041F\u0435\u0440\u0435\u043C\u0435\u0441\u0442\u0438\u0442\u044C \u0432\u0432\u0435\u0440\u0445",
+    moveDown: "\u041F\u0435\u0440\u0435\u043C\u0435\u0441\u0442\u0438\u0442\u044C \u0432\u043D\u0438\u0437",
     close: "\u0417\u0430\u043A\u0440\u044B\u0442\u044C",
     save: "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C",
+    separator: "\u0420\u0430\u0437\u0434\u0435\u043B\u0438\u0442\u0435\u043B\u044C",
     actionsList: "\u0421\u043F\u0438\u0441\u043E\u043A \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0439",
+    communityActions: "\u0414\u0435\u0439\u0441\u0442\u0432\u0438\u044F \u0441\u043E\u043E\u0431\u0449\u0435\u0441\u0442\u0432\u0430",
+    communityActionsDesc: '\u041D\u0438\u0436\u0435 \u0441\u043E\u0431\u0440\u0430\u043D\u044B \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044F \u0438\u0437 GitHub Discussion. \u041D\u0430\u0436\u043C\u0438\u0442\u0435 \xAB\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C\xBB, \u0447\u0442\u043E\u0431\u044B \u0434\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0435, \u0438\u043B\u0438 <a href="https://github.com/pfrankov/obsidian-local-gpt/discussions/89">\u043F\u043E\u0434\u0435\u043B\u0438\u0442\u0435\u0441\u044C \u0441\u0432\u043E\u0438\u043C</a>.',
+    communityActionsOpen: "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044F \u0441\u043E\u043E\u0431\u0449\u0435\u0441\u0442\u0432\u0430",
+    communityActionsOpenDesc: "\u041F\u0440\u043E\u0441\u043C\u0430\u0442\u0440\u0438\u0432\u0430\u0439\u0442\u0435 \u0438 \u0443\u0441\u0442\u0430\u043D\u0430\u0432\u043B\u0438\u0432\u0430\u0439\u0442\u0435 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044F, \u0441\u043E\u0437\u0434\u0430\u043D\u043D\u044B\u0435 \u043D\u0430\u0448\u0438\u043C \u0441\u043E\u043E\u0431\u0449\u0435\u0441\u0442\u0432\u043E\u043C.",
+    communityActionsAutoUpdate: "\u0414\u0435\u0439\u0441\u0442\u0432\u0438\u044F \u0441\u043E\u043E\u0431\u0449\u0435\u0441\u0442\u0432\u0430 \u043E\u0431\u043D\u043E\u0432\u043B\u044F\u044E\u0442\u0441\u044F \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u0438 \u043F\u0440\u0438 \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0438 \u0441\u043F\u0438\u0441\u043A\u0430. \u0418\u0437\u043C\u0435\u043D\u0451\u043D\u043D\u044B\u0435 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044F \u043D\u0435 \u043F\u0435\u0440\u0435\u0437\u0430\u043F\u0438\u0441\u044B\u0432\u0430\u044E\u0442\u0441\u044F.",
+    communityActionsLanguage: "\u042F\u0437\u044B\u043A \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0439 \u0441\u043E\u043E\u0431\u0449\u0435\u0441\u0442\u0432\u0430",
+    communityActionsLanguageDesc: "\u041F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0435\u0442\u0441\u044F \u044F\u0437\u044B\u043A Obsidian.",
+    communityActionsSearch: "\u0424\u0438\u043B\u044C\u0442\u0440 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0439 \u0441\u043E\u043E\u0431\u0449\u0435\u0441\u0442\u0432\u0430",
+    communityActionsSearchPlaceholder: "\u041F\u043E\u0438\u0441\u043A \u043F\u043E \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u044E, \u043E\u043F\u0438\u0441\u0430\u043D\u0438\u044E, \u043F\u0440\u043E\u043C\u043F\u0442\u0443 \u0438\u043B\u0438 \u0441\u0438\u0441\u0442\u0435\u043C\u043D\u043E\u043C\u0443 \u043F\u0440\u043E\u043C\u043F\u0442\u0443",
+    communityActionsScoreLabel: "\u0420\u0435\u0439\u0442\u0438\u043D\u0433",
+    communityActionsByAuthor: "\u043E\u0442 {{author}}",
+    communityActionsReplaceTag: "\u0417\u0430\u043C\u0435\u043D\u044F\u0435\u0442 \u0432\u044B\u0434\u0435\u043B\u0435\u043D\u0438\u0435",
+    communityActionsBadge: "\u0421\u043E\u043E\u0431\u0449\u0435\u0441\u0442\u0432\u043E",
+    communityActionsInstalled: "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u043E",
+    communityActionsModified: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u043E",
+    communityActionsInList: "\u0423\u0436\u0435 \u0432 \u0441\u043F\u0438\u0441\u043A\u0435",
+    communityActionsInstall: "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C",
+    communityActionsReplace: "\u0417\u0430\u043C\u0435\u043D\u0438\u0442\u044C",
+    communityActionsUpdate: "\u041E\u0431\u043D\u043E\u0432\u0438\u0442\u044C",
+    communityActionsRefresh: "\u041E\u0431\u043D\u043E\u0432\u0438\u0442\u044C",
+    communityActionsLoading: "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0439...",
+    communityActionsEmpty: "\u0414\u043B\u044F \u044D\u0442\u043E\u0433\u043E \u044F\u0437\u044B\u043A\u0430 \u043F\u043E\u043A\u0430 \u043D\u0435\u0442 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0439.",
+    communityActionsSearchEmpty: "\u041D\u0435\u0442 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0439, \u0441\u043E\u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0443\u044E\u0449\u0438\u0445 \u0437\u0430\u043F\u0440\u043E\u0441\u0443.",
+    communityActionsError: "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044F \u0441\u043E\u043E\u0431\u0449\u0435\u0441\u0442\u0432\u0430. \u041F\u043E\u043F\u0440\u043E\u0431\u0443\u0439\u0442\u0435 \u043F\u043E\u0437\u0436\u0435.",
+    communityActionsModifiedNote: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u043E \u043B\u043E\u043A\u0430\u043B\u044C\u043D\u043E. \u0410\u0432\u0442\u043E\u2011\u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u044F \u043F\u0440\u0438\u043E\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u044B.",
+    communityActionsConflictNote: "\u0414\u0435\u0439\u0441\u0442\u0432\u0438\u0435 \u0441 \u0442\u0430\u043A\u0438\u043C \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u0435\u043C \u0443\u0436\u0435 \u0435\u0441\u0442\u044C. \u0423\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0430 \u0437\u0430\u043C\u0435\u043D\u0438\u0442 \u0435\u0433\u043E.",
+    communityActionsSyncSummary: "\u041E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u043E: {{updated}}. \u041F\u0440\u043E\u043F\u0443\u0449\u0435\u043D\u043E \u0438\u0437\u043C\u0435\u043D\u0451\u043D\u043D\u044B\u0445: {{skipped}}.",
+    communityActionsUpdated: "\u041E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u043E \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0439 \u0441\u043E\u043E\u0431\u0449\u0435\u0441\u0442\u0432\u0430: {{count}}.",
+    communityActionsSkipped: "\u041F\u0440\u043E\u043F\u0443\u0449\u0435\u043D\u043E \u0438\u0437\u043C\u0435\u043D\u0451\u043D\u043D\u044B\u0445 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0439 \u0441\u043E\u043E\u0431\u0449\u0435\u0441\u0442\u0432\u0430: {{count}}.",
     changeOrder: "\u0418\u0437\u043C\u0435\u043D\u0438\u0442\u044C \u043F\u043E\u0440\u044F\u0434\u043E\u043A",
     done: "\u0413\u043E\u0442\u043E\u0432\u043E",
     advancedSettings: "\u0420\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u043D\u044B\u0435 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438",
@@ -556,12 +1504,20 @@ var zh_default = {
       placeholder: "\u60A8\u7684\u63D0\u793A... | Enter: \u53D1\u9001, Esc: \u53D6\u6D88",
       changeProvider: "\u5207\u6362 AI \u63D0\u4F9B\u5546",
       changeModel: "\u5207\u6362\u6A21\u578B",
-      changeCreativity: "\u66F4\u6539\u521B\u9020\u529B"
+      changeCreativity: "\u66F4\u6539\u521B\u9020\u529B",
+      changeSystemPrompt: "\u66F4\u6539\u7CFB\u7EDF\u63D0\u793A",
+      clearSystemPrompt: "\u6E05\u9664\u7CFB\u7EDF\u63D0\u793A",
+      unknownModel: "\u672A\u77E5\u6A21\u578B",
+      hint: "\u4F7F\u7528 / \u8F93\u5165\u547D\u4EE4\uFF0C@ \u5F15\u7528\u6587\u4EF6"
     }
   },
   statusBar: {
     enhancing: "\u2728 \u589E\u5F3A\u4E2D",
     enhancingWithProgress: "\u2728 \u589E\u5F3A\u4E2D {{percent}}%"
+  },
+  thinking: {
+    label: "\u601D\u8003\u4E2D",
+    placeholder: "\u2026"
   },
   notices: {
     errorGenerating: "\u751F\u6210\u6587\u672C\u65F6\u51FA\u9519: {{message}}",
@@ -588,8 +1544,10 @@ var zh_default = {
     actions: "\u64CD\u4F5C",
     quickAdd: "\u5FEB\u901F\u6DFB\u52A0",
     quickAddPlaceholder: "\u7C98\u8D34\u64CD\u4F5C",
-    quickAddDesc: '\u60A8\u53EF\u4EE5\u5206\u4EAB\u6700\u4F73\u7684\u63D0\u793A\u96C6\uFF0C\u6216\u4ECE<a href="https://github.com/pfrankov/obsidian-local-gpt/discussions/2">\u793E\u533A</a>\u83B7\u53D6\u4E00\u4E2A\u3002<br/><strong>\u91CD\u8981\u63D0\u793A:</strong> \u5982\u679C\u60A8\u5DF2\u7ECF\u6709\u4E00\u4E2A\u540C\u540D\u64CD\u4F5C\uFF0C\u5B83\u5C06\u88AB\u8986\u76D6\u3002',
+    quickAddDesc: "\u7C98\u8D34\u5171\u4EAB\u7684\u64CD\u4F5C\u5373\u53EF\u5FEB\u901F\u6DFB\u52A0\u3002<br/><strong>\u91CD\u8981\u63D0\u793A:</strong> \u5982\u679C\u60A8\u5DF2\u7ECF\u6709\u4E00\u4E2A\u540C\u540D\u64CD\u4F5C\uFF0C\u5B83\u5C06\u88AB\u8986\u76D6\u3002",
     addNewManually: "\u624B\u52A8\u6DFB\u52A0",
+    addAction: "\u6DFB\u52A0\u64CD\u4F5C",
+    addSeparator: "\u6DFB\u52A0\u5206\u9694\u7EBF",
     actionName: "\u64CD\u4F5C\u540D\u79F0",
     actionNamePlaceholder: "\u603B\u7ED3\u9009\u62E9",
     systemPrompt: "\u7CFB\u7EDF\u63D0\u793A",
@@ -600,9 +1558,41 @@ var zh_default = {
     replaceSelected: "\u66FF\u6362\u9009\u5B9A\u7684\u6587\u672C",
     replaceSelectedDesc: "\u5982\u679C\u9009\u4E2D\uFF0C\u7A81\u51FA\u663E\u793A\u7684\u6587\u672C\u5C06\u88AB\u6A21\u578B\u7684\u54CD\u5E94\u66FF\u6362\u3002",
     remove: "\u5220\u9664",
+    moveUp: "\u4E0A\u79FB",
+    moveDown: "\u4E0B\u79FB",
     close: "\u5173\u95ED",
     save: "\u4FDD\u5B58",
+    separator: "\u5206\u9694\u7EBF",
     actionsList: "\u64CD\u4F5C\u5217\u8868",
+    communityActions: "\u793E\u533A\u64CD\u4F5C",
+    communityActionsDesc: '\u4EE5\u4E0B\u662F\u4ECE GitHub Discussion \u6536\u96C6\u7684\u64CD\u4F5C\u3002\u70B9\u51FB\u201C\u5B89\u88C5\u201D\u5373\u53EF\u6DFB\u52A0\uFF0C\u6216<a href="https://github.com/pfrankov/obsidian-local-gpt/discussions/89">\u5206\u4EAB\u4F60\u7684\u64CD\u4F5C</a>\u3002',
+    communityActionsOpen: "\u6253\u5F00\u793E\u533A\u64CD\u4F5C",
+    communityActionsOpenDesc: "\u6D4F\u89C8\u5E76\u5B89\u88C5\u7531\u793E\u533A\u6210\u5458\u521B\u4F5C\u7684\u793E\u533A\u64CD\u4F5C\u3002",
+    communityActionsAutoUpdate: "\u5237\u65B0\u5217\u8868\u65F6\u4F1A\u81EA\u52A8\u66F4\u65B0\u793E\u533A\u64CD\u4F5C\uFF0C\u5DF2\u4FEE\u6539\u7684\u64CD\u4F5C\u4E0D\u4F1A\u88AB\u8986\u76D6\u3002",
+    communityActionsLanguage: "\u793E\u533A\u64CD\u4F5C\u8BED\u8A00",
+    communityActionsLanguageDesc: "\u9ED8\u8BA4\u4F7F\u7528 Obsidian \u7684\u8BED\u8A00\u3002",
+    communityActionsSearch: "\u7B5B\u9009\u793E\u533A\u64CD\u4F5C",
+    communityActionsSearchPlaceholder: "\u6309\u540D\u79F0\u3001\u63CF\u8FF0\u3001\u63D0\u793A\u8BCD\u6216\u7CFB\u7EDF\u63D0\u793A\u8BCD\u641C\u7D22",
+    communityActionsScoreLabel: "\u8BC4\u5206",
+    communityActionsByAuthor: "\u4F5C\u8005 {{author}}",
+    communityActionsReplaceTag: "\u66FF\u6362\u9009\u4E2D\u5185\u5BB9",
+    communityActionsBadge: "\u793E\u533A",
+    communityActionsInstalled: "\u5DF2\u5B89\u88C5",
+    communityActionsModified: "\u5DF2\u4FEE\u6539",
+    communityActionsInList: "\u5DF2\u5728\u5217\u8868\u4E2D",
+    communityActionsInstall: "\u5B89\u88C5",
+    communityActionsReplace: "\u66FF\u6362",
+    communityActionsUpdate: "\u66F4\u65B0",
+    communityActionsRefresh: "\u5237\u65B0",
+    communityActionsLoading: "\u6B63\u5728\u52A0\u8F7D\u64CD\u4F5C...",
+    communityActionsEmpty: "\u8BE5\u8BED\u8A00\u6682\u65E0\u64CD\u4F5C\u3002",
+    communityActionsSearchEmpty: "\u6CA1\u6709\u4E0E\u641C\u7D22\u5339\u914D\u7684\u64CD\u4F5C\u3002",
+    communityActionsError: "\u65E0\u6CD5\u52A0\u8F7D\u793E\u533A\u64CD\u4F5C\uFF0C\u8BF7\u7A0D\u540E\u518D\u8BD5\u3002",
+    communityActionsModifiedNote: "\u5DF2\u5728\u672C\u5730\u4FEE\u6539\uFF0C\u81EA\u52A8\u66F4\u65B0\u5DF2\u6682\u505C\u3002",
+    communityActionsConflictNote: "\u5DF2\u5B58\u5728\u540C\u540D\u64CD\u4F5C\uFF0C\u5B89\u88C5\u5C06\u8986\u76D6\u5B83\u3002",
+    communityActionsSyncSummary: "\u5DF2\u66F4\u65B0 {{updated}} \u4E2A\u64CD\u4F5C\uFF0C\u8DF3\u8FC7 {{skipped}} \u4E2A\u5DF2\u4FEE\u6539\u64CD\u4F5C\u3002",
+    communityActionsUpdated: "\u5DF2\u66F4\u65B0 {{count}} \u4E2A\u793E\u533A\u64CD\u4F5C\u3002",
+    communityActionsSkipped: "\u5DF2\u8DF3\u8FC7 {{count}} \u4E2A\u5DF2\u4FEE\u6539\u793E\u533A\u64CD\u4F5C\u3002",
     changeOrder: "\u66F4\u6539\u987A\u5E8F",
     done: "\u5B8C\u6210",
     advancedSettings: "\u9AD8\u7EA7\u8BBE\u7F6E",
@@ -775,8 +1765,15 @@ var logger = Logger.getInstance();
 // src/i18n/index.ts
 var locales = {
   en: en_default,
-  ru: ru_default,
   de: de_default,
+  es: es_default,
+  fr: fr_default,
+  it: it_default,
+  ja: ja_default,
+  ko: ko_default,
+  nl: nl_default,
+  pt: pt_default,
+  ru: ru_default,
   zh: zh_default
 };
 var I18n = class {
@@ -3053,22 +4050,772 @@ Sortable.mount(new AutoScrollPlugin());
 Sortable.mount(Remove, Revert);
 var sortable_esm_default = Sortable;
 
-// src/LocalGPTSettingTab.ts
+// src/actionUtils.ts
+var isSeparatorAction = (action) => Boolean(action.separator);
+var getRunnableActions = (actions) => actions.filter((action) => !isSeparatorAction(action));
+var createActionId = () => {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID();
+  }
+  return `action-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+};
+var ensureActionId = (action) => action.id ? action : {
+  ...action,
+  id: createActionId()
+};
+var ensureActionIds = (actions) => {
+  let changed = false;
+  const actionsWithIds = actions.map((action) => {
+    if (action.id) {
+      return action;
+    }
+    changed = true;
+    return ensureActionId(action);
+  });
+  return { actions: actionsWithIds, changed };
+};
+var getActionIdentifier = (action) => {
+  var _a2;
+  return action.id || (((_a2 = action.community) == null ? void 0 : _a2.id) ? `community:${action.community.id}` : `name:${action.name}`);
+};
+var moveAction = (actions, fromIndex, toIndex) => {
+  if (fromIndex === toIndex || fromIndex < 0 || toIndex < 0 || fromIndex >= actions.length || toIndex >= actions.length) {
+    return actions;
+  }
+  const updated = actions.slice();
+  const [moved2] = updated.splice(fromIndex, 1);
+  if (!moved2) {
+    return actions;
+  }
+  updated.splice(toIndex, 0, moved2);
+  return updated;
+};
+
+// src/languageDetection.ts
+var MAX_ANALYSIS_LENGTH = 1e3;
+var MIN_LATIN_LETTERS_THRESHOLD = 10;
+var SCRIPT_RANGES = {
+  ja: [
+    [12352, 12447],
+    // Hiragana
+    [12448, 12543],
+    // Katakana
+    [12784, 12799],
+    // Katakana Phonetic Extensions
+    [65381, 65439]
+    // Halfwidth Katakana
+  ],
+  zh: [
+    [13312, 19903],
+    // CJK Unified Ideographs Extension A
+    [19968, 40959]
+    // CJK Unified Ideographs
+  ],
+  ko: [
+    [4352, 4607],
+    // Hangul Jamo
+    [12592, 12687],
+    // Hangul Compatibility Jamo
+    [44032, 55215]
+    // Hangul Syllables
+  ],
+  ru: [
+    [1024, 1279],
+    // Cyrillic
+    [1280, 1327],
+    // Cyrillic Supplement
+    [11744, 11775],
+    // Cyrillic Extended-A
+    [42560, 42655]
+    // Cyrillic Extended-B
+  ],
+  ar: [
+    [1536, 1791],
+    // Arabic
+    [1872, 1919],
+    // Arabic Supplement
+    [2208, 2303]
+    // Arabic Extended-A
+  ],
+  he: [[1424, 1535]],
+  // Hebrew
+  el: [
+    [880, 1023],
+    // Greek and Coptic
+    [7936, 8191]
+    // Greek Extended
+  ],
+  hi: [[2304, 2431]]
+  // Devanagari
+};
+var LATIN_RANGES = [
+  [65, 90],
+  // Basic Latin uppercase
+  [97, 122],
+  // Basic Latin lowercase
+  [192, 591],
+  // Latin-1 Supplement + Extended-A/B
+  [7680, 7935]
+  // Latin Extended Additional
+];
+var SCRIPT_KEYS = [
+  "ja",
+  "zh",
+  "ko",
+  "ru",
+  "ar",
+  "he",
+  "el",
+  "hi"
+];
+var LATIN_KEYS = ["en", "de", "fr", "es", "pt", "id"];
+var WORD_WEIGHT = 2;
+var CHAR_WEIGHT = 3;
+var LATIN_LANGUAGE_PROFILES = {
+  en: {
+    words: [
+      "the",
+      "and",
+      "you",
+      "that",
+      "with",
+      "this",
+      "from",
+      "your",
+      "have",
+      "will",
+      "can",
+      "hello",
+      "world"
+    ],
+    chars: []
+  },
+  de: {
+    words: [
+      "der",
+      "die",
+      "das",
+      "und",
+      "ist",
+      "nicht",
+      "mit",
+      "auf",
+      "f\xFCr",
+      "eine",
+      "ein",
+      "ich",
+      "sie"
+    ],
+    chars: ["\xDF", "\xE4", "\xF6", "\xFC"]
+  },
+  fr: {
+    words: [
+      "le",
+      "la",
+      "les",
+      "des",
+      "est",
+      "une",
+      "un",
+      "pour",
+      "que",
+      "dans",
+      "avec",
+      "pas",
+      "vous",
+      "sur",
+      "ce"
+    ],
+    chars: [
+      "\u0153",
+      "\xE6",
+      "\xE7",
+      "\xE9",
+      "\xE8",
+      "\xEA",
+      "\xEB",
+      "\xE0",
+      "\xE2",
+      "\xEE",
+      "\xEF",
+      "\xF4",
+      "\xF9",
+      "\xFB",
+      "\xFC",
+      "\xFF"
+    ]
+  },
+  es: {
+    words: [
+      "el",
+      "la",
+      "los",
+      "las",
+      "que",
+      "para",
+      "con",
+      "una",
+      "un",
+      "por",
+      "pero",
+      "como",
+      "muy",
+      "estas",
+      "est\xE1s"
+    ],
+    chars: [
+      "\xF1",
+      "\xE1",
+      "\xE9",
+      "\xED",
+      "\xF3",
+      "\xFA",
+      "\xFC",
+      "\xBF",
+      "\xA1"
+    ]
+  },
+  pt: {
+    words: [
+      "o",
+      "a",
+      "os",
+      "as",
+      "que",
+      "para",
+      "com",
+      "uma",
+      "um",
+      "n\xE3o",
+      "por",
+      "mais",
+      "como",
+      "estou",
+      "est\xE1",
+      "de",
+      "e"
+    ],
+    chars: [
+      "\xE3",
+      "\xF5",
+      "\xE7",
+      "\xE1",
+      "\xE0",
+      "\xE2",
+      "\xEA",
+      "\xED",
+      "\xF3",
+      "\xF4",
+      "\xFA",
+      "\xFC"
+    ]
+  },
+  id: {
+    words: [
+      "yang",
+      "dan",
+      "tidak",
+      "saya",
+      "kamu",
+      "ini",
+      "itu",
+      "untuk",
+      "dengan",
+      "ada",
+      "dari",
+      "di",
+      "ke",
+      "apa",
+      "bagaimana",
+      "bisa",
+      "terjadi",
+      "tahu"
+    ],
+    chars: []
+  }
+};
+var LATIN_WORD_SETS = {
+  en: new Set(LATIN_LANGUAGE_PROFILES.en.words),
+  de: new Set(LATIN_LANGUAGE_PROFILES.de.words),
+  fr: new Set(LATIN_LANGUAGE_PROFILES.fr.words),
+  es: new Set(LATIN_LANGUAGE_PROFILES.es.words),
+  pt: new Set(LATIN_LANGUAGE_PROFILES.pt.words),
+  id: new Set(LATIN_LANGUAGE_PROFILES.id.words)
+};
+var LATIN_CHAR_SETS = {
+  en: new Set(LATIN_LANGUAGE_PROFILES.en.chars),
+  de: new Set(LATIN_LANGUAGE_PROFILES.de.chars),
+  fr: new Set(LATIN_LANGUAGE_PROFILES.fr.chars),
+  es: new Set(LATIN_LANGUAGE_PROFILES.es.chars),
+  pt: new Set(LATIN_LANGUAGE_PROFILES.pt.chars),
+  id: new Set(LATIN_LANGUAGE_PROFILES.id.chars)
+};
+var isCodeInRanges = (code, ranges) => {
+  for (const [start, end] of ranges) {
+    if (code >= start && code <= end) {
+      return true;
+    }
+  }
+  return false;
+};
+var detectScriptForCodePoint = (code) => {
+  for (const key of SCRIPT_KEYS) {
+    if (isCodeInRanges(code, SCRIPT_RANGES[key])) {
+      return key;
+    }
+  }
+  return null;
+};
+var isLatinCodePoint = (code) => isCodeInRanges(code, LATIN_RANGES);
+var mergeJapaneseHan = (counts) => {
+  if (counts.ja > 0 && counts.zh > 0) {
+    counts.ja += counts.zh;
+    counts.zh = 0;
+  }
+};
+var pickDominantLanguage = (counts, keys) => {
+  let topLanguage = "unknown";
+  let topCount = 0;
+  let isTie = false;
+  for (const key of keys) {
+    const count = counts[key];
+    if (count > topCount) {
+      topLanguage = key;
+      topCount = count;
+      isTie = false;
+    } else if (count === topCount && count > 0) {
+      isTie = true;
+    }
+  }
+  if (topCount === 0 || isTie) {
+    return "unknown";
+  }
+  return topLanguage;
+};
+var sumCounts = (counts) => Object.values(counts).reduce((total, value) => total + value, 0);
+var extractWords = (text2) => {
+  var _a2;
+  return (_a2 = text2.match(/\p{L}+/gu)) != null ? _a2 : [];
+};
+var countOccurrences = (values) => {
+  var _a2;
+  const counts = /* @__PURE__ */ new Map();
+  for (const value of values) {
+    counts.set(value, ((_a2 = counts.get(value)) != null ? _a2 : 0) + 1);
+  }
+  return counts;
+};
+var scoreLatinLanguages = (charCounts, wordCounts) => {
+  var _a2, _b;
+  const scores = {
+    en: 0,
+    de: 0,
+    fr: 0,
+    es: 0,
+    pt: 0,
+    id: 0
+  };
+  for (const language of LATIN_KEYS) {
+    const charSet = LATIN_CHAR_SETS[language];
+    for (const char of charSet) {
+      scores[language] += ((_a2 = charCounts.get(char)) != null ? _a2 : 0) * CHAR_WEIGHT;
+    }
+    const wordSet = LATIN_WORD_SETS[language];
+    for (const word of wordSet) {
+      scores[language] += ((_b = wordCounts.get(word)) != null ? _b : 0) * WORD_WEIGHT;
+    }
+  }
+  return scores;
+};
+var countScriptAndLatinLetters = (text2) => {
+  const scriptCounts = {
+    ja: 0,
+    zh: 0,
+    ko: 0,
+    ru: 0,
+    ar: 0,
+    he: 0,
+    el: 0,
+    hi: 0
+  };
+  let latinLetterCount = 0;
+  for (const char of text2) {
+    const code = char.codePointAt(0);
+    if (!code) {
+      continue;
+    }
+    const scriptLanguage = detectScriptForCodePoint(code);
+    if (scriptLanguage) {
+      scriptCounts[scriptLanguage] += 1;
+      continue;
+    }
+    if (isLatinCodePoint(code)) {
+      latinLetterCount += 1;
+    }
+  }
+  return { scriptCounts, latinLetterCount };
+};
+var detectDominantLanguage = (text2) => {
+  const truncated = text2.length > MAX_ANALYSIS_LENGTH ? text2.slice(0, MAX_ANALYSIS_LENGTH) : text2;
+  const normalized = truncated.normalize("NFC");
+  const { scriptCounts, latinLetterCount } = countScriptAndLatinLetters(normalized);
+  mergeJapaneseHan(scriptCounts);
+  const dominantScript = pickDominantLanguage(scriptCounts, SCRIPT_KEYS);
+  const scriptLetterCount = sumCounts(scriptCounts);
+  if (dominantScript !== "unknown" && scriptLetterCount >= latinLetterCount) {
+    return dominantScript;
+  }
+  const lowerText = normalized.toLowerCase();
+  const words = extractWords(lowerText);
+  const charCounts = countOccurrences(lowerText);
+  const wordCounts = countOccurrences(words);
+  const latinScores = scoreLatinLanguages(charCounts, wordCounts);
+  const dominantLatin = pickDominantLanguage(latinScores, LATIN_KEYS);
+  if (dominantLatin !== "unknown") {
+    return dominantLatin;
+  }
+  if (latinLetterCount >= MIN_LATIN_LETTERS_THRESHOLD) {
+    return "en";
+  }
+  return "unknown";
+};
+
+// src/CommunityActionsService.ts
+var import_obsidian = require("obsidian");
+var DISCUSSION_COMMENTS_URL = "https://api.github.com/repos/pfrankov/obsidian-local-gpt/discussions/89/comments";
+var PER_PAGE = 100;
 var SEPARATOR = "\u2702\uFE0F";
+var POSITIVE_REACTIONS = [
+  "+1",
+  "heart",
+  "hooray",
+  "rocket",
+  "eyes",
+  "laugh"
+];
+var NEGATIVE_REACTIONS = ["-1", "confused"];
+var FIELD_KEYS = ["name", "system", "prompt", "language", "replace"];
+var FIELD_REGEX = new RegExp(
+  `(?:^|\\n)\\s*(${FIELD_KEYS.join("|")}):\\s*([\\s\\S]*?)(?=\\n\\s*(?:${FIELD_KEYS.join(
+    "|"
+  )}):|$)`,
+  "gi"
+);
+var buildCommunityActionSignature = (action) => {
+  var _a2, _b;
+  return [(_a2 = action.system) != null ? _a2 : "", (_b = action.prompt) != null ? _b : "", action.replace ? "1" : "0"].join(
+    "\n---\n"
+  );
+};
+var buildCommunityActionKey = (language, name) => `${language.trim().toLowerCase()}::${name.trim().toLowerCase()}`;
+var CommunityActionsService = class {
+  static async getCommunityActions(options) {
+    var _a2;
+    const forceRefresh = (_a2 = options == null ? void 0 : options.forceRefresh) != null ? _a2 : false;
+    if (this.cache && !forceRefresh) {
+      return this.cache;
+    }
+    if (this.pendingRequest) {
+      return this.pendingRequest;
+    }
+    const fallback = this.cache;
+    this.pendingRequest = (async () => {
+      const { actions, failed } = await this.fetchCommunityActions();
+      if (failed) {
+        if (fallback) {
+          this.cache = fallback;
+          return fallback;
+        }
+        throw new Error("Failed to fetch community actions");
+      }
+      this.cache = actions;
+      return actions;
+    })().finally(() => {
+      this.pendingRequest = void 0;
+    });
+    return this.pendingRequest;
+  }
+  static clearCache() {
+    this.cache = null;
+    this.pendingRequest = void 0;
+  }
+  static async fetchCommunityActions() {
+    const actions = await this.collectActions(
+      1,
+      [],
+      /* @__PURE__ */ new Set(),
+      /* @__PURE__ */ new Map()
+    );
+    if (!actions) {
+      return { actions: [], failed: true };
+    }
+    const sorted = actions.sort((a, b) => {
+      if (a.score === b.score) {
+        return a.order - b.order;
+      }
+      return b.score - a.score;
+    }).map(({ order: _order2, ...action }) => action);
+    return { actions: sorted, failed: false };
+  }
+  static async collectActions(page, actions, uniqueKeys, uniqueContentKeys) {
+    var _a2;
+    const response = await this.requestPage(page);
+    if (!response) {
+      return page === 1 ? null : actions;
+    }
+    const comments = (_a2 = response.json) != null ? _a2 : [];
+    if (!comments.length) {
+      return actions;
+    }
+    this.appendActionsFromComments(
+      comments,
+      actions,
+      uniqueKeys,
+      uniqueContentKeys
+    );
+    if (comments.length < PER_PAGE) {
+      return actions;
+    }
+    return this.collectActions(
+      page + 1,
+      actions,
+      uniqueKeys,
+      uniqueContentKeys
+    );
+  }
+  static async requestPage(page) {
+    try {
+      const response = await (0, import_obsidian.requestUrl)({
+        url: `${DISCUSSION_COMMENTS_URL}?per_page=${PER_PAGE}&page=${page}&sort=created&direction=asc`,
+        headers: {
+          Accept: "application/vnd.github+json"
+        },
+        throw: false
+      });
+      if (response.status !== 200) {
+        console.error(
+          `GitHub API responded with ${response.status} on page ${page}`
+        );
+        return null;
+      }
+      return response;
+    } catch (error) {
+      console.error("Failed to fetch community actions", error);
+      return null;
+    }
+  }
+  static appendActionsFromComments(comments, actions, uniqueKeys, uniqueContentKeys) {
+    var _a2, _b, _c;
+    for (const comment of comments) {
+      const parsedAction = this.extractActionFromBody(comment.body || "");
+      if (!parsedAction) {
+        continue;
+      }
+      const languageKey = parsedAction.language.trim().toLowerCase();
+      const normalizedKey = buildCommunityActionKey(
+        languageKey,
+        parsedAction.name
+      );
+      if (uniqueKeys.has(normalizedKey)) {
+        continue;
+      }
+      const signatureKey = this.buildSimilaritySignature(parsedAction);
+      const languageSignatures = (_a2 = uniqueContentKeys.get(languageKey)) != null ? _a2 : /* @__PURE__ */ new Set();
+      if (languageSignatures.has(signatureKey)) {
+        continue;
+      }
+      uniqueKeys.add(normalizedKey);
+      languageSignatures.add(signatureKey);
+      uniqueContentKeys.set(languageKey, languageSignatures);
+      const score = this.getReactionScore(comment.reactions);
+      actions.push({
+        id: `${comment.id}`,
+        name: parsedAction.name,
+        language: parsedAction.language,
+        description: parsedAction.description,
+        prompt: parsedAction.prompt,
+        system: parsedAction.system,
+        replace: parsedAction.replace,
+        author: ((_b = comment.user) == null ? void 0 : _b.login) || "unknown",
+        authorUrl: (_c = comment.user) == null ? void 0 : _c.html_url,
+        commentUrl: comment.html_url,
+        score,
+        createdAt: comment.created_at,
+        updatedAt: comment.updated_at,
+        order: actions.length
+      });
+    }
+  }
+  static normalizeFieldValue(value) {
+    if (!value) {
+      return void 0;
+    }
+    const cleaned = value.trim();
+    if (!cleaned) {
+      return void 0;
+    }
+    return cleaned;
+  }
+  static normalizeSingleLine(value) {
+    if (!value) {
+      return void 0;
+    }
+    const firstLine = value.split("\n")[0].trim();
+    if (!firstLine) {
+      return void 0;
+    }
+    return firstLine;
+  }
+  static extractActionFromBody(body) {
+    if (!body) {
+      return null;
+    }
+    const normalizedBody = this.normalizeBody(body);
+    if (!normalizedBody.trim()) {
+      return null;
+    }
+    const splitBody = this.splitBodyByDescriptionSeparator(normalizedBody);
+    if (!splitBody) {
+      return null;
+    }
+    const fields = this.extractFields(splitBody.fieldsBody);
+    return this.buildActionFromFields(fields, splitBody.description);
+  }
+  static normalizeBody(body) {
+    return this.sanitizePlainText(body).split(SEPARATOR).join("\n").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+  }
+  static splitBodyByDescriptionSeparator(normalizedBody) {
+    const separatorRegex = /^\s*---\s*$/m;
+    const match = separatorRegex.exec(normalizedBody);
+    if (!match || typeof match.index !== "number") {
+      return null;
+    }
+    const descriptionBody = normalizedBody.slice(0, match.index).trim();
+    const fieldsBody = normalizedBody.slice(match.index + match[0].length).trim();
+    return {
+      description: this.normalizeFieldValue(descriptionBody),
+      fieldsBody
+    };
+  }
+  static extractFields(fieldsBody) {
+    const fields = {};
+    let fieldMatch;
+    FIELD_REGEX.lastIndex = 0;
+    while ((fieldMatch = FIELD_REGEX.exec(fieldsBody)) !== null) {
+      const key = fieldMatch[1].toLowerCase();
+      if (!FIELD_KEYS.includes(key) || fields[key]) {
+        continue;
+      }
+      const value = this.normalizeFieldValue(fieldMatch[2]);
+      if (!value) {
+        continue;
+      }
+      fields[key] = value;
+    }
+    return fields;
+  }
+  static buildActionFromFields(fields, description) {
+    var _a2;
+    const name = this.normalizeSingleLine(fields.name);
+    const language = (_a2 = this.normalizeSingleLine(
+      fields.language
+    )) == null ? void 0 : _a2.toLowerCase();
+    const system = fields.system;
+    const prompt = fields.prompt;
+    const replace = fields.replace ? fields.replace.toLowerCase() === "true" : void 0;
+    if (!name || !language) {
+      return null;
+    }
+    if (!system && !prompt) {
+      return null;
+    }
+    return {
+      name,
+      language,
+      description: description || void 0,
+      system: system || void 0,
+      prompt: prompt || void 0,
+      replace
+    };
+  }
+  static getReactionScore(reactions) {
+    if (!reactions) {
+      return 0;
+    }
+    const positive = POSITIVE_REACTIONS.reduce((total, key) => {
+      var _a2;
+      return total + ((_a2 = reactions[key]) != null ? _a2 : 0);
+    }, 0);
+    const negative = NEGATIVE_REACTIONS.reduce((total, key) => {
+      var _a2;
+      return total + ((_a2 = reactions[key]) != null ? _a2 : 0);
+    }, 0);
+    return positive - negative;
+  }
+  static sanitizePlainText(value) {
+    const withoutTags = value.replace(this.HTML_TAG_REGEX, "").replace(/[<>]/g, "");
+    const output = [];
+    for (let index2 = 0; index2 < withoutTags.length; index2 += 1) {
+      const code = withoutTags.charCodeAt(index2);
+      if (code === 9 || code === 10 || code === 13) {
+        output.push(withoutTags[index2]);
+        continue;
+      }
+      if (code < 32 || code === 127) {
+        continue;
+      }
+      output.push(withoutTags[index2]);
+    }
+    return output.join("");
+  }
+  static buildSimilaritySignature(action) {
+    const system = this.normalizeForSimilarity(action.system);
+    const prompt = this.normalizeForSimilarity(action.prompt);
+    const replace = action.replace ? "1" : "0";
+    return `${system}
+---
+${prompt}
+---
+${replace}`;
+  }
+  static normalizeForSimilarity(value) {
+    if (!value) {
+      return "";
+    }
+    const cleaned = this.sanitizePlainText(value);
+    return cleaned.normalize("NFKD").replace(/\p{M}/gu, "").toLowerCase().replace(/[^\p{L}\p{N}]+/gu, " ").replace(/\s+/g, " ").trim();
+  }
+};
+CommunityActionsService.cache = null;
+CommunityActionsService.HTML_TAG_REGEX = /<[^>]*>/g;
+
+// src/LocalGPTSettingTab.ts
+var SEPARATOR2 = "\u2702\uFE0F";
+var normalizeLanguageCode = (value) => {
+  if (!value) {
+    return "en";
+  }
+  const trimmed = value.trim().toLowerCase();
+  if (!trimmed) {
+    return "en";
+  }
+  return trimmed.split(/[-_]/)[0] || "en";
+};
 function escapeTitle(title) {
   if (!title) {
     return "";
   }
   return title.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
 }
-var LocalGPTSettingTab = class extends import_obsidian.PluginSettingTab {
+var LocalGPTSettingTab = class extends import_obsidian2.PluginSettingTab {
   constructor(app, plugin) {
     super(app, plugin);
     this.editEnabled = false;
     this.modelsOptions = {};
-    this.changingOrder = false;
     // Controls visibility of the Advanced settings section
     this.isAdvancedMode = false;
+    this.communityActionsStatusMessage = "";
+    this.communityActionsRenderId = 0;
     // Guard to require a second click before destructive reset
     this.isConfirmingReset = false;
     this.plugin = plugin;
@@ -3088,7 +4835,7 @@ var LocalGPTSettingTab = class extends import_obsidian.PluginSettingTab {
           "": ""
         }
       );
-      new import_obsidian.Setting(containerEl).setHeading().setName(I18n.t("settings.mainProvider")).setClass("ai-providers-select").addDropdown(
+      new import_obsidian2.Setting(containerEl).setHeading().setName(I18n.t("settings.mainProvider")).setClass("local-gpt-ai-providers-select").addDropdown(
         (dropdown) => dropdown.addOptions(providers).setValue(String(this.plugin.settings.aiProviders.main)).onChange(async (value) => {
           this.plugin.settings.aiProviders.main = value;
           this.plugin.actionPaletteProviderId = value;
@@ -3096,7 +4843,7 @@ var LocalGPTSettingTab = class extends import_obsidian.PluginSettingTab {
           await this.display();
         })
       );
-      new import_obsidian.Setting(containerEl).setName(I18n.t("settings.embeddingProvider")).setDesc(I18n.t("settings.embeddingProviderDesc")).setClass("ai-providers-select").addDropdown(
+      new import_obsidian2.Setting(containerEl).setName(I18n.t("settings.embeddingProvider")).setDesc(I18n.t("settings.embeddingProviderDesc")).setClass("local-gpt-ai-providers-select").addDropdown(
         (dropdown) => dropdown.addOptions(providers).setValue(
           String(this.plugin.settings.aiProviders.embedding)
         ).onChange(async (value) => {
@@ -3105,7 +4852,7 @@ var LocalGPTSettingTab = class extends import_obsidian.PluginSettingTab {
           await this.display();
         })
       );
-      new import_obsidian.Setting(containerEl).setName(I18n.t("settings.visionProvider")).setClass("ai-providers-select").setDesc(I18n.t("settings.visionProviderDesc")).addDropdown(
+      new import_obsidian2.Setting(containerEl).setName(I18n.t("settings.visionProvider")).setClass("local-gpt-ai-providers-select").setDesc(I18n.t("settings.visionProviderDesc")).addDropdown(
         (dropdown) => dropdown.addOptions(providers).setValue(
           String(this.plugin.settings.aiProviders.vision)
         ).onChange(async (value) => {
@@ -3114,7 +4861,7 @@ var LocalGPTSettingTab = class extends import_obsidian.PluginSettingTab {
           await this.display();
         })
       );
-      new import_obsidian.Setting(containerEl).setName(I18n.t("settings.creativity")).setDesc("").addDropdown((dropdown) => {
+      new import_obsidian2.Setting(containerEl).setName(I18n.t("settings.creativity")).setDesc("").addDropdown((dropdown) => {
         dropdown.addOption("", I18n.t("settings.creativityNone")).addOptions({
           low: I18n.t("settings.creativityLow"),
           medium: I18n.t("settings.creativityMedium"),
@@ -3137,36 +4884,196 @@ var LocalGPTSettingTab = class extends import_obsidian.PluginSettingTab {
       system: "",
       replace: false
     };
-    const sharingActionsMapping = {
+    const sharingFieldLabels = {
       name: "Name: ",
       system: "System: ",
       prompt: "Prompt: ",
       replace: "Replace: ",
-      model: "Model: "
+      language: "Language: "
+    };
+    const sharingFieldOrder = [
+      "name",
+      "system",
+      "prompt",
+      "replace",
+      "language"
+    ];
+    const sharingEntries = sharingFieldOrder.map(
+      (key) => [key, sharingFieldLabels[key]]
+    );
+    const quickAddHandlers = {
+      name: (value, action) => {
+        action.name = value;
+      },
+      system: (value, action) => {
+        action.system = value;
+      },
+      prompt: (value, action) => {
+        action.prompt = value;
+      },
+      replace: (value, action) => {
+        action.replace = value.trim().toLowerCase() === "true";
+      }
+    };
+    const defaultCommunityActionsLanguage = normalizeLanguageCode(
+      window.localStorage.getItem("language")
+    );
+    const isEditingExisting = Boolean(this.editExistingAction);
+    const isEditingNew = this.editEnabled && !isEditingExisting;
+    const dropCommunityLinkIfModified = (action) => {
+      var _a2;
+      if (!((_a2 = action.community) == null ? void 0 : _a2.hash)) {
+        return;
+      }
+      const localSignature = buildCommunityActionSignature(action);
+      if (localSignature !== action.community.hash) {
+        delete action.community;
+      }
+    };
+    const closeActionEditor = (scrollAction) => {
+      this.editEnabled = false;
+      this.editExistingAction = void 0;
+      this.pendingScroll = scrollAction ? {
+        action: scrollAction,
+        align: "center",
+        target: "row"
+      } : void 0;
+      this.display();
+    };
+    const renderActionEditor = (container, actionToEdit, isExistingAction) => {
+      new import_obsidian2.Setting(container).setName(I18n.t("settings.actionName")).addText((text2) => {
+        text2.inputEl.classList.add("local-gpt-action-input");
+        (actionToEdit == null ? void 0 : actionToEdit.name) && text2.setValue(actionToEdit.name);
+        text2.setPlaceholder(
+          I18n.t("settings.actionNamePlaceholder")
+        );
+        text2.onChange(async (value) => {
+          actionToEdit.name = value;
+        });
+      });
+      new import_obsidian2.Setting(container).setName(I18n.t("settings.systemPrompt")).setDesc(I18n.t("settings.systemPromptDesc")).addTextArea((text2) => {
+        text2.inputEl.classList.add("local-gpt-action-textarea");
+        (actionToEdit == null ? void 0 : actionToEdit.system) && text2.setValue(actionToEdit.system);
+        text2.setPlaceholder(
+          I18n.t("settings.systemPromptPlaceholder")
+        );
+        text2.onChange(async (value) => {
+          actionToEdit.system = value;
+        });
+      });
+      const promptSetting = new import_obsidian2.Setting(container).setName(I18n.t("settings.prompt")).setDesc("").addTextArea((text2) => {
+        text2.inputEl.classList.add("local-gpt-action-textarea");
+        (actionToEdit == null ? void 0 : actionToEdit.prompt) && text2.setValue(actionToEdit.prompt);
+        text2.setPlaceholder("");
+        text2.onChange(async (value) => {
+          actionToEdit.prompt = value;
+        });
+      });
+      promptSetting.descEl.innerHTML = I18n.t("settings.promptDesc");
+      new import_obsidian2.Setting(container).setName(I18n.t("settings.replaceSelected")).setDesc(I18n.t("settings.replaceSelectedDesc")).addToggle((component) => {
+        (actionToEdit == null ? void 0 : actionToEdit.replace) && component.setValue(actionToEdit.replace);
+        component.onChange(async (value) => {
+          actionToEdit.replace = value;
+        });
+      });
+      const actionButtonsRow = new import_obsidian2.Setting(container).setName("");
+      if (isExistingAction) {
+        actionButtonsRow.addButton((button) => {
+          button.setClass("local-gpt-action-remove");
+          button.setButtonText(I18n.t("settings.remove")).onClick(async () => {
+            if (!button.buttonEl.hasClass("mod-warning")) {
+              button.setClass("mod-warning");
+              return;
+            }
+            this.plugin.settings.actions = this.plugin.settings.actions.filter(
+              (innerAction) => innerAction !== actionToEdit
+            );
+            await this.plugin.saveSettings();
+            closeActionEditor();
+          });
+        });
+      }
+      actionButtonsRow.addButton((button) => {
+        button.setButtonText(I18n.t("settings.close")).onClick(async () => {
+          closeActionEditor(
+            isExistingAction ? actionToEdit : void 0
+          );
+        });
+      }).addButton(
+        (button) => button.setCta().setButtonText(I18n.t("settings.save")).onClick(async () => {
+          if (!actionToEdit.name) {
+            new import_obsidian2.Notice(
+              I18n.t("notices.actionNameRequired")
+            );
+            return;
+          }
+          const actionToSave = ensureActionId(actionToEdit);
+          if (!isExistingAction) {
+            if (this.plugin.settings.actions.find(
+              (action) => action.name === actionToSave.name
+            )) {
+              new import_obsidian2.Notice(
+                I18n.t("notices.actionNameExists", {
+                  name: actionToSave.name
+                })
+              );
+              return;
+            }
+            await this.addNewAction(actionToSave);
+          } else {
+            if (this.plugin.settings.actions.filter(
+              (action) => action.name === actionToSave.name
+            ).length > 1) {
+              new import_obsidian2.Notice(
+                I18n.t("notices.actionNameExists", {
+                  name: actionToSave.name
+                })
+              );
+              return;
+            }
+            dropCommunityLinkIfModified(actionToSave);
+            const index2 = this.plugin.settings.actions.findIndex(
+              (innerAction) => innerAction === actionToEdit
+            );
+            if (index2 >= 0) {
+              this.plugin.settings.actions[index2] = actionToSave;
+            }
+          }
+          await this.plugin.saveSettings();
+          closeActionEditor(actionToSave);
+        })
+      );
     };
     containerEl.createEl("div", { cls: "local-gpt-settings-separator" });
     containerEl.createEl("h3", { text: I18n.t("settings.actions") });
-    if (!this.editEnabled) {
-      const quickAdd = new import_obsidian.Setting(containerEl).setName(I18n.t("settings.quickAdd")).setDesc("").addText((text2) => {
-        text2.inputEl.style.minWidth = "100%";
+    if (!isEditingNew) {
+      const quickAdd = new import_obsidian2.Setting(containerEl).setName(I18n.t("settings.quickAdd")).setDesc("").addText((text2) => {
+        text2.inputEl.classList.add("local-gpt-action-input");
         text2.setPlaceholder(I18n.t("settings.quickAddPlaceholder"));
         text2.onChange(async (value) => {
-          const quickAddAction = value.split(SEPARATOR).map((part) => part.trim()).reduce((acc, part) => {
-            const foundMatchKey = Object.keys(
-              sharingActionsMapping
-            ).find((key) => {
-              return part.startsWith(
-                sharingActionsMapping[key]
-              );
-            });
-            if (foundMatchKey) {
-              acc[foundMatchKey] = part.substring(
-                sharingActionsMapping[foundMatchKey].length,
-                part.length
-              );
+          const parts = value.split(SEPARATOR2).map((part) => part.trim()).filter(Boolean);
+          if (!parts.length) {
+            return;
+          }
+          const quickAddAction = {
+            name: "",
+            prompt: ""
+          };
+          for (const part of parts) {
+            const entry = sharingEntries.find(
+              ([, label2]) => part.startsWith(label2)
+            );
+            const key = entry == null ? void 0 : entry[0];
+            const label = entry == null ? void 0 : entry[1];
+            const rawValue = label ? part.slice(label.length).trim() : "";
+            if (!key || !rawValue) {
+              continue;
             }
-            return acc;
-          }, {});
+            const handler = quickAddHandlers[key];
+            if (handler) {
+              handler(rawValue, quickAddAction);
+            }
+          }
           if (quickAddAction.name) {
             await this.addNewAction(quickAddAction);
             text2.setValue("");
@@ -3175,180 +5082,311 @@ var LocalGPTSettingTab = class extends import_obsidian.PluginSettingTab {
         });
       });
       quickAdd.descEl.innerHTML = I18n.t("settings.quickAddDesc");
-      new import_obsidian.Setting(containerEl).setName(I18n.t("settings.addNewManually")).addButton(
-        (button) => button.setIcon("plus").onClick(async () => {
+      new import_obsidian2.Setting(containerEl).setName(I18n.t("settings.communityActions")).setDesc(I18n.t("settings.communityActionsOpenDesc")).addButton((button) => {
+        button.setButtonText(I18n.t("settings.communityActionsOpen")).setCta().onClick(() => openCommunityActionsModal());
+      });
+      const addActionsRow = new import_obsidian2.Setting(containerEl).setName(I18n.t("settings.addNewManually")).setClass("local-gpt-add-actions");
+      addActionsRow.addButton(
+        (button) => button.setCta().setButtonText(I18n.t("settings.addAction")).onClick(async () => {
           this.editEnabled = true;
           this.editExistingAction = void 0;
           this.display();
         })
-      );
-    } else {
-      new import_obsidian.Setting(containerEl).setName(I18n.t("settings.actionName")).addText((text2) => {
-        (editingAction == null ? void 0 : editingAction.name) && text2.setValue(editingAction.name);
-        text2.inputEl.style.minWidth = "100%";
-        text2.setPlaceholder(
-          I18n.t("settings.actionNamePlaceholder")
-        );
-        text2.onChange(async (value) => {
-          editingAction.name = value;
-        });
-      });
-      new import_obsidian.Setting(containerEl).setName(I18n.t("settings.systemPrompt")).setDesc(I18n.t("settings.systemPromptDesc")).addTextArea((text2) => {
-        (editingAction == null ? void 0 : editingAction.system) && text2.setValue(editingAction.system);
-        text2.inputEl.style.minWidth = "100%";
-        text2.inputEl.style.minHeight = "6em";
-        text2.inputEl.style.resize = "vertical";
-        text2.setPlaceholder(
-          I18n.t("settings.systemPromptPlaceholder")
-        );
-        text2.onChange(async (value) => {
-          editingAction.system = value;
-        });
-      });
-      const promptSetting = new import_obsidian.Setting(containerEl).setName(I18n.t("settings.prompt")).setDesc("").addTextArea((text2) => {
-        (editingAction == null ? void 0 : editingAction.prompt) && text2.setValue(editingAction.prompt);
-        text2.inputEl.style.minWidth = "100%";
-        text2.inputEl.style.minHeight = "6em";
-        text2.inputEl.style.resize = "vertical";
-        text2.setPlaceholder("");
-        text2.onChange(async (value) => {
-          editingAction.prompt = value;
-        });
-      });
-      promptSetting.descEl.innerHTML = I18n.t("settings.promptDesc");
-      new import_obsidian.Setting(containerEl).setName(I18n.t("settings.replaceSelected")).setDesc(I18n.t("settings.replaceSelectedDesc")).addToggle((component) => {
-        (editingAction == null ? void 0 : editingAction.replace) && component.setValue(editingAction.replace);
-        component.onChange(async (value) => {
-          editingAction.replace = value;
-        });
-      });
-      const actionButtonsRow = new import_obsidian.Setting(containerEl).setName("");
-      if (this.editExistingAction) {
-        actionButtonsRow.addButton((button) => {
-          button.buttonEl.style.marginRight = "2em";
-          button.setButtonText(I18n.t("settings.remove")).onClick(async () => {
-            if (!button.buttonEl.hasClass("mod-warning")) {
-              button.setClass("mod-warning");
-              return;
-            }
-            this.plugin.settings.actions = this.plugin.settings.actions.filter(
-              (innerAction) => innerAction !== editingAction
-            );
-            await this.plugin.saveSettings();
-            this.editExistingAction = void 0;
-            this.editEnabled = false;
-            this.display();
-          });
-        });
-      }
-      actionButtonsRow.addButton((button) => {
-        button.setButtonText(I18n.t("settings.close")).onClick(async () => {
-          this.editEnabled = false;
-          this.editExistingAction = void 0;
-          this.display();
-        });
-      }).addButton(
-        (button) => button.setCta().setButtonText(I18n.t("settings.save")).onClick(async () => {
-          if (!editingAction.name) {
-            new import_obsidian.Notice(
-              I18n.t("notices.actionNameRequired")
-            );
-            return;
-          }
-          if (!this.editExistingAction) {
-            if (this.plugin.settings.actions.find(
-              (action) => action.name === editingAction.name
-            )) {
-              new import_obsidian.Notice(
-                I18n.t("notices.actionNameExists", {
-                  name: editingAction.name
-                })
-              );
-              return;
-            }
-            await this.addNewAction(editingAction);
-          } else {
-            if (this.plugin.settings.actions.filter(
-              (action) => action.name === editingAction.name
-            ).length > 1) {
-              new import_obsidian.Notice(
-                I18n.t("notices.actionNameExists", {
-                  name: editingAction.name
-                })
-              );
-              return;
-            }
-            const index2 = this.plugin.settings.actions.findIndex(
-              (innerAction) => innerAction === editingAction
-            );
-            this.plugin.settings.actions[index2] = editingAction;
-          }
-          await this.plugin.saveSettings();
-          this.editEnabled = false;
-          this.editExistingAction = void 0;
+      ).addButton(
+        (button) => button.setButtonText(I18n.t("settings.addSeparator")).onClick(async () => {
+          captureScrollPosition(containerEl);
+          await this.addSeparator();
           this.display();
         })
       );
+    } else {
+      renderActionEditor(containerEl, editingAction, false);
     }
     containerEl.createEl("h4", { text: I18n.t("settings.actionsList") });
     const actionsContainer = containerEl.createDiv(
       "local-gpt-actions-container"
     );
-    this.plugin.settings.actions.forEach((action, actionIndex) => {
-      const sharingString = [
-        action.name && `${sharingActionsMapping.name}${action.name}`,
-        action.system && `${sharingActionsMapping.system}${action.system}`,
-        action.prompt && `${sharingActionsMapping.prompt}${action.prompt}`,
-        action.replace && `${sharingActionsMapping.replace}${action.replace}`
-      ].filter(Boolean).join(` ${SEPARATOR}
-`);
-      if (!this.changingOrder) {
-        const actionRow = new import_obsidian.Setting(actionsContainer).setName(action.name).setDesc("").addButton(
-          (button) => button.setIcon("copy").onClick(async () => {
-            navigator.clipboard.writeText(sharingString);
-            new import_obsidian.Notice(I18n.t("notices.copied"));
-          })
-        ).addButton(
-          (button) => button.setButtonText("Edit").onClick(async () => {
-            this.editEnabled = true;
-            this.editExistingAction = this.plugin.settings.actions.find(
-              (innerAction) => innerAction.name == action.name
-            );
-            this.display();
-          })
-        );
-        const systemTitle = escapeTitle(action.system);
-        const promptTitle = escapeTitle(action.prompt);
-        actionRow.descEl.innerHTML = [
-          action.system && `<div title="${systemTitle}" style="text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
-							<b>${sharingActionsMapping.system}</b>${action.system}</div>`,
-          action.prompt && `<div title="${promptTitle}" style="text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
-							<b>${sharingActionsMapping.prompt}</b>${action.prompt}
-						</div>`
-        ].filter(Boolean).join("<br/>\n");
-      } else {
-        const actionRow = new import_obsidian.Setting(actionsContainer).setName(action.name).setDesc("");
-        actionRow.settingEl.addClass("local-gpt-action-row");
-        const handle = actionRow.settingEl.createDiv(
-          "local-gpt-drag-handle"
-        );
-        (0, import_obsidian.setIcon)(handle, "grip-vertical");
-        actionRow.settingEl.prepend(handle);
+    const isMobile = import_obsidian2.Platform.isMobile || import_obsidian2.Platform.isMobileApp;
+    const updateOrder = async (fromIndex, toIndex) => {
+      const updatedActions = moveAction(
+        this.plugin.settings.actions,
+        fromIndex,
+        toIndex
+      );
+      if (updatedActions === this.plugin.settings.actions) {
+        return;
       }
-    });
-    if (this.changingOrder) {
-      const getScrollableParent = (el) => {
-        let node = el.parentElement;
-        while (node) {
-          const style = getComputedStyle(node);
-          const overflowY = style.overflowY;
-          if (node.scrollHeight > node.clientHeight && (overflowY === "auto" || overflowY === "scroll")) {
-            return node;
-          }
-          node = node.parentElement;
+      this.plugin.settings.actions = updatedActions;
+      await this.plugin.saveSettings();
+    };
+    const editFormScrollOffset = 30;
+    const getScrollableParent = (el) => {
+      let node = el.parentElement;
+      while (node) {
+        const style = getComputedStyle(node);
+        const overflowY = style.overflowY;
+        if (node.scrollHeight > node.clientHeight && (overflowY === "auto" || overflowY === "scroll")) {
+          return node;
         }
-        return document.scrollingElement || document.documentElement;
+        node = node.parentElement;
+      }
+      return document.scrollingElement || document.documentElement;
+    };
+    const captureScrollPosition = (anchor) => {
+      const scrollEl2 = getScrollableParent(anchor);
+      this.pendingScrollRestore = {
+        top: scrollEl2.scrollTop,
+        height: scrollEl2.scrollHeight
       };
+    };
+    const restoreScrollPosition = (anchor) => {
+      const pendingRestore = this.pendingScrollRestore;
+      if (!pendingRestore)
+        return;
+      const scrollEl2 = getScrollableParent(anchor);
+      const heightDelta = scrollEl2.scrollHeight - pendingRestore.height;
+      let desiredTop = pendingRestore.top;
+      if (pendingRestore.top > 0) {
+        desiredTop += heightDelta;
+      }
+      const maxScroll = scrollEl2.scrollHeight - scrollEl2.clientHeight;
+      scrollEl2.scrollTop = Math.min(
+        Math.max(desiredTop, 0),
+        Math.max(0, maxScroll)
+      );
+      this.pendingScrollRestore = void 0;
+    };
+    const smoothScrollToTarget = (target, align, offset = 0, onComplete) => {
+      const scrollEl2 = getScrollableParent(target);
+      const parentRect = scrollEl2.getBoundingClientRect();
+      const targetRect = target.getBoundingClientRect();
+      const currentTop = scrollEl2.scrollTop;
+      const targetTop = targetRect.top - parentRect.top + currentTop;
+      let desiredTop = targetTop;
+      if (align === "start") {
+        desiredTop = targetTop - offset;
+      } else {
+        const available = parentRect.height - targetRect.height;
+        desiredTop = targetTop - Math.max(0, available / 2);
+      }
+      const maxScroll = scrollEl2.scrollHeight - scrollEl2.clientHeight;
+      const clampedTop = Math.min(
+        Math.max(desiredTop, 0),
+        Math.max(0, maxScroll)
+      );
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+      const distance = clampedTop - currentTop;
+      const minDistance = 1;
+      if (prefersReducedMotion || Math.abs(distance) < minDistance) {
+        scrollEl2.scrollTop = clampedTop;
+        onComplete == null ? void 0 : onComplete();
+        return;
+      }
+      const duration = Math.min(
+        600,
+        Math.max(240, Math.abs(distance) * 0.5)
+      );
+      const startTime = performance.now();
+      const easeInOut = (t) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+      const step = (now2) => {
+        const progress = Math.min((now2 - startTime) / duration, 1);
+        const eased = easeInOut(progress);
+        scrollEl2.scrollTop = currentTop + distance * eased;
+        if (progress < 1) {
+          requestAnimationFrame(step);
+          return;
+        }
+        onComplete == null ? void 0 : onComplete();
+      };
+      requestAnimationFrame(step);
+    };
+    const triggerHighlight = (element2) => {
+      element2.classList.remove("local-gpt-action-highlight");
+      void element2.offsetWidth;
+      element2.classList.add("local-gpt-action-highlight");
+      element2.addEventListener(
+        "animationend",
+        () => element2.classList.remove("local-gpt-action-highlight"),
+        { once: true }
+      );
+    };
+    const applyPendingScroll = (action, target, targetType, offset = 0, highlightTarget) => {
+      const pendingScroll = this.pendingScroll;
+      if (!pendingScroll || pendingScroll.action !== action || pendingScroll.target !== targetType) {
+        return;
+      }
+      const scrollOffset = pendingScroll.align === "start" ? offset : 0;
+      requestAnimationFrame(() => {
+        smoothScrollToTarget(
+          target,
+          pendingScroll.align,
+          scrollOffset,
+          () => triggerHighlight(highlightTarget != null ? highlightTarget : target)
+        );
+      });
+      this.pendingScroll = void 0;
+    };
+    const buildSharingString = (action) => {
+      const detectedLanguage = detectDominantLanguage(
+        [action.name, action.system, action.prompt].filter((value) => Boolean(value)).join("\n")
+      );
+      const resolvedLanguage = normalizeLanguageCode(
+        detectedLanguage === "unknown" ? defaultCommunityActionsLanguage : detectedLanguage
+      );
+      const replaceValue = action.replace ? `${sharingFieldLabels.replace}${action.replace}` : "";
+      return [
+        action.name && `${sharingFieldLabels.name}${action.name}`,
+        action.system && `${sharingFieldLabels.system}${action.system}`,
+        action.prompt && `${sharingFieldLabels.prompt}${action.prompt}`,
+        replaceValue,
+        `${sharingFieldLabels.language}${resolvedLanguage}`
+      ].filter(Boolean).join(` ${SEPARATOR2}
+`);
+    };
+    const buildActionDescription = (action) => {
+      var _a2, _b;
+      const systemTitle = escapeTitle(action.system);
+      const promptTitle = escapeTitle(action.prompt);
+      const communityDescription = (_b = (_a2 = action.community) == null ? void 0 : _a2.description) == null ? void 0 : _b.trim();
+      if (communityDescription) {
+        const escaped = escapeTitle(communityDescription);
+        return `<div class="local-gpt-action-community-description" title="${escaped}">${escaped}</div>`;
+      }
+      return [
+        action.system ? `<div title="${systemTitle}" style="text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+						<b>${sharingFieldLabels.system}</b>${action.system}</div>` : "",
+        action.prompt ? `<div title="${promptTitle}" style="text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+						<b>${sharingFieldLabels.prompt}</b>${action.prompt}
+					</div>` : ""
+      ].filter(Boolean).join("<br/>\n");
+    };
+    const addMobileMoveButtons = (row, actionIndex) => {
+      if (!isMobile)
+        return;
+      row.addExtraButton((button) => {
+        button.setIcon("chevron-up").setTooltip(I18n.t("settings.moveUp")).onClick(async () => {
+          await updateOrder(actionIndex, actionIndex - 1);
+          this.display();
+        });
+        if (actionIndex === 0) {
+          button.setDisabled(true);
+        }
+      });
+      row.addExtraButton((button) => {
+        button.setIcon("chevron-down").setTooltip(I18n.t("settings.moveDown")).onClick(async () => {
+          await updateOrder(actionIndex, actionIndex + 1);
+          this.display();
+        });
+        if (actionIndex === this.plugin.settings.actions.length - 1) {
+          button.setDisabled(true);
+        }
+      });
+    };
+    const renderSeparatorActionRow = (action, actionIndex) => {
+      const actionRow = new import_obsidian2.Setting(actionsContainer).setName("").setDesc("");
+      actionRow.settingEl.addClass("local-gpt-action-row");
+      actionRow.settingEl.addClass("local-gpt-action-separator");
+      actionRow.settingEl.setAttribute(
+        "aria-label",
+        I18n.t("settings.separator")
+      );
+      const handle = actionRow.settingEl.createDiv(
+        "local-gpt-drag-handle"
+      );
+      (0, import_obsidian2.setIcon)(handle, "grip-vertical");
+      actionRow.settingEl.prepend(handle);
+      addMobileMoveButtons(actionRow, actionIndex);
+      actionRow.infoEl.empty();
+      actionRow.infoEl.createDiv("local-gpt-action-separator-line");
+      actionRow.addButton(
+        (button) => button.setIcon("trash").setTooltip(I18n.t("settings.remove")).onClick(async () => {
+          if (!button.buttonEl.hasClass("mod-warning")) {
+            button.setClass("mod-warning");
+            return;
+          }
+          this.plugin.settings.actions = this.plugin.settings.actions.filter(
+            (innerAction) => innerAction !== action
+          );
+          await this.plugin.saveSettings();
+          this.display();
+        })
+      );
+    };
+    const renderActionRow = (action, actionIndex) => {
+      var _a2, _b;
+      const isEditingRow = this.editExistingAction === action;
+      const actionRow = new import_obsidian2.Setting(actionsContainer);
+      actionRow.settingEl.addClass("local-gpt-action-row");
+      if (isEditingRow) {
+        actionRow.controlEl.remove();
+        actionRow.infoEl.empty();
+        renderActionEditor(actionRow.infoEl, action, true);
+        const target = (_a2 = actionRow.infoEl.querySelector(".setting-item")) != null ? _a2 : actionRow.infoEl;
+        applyPendingScroll(
+          action,
+          target,
+          "form",
+          editFormScrollOffset,
+          actionRow.settingEl
+        );
+        return;
+      }
+      actionRow.setName(action.name).setDesc("");
+      if (action.community && actionRow.nameEl) {
+        const nameEl = actionRow.nameEl;
+        const nameText = (_b = nameEl.textContent) != null ? _b : "";
+        nameEl.empty();
+        nameEl.createSpan({
+          cls: "local-gpt-action-name-label",
+          text: nameText
+        });
+        nameEl.createSpan({
+          cls: "local-gpt-community-actions-status local-gpt-action-community-status local-gpt-is-installed",
+          text: I18n.t("settings.communityActionsBadge")
+        });
+      }
+      const handle = actionRow.settingEl.createDiv(
+        "local-gpt-drag-handle"
+      );
+      (0, import_obsidian2.setIcon)(handle, "grip-vertical");
+      actionRow.settingEl.prepend(handle);
+      addMobileMoveButtons(actionRow, actionIndex);
+      const sharingString = buildSharingString(action);
+      actionRow.addButton(
+        (button) => button.setIcon("copy").onClick(async () => {
+          navigator.clipboard.writeText(sharingString);
+          new import_obsidian2.Notice(I18n.t("notices.copied"));
+        })
+      ).addButton(
+        (button) => button.setButtonText("Edit").onClick(async () => {
+          this.editEnabled = false;
+          this.pendingScroll = {
+            action,
+            align: "start",
+            target: "form"
+          };
+          this.editExistingAction = action;
+          this.display();
+        })
+      );
+      actionRow.descEl.innerHTML = buildActionDescription(action);
+      applyPendingScroll(action, actionRow.settingEl, "row");
+    };
+    this.plugin.settings.actions.forEach((action, actionIndex) => {
+      if (isSeparatorAction(action)) {
+        renderSeparatorActionRow(action, actionIndex);
+        return;
+      }
+      renderActionRow(action, actionIndex);
+    });
+    restoreScrollPosition(actionsContainer);
+    this.pendingScroll = void 0;
+    const setupActionsSortable = () => {
+      if (this.plugin.settings.actions.length <= 1) {
+        return;
+      }
       let autoScrollFrame = null;
       let autoScrollDelta = 0;
       let scrollEl2 = null;
@@ -3409,8 +5447,9 @@ var LocalGPTSettingTab = class extends import_obsidian.PluginSettingTab {
       };
       sortable_esm_default.create(actionsContainer, {
         animation: 150,
-        // Allow dragging by the whole item (not just the handle)
+        // Allow dragging by the handle only
         draggable: ".setting-item",
+        handle: ".local-gpt-drag-handle",
         // We provide manual edge autoscroll for reliability in Obsidian's settings modal
         ghostClass: "local-gpt-sortable-ghost",
         chosenClass: "local-gpt-sortable-chosen",
@@ -3465,32 +5504,644 @@ var LocalGPTSettingTab = class extends import_obsidian.PluginSettingTab {
             }
           }
           if (evt.oldIndex !== void 0 && evt.newIndex !== void 0 && evt.oldIndex !== evt.newIndex) {
-            const [moved2] = this.plugin.settings.actions.splice(
-              evt.oldIndex,
-              1
-            );
-            this.plugin.settings.actions.splice(
-              evt.newIndex,
-              0,
-              moved2
-            );
-            await this.plugin.saveSettings();
+            await updateOrder(evt.oldIndex, evt.newIndex);
           }
         }
       });
-    }
-    if (this.plugin.settings.actions.length) {
-      new import_obsidian.Setting(containerEl).setName("").addButton((button) => {
-        this.changingOrder && button.setCta();
-        button.setButtonText(
-          this.changingOrder ? I18n.t("settings.done") : I18n.t("settings.changeOrder")
-        ).onClick(async () => {
-          this.changingOrder = !this.changingOrder;
+    };
+    setupActionsSortable();
+    const openCommunityActionsModal = () => {
+      const modal = new import_obsidian2.Modal(this.app);
+      modal.modalEl.addClass("local-gpt-community-actions-modal");
+      modal.titleEl.setText(I18n.t("settings.communityActions"));
+      const modalContent = modal.contentEl;
+      const communityActionsRenderId = Date.now();
+      this.communityActionsRenderId = communityActionsRenderId;
+      const communityActionsSection = modalContent.createDiv(
+        "local-gpt-community-actions"
+      );
+      const communityActionsDescription = communityActionsSection.createDiv("setting-item-description");
+      communityActionsDescription.innerHTML = I18n.t(
+        "settings.communityActionsDesc"
+      );
+      const communityActionsHint = communityActionsSection.createDiv(
+        "local-gpt-community-actions-hint"
+      );
+      communityActionsHint.setText(
+        I18n.t("settings.communityActionsAutoUpdate")
+      );
+      const communityActionsStatus = communityActionsSection.createDiv(
+        "local-gpt-community-actions-status-line"
+      );
+      communityActionsStatus.setText(
+        this.communityActionsStatusMessage || ""
+      );
+      communityActionsStatus.toggleClass(
+        "local-gpt-is-hidden",
+        !this.communityActionsStatusMessage
+      );
+      this.communityActionsLanguage = normalizeLanguageCode(
+        this.communityActionsLanguage || defaultCommunityActionsLanguage
+      );
+      let communityActions = [];
+      let communityActionsLoaded = false;
+      let languageDropdown = null;
+      let refreshButton = null;
+      let communityActionsSearchQuery = "";
+      const communityActionsList = communityActionsSection.createDiv(
+        "local-gpt-community-actions-list"
+      );
+      const renderCommunityActionsMessage = (message, className) => {
+        communityActionsList.empty();
+        const messageEl = communityActionsList.createDiv(className);
+        messageEl.setText(message);
+      };
+      const normalizeActionName = (name) => name.trim().toLowerCase();
+      const normalizeSearchValue = (value) => value.toLowerCase().replace(/\s+/g, " ").trim();
+      const fuzzyMatch2 = (target, query) => {
+        if (!query) {
+          return true;
+        }
+        let ti = 0;
+        for (const qc of query) {
+          ti = target.indexOf(qc, ti);
+          if (ti === -1) {
+            return false;
+          }
+          ti++;
+        }
+        return true;
+      };
+      const buildCommunityActionsLookup = (actions) => {
+        const byId = /* @__PURE__ */ new Map();
+        const byKey = /* @__PURE__ */ new Map();
+        const byName = /* @__PURE__ */ new Map();
+        actions.forEach((action) => {
+          var _a2, _b, _c;
+          byName.set(normalizeActionName(action.name), action);
+          if ((_a2 = action.community) == null ? void 0 : _a2.id) {
+            byId.set(action.community.id, action);
+          }
+          if (((_b = action.community) == null ? void 0 : _b.language) && ((_c = action.community) == null ? void 0 : _c.name)) {
+            byKey.set(
+              buildCommunityActionKey(
+                action.community.language,
+                action.community.name
+              ),
+              action
+            );
+          }
+        });
+        return { byId, byKey, byName };
+      };
+      const findCommunityActionLink = (action, lookup) => lookup.byId.get(action.id) || lookup.byKey.get(
+        buildCommunityActionKey(action.language, action.name)
+      );
+      const getCommunityActionSearchRank = (action, query) => {
+        const fields = [
+          action.name,
+          action.description,
+          action.prompt,
+          action.system
+        ];
+        for (let i = 0; i < fields.length; i++) {
+          const value = fields[i];
+          if (!value) {
+            continue;
+          }
+          const normalized = normalizeSearchValue(value);
+          if (normalized && fuzzyMatch2(normalized, query)) {
+            return i;
+          }
+        }
+        return null;
+      };
+      const resolveCommunityActionState = (action, lookup) => {
+        var _a2;
+        const linkedAction = findCommunityActionLink(action, lookup);
+        if (linkedAction) {
+          const localSignature = buildCommunityActionSignature(linkedAction);
+          const storedHash = (_a2 = linkedAction.community) == null ? void 0 : _a2.hash;
+          if (storedHash && localSignature !== storedHash) {
+            return { type: "modified", localAction: linkedAction };
+          }
+          return { type: "installed", localAction: linkedAction };
+        }
+        const nameMatch = lookup.byName.get(
+          normalizeActionName(action.name)
+        );
+        if (nameMatch) {
+          return { type: "conflict", localAction: nameMatch };
+        }
+        return { type: "available" };
+      };
+      const buildCommunityActionRef = (action) => {
+        var _a2, _b;
+        return {
+          id: action.id,
+          language: action.language,
+          name: action.name,
+          hash: buildCommunityActionSignature(action),
+          updatedAt: (_a2 = action.updatedAt) != null ? _a2 : action.createdAt,
+          description: ((_b = action.description) == null ? void 0 : _b.trim()) || void 0
+        };
+      };
+      const setCommunityActionsStatusMessage = (message) => {
+        this.communityActionsStatusMessage = message;
+        if (!message) {
+          communityActionsStatus.setText("");
+          communityActionsStatus.addClass("local-gpt-is-hidden");
+          return;
+        }
+        communityActionsStatus.setText(message);
+        communityActionsStatus.removeClass("local-gpt-is-hidden");
+      };
+      const addPreviewLine = (preview, label, value) => {
+        if (!value) {
+          return;
+        }
+        const line = preview.createDiv(
+          "local-gpt-community-actions-preview-line"
+        );
+        line.createSpan({
+          text: `${label}: `,
+          cls: "local-gpt-community-actions-preview-label"
+        });
+        line.createSpan({ text: value });
+      };
+      let refreshCommunityActionsList = () => {
+        renderCommunityActionsMessage(
+          I18n.t("settings.communityActionsLoading"),
+          "local-gpt-community-actions-loading"
+        );
+      };
+      const installCommunityAction = async (action, existingAction) => {
+        var _a2, _b;
+        const localAction = existingAction ? { ...existingAction } : {
+          name: action.name,
+          prompt: ""
+        };
+        localAction.name = action.name;
+        localAction.prompt = (_a2 = action.prompt) != null ? _a2 : "";
+        localAction.replace = (_b = action.replace) != null ? _b : false;
+        if (action.system) {
+          localAction.system = action.system;
+        } else {
+          delete localAction.system;
+        }
+        localAction.community = buildCommunityActionRef(action);
+        captureScrollPosition(containerEl);
+        await this.addNewAction(localAction);
+        refreshCommunityActionsList();
+        this.pendingScroll = {
+          action: localAction,
+          align: "center",
+          target: "row"
+        };
+        this.display();
+      };
+      const getCommunityActionStatusPill = (state) => {
+        if (state.type === "installed") {
+          return {
+            label: I18n.t("settings.communityActionsInstalled"),
+            variant: "installed"
+          };
+        }
+        if (state.type === "modified") {
+          return {
+            label: I18n.t("settings.communityActionsModified"),
+            variant: "modified"
+          };
+        }
+        if (state.type === "conflict") {
+          return {
+            label: I18n.t("settings.communityActionsInList"),
+            variant: "conflict"
+          };
+        }
+        return null;
+      };
+      const getCommunityActionNote = (state) => {
+        if (state.type === "modified") {
+          return I18n.t("settings.communityActionsModifiedNote");
+        }
+        if (state.type === "conflict") {
+          return I18n.t("settings.communityActionsConflictNote");
+        }
+        return null;
+      };
+      const configureCommunityActionButton = (button, action, state) => {
+        if (state.type === "installed") {
+          button.setButtonText(
+            I18n.t("settings.communityActionsInstalled")
+          ).setDisabled(true);
+          button.buttonEl.addClass(
+            "local-gpt-community-actions-installed-button"
+          );
+          return;
+        }
+        if (state.type === "modified") {
+          button.setButtonText(
+            I18n.t("settings.communityActionsUpdate")
+          ).setClass("mod-warning").onClick(
+            async () => installCommunityAction(action, state.localAction)
+          );
+          return;
+        }
+        if (state.type === "conflict") {
+          button.setButtonText(
+            I18n.t("settings.communityActionsReplace")
+          ).setClass("mod-warning").onClick(
+            async () => installCommunityAction(action, state.localAction)
+          );
+          return;
+        }
+        button.setCta().setButtonText(I18n.t("settings.communityActionsInstall")).onClick(async () => installCommunityAction(action));
+        button.buttonEl.addClass(
+          "local-gpt-community-actions-install-button"
+        );
+        const icon = button.buttonEl.createSpan(
+          "local-gpt-community-actions-install-icon"
+        );
+        (0, import_obsidian2.setIcon)(icon, "plus");
+        button.buttonEl.prepend(icon);
+      };
+      const renderCommunityActionRow = (action, state) => {
+        var _a2;
+        const actionRow = communityActionsList.createDiv(
+          "local-gpt-community-actions-row"
+        );
+        if (state.type === "installed") {
+          actionRow.addClass("local-gpt-is-installed");
+        }
+        const infoEl = actionRow.createDiv(
+          "local-gpt-community-actions-info"
+        );
+        const content = infoEl.createDiv(
+          "local-gpt-community-actions-content"
+        );
+        const header = content.createDiv(
+          "local-gpt-community-actions-header"
+        );
+        header.createSpan({
+          text: action.name,
+          cls: "local-gpt-community-actions-title"
+        });
+        const statusPill = getCommunityActionStatusPill(state);
+        if (statusPill) {
+          const pill = header.createSpan(
+            "local-gpt-community-actions-status"
+          );
+          pill.setText(statusPill.label);
+          pill.addClass(`local-gpt-is-${statusPill.variant}`);
+        }
+        const score = header.createSpan(
+          "local-gpt-community-actions-score"
+        );
+        score.setText(String(action.score));
+        score.setAttr(
+          "aria-label",
+          `${I18n.t("settings.communityActionsScoreLabel")} ${action.score}`
+        );
+        const metaRow = content.createDiv(
+          "local-gpt-community-actions-meta"
+        );
+        if (action.author) {
+          const author = metaRow.createSpan(
+            "local-gpt-community-actions-meta-item"
+          );
+          author.setText(
+            I18n.t("settings.communityActionsByAuthor", {
+              author: `@${action.author}`
+            })
+          );
+          author.addClass("local-gpt-community-actions-author");
+        }
+        if (action.replace) {
+          const replaceTag = metaRow.createSpan(
+            "local-gpt-community-actions-meta-pill"
+          );
+          replaceTag.setText(
+            I18n.t("settings.communityActionsReplaceTag")
+          );
+        }
+        const footer = content.createDiv(
+          "local-gpt-community-actions-footer"
+        );
+        const preview = footer.createDiv(
+          "local-gpt-community-actions-preview"
+        );
+        const description = (_a2 = action.description) == null ? void 0 : _a2.trim();
+        if (description) {
+          const descriptionLine = preview.createDiv(
+            "local-gpt-community-actions-description"
+          );
+          descriptionLine.setText(description);
+          descriptionLine.setAttr("title", description);
+        } else {
+          addPreviewLine(
+            preview,
+            I18n.t("settings.systemPrompt"),
+            action.system
+          );
+          addPreviewLine(
+            preview,
+            I18n.t("settings.prompt"),
+            action.prompt
+          );
+        }
+        const noteText = getCommunityActionNote(state);
+        if (noteText) {
+          const note = content.createDiv(
+            "local-gpt-community-actions-note"
+          );
+          note.setText(noteText);
+        }
+        const actions = footer.createDiv(
+          "local-gpt-community-actions-actions"
+        );
+        const controlEl = actions.createDiv(
+          "local-gpt-community-actions-control"
+        );
+        const button = new import_obsidian2.ButtonComponent(controlEl);
+        configureCommunityActionButton(button, action, state);
+      };
+      const renderCommunityActionsList = (actions) => {
+        if (!communityActionsLoaded) {
+          renderCommunityActionsMessage(
+            I18n.t("settings.communityActionsLoading"),
+            "local-gpt-community-actions-loading"
+          );
+          return;
+        }
+        const selectedLanguage = normalizeLanguageCode(
+          this.communityActionsLanguage || defaultCommunityActionsLanguage
+        );
+        const languageFiltered = actions.filter(
+          (action) => normalizeLanguageCode(action.language) === selectedLanguage
+        );
+        if (!languageFiltered.length) {
+          renderCommunityActionsMessage(
+            I18n.t("settings.communityActionsEmpty"),
+            "local-gpt-community-actions-empty"
+          );
+          return;
+        }
+        const query = normalizeSearchValue(communityActionsSearchQuery);
+        let filtered = languageFiltered;
+        if (query) {
+          const matches2 = languageFiltered.map((action, index2) => {
+            const rank = getCommunityActionSearchRank(
+              action,
+              query
+            );
+            if (rank === null) {
+              return null;
+            }
+            return { action, rank, index: index2 };
+          }).filter(
+            (match) => Boolean(match)
+          ).sort((a, b) => {
+            if (a.rank !== b.rank) {
+              return a.rank - b.rank;
+            }
+            return a.index - b.index;
+          });
+          if (!matches2.length) {
+            renderCommunityActionsMessage(
+              I18n.t("settings.communityActionsSearchEmpty"),
+              "local-gpt-community-actions-empty"
+            );
+            return;
+          }
+          filtered = matches2.map((match) => match.action);
+        }
+        communityActionsList.empty();
+        const lookup = buildCommunityActionsLookup(
+          this.plugin.settings.actions
+        );
+        filtered.forEach(
+          (action) => renderCommunityActionRow(
+            action,
+            resolveCommunityActionState(action, lookup)
+          )
+        );
+      };
+      refreshCommunityActionsList = () => renderCommunityActionsList(communityActions);
+      const updateCommunityActionsLanguageOptions = (actions) => {
+        if (!languageDropdown) {
+          return;
+        }
+        const languages = new Set(
+          actions.map(
+            (action) => normalizeLanguageCode(action.language)
+          )
+        );
+        if (this.communityActionsLanguage) {
+          languages.add(
+            normalizeLanguageCode(this.communityActionsLanguage)
+          );
+        }
+        languages.add(defaultCommunityActionsLanguage);
+        const options = Array.from(languages).sort(
+          (a, b) => a.localeCompare(b)
+        );
+        languageDropdown.selectEl.options.length = 0;
+        options.forEach((language) => {
+          languageDropdown == null ? void 0 : languageDropdown.addOption(language, language);
+        });
+        languageDropdown.setValue(
+          normalizeLanguageCode(
+            this.communityActionsLanguage || defaultCommunityActionsLanguage
+          )
+        );
+      };
+      const syncCommunityActions = async (actions) => {
+        const lookup = buildCommunityActionsLookup(
+          this.plugin.settings.actions
+        );
+        let updated = 0;
+        let skipped = 0;
+        const applyCommunityActionUpdate = (localAction, action) => {
+          var _a2, _b;
+          localAction.prompt = (_a2 = action.prompt) != null ? _a2 : "";
+          localAction.replace = (_b = action.replace) != null ? _b : false;
+          if (action.system) {
+            localAction.system = action.system;
+          } else {
+            delete localAction.system;
+          }
+          localAction.community = buildCommunityActionRef(action);
+        };
+        const isCommunityActionModified = (localAction, localSignature) => {
+          var _a2;
+          const storedHash = (_a2 = localAction.community) == null ? void 0 : _a2.hash;
+          return Boolean(storedHash && localSignature !== storedHash);
+        };
+        const shouldUpdateCommunityAction = (localAction, localSignature, remoteSignature, action) => {
+          var _a2, _b, _c, _d, _e;
+          return localSignature !== remoteSignature || ((_a2 = localAction.community) == null ? void 0 : _a2.hash) !== remoteSignature || ((_b = localAction.community) == null ? void 0 : _b.id) !== action.id || ((_d = (_c = localAction.community) == null ? void 0 : _c.description) == null ? void 0 : _d.trim()) !== (((_e = action.description) == null ? void 0 : _e.trim()) || void 0);
+        };
+        const tryAdoptCommunityAction = (action, lookup2) => {
+          const nameMatch = lookup2.byName.get(
+            normalizeActionName(action.name)
+          );
+          if (!nameMatch) {
+            return { updated: 0, skipped: 0 };
+          }
+          const localSignature = buildCommunityActionSignature(nameMatch);
+          const remoteSignature = buildCommunityActionSignature(action);
+          if (localSignature !== remoteSignature) {
+            return { updated: 0, skipped: 0 };
+          }
+          nameMatch.community = buildCommunityActionRef(action);
+          return { updated: 1, skipped: 0 };
+        };
+        const syncCommunityAction = (action, lookup2) => {
+          const localAction = findCommunityActionLink(action, lookup2);
+          if (!localAction) {
+            return tryAdoptCommunityAction(action, lookup2);
+          }
+          const localSignature = buildCommunityActionSignature(localAction);
+          const remoteSignature = buildCommunityActionSignature(action);
+          if (isCommunityActionModified(localAction, localSignature)) {
+            return { updated: 0, skipped: 1 };
+          }
+          if (!shouldUpdateCommunityAction(
+            localAction,
+            localSignature,
+            remoteSignature,
+            action
+          )) {
+            return { updated: 0, skipped: 0 };
+          }
+          applyCommunityActionUpdate(localAction, action);
+          return { updated: 1, skipped: 0 };
+        };
+        actions.forEach((action) => {
+          const result = syncCommunityAction(action, lookup);
+          updated += result.updated;
+          skipped += result.skipped;
+        });
+        if (updated > 0) {
+          await this.plugin.saveSettings();
+        }
+        return { updated, skipped };
+      };
+      const buildCommunityActionsSyncMessage = (result) => {
+        if (result.updated > 0 && result.skipped > 0) {
+          return I18n.t("settings.communityActionsSyncSummary", {
+            updated: String(result.updated),
+            skipped: String(result.skipped)
+          });
+        }
+        if (result.updated > 0) {
+          return I18n.t("settings.communityActionsUpdated", {
+            count: String(result.updated)
+          });
+        }
+        if (result.skipped > 0) {
+          return I18n.t("settings.communityActionsSkipped", {
+            count: String(result.skipped)
+          });
+        }
+        return "";
+      };
+      const finishCommunityActionsLoad = (actions) => {
+        communityActionsLoaded = true;
+        updateCommunityActionsLanguageOptions(actions);
+        renderCommunityActionsList(actions);
+      };
+      const handleCommunityActions = async (actions) => {
+        if (this.communityActionsRenderId !== communityActionsRenderId) {
+          return true;
+        }
+        communityActions = actions;
+        const syncResult = await syncCommunityActions(actions);
+        const syncMessage = buildCommunityActionsSyncMessage(syncResult);
+        setCommunityActionsStatusMessage(syncMessage);
+        if (syncResult.updated > 0) {
           this.display();
+          return true;
+        }
+        finishCommunityActionsLoad(actions);
+        return false;
+      };
+      const handleCommunityActionsError = (error) => {
+        if (this.communityActionsRenderId !== communityActionsRenderId) {
+          return;
+        }
+        console.error("Failed to load community actions", error);
+        communityActionsLoaded = true;
+        setCommunityActionsStatusMessage("");
+        renderCommunityActionsMessage(
+          I18n.t("settings.communityActionsError"),
+          "local-gpt-community-actions-error"
+        );
+      };
+      const loadCommunityActions = async (forceRefresh = false) => {
+        communityActionsLoaded = false;
+        renderCommunityActionsMessage(
+          I18n.t("settings.communityActionsLoading"),
+          "local-gpt-community-actions-loading"
+        );
+        refreshButton == null ? void 0 : refreshButton.setDisabled(true);
+        try {
+          const actions = await CommunityActionsService.getCommunityActions({
+            forceRefresh
+          });
+          await handleCommunityActions(actions);
+        } catch (error) {
+          handleCommunityActionsError(error);
+        } finally {
+          refreshButton == null ? void 0 : refreshButton.setDisabled(false);
+        }
+      };
+      const languageSetting = new import_obsidian2.Setting(communityActionsSection).setName(I18n.t("settings.communityActionsLanguage")).setDesc(I18n.t("settings.communityActionsLanguageDesc")).addDropdown((dropdown) => {
+        languageDropdown = dropdown;
+        const initialLanguage = normalizeLanguageCode(
+          this.communityActionsLanguage || defaultCommunityActionsLanguage
+        );
+        dropdown.addOption(initialLanguage, initialLanguage);
+        dropdown.setValue(initialLanguage);
+        dropdown.onChange((value) => {
+          this.communityActionsLanguage = normalizeLanguageCode(value);
+          renderCommunityActionsList(communityActions);
+        });
+      }).addButton((button) => {
+        refreshButton = button;
+        button.setButtonText(
+          I18n.t("settings.communityActionsRefresh")
+        ).onClick(async () => {
+          CommunityActionsService.clearCache();
+          await loadCommunityActions(true);
         });
       });
-    }
-    new import_obsidian.Setting(containerEl).setHeading().setName(I18n.t("settings.advancedSettings")).setDesc(I18n.t("settings.advancedSettingsDesc")).setClass("local-gpt-advanced-toggle").addToggle(
+      communityActionsSection.insertBefore(
+        languageSetting.settingEl,
+        communityActionsList
+      );
+      const searchSetting = new import_obsidian2.Setting(communityActionsSection).setName(I18n.t("settings.communityActionsSearch")).setDesc("").setClass("local-gpt-community-actions-search").addText((text2) => {
+        text2.setPlaceholder(
+          I18n.t("settings.communityActionsSearchPlaceholder")
+        );
+        text2.onChange((value) => {
+          communityActionsSearchQuery = value;
+          renderCommunityActionsList(communityActions);
+        });
+      });
+      communityActionsSection.insertBefore(
+        searchSetting.settingEl,
+        communityActionsList
+      );
+      modal.onClose = () => {
+        this.communityActionsRenderId = 0;
+        modal.contentEl.empty();
+      };
+      modal.open();
+      loadCommunityActions();
+    };
+    new import_obsidian2.Setting(containerEl).setHeading().setName(I18n.t("settings.advancedSettings")).setDesc(I18n.t("settings.advancedSettingsDesc")).setClass("local-gpt-advanced-toggle").addToggle(
       (toggle) => toggle.setValue(this.isAdvancedMode).onChange((value) => {
         this.isAdvancedMode = value;
         this.display();
@@ -3503,7 +6154,7 @@ var LocalGPTSettingTab = class extends import_obsidian.PluginSettingTab {
       enhancedSection.createEl("h4", {
         text: I18n.t("settings.enhancedActions")
       });
-      new import_obsidian.Setting(enhancedSection).setName(I18n.t("settings.enhancedActionsLabel")).setDesc(I18n.t("settings.enhancedActionsDesc")).setClass("ai-providers-select").addDropdown((dropdown) => {
+      new import_obsidian2.Setting(enhancedSection).setName(I18n.t("settings.enhancedActionsLabel")).setDesc(I18n.t("settings.enhancedActionsDesc")).setClass("local-gpt-ai-providers-select").addDropdown((dropdown) => {
         dropdown.addOptions({
           local: I18n.t("settings.contextLimitLocal"),
           cloud: I18n.t("settings.contextLimitCloud"),
@@ -3524,7 +6175,7 @@ var LocalGPTSettingTab = class extends import_obsidian.PluginSettingTab {
       dangerSection.createEl("h4", {
         text: I18n.t("settings.dangerZone")
       });
-      new import_obsidian.Setting(dangerSection).setName(I18n.t("settings.resetActions")).setDesc(I18n.t("settings.resetActionsDesc")).addButton(
+      new import_obsidian2.Setting(dangerSection).setName(I18n.t("settings.resetActions")).setDesc(I18n.t("settings.resetActionsDesc")).addButton(
         (button) => button.setClass("mod-warning").setButtonText(I18n.t("settings.reset")).onClick(async () => {
           if (!this.isConfirmingReset) {
             this.isConfirmingReset = true;
@@ -3536,7 +6187,11 @@ var LocalGPTSettingTab = class extends import_obsidian.PluginSettingTab {
           button.setDisabled(true);
           button.buttonEl.setAttribute("disabled", "true");
           button.buttonEl.classList.remove("mod-warning");
-          this.plugin.settings.actions = DEFAULT_SETTINGS.actions;
+          this.plugin.settings.actions = ensureActionIds(
+            DEFAULT_SETTINGS.actions.map((action) => ({
+              ...action
+            }))
+          ).actions;
           await this.plugin.saveSettings();
           this.isConfirmingReset = false;
           this.display();
@@ -3545,23 +6200,36 @@ var LocalGPTSettingTab = class extends import_obsidian.PluginSettingTab {
     }
   }
   async addNewAction(editingAction) {
+    const actionWithId = ensureActionId(editingAction);
     const alreadyExistingActionIndex = this.plugin.settings.actions.findIndex(
-      (action) => action.name === editingAction.name
+      (action) => action.name === actionWithId.name
     );
     if (alreadyExistingActionIndex >= 0) {
-      this.plugin.settings.actions[alreadyExistingActionIndex] = editingAction;
-      new import_obsidian.Notice(
-        I18n.t("notices.actionRewritten", { name: editingAction.name })
+      this.plugin.settings.actions[alreadyExistingActionIndex] = actionWithId;
+      new import_obsidian2.Notice(
+        I18n.t("notices.actionRewritten", { name: actionWithId.name })
       );
     } else {
       this.plugin.settings.actions = [
-        editingAction,
+        actionWithId,
         ...this.plugin.settings.actions
       ];
-      new import_obsidian.Notice(
-        I18n.t("notices.actionAdded", { name: editingAction.name })
+      new import_obsidian2.Notice(
+        I18n.t("notices.actionAdded", { name: actionWithId.name })
       );
     }
+    await this.plugin.saveSettings();
+  }
+  async addSeparator() {
+    const separatorAction = ensureActionId({
+      name: "separator",
+      prompt: "",
+      separator: true
+    });
+    this.plugin.settings.actions = [
+      separatorAction,
+      ...this.plugin.settings.actions
+    ];
     await this.plugin.saveSettings();
   }
 };
@@ -3569,6 +6237,57 @@ var LocalGPTSettingTab = class extends import_obsidian.PluginSettingTab {
 // src/spinnerPlugin.ts
 var import_state = require("@codemirror/state");
 var import_view = require("@codemirror/view");
+var import_obsidian3 = require("obsidian");
+var THINKING_ICON_CANDIDATES = [
+  "atom",
+  "beaker",
+  "book",
+  "book-open",
+  "bookmark",
+  "bot",
+  "brain",
+  "coffee",
+  "compass",
+  "flask-conical",
+  "lightbulb",
+  "map",
+  "map-pin",
+  "microscope",
+  "palette",
+  "pen-tool",
+  "pencil",
+  "sparkles",
+  "telescope"
+];
+var thinkingIconPool = null;
+var resolveThinkingIconPool = () => {
+  if (thinkingIconPool) {
+    return thinkingIconPool;
+  }
+  let pool = [];
+  try {
+    if (typeof import_obsidian3.getIconIds === "function") {
+      const available = new Set((0, import_obsidian3.getIconIds)());
+      pool = THINKING_ICON_CANDIDATES.filter(
+        (icon) => available.has(icon)
+      );
+    }
+    if (typeof import_obsidian3.getIcon === "function") {
+      const candidates = pool.length ? pool : THINKING_ICON_CANDIDATES;
+      pool = candidates.filter((icon) => Boolean((0, import_obsidian3.getIcon)(icon)));
+    }
+  } catch (e) {
+    pool = [];
+  }
+  if (pool.length) {
+    thinkingIconPool = pool;
+  }
+  return pool;
+};
+var ICON_SWITCH_MIN_MS = 1100;
+var ICON_SWITCH_MAX_MS = 2e3;
+var ICON_CROSSFADE_MS = 560;
+var ICON_GLINT_DURATION_MS = 280;
 var _LoaderWidget = class extends import_view.WidgetType {
   toDOM(view) {
     return _LoaderWidget.element.cloneNode(true);
@@ -3579,20 +6298,352 @@ LoaderWidget.element = document.createElement("span");
 (() => {
   _LoaderWidget.element.addClasses(["local-gpt-loading", "local-gpt-dots"]);
 })();
-var ThinkingWidget = class extends import_view.WidgetType {
-  static createDOMStructure() {
-    const container = document.createElement("div");
-    container.addClass("local-gpt-thinking-container");
-    container.appendChild(document.createElement("br"));
-    const textElement = document.createElement("span");
-    textElement.addClass("local-gpt-thinking");
-    textElement.textContent = "Thinking";
-    textElement.setAttribute("data-text", "Thinking");
-    container.appendChild(textElement);
-    return container;
+var ThinkingStreamWidget = class extends import_view.WidgetType {
+  constructor(thinkingText, answerText, isThinking) {
+    super();
+    this.thinkingText = thinkingText;
+    this.answerText = answerText;
+    this.isThinking = isThinking;
+    this.dom = null;
+    this.detailsEl = null;
+    this.thinkingEl = null;
+    this.answerEl = null;
+    this.iconWrap = null;
+    this.iconPrimary = null;
+    this.iconSecondary = null;
+    this.currentIcon = null;
+    this.iconQueue = [];
+    this.iconTimer = null;
+    this.iconCrossfadeTimeout = null;
+    this.iconCrossfadeRaf = null;
+    this.iconGlintStartTimeout = null;
+    this.iconGlintEndTimeout = null;
+    this.scrollRaf = null;
+  }
+  eq(other) {
+    return other.thinkingText === this.thinkingText && other.answerText === this.answerText && other.isThinking === this.isThinking;
+  }
+  update(thinkingText, answerText, isThinking) {
+    const shouldUpdateDom = thinkingText !== this.thinkingText || answerText !== this.answerText || isThinking !== this.isThinking;
+    this.thinkingText = thinkingText;
+    this.answerText = answerText;
+    this.isThinking = isThinking;
+    if (!this.dom || !shouldUpdateDom) {
+      return;
+    }
+    this.updateHeader();
+    this.updateTextBlocks();
   }
   toDOM(view) {
-    return ThinkingWidget.createDOMStructure();
+    if (!this.dom) {
+      this.dom = document.createElement("div");
+      this.dom.addClass("local-gpt-thinking-stream");
+      this.dom.appendChild(document.createElement("br"));
+      const details = document.createElement("details");
+      details.addClass("local-gpt-think-details");
+      details.open = true;
+      this.detailsEl = details;
+      const summary = document.createElement("summary");
+      summary.addClass("local-gpt-think-summary");
+      const iconWrap = document.createElement("span");
+      iconWrap.addClass("local-gpt-thinking-icon");
+      iconWrap.setAttribute("aria-hidden", "true");
+      const iconPrimary = document.createElement("span");
+      iconPrimary.addClasses([
+        "local-gpt-thinking-icon-svg",
+        "local-gpt-is-active"
+      ]);
+      const iconSecondary = document.createElement("span");
+      iconSecondary.addClass("local-gpt-thinking-icon-svg");
+      iconWrap.appendChild(iconPrimary);
+      iconWrap.appendChild(iconSecondary);
+      summary.appendChild(iconWrap);
+      this.iconWrap = iconWrap;
+      this.iconPrimary = iconPrimary;
+      this.iconSecondary = iconSecondary;
+      const titleEl = document.createElement("span");
+      titleEl.addClass("local-gpt-think-title");
+      const thinkingLabel = I18n.t("thinking.label");
+      titleEl.textContent = thinkingLabel;
+      titleEl.addClass("local-gpt-thinking");
+      summary.appendChild(titleEl);
+      details.appendChild(summary);
+      const body = document.createElement("div");
+      body.addClass("local-gpt-think-body");
+      this.thinkingEl = document.createElement("div");
+      this.thinkingEl.addClass("local-gpt-think-content");
+      this.thinkingEl.setAttribute(
+        "data-empty",
+        I18n.t("thinking.placeholder")
+      );
+      body.appendChild(this.thinkingEl);
+      details.appendChild(body);
+      this.dom.appendChild(details);
+      this.answerEl = document.createElement("div");
+      this.answerEl.addClasses([
+        "local-gpt-content",
+        "local-gpt-think-answer"
+      ]);
+      this.dom.appendChild(this.answerEl);
+      this.updateHeader();
+      this.updateTextBlocks();
+    }
+    return this.dom;
+  }
+  updateHeader() {
+    var _a2;
+    (_a2 = this.detailsEl) == null ? void 0 : _a2.toggleClass("local-gpt-is-hidden", !this.isThinking);
+    if (this.isThinking) {
+      this.startIconCycle();
+    } else {
+      this.stopIconCycle();
+    }
+  }
+  updateTextBlocks() {
+    if (this.thinkingEl) {
+      this.updateStreamingText(this.thinkingEl, this.thinkingText, true);
+    }
+    if (this.answerEl) {
+      const hasAnswer = Boolean(this.answerText.trim());
+      this.answerEl.toggleClass("local-gpt-is-hidden", !hasAnswer);
+      if (hasAnswer) {
+        this.updateStreamingText(this.answerEl, this.answerText, false);
+      }
+    }
+    this.scheduleScrollToBottom();
+  }
+  updateStreamingText(target, newText, animateChunk) {
+    if (!newText) {
+      target.textContent = "";
+      return;
+    }
+    const previousText = target.textContent || "";
+    if (!newText.startsWith(previousText)) {
+      target.textContent = newText;
+      return;
+    }
+    const addedText = newText.slice(previousText.length);
+    if (!addedText) {
+      target.textContent = newText;
+      return;
+    }
+    target.textContent = newText.slice(
+      0,
+      newText.length - addedText.length
+    );
+    if (!animateChunk) {
+      target.appendChild(document.createTextNode(addedText));
+      return;
+    }
+    const span = document.createElement("span");
+    span.addClass("local-gpt-stream-chunk");
+    span.textContent = addedText;
+    target.appendChild(span);
+  }
+  scheduleScrollToBottom() {
+    if (!this.thinkingEl || this.scrollRaf !== null) {
+      return;
+    }
+    this.scrollRaf = requestAnimationFrame(() => {
+      this.scrollRaf = null;
+      if (!this.thinkingEl) {
+        return;
+      }
+      const maxScrollTop = this.thinkingEl.scrollHeight - this.thinkingEl.clientHeight;
+      const isOverflowing = maxScrollTop > 1;
+      this.thinkingEl.toggleClass(
+        "local-gpt-is-overflowing",
+        isOverflowing
+      );
+      if (!isOverflowing) {
+        this.thinkingEl.scrollTop = 0;
+        return;
+      }
+      this.thinkingEl.scrollTop = maxScrollTop;
+    });
+  }
+  startIconCycle() {
+    if (!this.iconWrap || !this.iconPrimary || !this.iconSecondary) {
+      return;
+    }
+    if (!this.currentIcon) {
+      const nextIcon = this.getNextIcon();
+      if (!nextIcon) {
+        this.iconWrap.classList.add("local-gpt-is-hidden");
+        return;
+      }
+      this.iconWrap.classList.remove("local-gpt-is-hidden");
+      this.applyIcon(nextIcon);
+    }
+    if (this.iconTimer !== null) {
+      return;
+    }
+    this.scheduleNextIcon();
+  }
+  stopIconCycle() {
+    var _a2;
+    this.clearIconTimers();
+    this.iconQueue = [];
+    (_a2 = this.iconWrap) == null ? void 0 : _a2.classList.remove("local-gpt-is-glint");
+  }
+  clearIconTimers() {
+    if (this.iconTimer !== null) {
+      window.clearTimeout(this.iconTimer);
+      this.iconTimer = null;
+    }
+    if (this.iconCrossfadeTimeout !== null) {
+      window.clearTimeout(this.iconCrossfadeTimeout);
+      this.iconCrossfadeTimeout = null;
+    }
+    if (this.iconCrossfadeRaf !== null) {
+      cancelAnimationFrame(this.iconCrossfadeRaf);
+      this.iconCrossfadeRaf = null;
+    }
+    if (this.iconGlintStartTimeout !== null) {
+      window.clearTimeout(this.iconGlintStartTimeout);
+      this.iconGlintStartTimeout = null;
+    }
+    if (this.iconGlintEndTimeout !== null) {
+      window.clearTimeout(this.iconGlintEndTimeout);
+      this.iconGlintEndTimeout = null;
+    }
+  }
+  scheduleNextIcon() {
+    if (!this.isThinking || !this.iconWrap) {
+      return;
+    }
+    const delay = this.randomBetween(
+      ICON_SWITCH_MIN_MS,
+      ICON_SWITCH_MAX_MS
+    );
+    this.iconTimer = window.setTimeout(() => {
+      this.iconTimer = null;
+      if (!this.isThinking) {
+        return;
+      }
+      this.swapIcon();
+      this.scheduleNextIcon();
+    }, delay);
+  }
+  swapIcon() {
+    if (!this.iconWrap || !this.iconPrimary || !this.iconSecondary) {
+      return;
+    }
+    const nextIcon = this.getNextIcon();
+    if (!nextIcon || nextIcon === this.currentIcon) {
+      return;
+    }
+    if (this.iconCrossfadeTimeout !== null) {
+      window.clearTimeout(this.iconCrossfadeTimeout);
+      this.iconCrossfadeTimeout = null;
+    }
+    if (this.iconCrossfadeRaf !== null) {
+      cancelAnimationFrame(this.iconCrossfadeRaf);
+      this.iconCrossfadeRaf = null;
+    }
+    const incoming = this.iconSecondary;
+    const outgoing = this.iconPrimary;
+    incoming.textContent = "";
+    (0, import_obsidian3.setIcon)(incoming, nextIcon);
+    this.iconCrossfadeRaf = requestAnimationFrame(() => {
+      this.iconCrossfadeRaf = null;
+      outgoing.classList.remove("local-gpt-is-active");
+      incoming.classList.add("local-gpt-is-active");
+      const glintDelay = Math.max(0, Math.round(ICON_CROSSFADE_MS * 0.1));
+      this.scheduleGlint(glintDelay);
+    });
+    this.iconPrimary = incoming;
+    this.iconSecondary = outgoing;
+    this.currentIcon = nextIcon;
+    this.iconCrossfadeTimeout = window.setTimeout(() => {
+      this.iconCrossfadeTimeout = null;
+      if (this.iconSecondary) {
+        this.iconSecondary.textContent = "";
+      }
+    }, ICON_CROSSFADE_MS);
+  }
+  applyIcon(iconId) {
+    if (!this.iconPrimary || !this.iconSecondary) {
+      return;
+    }
+    this.iconPrimary.textContent = "";
+    (0, import_obsidian3.setIcon)(this.iconPrimary, iconId);
+    this.iconPrimary.classList.add("local-gpt-is-active");
+    this.iconSecondary.classList.remove("local-gpt-is-active");
+    this.iconSecondary.textContent = "";
+    this.currentIcon = iconId;
+  }
+  randomBetween(min, max) {
+    return Math.round(min + Math.random() * (max - min));
+  }
+  triggerGlint() {
+    if (!this.iconWrap) {
+      return;
+    }
+    if (this.iconGlintEndTimeout !== null) {
+      window.clearTimeout(this.iconGlintEndTimeout);
+      this.iconGlintEndTimeout = null;
+    }
+    this.iconWrap.classList.remove("local-gpt-is-glint");
+    void this.iconWrap.offsetWidth;
+    this.iconWrap.classList.add("local-gpt-is-glint");
+    this.iconGlintEndTimeout = window.setTimeout(() => {
+      var _a2;
+      this.iconGlintEndTimeout = null;
+      (_a2 = this.iconWrap) == null ? void 0 : _a2.classList.remove("local-gpt-is-glint");
+    }, ICON_GLINT_DURATION_MS);
+  }
+  scheduleGlint(delayMs) {
+    if (!this.iconWrap) {
+      return;
+    }
+    if (this.iconGlintStartTimeout !== null) {
+      window.clearTimeout(this.iconGlintStartTimeout);
+      this.iconGlintStartTimeout = null;
+    }
+    if (this.iconGlintEndTimeout !== null) {
+      window.clearTimeout(this.iconGlintEndTimeout);
+      this.iconGlintEndTimeout = null;
+    }
+    this.iconWrap.classList.remove("local-gpt-is-glint");
+    if (delayMs <= 0) {
+      this.triggerGlint();
+      return;
+    }
+    this.iconGlintStartTimeout = window.setTimeout(() => {
+      this.iconGlintStartTimeout = null;
+      this.triggerGlint();
+    }, delayMs);
+  }
+  getNextIcon() {
+    const pool = resolveThinkingIconPool();
+    if (!pool.length) {
+      return null;
+    }
+    if (!this.iconQueue.length) {
+      this.iconQueue = this.buildIconQueue(pool, this.currentIcon);
+    }
+    return this.iconQueue.shift() || null;
+  }
+  buildIconQueue(pool, avoid) {
+    const shuffled = [...pool];
+    for (let i = shuffled.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    if (avoid && shuffled.length > 1 && shuffled[0] === avoid) {
+      const swapIndex = shuffled.findIndex((icon) => icon !== avoid);
+      if (swapIndex > 0) {
+        [shuffled[0], shuffled[swapIndex]] = [
+          shuffled[swapIndex],
+          shuffled[0]
+        ];
+      }
+    }
+    return shuffled;
+  }
+  destroy() {
+    this.stopIconCycle();
   }
 };
 var ContentWidget = class extends import_view.WidgetType {
@@ -3629,7 +6680,9 @@ var ContentWidget = class extends import_view.WidgetType {
 var SpinnerPlugin = class {
   constructor(editorView) {
     this.editorView = editorView;
-    this.positions = /* @__PURE__ */ new Map();
+    this.idCounter = 0;
+    this.entries = /* @__PURE__ */ new Map();
+    this.positionToId = /* @__PURE__ */ new Map();
     this.decorations = import_view.Decoration.none;
   }
   /**
@@ -3642,7 +6695,16 @@ var SpinnerPlugin = class {
    */
   processText(text2, processFunc, position) {
     const result = this.processThinkingTags(text2);
-    this.showThinking(result.isThinking, position);
+    if (result.hasThinkingTags) {
+      const displayText = result.displayText.trim() ? processFunc ? processFunc(result.displayText) : result.displayText : "";
+      this.updateThinkingStream(
+        result.thinkingText,
+        displayText,
+        result.isThinking,
+        position
+      );
+      return;
+    }
     if (result.displayText.trim()) {
       const displayText = processFunc ? processFunc(result.displayText) : result.displayText;
       this.updateContent(displayText, position);
@@ -3657,7 +6719,9 @@ var SpinnerPlugin = class {
   processThinkingTags(text2) {
     if (!text2.startsWith("<think>")) {
       return {
+        hasThinkingTags: false,
         isThinking: false,
+        thinkingText: "",
         displayText: text2
       };
     }
@@ -3666,20 +6730,27 @@ var SpinnerPlugin = class {
     );
     if (!thinkingMatch) {
       return {
+        hasThinkingTags: true,
         isThinking: true,
+        thinkingText: text2.slice("<think>".length),
         displayText: ""
         // No display text while in thinking mode
       };
     }
+    const thinkingText = thinkingMatch[1] || "";
     if (thinkingMatch[2]) {
       const afterThinkTag = thinkingMatch[3] || "";
       return {
+        hasThinkingTags: true,
         isThinking: false,
+        thinkingText,
         displayText: afterThinkTag
       };
     }
     return {
+      hasThinkingTags: true,
       isThinking: true,
+      thinkingText,
       displayText: ""
       // No display text while in thinking mode
     };
@@ -3689,47 +6760,54 @@ var SpinnerPlugin = class {
       this.editorView.state,
       position
     );
-    this.positions.set(position, {
+    const id = `spinner-${++this.idCounter}`;
+    this.entries.set(id, {
+      position,
       isEndOfLine,
-      widget: new LoaderWidget(),
-      isThinking: false
+      widget: new LoaderWidget()
     });
+    this.positionToId.set(position, id);
     this.updateDecorations();
-    return () => this.hide(position);
+    return () => this.hide(id);
   }
-  hide(position) {
-    this.positions.delete(position);
-    this.updateDecorations();
+  hide(id) {
+    const entry = this.entries.get(id);
+    if (entry) {
+      this.positionToId.delete(entry.position);
+      this.entries.delete(id);
+      this.updateDecorations();
+    }
   }
-  showThinking(enabled, position) {
+  updateThinkingStream(thinkingText, answerText, isThinking, originalPosition) {
     let updated = false;
-    const updatePosition = (data) => {
-      if (enabled && !data.isThinking) {
-        data.widget = new ThinkingWidget();
-        data.isThinking = true;
+    const updateEntry = (data) => {
+      if (data.widget instanceof ThinkingStreamWidget) {
+        data.widget.update(thinkingText, answerText, isThinking);
         updated = true;
-      } else if (!enabled && data.isThinking) {
-        data.widget = new LoaderWidget();
-        data.isThinking = false;
-        updated = true;
+        return;
       }
+      data.widget = new ThinkingStreamWidget(
+        thinkingText,
+        answerText,
+        isThinking
+      );
+      updated = true;
     };
-    if (position !== void 0) {
-      const data = this.positions.get(position);
+    if (originalPosition !== void 0) {
+      const id = this.positionToId.get(originalPosition);
+      const data = id ? this.entries.get(id) : void 0;
       if (data)
-        updatePosition(data);
+        updateEntry(data);
     } else {
-      this.positions.forEach(updatePosition);
+      this.entries.forEach(updateEntry);
     }
     if (updated) {
       this.updateDecorations();
     }
   }
-  updateContent(text2, position) {
+  updateContent(text2, originalPosition) {
     let updated = false;
-    const updatePosition = (data) => {
-      if (data.isThinking)
-        return;
+    const updateEntry = (data) => {
       if (data.widget instanceof LoaderWidget) {
         data.widget = new ContentWidget(text2);
         updated = true;
@@ -3738,34 +6816,47 @@ var SpinnerPlugin = class {
         updated = true;
       }
     };
-    if (position !== void 0) {
-      const data = this.positions.get(position);
+    if (originalPosition !== void 0) {
+      const id = this.positionToId.get(originalPosition);
+      const data = id ? this.entries.get(id) : void 0;
       if (data)
-        updatePosition(data);
+        updateEntry(data);
     } else {
-      this.positions.forEach(updatePosition);
+      this.entries.forEach(updateEntry);
     }
     if (updated) {
       this.updateDecorations();
     }
   }
   update(update2) {
+    if (update2.docChanged) {
+      this.entries.forEach((data) => {
+        data.position = update2.changes.mapPos(data.position);
+        data.isEndOfLine = this.isPositionAtEndOfLine(
+          update2.state,
+          data.position
+        );
+      });
+    }
     if (update2.docChanged || update2.viewportChanged) {
       this.updateDecorations();
     }
   }
   updateDecorations() {
     const builder = new import_state.RangeSetBuilder();
-    this.positions.forEach((data, position) => {
+    const sorted = [...this.entries.values()].sort(
+      (a, b) => a.position - b.position
+    );
+    for (const data of sorted) {
       builder.add(
-        position,
-        position,
+        data.position,
+        data.position,
         import_view.Decoration.widget({
           widget: data.widget,
           side: data.isEndOfLine ? 1 : -1
         })
       );
-    });
+    }
     this.decorations = builder.finish();
     this.editorView.requestMeasure();
   }
@@ -3777,8 +6868,85 @@ var spinnerPlugin = import_view.ViewPlugin.fromClass(SpinnerPlugin, {
   decorations: (v) => v.decorations
 });
 
-// src/ui/actionPalettePlugin.ts
+// src/requestPositionTracker.ts
 var import_state2 = require("@codemirror/state");
+var addTrackedRangeEffect = import_state2.StateEffect.define();
+var removeTrackedRangeEffect = import_state2.StateEffect.define();
+var mapTrackedRange = (range, changes) => {
+  const isEmpty = range.from === range.to;
+  const mappedFrom = changes.mapPos(range.from, 1);
+  const mappedTo = changes.mapPos(range.to, isEmpty ? 1 : -1);
+  const mappedInsertAfter = changes.mapPos(range.insertAfter, 1);
+  return mappedFrom <= mappedTo ? {
+    from: mappedFrom,
+    to: mappedTo,
+    insertAfter: mappedInsertAfter
+  } : {
+    from: mappedTo,
+    to: mappedFrom,
+    insertAfter: mappedInsertAfter
+  };
+};
+var mapTrackedRanges = (ranges, changes) => {
+  if (ranges.size === 0) {
+    return ranges;
+  }
+  const next = /* @__PURE__ */ new Map();
+  ranges.forEach((range, id) => {
+    next.set(id, mapTrackedRange(range, changes));
+  });
+  return next;
+};
+var applyEffects = (current, effects) => {
+  let next = current;
+  for (const effect of effects) {
+    if (effect.is(addTrackedRangeEffect)) {
+      if (next === current)
+        next = new Map(current);
+      next.set(effect.value.id, effect.value.range);
+    } else if (effect.is(removeTrackedRangeEffect)) {
+      if (next === current)
+        next = new Map(current);
+      next.delete(effect.value);
+    }
+  }
+  return next;
+};
+var trackedRangeField = import_state2.StateField.define({
+  create() {
+    return /* @__PURE__ */ new Map();
+  },
+  update(value, tr) {
+    const mapped = tr.docChanged ? mapTrackedRanges(value, tr.changes) : value;
+    return applyEffects(mapped, tr.effects);
+  }
+});
+var trackedRangeCounter = 0;
+var requestPositionTracker = trackedRangeField;
+function trackSelectionRange(view, from, to) {
+  if (!view.state.field(trackedRangeField, false)) {
+    return null;
+  }
+  trackedRangeCounter += 1;
+  const id = `local-gpt-range-${trackedRangeCounter}`;
+  const range = { from, to, insertAfter: to };
+  view.dispatch({
+    effects: addTrackedRangeEffect.of({ id, range })
+  });
+  return id;
+}
+function getTrackedRange(view, id) {
+  var _a2, _b;
+  return (_b = (_a2 = view.state.field(trackedRangeField, false)) == null ? void 0 : _a2.get(id)) != null ? _b : null;
+}
+function releaseTrackedRange(view, id) {
+  if (!view.state.field(trackedRangeField, false))
+    return;
+  view.dispatch({ effects: removeTrackedRangeEffect.of(id) });
+}
+
+// src/ui/actionPalettePlugin.ts
+var import_state3 = require("@codemirror/state");
 var import_view2 = require("@codemirror/view");
 
 // node_modules/svelte/src/runtime/internal/utils.js
@@ -3891,6 +7059,9 @@ function text(data) {
 function space() {
   return text(" ");
 }
+function empty() {
+  return text("");
+}
 function listen(node, event, handler, options) {
   node.addEventListener(event, handler, options);
   return () => node.removeEventListener(event, handler, options);
@@ -3910,6 +7081,13 @@ function set_data(text2, data) {
     return;
   text2.data = /** @type {string} */
   data;
+}
+function set_style(node, key, value, important) {
+  if (value == null) {
+    node.style.removeProperty(key);
+  } else {
+    node.style.setProperty(key, value, important ? "important" : "");
+  }
 }
 function custom_event(type, detail, { bubbles = false, cancelable = false } = {}) {
   return new CustomEvent(type, { detail, bubbles, cancelable });
@@ -4470,116 +7648,515 @@ function __awaiter(thisArg, _arguments, P, generator) {
   });
 }
 
+// src/ui/actionPaletteHistory.ts
+var PROMPT_HISTORY_LIMIT = 50;
+var HISTORY_STORAGE_KEY = "local-gpt-action-palette-history";
+var promptHistory = loadHistoryFromStorage();
+function loadHistoryFromStorage() {
+  if (typeof localStorage === "undefined")
+    return [];
+  try {
+    const raw = localStorage.getItem(HISTORY_STORAGE_KEY);
+    if (!raw)
+      return [];
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed))
+      return [];
+    return parsed.filter((item) => typeof item === "string").slice(-PROMPT_HISTORY_LIMIT);
+  } catch (error) {
+    console.error("Failed to read Action Palette history:", error);
+    return [];
+  }
+}
+function persistHistory() {
+  if (typeof localStorage === "undefined")
+    return;
+  try {
+    localStorage.setItem(
+      HISTORY_STORAGE_KEY,
+      JSON.stringify(promptHistory.slice(-PROMPT_HISTORY_LIMIT))
+    );
+  } catch (error) {
+    console.error("Failed to save Action Palette history:", error);
+  }
+}
+function addToPromptHistory(entry) {
+  var _a2;
+  const normalized = entry.trim();
+  if (!normalized)
+    return;
+  const lastNormalized = (_a2 = promptHistory[promptHistory.length - 1]) == null ? void 0 : _a2.trim();
+  if (lastNormalized === normalized)
+    return;
+  promptHistory.push(entry);
+  if (promptHistory.length > PROMPT_HISTORY_LIMIT) {
+    promptHistory.shift();
+  }
+  persistHistory();
+}
+function getPromptHistoryEntry(index2) {
+  return promptHistory[index2];
+}
+function getPromptHistoryLength() {
+  return promptHistory.length;
+}
+
 // src/ui/ActionPalette.svelte
 function get_each_context(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[112] = list[i];
-  child_ctx[114] = i;
+  child_ctx[123] = list[i];
+  child_ctx[125] = i;
   return child_ctx;
 }
 function get_each_context_1(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[115] = list[i];
-  child_ctx[114] = i;
+  child_ctx[123] = list[i];
+  child_ctx[125] = i;
   return child_ctx;
 }
 function get_each_context_2(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[117] = list[i];
-  child_ctx[114] = i;
+  child_ctx[123] = list[i];
+  child_ctx[125] = i;
   return child_ctx;
 }
 function get_each_context_3(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[119] = list[i];
-  child_ctx[114] = i;
+  child_ctx[123] = list[i];
+  child_ctx[125] = i;
   return child_ctx;
 }
 function get_each_context_4(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[121] = list[i];
-  child_ctx[114] = i;
+  child_ctx[123] = list[i];
+  child_ctx[125] = i;
   return child_ctx;
 }
-function create_if_block_6(ctx) {
-  let div;
+function get_each_context_5(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[123] = list[i];
+  child_ctx[125] = i;
+  return child_ctx;
+}
+function create_if_block_2(ctx) {
+  let div0;
+  let t0;
+  let div1;
+  let t1;
+  let div2;
+  let t2;
+  let div3;
+  let t3;
+  let div4;
+  let t4;
+  let div5;
+  let each_value_5 = ensure_array_like(
+    /*fileItems*/
+    ctx[11]
+  );
+  let each_blocks_5 = [];
+  for (let i = 0; i < each_value_5.length; i += 1) {
+    each_blocks_5[i] = create_each_block_5(get_each_context_5(ctx, each_value_5, i));
+  }
   let each_value_4 = ensure_array_like(
-    /*filteredFiles*/
+    /*commandItems*/
+    ctx[12]
+  );
+  let each_blocks_4 = [];
+  for (let i = 0; i < each_value_4.length; i += 1) {
+    each_blocks_4[i] = create_each_block_4(get_each_context_4(ctx, each_value_4, i));
+  }
+  let each_value_3 = ensure_array_like(
+    /*providerItems*/
     ctx[13]
   );
+  let each_blocks_3 = [];
+  for (let i = 0; i < each_value_3.length; i += 1) {
+    each_blocks_3[i] = create_each_block_3(get_each_context_3(ctx, each_value_3, i));
+  }
+  let each_value_2 = ensure_array_like(
+    /*modelItems*/
+    ctx[14]
+  );
+  let each_blocks_2 = [];
+  for (let i = 0; i < each_value_2.length; i += 1) {
+    each_blocks_2[i] = create_each_block_2(get_each_context_2(ctx, each_value_2, i));
+  }
+  let each_value_1 = ensure_array_like(
+    /*creativityItems*/
+    ctx[15]
+  );
+  let each_blocks_1 = [];
+  for (let i = 0; i < each_value_1.length; i += 1) {
+    each_blocks_1[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
+  }
+  let each_value = ensure_array_like(
+    /*systemItems*/
+    ctx[16]
+  );
   let each_blocks = [];
-  for (let i = 0; i < each_value_4.length; i += 1) {
-    each_blocks[i] = create_each_block_4(get_each_context_4(ctx, each_value_4, i));
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
   }
   return {
     c() {
-      div = element("div");
+      div0 = element("div");
+      for (let i = 0; i < each_blocks_5.length; i += 1) {
+        each_blocks_5[i].c();
+      }
+      t0 = space();
+      div1 = element("div");
+      for (let i = 0; i < each_blocks_4.length; i += 1) {
+        each_blocks_4[i].c();
+      }
+      t1 = space();
+      div2 = element("div");
+      for (let i = 0; i < each_blocks_3.length; i += 1) {
+        each_blocks_3[i].c();
+      }
+      t2 = space();
+      div3 = element("div");
+      for (let i = 0; i < each_blocks_2.length; i += 1) {
+        each_blocks_2[i].c();
+      }
+      t3 = space();
+      div4 = element("div");
+      for (let i = 0; i < each_blocks_1.length; i += 1) {
+        each_blocks_1[i].c();
+      }
+      t4 = space();
+      div5 = element("div");
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(div, "class", "local-gpt-dropdown");
+      attr(div0, "class", "local-gpt-dropdown");
+      set_style(
+        div0,
+        "display",
+        /*activeDropdown*/
+        ctx[2] === "file" ? "block" : "none"
+      );
+      attr(div1, "class", "local-gpt-dropdown");
+      set_style(
+        div1,
+        "display",
+        /*activeDropdown*/
+        ctx[2] === "command" ? "block" : "none"
+      );
+      attr(div2, "class", "local-gpt-dropdown");
+      set_style(
+        div2,
+        "display",
+        /*activeDropdown*/
+        ctx[2] === "provider" ? "block" : "none"
+      );
+      attr(div3, "class", "local-gpt-dropdown");
+      set_style(
+        div3,
+        "display",
+        /*activeDropdown*/
+        ctx[2] === "model" ? "block" : "none"
+      );
+      attr(div4, "class", "local-gpt-dropdown");
+      set_style(
+        div4,
+        "display",
+        /*activeDropdown*/
+        ctx[2] === "creativity" ? "block" : "none"
+      );
+      attr(div5, "class", "local-gpt-dropdown");
+      set_style(
+        div5,
+        "display",
+        /*activeDropdown*/
+        ctx[2] === "system" ? "block" : "none"
+      );
     },
     m(target, anchor) {
-      insert(target, div, anchor);
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        if (each_blocks[i]) {
-          each_blocks[i].m(div, null);
+      insert(target, div0, anchor);
+      for (let i = 0; i < each_blocks_5.length; i += 1) {
+        if (each_blocks_5[i]) {
+          each_blocks_5[i].m(div0, null);
         }
       }
-      ctx[44](div);
+      ctx[39](div0);
+      insert(target, t0, anchor);
+      insert(target, div1, anchor);
+      for (let i = 0; i < each_blocks_4.length; i += 1) {
+        if (each_blocks_4[i]) {
+          each_blocks_4[i].m(div1, null);
+        }
+      }
+      ctx[42](div1);
+      insert(target, t1, anchor);
+      insert(target, div2, anchor);
+      for (let i = 0; i < each_blocks_3.length; i += 1) {
+        if (each_blocks_3[i]) {
+          each_blocks_3[i].m(div2, null);
+        }
+      }
+      ctx[45](div2);
+      insert(target, t2, anchor);
+      insert(target, div3, anchor);
+      for (let i = 0; i < each_blocks_2.length; i += 1) {
+        if (each_blocks_2[i]) {
+          each_blocks_2[i].m(div3, null);
+        }
+      }
+      ctx[48](div3);
+      insert(target, t3, anchor);
+      insert(target, div4, anchor);
+      for (let i = 0; i < each_blocks_1.length; i += 1) {
+        if (each_blocks_1[i]) {
+          each_blocks_1[i].m(div4, null);
+        }
+      }
+      ctx[51](div4);
+      insert(target, t4, anchor);
+      insert(target, div5, anchor);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(div5, null);
+        }
+      }
+      ctx[54](div5);
     },
     p(ctx2, dirty) {
-      if (dirty[0] & /*selectedDropdownIndex, insertFileAtCursor, filteredFiles*/
-      67379200) {
+      if (dirty[0] & /*selectedIndex, handleSelection, fileItems, activeDropdown*/
+      4327428) {
+        each_value_5 = ensure_array_like(
+          /*fileItems*/
+          ctx2[11]
+        );
+        let i;
+        for (i = 0; i < each_value_5.length; i += 1) {
+          const child_ctx = get_each_context_5(ctx2, each_value_5, i);
+          if (each_blocks_5[i]) {
+            each_blocks_5[i].p(child_ctx, dirty);
+          } else {
+            each_blocks_5[i] = create_each_block_5(child_ctx);
+            each_blocks_5[i].c();
+            each_blocks_5[i].m(div0, null);
+          }
+        }
+        for (; i < each_blocks_5.length; i += 1) {
+          each_blocks_5[i].d(1);
+        }
+        each_blocks_5.length = each_value_5.length;
+      }
+      if (dirty[0] & /*activeDropdown*/
+      4) {
+        set_style(
+          div0,
+          "display",
+          /*activeDropdown*/
+          ctx2[2] === "file" ? "block" : "none"
+        );
+      }
+      if (dirty[0] & /*selectedIndex, handleSelection, commandItems, activeDropdown*/
+      4329476) {
         each_value_4 = ensure_array_like(
-          /*filteredFiles*/
-          ctx2[13]
+          /*commandItems*/
+          ctx2[12]
         );
         let i;
         for (i = 0; i < each_value_4.length; i += 1) {
           const child_ctx = get_each_context_4(ctx2, each_value_4, i);
+          if (each_blocks_4[i]) {
+            each_blocks_4[i].p(child_ctx, dirty);
+          } else {
+            each_blocks_4[i] = create_each_block_4(child_ctx);
+            each_blocks_4[i].c();
+            each_blocks_4[i].m(div1, null);
+          }
+        }
+        for (; i < each_blocks_4.length; i += 1) {
+          each_blocks_4[i].d(1);
+        }
+        each_blocks_4.length = each_value_4.length;
+      }
+      if (dirty[0] & /*activeDropdown*/
+      4) {
+        set_style(
+          div1,
+          "display",
+          /*activeDropdown*/
+          ctx2[2] === "command" ? "block" : "none"
+        );
+      }
+      if (dirty[0] & /*selectedIndex, handleSelection, providerItems, activeDropdown*/
+      4333572) {
+        each_value_3 = ensure_array_like(
+          /*providerItems*/
+          ctx2[13]
+        );
+        let i;
+        for (i = 0; i < each_value_3.length; i += 1) {
+          const child_ctx = get_each_context_3(ctx2, each_value_3, i);
+          if (each_blocks_3[i]) {
+            each_blocks_3[i].p(child_ctx, dirty);
+          } else {
+            each_blocks_3[i] = create_each_block_3(child_ctx);
+            each_blocks_3[i].c();
+            each_blocks_3[i].m(div2, null);
+          }
+        }
+        for (; i < each_blocks_3.length; i += 1) {
+          each_blocks_3[i].d(1);
+        }
+        each_blocks_3.length = each_value_3.length;
+      }
+      if (dirty[0] & /*activeDropdown*/
+      4) {
+        set_style(
+          div2,
+          "display",
+          /*activeDropdown*/
+          ctx2[2] === "provider" ? "block" : "none"
+        );
+      }
+      if (dirty[0] & /*selectedIndex, handleSelection, modelItems, activeDropdown*/
+      4341764) {
+        each_value_2 = ensure_array_like(
+          /*modelItems*/
+          ctx2[14]
+        );
+        let i;
+        for (i = 0; i < each_value_2.length; i += 1) {
+          const child_ctx = get_each_context_2(ctx2, each_value_2, i);
+          if (each_blocks_2[i]) {
+            each_blocks_2[i].p(child_ctx, dirty);
+          } else {
+            each_blocks_2[i] = create_each_block_2(child_ctx);
+            each_blocks_2[i].c();
+            each_blocks_2[i].m(div3, null);
+          }
+        }
+        for (; i < each_blocks_2.length; i += 1) {
+          each_blocks_2[i].d(1);
+        }
+        each_blocks_2.length = each_value_2.length;
+      }
+      if (dirty[0] & /*activeDropdown*/
+      4) {
+        set_style(
+          div3,
+          "display",
+          /*activeDropdown*/
+          ctx2[2] === "model" ? "block" : "none"
+        );
+      }
+      if (dirty[0] & /*selectedIndex, handleSelection, creativityItems, activeDropdown*/
+      4358148) {
+        each_value_1 = ensure_array_like(
+          /*creativityItems*/
+          ctx2[15]
+        );
+        let i;
+        for (i = 0; i < each_value_1.length; i += 1) {
+          const child_ctx = get_each_context_1(ctx2, each_value_1, i);
+          if (each_blocks_1[i]) {
+            each_blocks_1[i].p(child_ctx, dirty);
+          } else {
+            each_blocks_1[i] = create_each_block_1(child_ctx);
+            each_blocks_1[i].c();
+            each_blocks_1[i].m(div4, null);
+          }
+        }
+        for (; i < each_blocks_1.length; i += 1) {
+          each_blocks_1[i].d(1);
+        }
+        each_blocks_1.length = each_value_1.length;
+      }
+      if (dirty[0] & /*activeDropdown*/
+      4) {
+        set_style(
+          div4,
+          "display",
+          /*activeDropdown*/
+          ctx2[2] === "creativity" ? "block" : "none"
+        );
+      }
+      if (dirty[0] & /*selectedIndex, handleSelection, systemItems, activeDropdown*/
+      4390916) {
+        each_value = ensure_array_like(
+          /*systemItems*/
+          ctx2[16]
+        );
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context(ctx2, each_value, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
           } else {
-            each_blocks[i] = create_each_block_4(child_ctx);
+            each_blocks[i] = create_each_block(child_ctx);
             each_blocks[i].c();
-            each_blocks[i].m(div, null);
+            each_blocks[i].m(div5, null);
           }
         }
         for (; i < each_blocks.length; i += 1) {
           each_blocks[i].d(1);
         }
-        each_blocks.length = each_value_4.length;
+        each_blocks.length = each_value.length;
+      }
+      if (dirty[0] & /*activeDropdown*/
+      4) {
+        set_style(
+          div5,
+          "display",
+          /*activeDropdown*/
+          ctx2[2] === "system" ? "block" : "none"
+        );
       }
     },
     d(detaching) {
       if (detaching) {
-        detach(div);
+        detach(div0);
+        detach(t0);
+        detach(div1);
+        detach(t1);
+        detach(div2);
+        detach(t2);
+        detach(div3);
+        detach(t3);
+        detach(div4);
+        detach(t4);
+        detach(div5);
       }
+      destroy_each(each_blocks_5, detaching);
+      ctx[39](null);
+      destroy_each(each_blocks_4, detaching);
+      ctx[42](null);
+      destroy_each(each_blocks_3, detaching);
+      ctx[45](null);
+      destroy_each(each_blocks_2, detaching);
+      ctx[48](null);
+      destroy_each(each_blocks_1, detaching);
+      ctx[51](null);
       destroy_each(each_blocks, detaching);
-      ctx[44](null);
+      ctx[54](null);
     }
   };
 }
-function create_each_block_4(ctx) {
+function create_if_block_10(ctx) {
   let div;
   let span0;
   let t0_value = (
-    /*file*/
-    ctx[121].basename + ""
+    /*item*/
+    ctx[123].basename + ""
   );
   let t0;
   let t1;
   let t2_value = (
-    /*file*/
-    ctx[121].extension + ""
+    /*item*/
+    ctx[123].extension + ""
   );
   let t2;
   let t3;
   let span1;
   let t4_value = (
-    /*file*/
-    ctx[121].path + ""
+    /*item*/
+    ctx[123].path + ""
   );
   let t4;
   let t5;
@@ -4590,18 +8167,18 @@ function create_each_block_4(ctx) {
   function click_handler() {
     return (
       /*click_handler*/
-      ctx[42](
-        /*file*/
-        ctx[121]
+      ctx[37](
+        /*item*/
+        ctx[123]
       )
     );
   }
   function keydown_handler(...args) {
     return (
       /*keydown_handler*/
-      ctx[43](
-        /*file*/
-        ctx[121],
+      ctx[38](
+        /*item*/
+        ctx[123],
         ...args
       )
     );
@@ -4620,13 +8197,13 @@ function create_each_block_4(ctx) {
       attr(span0, "class", "local-gpt-file-name");
       attr(span1, "class", "local-gpt-file-path");
       attr(div, "class", div_class_value = "local-gpt-dropdown-item " + /*index*/
-      (ctx[114] === /*selectedDropdownIndex*/
-      ctx[18] ? "local-gpt-selected" : ""));
+      (ctx[125] === /*selectedIndex*/
+      ctx[17] ? "local-gpt-selected" : ""));
       attr(div, "role", "option");
       attr(div, "tabindex", "0");
       attr(div, "aria-selected", div_aria_selected_value = /*index*/
-      ctx[114] === /*selectedDropdownIndex*/
-      ctx[18]);
+      ctx[125] === /*selectedIndex*/
+      ctx[17]);
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -4648,28 +8225,28 @@ function create_each_block_4(ctx) {
     },
     p(new_ctx, dirty) {
       ctx = new_ctx;
-      if (dirty[0] & /*filteredFiles*/
-      8192 && t0_value !== (t0_value = /*file*/
-      ctx[121].basename + ""))
+      if (dirty[0] & /*fileItems*/
+      2048 && t0_value !== (t0_value = /*item*/
+      ctx[123].basename + ""))
         set_data(t0, t0_value);
-      if (dirty[0] & /*filteredFiles*/
-      8192 && t2_value !== (t2_value = /*file*/
-      ctx[121].extension + ""))
+      if (dirty[0] & /*fileItems*/
+      2048 && t2_value !== (t2_value = /*item*/
+      ctx[123].extension + ""))
         set_data(t2, t2_value);
-      if (dirty[0] & /*filteredFiles*/
-      8192 && t4_value !== (t4_value = /*file*/
-      ctx[121].path + ""))
+      if (dirty[0] & /*fileItems*/
+      2048 && t4_value !== (t4_value = /*item*/
+      ctx[123].path + ""))
         set_data(t4, t4_value);
-      if (dirty[0] & /*selectedDropdownIndex*/
-      262144 && div_class_value !== (div_class_value = "local-gpt-dropdown-item " + /*index*/
-      (ctx[114] === /*selectedDropdownIndex*/
-      ctx[18] ? "local-gpt-selected" : ""))) {
+      if (dirty[0] & /*selectedIndex*/
+      131072 && div_class_value !== (div_class_value = "local-gpt-dropdown-item " + /*index*/
+      (ctx[125] === /*selectedIndex*/
+      ctx[17] ? "local-gpt-selected" : ""))) {
         attr(div, "class", div_class_value);
       }
-      if (dirty[0] & /*selectedDropdownIndex*/
-      262144 && div_aria_selected_value !== (div_aria_selected_value = /*index*/
-      ctx[114] === /*selectedDropdownIndex*/
-      ctx[18])) {
+      if (dirty[0] & /*selectedIndex*/
+      131072 && div_aria_selected_value !== (div_aria_selected_value = /*index*/
+      ctx[125] === /*selectedIndex*/
+      ctx[17])) {
         attr(div, "aria-selected", div_aria_selected_value);
       }
     },
@@ -4682,80 +8259,63 @@ function create_each_block_4(ctx) {
     }
   };
 }
-function create_if_block_5(ctx) {
-  let div;
-  let each_value_3 = ensure_array_like(
-    /*filteredCommands*/
-    ctx[14]
+function create_each_block_5(ctx) {
+  let if_block_anchor;
+  let if_block = (
+    /*activeDropdown*/
+    ctx[2] === "file" && create_if_block_10(ctx)
   );
-  let each_blocks = [];
-  for (let i = 0; i < each_value_3.length; i += 1) {
-    each_blocks[i] = create_each_block_3(get_each_context_3(ctx, each_value_3, i));
-  }
   return {
     c() {
-      div = element("div");
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].c();
-      }
-      attr(div, "class", "local-gpt-dropdown");
+      if (if_block)
+        if_block.c();
+      if_block_anchor = empty();
     },
     m(target, anchor) {
-      insert(target, div, anchor);
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        if (each_blocks[i]) {
-          each_blocks[i].m(div, null);
-        }
-      }
-      ctx[47](div);
+      if (if_block)
+        if_block.m(target, anchor);
+      insert(target, if_block_anchor, anchor);
     },
     p(ctx2, dirty) {
-      if (dirty[0] & /*selectedCommandIndex, insertCommandAtCursor, filteredCommands*/
-      134758400) {
-        each_value_3 = ensure_array_like(
-          /*filteredCommands*/
-          ctx2[14]
-        );
-        let i;
-        for (i = 0; i < each_value_3.length; i += 1) {
-          const child_ctx = get_each_context_3(ctx2, each_value_3, i);
-          if (each_blocks[i]) {
-            each_blocks[i].p(child_ctx, dirty);
-          } else {
-            each_blocks[i] = create_each_block_3(child_ctx);
-            each_blocks[i].c();
-            each_blocks[i].m(div, null);
-          }
+      if (
+        /*activeDropdown*/
+        ctx2[2] === "file"
+      ) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+        } else {
+          if_block = create_if_block_10(ctx2);
+          if_block.c();
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
         }
-        for (; i < each_blocks.length; i += 1) {
-          each_blocks[i].d(1);
-        }
-        each_blocks.length = each_value_3.length;
+      } else if (if_block) {
+        if_block.d(1);
+        if_block = null;
       }
     },
     d(detaching) {
       if (detaching) {
-        detach(div);
+        detach(if_block_anchor);
       }
-      destroy_each(each_blocks, detaching);
-      ctx[47](null);
+      if (if_block)
+        if_block.d(detaching);
     }
   };
 }
-function create_each_block_3(ctx) {
+function create_if_block_9(ctx) {
   let div;
   let span0;
   let t0;
   let t1_value = (
-    /*command*/
-    ctx[119].name + ""
+    /*item*/
+    ctx[123].name + ""
   );
   let t1;
   let t2;
   let span1;
   let t3_value = (
-    /*command*/
-    ctx[119].description + ""
+    /*item*/
+    ctx[123].description + ""
   );
   let t3;
   let t4;
@@ -4766,18 +8326,18 @@ function create_each_block_3(ctx) {
   function click_handler_1() {
     return (
       /*click_handler_1*/
-      ctx[45](
-        /*command*/
-        ctx[119]
+      ctx[40](
+        /*item*/
+        ctx[123]
       )
     );
   }
   function keydown_handler_1(...args) {
     return (
       /*keydown_handler_1*/
-      ctx[46](
-        /*command*/
-        ctx[119],
+      ctx[41](
+        /*item*/
+        ctx[123],
         ...args
       )
     );
@@ -4795,13 +8355,13 @@ function create_each_block_3(ctx) {
       attr(span0, "class", "local-gpt-command-name");
       attr(span1, "class", "local-gpt-command-description");
       attr(div, "class", div_class_value = "local-gpt-dropdown-item " + /*index*/
-      (ctx[114] === /*selectedCommandIndex*/
-      ctx[19] ? "local-gpt-selected" : ""));
+      (ctx[125] === /*selectedIndex*/
+      ctx[17] ? "local-gpt-selected" : ""));
       attr(div, "role", "option");
       attr(div, "tabindex", "0");
       attr(div, "aria-selected", div_aria_selected_value = /*index*/
-      ctx[114] === /*selectedCommandIndex*/
-      ctx[19]);
+      ctx[125] === /*selectedIndex*/
+      ctx[17]);
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -4822,24 +8382,24 @@ function create_each_block_3(ctx) {
     },
     p(new_ctx, dirty) {
       ctx = new_ctx;
-      if (dirty[0] & /*filteredCommands*/
-      16384 && t1_value !== (t1_value = /*command*/
-      ctx[119].name + ""))
+      if (dirty[0] & /*commandItems*/
+      4096 && t1_value !== (t1_value = /*item*/
+      ctx[123].name + ""))
         set_data(t1, t1_value);
-      if (dirty[0] & /*filteredCommands*/
-      16384 && t3_value !== (t3_value = /*command*/
-      ctx[119].description + ""))
+      if (dirty[0] & /*commandItems*/
+      4096 && t3_value !== (t3_value = /*item*/
+      ctx[123].description + ""))
         set_data(t3, t3_value);
-      if (dirty[0] & /*selectedCommandIndex*/
-      524288 && div_class_value !== (div_class_value = "local-gpt-dropdown-item " + /*index*/
-      (ctx[114] === /*selectedCommandIndex*/
-      ctx[19] ? "local-gpt-selected" : ""))) {
+      if (dirty[0] & /*selectedIndex*/
+      131072 && div_class_value !== (div_class_value = "local-gpt-dropdown-item " + /*index*/
+      (ctx[125] === /*selectedIndex*/
+      ctx[17] ? "local-gpt-selected" : ""))) {
         attr(div, "class", div_class_value);
       }
-      if (dirty[0] & /*selectedCommandIndex*/
-      524288 && div_aria_selected_value !== (div_aria_selected_value = /*index*/
-      ctx[114] === /*selectedCommandIndex*/
-      ctx[19])) {
+      if (dirty[0] & /*selectedIndex*/
+      131072 && div_aria_selected_value !== (div_aria_selected_value = /*index*/
+      ctx[125] === /*selectedIndex*/
+      ctx[17])) {
         attr(div, "aria-selected", div_aria_selected_value);
       }
     },
@@ -4852,409 +8412,64 @@ function create_each_block_3(ctx) {
     }
   };
 }
-function create_if_block_4(ctx) {
-  let div;
-  let each_value_2 = ensure_array_like(
-    /*filteredModels*/
-    ctx[16]
+function create_each_block_4(ctx) {
+  let if_block_anchor;
+  let if_block = (
+    /*activeDropdown*/
+    ctx[2] === "command" && create_if_block_9(ctx)
   );
-  let each_blocks = [];
-  for (let i = 0; i < each_value_2.length; i += 1) {
-    each_blocks[i] = create_each_block_2(get_each_context_2(ctx, each_value_2, i));
-  }
   return {
     c() {
-      div = element("div");
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].c();
-      }
-      attr(div, "class", "local-gpt-dropdown");
+      if (if_block)
+        if_block.c();
+      if_block_anchor = empty();
     },
     m(target, anchor) {
-      insert(target, div, anchor);
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        if (each_blocks[i]) {
-          each_blocks[i].m(div, null);
-        }
-      }
-      ctx[50](div);
+      if (if_block)
+        if_block.m(target, anchor);
+      insert(target, if_block_anchor, anchor);
     },
     p(ctx2, dirty) {
-      if (dirty[0] & /*selectedModelIndex, selectModel, filteredModels*/
-      539033600) {
-        each_value_2 = ensure_array_like(
-          /*filteredModels*/
-          ctx2[16]
-        );
-        let i;
-        for (i = 0; i < each_value_2.length; i += 1) {
-          const child_ctx = get_each_context_2(ctx2, each_value_2, i);
-          if (each_blocks[i]) {
-            each_blocks[i].p(child_ctx, dirty);
-          } else {
-            each_blocks[i] = create_each_block_2(child_ctx);
-            each_blocks[i].c();
-            each_blocks[i].m(div, null);
-          }
+      if (
+        /*activeDropdown*/
+        ctx2[2] === "command"
+      ) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+        } else {
+          if_block = create_if_block_9(ctx2);
+          if_block.c();
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
         }
-        for (; i < each_blocks.length; i += 1) {
-          each_blocks[i].d(1);
-        }
-        each_blocks.length = each_value_2.length;
+      } else if (if_block) {
+        if_block.d(1);
+        if_block = null;
       }
     },
     d(detaching) {
       if (detaching) {
-        detach(div);
+        detach(if_block_anchor);
       }
-      destroy_each(each_blocks, detaching);
-      ctx[50](null);
+      if (if_block)
+        if_block.d(detaching);
     }
   };
 }
-function create_each_block_2(ctx) {
-  let div;
-  let span;
-  let t0_value = (
-    /*model*/
-    ctx[117].name + ""
-  );
-  let t0;
-  let t1;
-  let div_class_value;
-  let div_aria_selected_value;
-  let mounted;
-  let dispose;
-  function click_handler_2() {
-    return (
-      /*click_handler_2*/
-      ctx[48](
-        /*model*/
-        ctx[117]
-      )
-    );
-  }
-  function keydown_handler_2(...args) {
-    return (
-      /*keydown_handler_2*/
-      ctx[49](
-        /*model*/
-        ctx[117],
-        ...args
-      )
-    );
-  }
-  return {
-    c() {
-      div = element("div");
-      span = element("span");
-      t0 = text(t0_value);
-      t1 = space();
-      attr(span, "class", "local-gpt-provider-name");
-      attr(div, "class", div_class_value = "local-gpt-dropdown-item " + /*index*/
-      (ctx[114] === /*selectedModelIndex*/
-      ctx[21] ? "local-gpt-selected" : ""));
-      attr(div, "role", "option");
-      attr(div, "tabindex", "0");
-      attr(div, "aria-selected", div_aria_selected_value = /*index*/
-      ctx[114] === /*selectedModelIndex*/
-      ctx[21]);
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-      append(div, span);
-      append(span, t0);
-      append(div, t1);
-      if (!mounted) {
-        dispose = [
-          listen(div, "click", click_handler_2),
-          listen(div, "keydown", keydown_handler_2)
-        ];
-        mounted = true;
-      }
-    },
-    p(new_ctx, dirty) {
-      ctx = new_ctx;
-      if (dirty[0] & /*filteredModels*/
-      65536 && t0_value !== (t0_value = /*model*/
-      ctx[117].name + ""))
-        set_data(t0, t0_value);
-      if (dirty[0] & /*selectedModelIndex*/
-      2097152 && div_class_value !== (div_class_value = "local-gpt-dropdown-item " + /*index*/
-      (ctx[114] === /*selectedModelIndex*/
-      ctx[21] ? "local-gpt-selected" : ""))) {
-        attr(div, "class", div_class_value);
-      }
-      if (dirty[0] & /*selectedModelIndex*/
-      2097152 && div_aria_selected_value !== (div_aria_selected_value = /*index*/
-      ctx[114] === /*selectedModelIndex*/
-      ctx[21])) {
-        attr(div, "aria-selected", div_aria_selected_value);
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-      mounted = false;
-      run_all(dispose);
-    }
-  };
-}
-function create_if_block_3(ctx) {
-  let div;
-  let each_value_1 = ensure_array_like(
-    /*filteredCreativities*/
-    ctx[17]
-  );
-  let each_blocks = [];
-  for (let i = 0; i < each_value_1.length; i += 1) {
-    each_blocks[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
-  }
-  return {
-    c() {
-      div = element("div");
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].c();
-      }
-      attr(div, "class", "local-gpt-dropdown");
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        if (each_blocks[i]) {
-          each_blocks[i].m(div, null);
-        }
-      }
-      ctx[53](div);
-    },
-    p(ctx2, dirty) {
-      if (dirty[0] & /*selectedCreativityIndex, selectCreativity, filteredCreativities*/
-      1078067200) {
-        each_value_1 = ensure_array_like(
-          /*filteredCreativities*/
-          ctx2[17]
-        );
-        let i;
-        for (i = 0; i < each_value_1.length; i += 1) {
-          const child_ctx = get_each_context_1(ctx2, each_value_1, i);
-          if (each_blocks[i]) {
-            each_blocks[i].p(child_ctx, dirty);
-          } else {
-            each_blocks[i] = create_each_block_1(child_ctx);
-            each_blocks[i].c();
-            each_blocks[i].m(div, null);
-          }
-        }
-        for (; i < each_blocks.length; i += 1) {
-          each_blocks[i].d(1);
-        }
-        each_blocks.length = each_value_1.length;
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-      destroy_each(each_blocks, detaching);
-      ctx[53](null);
-    }
-  };
-}
-function create_each_block_1(ctx) {
-  let div;
-  let span;
-  let t0_value = (
-    /*item*/
-    ctx[115].name + ""
-  );
-  let t0;
-  let t1;
-  let div_class_value;
-  let div_aria_selected_value;
-  let mounted;
-  let dispose;
-  function click_handler_3() {
-    return (
-      /*click_handler_3*/
-      ctx[51](
-        /*item*/
-        ctx[115]
-      )
-    );
-  }
-  function keydown_handler_3(...args) {
-    return (
-      /*keydown_handler_3*/
-      ctx[52](
-        /*item*/
-        ctx[115],
-        ...args
-      )
-    );
-  }
-  return {
-    c() {
-      div = element("div");
-      span = element("span");
-      t0 = text(t0_value);
-      t1 = space();
-      attr(span, "class", "local-gpt-provider-name");
-      attr(div, "class", div_class_value = "local-gpt-dropdown-item " + /*index*/
-      (ctx[114] === /*selectedCreativityIndex*/
-      ctx[22] ? "local-gpt-selected" : ""));
-      attr(div, "role", "option");
-      attr(div, "tabindex", "0");
-      attr(div, "aria-selected", div_aria_selected_value = /*index*/
-      ctx[114] === /*selectedCreativityIndex*/
-      ctx[22]);
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-      append(div, span);
-      append(span, t0);
-      append(div, t1);
-      if (!mounted) {
-        dispose = [
-          listen(div, "click", click_handler_3),
-          listen(div, "keydown", keydown_handler_3)
-        ];
-        mounted = true;
-      }
-    },
-    p(new_ctx, dirty) {
-      ctx = new_ctx;
-      if (dirty[0] & /*filteredCreativities*/
-      131072 && t0_value !== (t0_value = /*item*/
-      ctx[115].name + ""))
-        set_data(t0, t0_value);
-      if (dirty[0] & /*selectedCreativityIndex*/
-      4194304 && div_class_value !== (div_class_value = "local-gpt-dropdown-item " + /*index*/
-      (ctx[114] === /*selectedCreativityIndex*/
-      ctx[22] ? "local-gpt-selected" : ""))) {
-        attr(div, "class", div_class_value);
-      }
-      if (dirty[0] & /*selectedCreativityIndex*/
-      4194304 && div_aria_selected_value !== (div_aria_selected_value = /*index*/
-      ctx[114] === /*selectedCreativityIndex*/
-      ctx[22])) {
-        attr(div, "aria-selected", div_aria_selected_value);
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-      mounted = false;
-      run_all(dispose);
-    }
-  };
-}
-function create_if_block_1(ctx) {
-  let div;
-  let each_value = ensure_array_like(
-    /*filteredProviders*/
-    ctx[15]
-  );
-  let each_blocks = [];
-  for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
-  }
-  return {
-    c() {
-      div = element("div");
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].c();
-      }
-      attr(div, "class", "local-gpt-dropdown");
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        if (each_blocks[i]) {
-          each_blocks[i].m(div, null);
-        }
-      }
-      ctx[56](div);
-    },
-    p(ctx2, dirty) {
-      if (dirty[0] & /*selectedProviderIndex, selectProvider, filteredProviders*/
-      269516800) {
-        each_value = ensure_array_like(
-          /*filteredProviders*/
-          ctx2[15]
-        );
-        let i;
-        for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context(ctx2, each_value, i);
-          if (each_blocks[i]) {
-            each_blocks[i].p(child_ctx, dirty);
-          } else {
-            each_blocks[i] = create_each_block(child_ctx);
-            each_blocks[i].c();
-            each_blocks[i].m(div, null);
-          }
-        }
-        for (; i < each_blocks.length; i += 1) {
-          each_blocks[i].d(1);
-        }
-        each_blocks.length = each_value.length;
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-      destroy_each(each_blocks, detaching);
-      ctx[56](null);
-    }
-  };
-}
-function create_if_block_2(ctx) {
-  let span;
-  let t_value = (
-    /*provider*/
-    ctx[112].providerUrl + ""
-  );
-  let t;
-  return {
-    c() {
-      span = element("span");
-      t = text(t_value);
-      attr(span, "class", "local-gpt-provider-url");
-    },
-    m(target, anchor) {
-      insert(target, span, anchor);
-      append(span, t);
-    },
-    p(ctx2, dirty) {
-      if (dirty[0] & /*filteredProviders*/
-      32768 && t_value !== (t_value = /*provider*/
-      ctx2[112].providerUrl + ""))
-        set_data(t, t_value);
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(span);
-      }
-    }
-  };
-}
-function create_each_block(ctx) {
+function create_if_block_7(ctx) {
   let div1;
   let div0;
   let span0;
   let t0_value = (
-    /*provider*/
-    ctx[112].providerName + ""
+    /*item*/
+    ctx[123].providerName + ""
   );
   let t0;
   let t1;
   let t2;
   let span1;
   let t3_value = (
-    /*provider*/
-    ctx[112].name + ""
+    /*item*/
+    ctx[123].name + ""
   );
   let t3;
   let t4;
@@ -5263,24 +8478,24 @@ function create_each_block(ctx) {
   let mounted;
   let dispose;
   let if_block = (
-    /*provider*/
-    ctx[112].providerUrl && create_if_block_2(ctx)
+    /*item*/
+    ctx[123].providerUrl && create_if_block_8(ctx)
   );
-  function click_handler_4() {
+  function click_handler_2() {
     return (
-      /*click_handler_4*/
-      ctx[54](
-        /*provider*/
-        ctx[112]
+      /*click_handler_2*/
+      ctx[43](
+        /*item*/
+        ctx[123]
       )
     );
   }
-  function keydown_handler_4(...args) {
+  function keydown_handler_2(...args) {
     return (
-      /*keydown_handler_4*/
-      ctx[55](
-        /*provider*/
-        ctx[112],
+      /*keydown_handler_2*/
+      ctx[44](
+        /*item*/
+        ctx[123],
         ...args
       )
     );
@@ -5302,13 +8517,13 @@ function create_each_block(ctx) {
       attr(div0, "class", "local-gpt-provider-header");
       attr(span1, "class", "local-gpt-provider-model");
       attr(div1, "class", div1_class_value = "local-gpt-dropdown-item " + /*index*/
-      (ctx[114] === /*selectedProviderIndex*/
-      ctx[20] ? "local-gpt-selected" : ""));
+      (ctx[125] === /*selectedIndex*/
+      ctx[17] ? "local-gpt-selected" : ""));
       attr(div1, "role", "option");
       attr(div1, "tabindex", "0");
       attr(div1, "aria-selected", div1_aria_selected_value = /*index*/
-      ctx[114] === /*selectedProviderIndex*/
-      ctx[20]);
+      ctx[125] === /*selectedIndex*/
+      ctx[17]);
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -5324,26 +8539,26 @@ function create_each_block(ctx) {
       append(div1, t4);
       if (!mounted) {
         dispose = [
-          listen(div1, "click", click_handler_4),
-          listen(div1, "keydown", keydown_handler_4)
+          listen(div1, "click", click_handler_2),
+          listen(div1, "keydown", keydown_handler_2)
         ];
         mounted = true;
       }
     },
     p(new_ctx, dirty) {
       ctx = new_ctx;
-      if (dirty[0] & /*filteredProviders*/
-      32768 && t0_value !== (t0_value = /*provider*/
-      ctx[112].providerName + ""))
+      if (dirty[0] & /*providerItems*/
+      8192 && t0_value !== (t0_value = /*item*/
+      ctx[123].providerName + ""))
         set_data(t0, t0_value);
       if (
-        /*provider*/
-        ctx[112].providerUrl
+        /*item*/
+        ctx[123].providerUrl
       ) {
         if (if_block) {
           if_block.p(ctx, dirty);
         } else {
-          if_block = create_if_block_2(ctx);
+          if_block = create_if_block_8(ctx);
           if_block.c();
           if_block.m(div0, null);
         }
@@ -5351,20 +8566,20 @@ function create_each_block(ctx) {
         if_block.d(1);
         if_block = null;
       }
-      if (dirty[0] & /*filteredProviders*/
-      32768 && t3_value !== (t3_value = /*provider*/
-      ctx[112].name + ""))
+      if (dirty[0] & /*providerItems*/
+      8192 && t3_value !== (t3_value = /*item*/
+      ctx[123].name + ""))
         set_data(t3, t3_value);
-      if (dirty[0] & /*selectedProviderIndex*/
-      1048576 && div1_class_value !== (div1_class_value = "local-gpt-dropdown-item " + /*index*/
-      (ctx[114] === /*selectedProviderIndex*/
-      ctx[20] ? "local-gpt-selected" : ""))) {
+      if (dirty[0] & /*selectedIndex*/
+      131072 && div1_class_value !== (div1_class_value = "local-gpt-dropdown-item " + /*index*/
+      (ctx[125] === /*selectedIndex*/
+      ctx[17] ? "local-gpt-selected" : ""))) {
         attr(div1, "class", div1_class_value);
       }
-      if (dirty[0] & /*selectedProviderIndex*/
-      1048576 && div1_aria_selected_value !== (div1_aria_selected_value = /*index*/
-      ctx[114] === /*selectedProviderIndex*/
-      ctx[20])) {
+      if (dirty[0] & /*selectedIndex*/
+      131072 && div1_aria_selected_value !== (div1_aria_selected_value = /*index*/
+      ctx[125] === /*selectedIndex*/
+      ctx[17])) {
         attr(div1, "aria-selected", div1_aria_selected_value);
       }
     },
@@ -5379,28 +8594,614 @@ function create_each_block(ctx) {
     }
   };
 }
-function create_if_block(ctx) {
-  let div1;
-  let div0;
+function create_if_block_8(ctx) {
+  let span;
+  let t_value = (
+    /*item*/
+    ctx[123].providerUrl + ""
+  );
   let t;
-  let div0_class_value;
   return {
     c() {
-      div1 = element("div");
-      div0 = element("div");
+      span = element("span");
+      t = text(t_value);
+      attr(span, "class", "local-gpt-provider-url");
+    },
+    m(target, anchor) {
+      insert(target, span, anchor);
+      append(span, t);
+    },
+    p(ctx2, dirty) {
+      if (dirty[0] & /*providerItems*/
+      8192 && t_value !== (t_value = /*item*/
+      ctx2[123].providerUrl + ""))
+        set_data(t, t_value);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(span);
+      }
+    }
+  };
+}
+function create_each_block_3(ctx) {
+  let if_block_anchor;
+  let if_block = (
+    /*activeDropdown*/
+    ctx[2] === "provider" && create_if_block_7(ctx)
+  );
+  return {
+    c() {
+      if (if_block)
+        if_block.c();
+      if_block_anchor = empty();
+    },
+    m(target, anchor) {
+      if (if_block)
+        if_block.m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+    },
+    p(ctx2, dirty) {
+      if (
+        /*activeDropdown*/
+        ctx2[2] === "provider"
+      ) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+        } else {
+          if_block = create_if_block_7(ctx2);
+          if_block.c();
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+        }
+      } else if (if_block) {
+        if_block.d(1);
+        if_block = null;
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if (if_block)
+        if_block.d(detaching);
+    }
+  };
+}
+function create_if_block_6(ctx) {
+  let div;
+  let span;
+  let t0_value = (
+    /*item*/
+    ctx[123].name + ""
+  );
+  let t0;
+  let t1;
+  let div_class_value;
+  let div_aria_selected_value;
+  let mounted;
+  let dispose;
+  function click_handler_3() {
+    return (
+      /*click_handler_3*/
+      ctx[46](
+        /*item*/
+        ctx[123]
+      )
+    );
+  }
+  function keydown_handler_3(...args) {
+    return (
+      /*keydown_handler_3*/
+      ctx[47](
+        /*item*/
+        ctx[123],
+        ...args
+      )
+    );
+  }
+  return {
+    c() {
+      div = element("div");
+      span = element("span");
+      t0 = text(t0_value);
+      t1 = space();
+      attr(span, "class", "local-gpt-model-name");
+      attr(div, "class", div_class_value = "local-gpt-dropdown-item " + /*index*/
+      (ctx[125] === /*selectedIndex*/
+      ctx[17] ? "local-gpt-selected" : ""));
+      attr(div, "role", "option");
+      attr(div, "tabindex", "0");
+      attr(div, "aria-selected", div_aria_selected_value = /*index*/
+      ctx[125] === /*selectedIndex*/
+      ctx[17]);
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      append(div, span);
+      append(span, t0);
+      append(div, t1);
+      if (!mounted) {
+        dispose = [
+          listen(div, "click", click_handler_3),
+          listen(div, "keydown", keydown_handler_3)
+        ];
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (dirty[0] & /*modelItems*/
+      16384 && t0_value !== (t0_value = /*item*/
+      ctx[123].name + ""))
+        set_data(t0, t0_value);
+      if (dirty[0] & /*selectedIndex*/
+      131072 && div_class_value !== (div_class_value = "local-gpt-dropdown-item " + /*index*/
+      (ctx[125] === /*selectedIndex*/
+      ctx[17] ? "local-gpt-selected" : ""))) {
+        attr(div, "class", div_class_value);
+      }
+      if (dirty[0] & /*selectedIndex*/
+      131072 && div_aria_selected_value !== (div_aria_selected_value = /*index*/
+      ctx[125] === /*selectedIndex*/
+      ctx[17])) {
+        attr(div, "aria-selected", div_aria_selected_value);
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+function create_each_block_2(ctx) {
+  let if_block_anchor;
+  let if_block = (
+    /*activeDropdown*/
+    ctx[2] === "model" && create_if_block_6(ctx)
+  );
+  return {
+    c() {
+      if (if_block)
+        if_block.c();
+      if_block_anchor = empty();
+    },
+    m(target, anchor) {
+      if (if_block)
+        if_block.m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+    },
+    p(ctx2, dirty) {
+      if (
+        /*activeDropdown*/
+        ctx2[2] === "model"
+      ) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+        } else {
+          if_block = create_if_block_6(ctx2);
+          if_block.c();
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+        }
+      } else if (if_block) {
+        if_block.d(1);
+        if_block = null;
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if (if_block)
+        if_block.d(detaching);
+    }
+  };
+}
+function create_if_block_5(ctx) {
+  let div;
+  let span;
+  let t0_value = (
+    /*item*/
+    ctx[123].name + ""
+  );
+  let t0;
+  let t1;
+  let div_class_value;
+  let div_aria_selected_value;
+  let mounted;
+  let dispose;
+  function click_handler_4() {
+    return (
+      /*click_handler_4*/
+      ctx[49](
+        /*item*/
+        ctx[123]
+      )
+    );
+  }
+  function keydown_handler_4(...args) {
+    return (
+      /*keydown_handler_4*/
+      ctx[50](
+        /*item*/
+        ctx[123],
+        ...args
+      )
+    );
+  }
+  return {
+    c() {
+      div = element("div");
+      span = element("span");
+      t0 = text(t0_value);
+      t1 = space();
+      attr(span, "class", "local-gpt-creativity-name");
+      attr(div, "class", div_class_value = "local-gpt-dropdown-item " + /*index*/
+      (ctx[125] === /*selectedIndex*/
+      ctx[17] ? "local-gpt-selected" : ""));
+      attr(div, "role", "option");
+      attr(div, "tabindex", "0");
+      attr(div, "aria-selected", div_aria_selected_value = /*index*/
+      ctx[125] === /*selectedIndex*/
+      ctx[17]);
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      append(div, span);
+      append(span, t0);
+      append(div, t1);
+      if (!mounted) {
+        dispose = [
+          listen(div, "click", click_handler_4),
+          listen(div, "keydown", keydown_handler_4)
+        ];
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (dirty[0] & /*creativityItems*/
+      32768 && t0_value !== (t0_value = /*item*/
+      ctx[123].name + ""))
+        set_data(t0, t0_value);
+      if (dirty[0] & /*selectedIndex*/
+      131072 && div_class_value !== (div_class_value = "local-gpt-dropdown-item " + /*index*/
+      (ctx[125] === /*selectedIndex*/
+      ctx[17] ? "local-gpt-selected" : ""))) {
+        attr(div, "class", div_class_value);
+      }
+      if (dirty[0] & /*selectedIndex*/
+      131072 && div_aria_selected_value !== (div_aria_selected_value = /*index*/
+      ctx[125] === /*selectedIndex*/
+      ctx[17])) {
+        attr(div, "aria-selected", div_aria_selected_value);
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+function create_each_block_1(ctx) {
+  let if_block_anchor;
+  let if_block = (
+    /*activeDropdown*/
+    ctx[2] === "creativity" && create_if_block_5(ctx)
+  );
+  return {
+    c() {
+      if (if_block)
+        if_block.c();
+      if_block_anchor = empty();
+    },
+    m(target, anchor) {
+      if (if_block)
+        if_block.m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+    },
+    p(ctx2, dirty) {
+      if (
+        /*activeDropdown*/
+        ctx2[2] === "creativity"
+      ) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+        } else {
+          if_block = create_if_block_5(ctx2);
+          if_block.c();
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+        }
+      } else if (if_block) {
+        if_block.d(1);
+        if_block = null;
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if (if_block)
+        if_block.d(detaching);
+    }
+  };
+}
+function create_if_block_3(ctx) {
+  let div;
+  let span;
+  let t0_value = (
+    /*item*/
+    ctx[123].name + ""
+  );
+  let t0;
+  let t1;
+  let t2;
+  let div_class_value;
+  let div_aria_selected_value;
+  let mounted;
+  let dispose;
+  let if_block = (
+    /*item*/
+    ctx[123].id !== CLEAR_SYSTEM_PROMPT_ID && create_if_block_4(ctx)
+  );
+  function click_handler_5() {
+    return (
+      /*click_handler_5*/
+      ctx[52](
+        /*item*/
+        ctx[123]
+      )
+    );
+  }
+  function keydown_handler_5(...args) {
+    return (
+      /*keydown_handler_5*/
+      ctx[53](
+        /*item*/
+        ctx[123],
+        ...args
+      )
+    );
+  }
+  return {
+    c() {
+      div = element("div");
+      span = element("span");
+      t0 = text(t0_value);
+      t1 = space();
+      if (if_block)
+        if_block.c();
+      t2 = space();
+      attr(span, "class", "local-gpt-system-name");
+      attr(div, "class", div_class_value = "local-gpt-dropdown-item " + /*index*/
+      (ctx[125] === /*selectedIndex*/
+      ctx[17] ? "local-gpt-selected" : ""));
+      attr(div, "role", "option");
+      attr(div, "tabindex", "0");
+      attr(div, "aria-selected", div_aria_selected_value = /*index*/
+      ctx[125] === /*selectedIndex*/
+      ctx[17]);
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      append(div, span);
+      append(span, t0);
+      append(div, t1);
+      if (if_block)
+        if_block.m(div, null);
+      append(div, t2);
+      if (!mounted) {
+        dispose = [
+          listen(div, "click", click_handler_5),
+          listen(div, "keydown", keydown_handler_5)
+        ];
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (dirty[0] & /*systemItems*/
+      65536 && t0_value !== (t0_value = /*item*/
+      ctx[123].name + ""))
+        set_data(t0, t0_value);
+      if (
+        /*item*/
+        ctx[123].id !== CLEAR_SYSTEM_PROMPT_ID
+      ) {
+        if (if_block) {
+          if_block.p(ctx, dirty);
+        } else {
+          if_block = create_if_block_4(ctx);
+          if_block.c();
+          if_block.m(div, t2);
+        }
+      } else if (if_block) {
+        if_block.d(1);
+        if_block = null;
+      }
+      if (dirty[0] & /*selectedIndex*/
+      131072 && div_class_value !== (div_class_value = "local-gpt-dropdown-item " + /*index*/
+      (ctx[125] === /*selectedIndex*/
+      ctx[17] ? "local-gpt-selected" : ""))) {
+        attr(div, "class", div_class_value);
+      }
+      if (dirty[0] & /*selectedIndex*/
+      131072 && div_aria_selected_value !== (div_aria_selected_value = /*index*/
+      ctx[125] === /*selectedIndex*/
+      ctx[17])) {
+        attr(div, "aria-selected", div_aria_selected_value);
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      if (if_block)
+        if_block.d();
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+function create_if_block_4(ctx) {
+  let span;
+  let t_value = formatSystemPreview(
+    /*item*/
+    ctx[123].system
+  ) + "";
+  let t;
+  return {
+    c() {
+      span = element("span");
+      t = text(t_value);
+      attr(span, "class", "local-gpt-system-detail");
+    },
+    m(target, anchor) {
+      insert(target, span, anchor);
+      append(span, t);
+    },
+    p(ctx2, dirty) {
+      if (dirty[0] & /*systemItems*/
+      65536 && t_value !== (t_value = formatSystemPreview(
+        /*item*/
+        ctx2[123].system
+      ) + ""))
+        set_data(t, t_value);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(span);
+      }
+    }
+  };
+}
+function create_each_block(ctx) {
+  let if_block_anchor;
+  let if_block = (
+    /*activeDropdown*/
+    ctx[2] === "system" && create_if_block_3(ctx)
+  );
+  return {
+    c() {
+      if (if_block)
+        if_block.c();
+      if_block_anchor = empty();
+    },
+    m(target, anchor) {
+      if (if_block)
+        if_block.m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+    },
+    p(ctx2, dirty) {
+      if (
+        /*activeDropdown*/
+        ctx2[2] === "system"
+      ) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+        } else {
+          if_block = create_if_block_3(ctx2);
+          if_block.c();
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+        }
+      } else if (if_block) {
+        if_block.d(1);
+        if_block = null;
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if (if_block)
+        if_block.d(detaching);
+    }
+  };
+}
+function create_else_block(ctx) {
+  let div;
+  return {
+    c() {
+      div = element("div");
+      div.textContent = `${I18n.t("commands.actionPalette.hint")}`;
+      attr(div, "class", "local-gpt-provider-badge-hint");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+    },
+    p: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+    }
+  };
+}
+function create_if_block_1(ctx) {
+  let div;
+  let span;
+  let t;
+  let div_class_value;
+  return {
+    c() {
+      div = element("div");
+      span = element("span");
+      t = text(
+        /*selectedSystemPromptName*/
+        ctx[19]
+      );
+      attr(span, "class", "local-gpt-system-indicator-label");
+      attr(div, "class", div_class_value = /*badgeHighlight*/
+      ctx[18] ? "local-gpt-system-indicator local-gpt-badge-highlight" : "local-gpt-system-indicator");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      append(div, span);
+      append(span, t);
+    },
+    p(ctx2, dirty) {
+      if (dirty[0] & /*selectedSystemPromptName*/
+      524288)
+        set_data(
+          t,
+          /*selectedSystemPromptName*/
+          ctx2[19]
+        );
+      if (dirty[0] & /*badgeHighlight*/
+      262144 && div_class_value !== (div_class_value = /*badgeHighlight*/
+      ctx2[18] ? "local-gpt-system-indicator local-gpt-badge-highlight" : "local-gpt-system-indicator")) {
+        attr(div, "class", div_class_value);
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+    }
+  };
+}
+function create_if_block(ctx) {
+  let div;
+  let t;
+  let div_class_value;
+  return {
+    c() {
+      div = element("div");
       t = text(
         /*providerLabel*/
         ctx[0]
       );
-      attr(div0, "class", div0_class_value = /*badgeHighlight*/
-      ctx[23] ? "local-gpt-provider-badge-label local-gpt-badge-highlight" : "local-gpt-provider-badge-label");
-      attr(div1, "class", "local-gpt-provider-badge");
-      attr(div1, "aria-hidden", "true");
+      attr(div, "class", div_class_value = /*badgeHighlight*/
+      ctx[18] ? "local-gpt-provider-badge-label local-gpt-badge-highlight" : "local-gpt-provider-badge-label");
     },
     m(target, anchor) {
-      insert(target, div1, anchor);
-      append(div1, div0);
-      append(div0, t);
+      insert(target, div, anchor);
+      append(div, t);
     },
     p(ctx2, dirty) {
       if (dirty[0] & /*providerLabel*/
@@ -5411,80 +9212,59 @@ function create_if_block(ctx) {
           ctx2[0]
         );
       if (dirty[0] & /*badgeHighlight*/
-      8388608 && div0_class_value !== (div0_class_value = /*badgeHighlight*/
-      ctx2[23] ? "local-gpt-provider-badge-label local-gpt-badge-highlight" : "local-gpt-provider-badge-label")) {
-        attr(div0, "class", div0_class_value);
+      262144 && div_class_value !== (div_class_value = /*badgeHighlight*/
+      ctx2[18] ? "local-gpt-provider-badge-label local-gpt-badge-highlight" : "local-gpt-provider-badge-label")) {
+        attr(div, "class", div_class_value);
       }
     },
     d(detaching) {
       if (detaching) {
-        detach(div1);
+        detach(div);
       }
     }
   };
 }
 function create_fragment(ctx) {
-  let div1;
+  let div2;
   let div0;
   let t0;
   let t1;
+  let div1;
   let t2;
-  let t3;
-  let t4;
-  let t5;
   let mounted;
   let dispose;
   let if_block0 = (
-    /*isDropdownVisible*/
-    ctx[8] && /*filteredFiles*/
-    ctx[13].length > 0 && create_if_block_6(ctx)
+    /*activeDropdown*/
+    ctx[2] !== "none" && /*filteredItems*/
+    ctx[3].length > 0 && create_if_block_2(ctx)
   );
-  let if_block1 = (
-    /*isCommandDropdownVisible*/
-    ctx[9] && /*filteredCommands*/
-    ctx[14].length > 0 && create_if_block_5(ctx)
-  );
+  function select_block_type(ctx2, dirty) {
+    if (
+      /*selectedSystemPromptName*/
+      ctx2[19]
+    )
+      return create_if_block_1;
+    return create_else_block;
+  }
+  let current_block_type = select_block_type(ctx, [-1, -1, -1, -1, -1]);
+  let if_block1 = current_block_type(ctx);
   let if_block2 = (
-    /*isModelDropdownVisible*/
-    ctx[11] && /*filteredModels*/
-    ctx[16].length > 0 && create_if_block_4(ctx)
-  );
-  let if_block3 = (
-    /*isCreativityDropdownVisible*/
-    ctx[12] && /*filteredCreativities*/
-    ctx[17].length > 0 && create_if_block_3(ctx)
-  );
-  let if_block4 = (
-    /*isProviderDropdownVisible*/
-    ctx[10] && /*filteredProviders*/
-    ctx[15].length > 0 && create_if_block_1(ctx)
-  );
-  let if_block5 = (
     /*providerLabel*/
     ctx[0] && create_if_block(ctx)
   );
   return {
     c() {
-      div1 = element("div");
+      div2 = element("div");
       div0 = element("div");
       t0 = space();
       if (if_block0)
         if_block0.c();
       t1 = space();
-      if (if_block1)
-        if_block1.c();
+      div1 = element("div");
+      if_block1.c();
       t2 = space();
       if (if_block2)
         if_block2.c();
-      t3 = space();
-      if (if_block3)
-        if_block3.c();
-      t4 = space();
-      if (if_block4)
-        if_block4.c();
-      t5 = space();
-      if (if_block5)
-        if_block5.c();
       attr(div0, "class", "local-gpt-action-palette");
       attr(div0, "contenteditable", "true");
       attr(div0, "role", "textbox");
@@ -5502,55 +9282,47 @@ function create_fragment(ctx) {
         ctx[1]
       );
       attr(div0, "spellcheck", "false");
-      attr(div1, "class", "local-gpt-action-palette-shell");
+      attr(div1, "class", "local-gpt-provider-badge");
+      attr(div2, "class", "local-gpt-action-palette-shell");
     },
     m(target, anchor) {
-      insert(target, div1, anchor);
-      append(div1, div0);
-      ctx[41](div0);
-      append(div1, t0);
+      insert(target, div2, anchor);
+      append(div2, div0);
+      ctx[36](div0);
+      append(div2, t0);
       if (if_block0)
-        if_block0.m(div1, null);
-      append(div1, t1);
-      if (if_block1)
-        if_block1.m(div1, null);
+        if_block0.m(div2, null);
+      append(div2, t1);
+      append(div2, div1);
+      if_block1.m(div1, null);
       append(div1, t2);
       if (if_block2)
         if_block2.m(div1, null);
-      append(div1, t3);
-      if (if_block3)
-        if_block3.m(div1, null);
-      append(div1, t4);
-      if (if_block4)
-        if_block4.m(div1, null);
-      append(div1, t5);
-      if (if_block5)
-        if_block5.m(div1, null);
       if (!mounted) {
         dispose = [
           listen(
             div0,
             "keydown",
             /*handleKeydown*/
-            ctx[24]
+            ctx[20]
           ),
           listen(
             div0,
             "input",
             /*handleInput*/
-            ctx[25]
+            ctx[21]
           ),
           listen(
             div0,
             "keyup",
             /*handleKeyup*/
-            ctx[32]
+            ctx[24]
           ),
           listen(
             div0,
             "click",
             /*handleContentClick*/
-            ctx[31]
+            ctx[23]
           )
         ];
         mounted = true;
@@ -5576,120 +9348,59 @@ function create_fragment(ctx) {
         );
       }
       if (
-        /*isDropdownVisible*/
-        ctx2[8] && /*filteredFiles*/
-        ctx2[13].length > 0
+        /*activeDropdown*/
+        ctx2[2] !== "none" && /*filteredItems*/
+        ctx2[3].length > 0
       ) {
         if (if_block0) {
           if_block0.p(ctx2, dirty);
         } else {
-          if_block0 = create_if_block_6(ctx2);
+          if_block0 = create_if_block_2(ctx2);
           if_block0.c();
-          if_block0.m(div1, t1);
+          if_block0.m(div2, t1);
         }
       } else if (if_block0) {
         if_block0.d(1);
         if_block0 = null;
       }
-      if (
-        /*isCommandDropdownVisible*/
-        ctx2[9] && /*filteredCommands*/
-        ctx2[14].length > 0
-      ) {
+      if (current_block_type === (current_block_type = select_block_type(ctx2, dirty)) && if_block1) {
+        if_block1.p(ctx2, dirty);
+      } else {
+        if_block1.d(1);
+        if_block1 = current_block_type(ctx2);
         if (if_block1) {
-          if_block1.p(ctx2, dirty);
-        } else {
-          if_block1 = create_if_block_5(ctx2);
           if_block1.c();
           if_block1.m(div1, t2);
         }
-      } else if (if_block1) {
-        if_block1.d(1);
-        if_block1 = null;
-      }
-      if (
-        /*isModelDropdownVisible*/
-        ctx2[11] && /*filteredModels*/
-        ctx2[16].length > 0
-      ) {
-        if (if_block2) {
-          if_block2.p(ctx2, dirty);
-        } else {
-          if_block2 = create_if_block_4(ctx2);
-          if_block2.c();
-          if_block2.m(div1, t3);
-        }
-      } else if (if_block2) {
-        if_block2.d(1);
-        if_block2 = null;
-      }
-      if (
-        /*isCreativityDropdownVisible*/
-        ctx2[12] && /*filteredCreativities*/
-        ctx2[17].length > 0
-      ) {
-        if (if_block3) {
-          if_block3.p(ctx2, dirty);
-        } else {
-          if_block3 = create_if_block_3(ctx2);
-          if_block3.c();
-          if_block3.m(div1, t4);
-        }
-      } else if (if_block3) {
-        if_block3.d(1);
-        if_block3 = null;
-      }
-      if (
-        /*isProviderDropdownVisible*/
-        ctx2[10] && /*filteredProviders*/
-        ctx2[15].length > 0
-      ) {
-        if (if_block4) {
-          if_block4.p(ctx2, dirty);
-        } else {
-          if_block4 = create_if_block_1(ctx2);
-          if_block4.c();
-          if_block4.m(div1, t5);
-        }
-      } else if (if_block4) {
-        if_block4.d(1);
-        if_block4 = null;
       }
       if (
         /*providerLabel*/
         ctx2[0]
       ) {
-        if (if_block5) {
-          if_block5.p(ctx2, dirty);
+        if (if_block2) {
+          if_block2.p(ctx2, dirty);
         } else {
-          if_block5 = create_if_block(ctx2);
-          if_block5.c();
-          if_block5.m(div1, null);
+          if_block2 = create_if_block(ctx2);
+          if_block2.c();
+          if_block2.m(div1, null);
         }
-      } else if (if_block5) {
-        if_block5.d(1);
-        if_block5 = null;
+      } else if (if_block2) {
+        if_block2.d(1);
+        if_block2 = null;
       }
     },
     i: noop,
     o: noop,
     d(detaching) {
       if (detaching) {
-        detach(div1);
+        detach(div2);
       }
-      ctx[41](null);
+      ctx[36](null);
       if (if_block0)
         if_block0.d();
-      if (if_block1)
-        if_block1.d();
+      if_block1.d();
       if (if_block2)
         if_block2.d();
-      if (if_block3)
-        if_block3.d();
-      if (if_block4)
-        if_block4.d();
-      if (if_block5)
-        if_block5.d();
       mounted = false;
       run_all(dispose);
     }
@@ -5702,6 +9413,8 @@ var SPACE_AFTER_MENTION = " ";
 var COMMAND_REGEX = /\/([^\/\s]+)(?=\s|$|\/)/g;
 var COMMAND_PREFIX = "/";
 var SPACE_AFTER_COMMAND = " ";
+var CLEAR_SYSTEM_PROMPT_ID = "__clear_system_prompt__";
+var SYSTEM_PREVIEW_LENGTH = 80;
 function findMatchingFile(fileName, availableFiles) {
   const normalizedFileName = fileName.toLowerCase();
   return availableFiles.find((file) => {
@@ -5730,6 +9443,12 @@ function scrollSelectedIntoView(container, index2) {
     selectedItem.scrollIntoView({ block: "nearest", behavior: "smooth" });
   }
 }
+function formatSystemPreview(text2) {
+  const singleLine = text2.replace(/\r?\n/g, " ");
+  if (singleLine.length <= SYSTEM_PREVIEW_LENGTH)
+    return singleLine;
+  return `${singleLine.slice(0, SYSTEM_PREVIEW_LENGTH - 1)}\u2026`;
+}
 function fuzzyMatch(target, query) {
   if (!query)
     return true;
@@ -5749,7 +9468,7 @@ function createFileRemovalPattern(file) {
   return new RegExp(`${MENTION_PREFIX}${escapedFileName}\\s?`, "g");
 }
 function instance($$self, $$props, $$invalidate) {
-  let { placeholder = "Type here\u2026" } = $$props;
+  let { placeholder = I18n.t("commands.actionPalette.placeholder") } = $$props;
   let { value = "" } = $$props;
   let { providerLabel = "" } = $$props;
   let { providerId = void 0 } = $$props;
@@ -5759,6 +9478,9 @@ function instance($$self, $$props, $$invalidate) {
   let { getModels = void 0 } = $$props;
   let { onModelChange = void 0 } = $$props;
   let { onCreativityChange = void 0 } = $$props;
+  let { getSystemPrompts = void 0 } = $$props;
+  let { selectedSystemPromptId = null } = $$props;
+  let { onSystemPromptChange = void 0 } = $$props;
   const dispatch = createEventDispatcher();
   let contentElement = null;
   let dropdownElement = null;
@@ -5766,25 +9488,56 @@ function instance($$self, $$props, $$invalidate) {
   let providerDropdownElement = null;
   let modelDropdownElement = null;
   let creativityDropdownElement = null;
-  let isDropdownVisible = false;
-  let isCommandDropdownVisible = false;
-  let isProviderDropdownVisible = false;
-  let isModelDropdownVisible = false;
-  let isCreativityDropdownVisible = false;
-  let filteredFiles = [];
-  let filteredCommands = [];
-  let filteredProviders = [];
-  let filteredModels = [];
-  let filteredCreativities = [];
+  let systemDropdownElement = null;
+  let activeDropdown = "none";
+  let filteredItems = [];
+  let fileItems = [];
+  let commandItems = [];
+  let providerItems = [];
+  let modelItems = [];
+  let creativityItems = [];
+  let systemItems = [];
   let allProviders = [];
   let allModels = [];
   let allCreativities = [];
-  let selectedDropdownIndex = -1;
-  let selectedCommandIndex = -1;
-  let selectedProviderIndex = -1;
-  let selectedModelIndex = -1;
-  let selectedCreativityIndex = -1;
+  let allSystemPrompts = [];
+  function updateFilteredDropdownItems(matches2) {
+    $$invalidate(3, filteredItems = matches2);
+    if (matches2.length === 0) {
+      $$invalidate(17, selectedIndex = -1);
+      return;
+    }
+    if (selectedIndex < 0 || selectedIndex >= matches2.length) {
+      $$invalidate(17, selectedIndex = 0);
+    }
+  }
+  const dropdownControllers = {
+    provider: {
+      kind: "provider",
+      show: () => showProviderDropdown(),
+      refresh: () => applyProviderFilter()
+    },
+    model: {
+      kind: "model",
+      show: () => showModelDropdown(),
+      refresh: () => applyModelFilter()
+    },
+    creativity: {
+      kind: "creativity",
+      show: () => showCreativityDropdown(),
+      refresh: () => applyCreativityFilter()
+    },
+    system: {
+      kind: "system",
+      show: () => showSystemDropdown(),
+      refresh: () => applySystemFilter()
+    }
+  };
+  let selectedIndex = -1;
   let badgeHighlight = false;
+  let selectedSystemPromptValue = void 0;
+  let historyIndex = getPromptHistoryLength();
+  let draftBeforeHistory = value;
   let selectedFiles = [];
   let textContent = "";
   let cursorPosition = 0;
@@ -5794,6 +9547,7 @@ function instance($$self, $$props, $$invalidate) {
   let providerName = providerLabel.split(" \xB7 ")[0] || "";
   let modelName = (providerLabel.split(" \xB7 ")[1] || "").trim();
   let creativityBadge = (providerLabel.split(" \xB7 ")[2] || "").trim();
+  let selectedSystemPromptName = "";
   function getCreativityOptions() {
     return [
       {
@@ -5823,7 +9577,7 @@ function instance($$self, $$props, $$invalidate) {
     const newSelectedFiles = [];
     const mentionMatches = Array.from(text2.matchAll(FILE_MENTION_REGEX));
     for (const match of mentionMatches) {
-      const fileName = match[1].trim();
+      const fileName = (match[1] || "").trim();
       const matchedFile = findMatchingFile(fileName, availableFiles);
       if (matchedFile && !selectedFiles.includes(matchedFile.path)) {
         newSelectedFiles.push(matchedFile.path);
@@ -5845,6 +9599,10 @@ function instance($$self, $$props, $$invalidate) {
       {
         name: "creativity",
         description: I18n.t("commands.actionPalette.changeCreativity")
+      },
+      {
+        name: "system",
+        description: I18n.t("commands.actionPalette.changeSystemPrompt")
       }
     ];
   }
@@ -5873,6 +9631,7 @@ function instance($$self, $$props, $$invalidate) {
     });
   }
   function parseTextToTokens(text2) {
+    var _a2;
     const tokens = [];
     if (getFiles) {
       const availableFiles = getFiles();
@@ -5886,10 +9645,13 @@ function instance($$self, $$props, $$invalidate) {
     const allMatches = [
       ...mentionMatches.map((match) => ({ type: "file", match })),
       ...commandMatches.map((match) => ({ type: "command", match }))
-    ].sort((a, b) => a.match.index - b.match.index);
+    ].sort((a, b) => {
+      var _a3, _b;
+      return ((_a3 = a.match.index) !== null && _a3 !== void 0 ? _a3 : 0) - ((_b = b.match.index) !== null && _b !== void 0 ? _b : 0);
+    });
     let lastIndex = 0;
     for (const { type, match } of allMatches) {
-      const matchStart = match.index;
+      const matchStart = (_a2 = match.index) !== null && _a2 !== void 0 ? _a2 : 0;
       const matchEnd = matchStart + match[0].length;
       if (matchStart > lastIndex) {
         tokens.push({
@@ -5900,7 +9662,7 @@ function instance($$self, $$props, $$invalidate) {
         });
       }
       if (type === "file" && getFiles) {
-        const fileName = match[1].trim();
+        const fileName = (match[1] || "").trim();
         const availableFiles = getFiles();
         const matchedFile = findMatchingFile(fileName, availableFiles);
         if (matchedFile) {
@@ -5920,7 +9682,7 @@ function instance($$self, $$props, $$invalidate) {
           });
         }
       } else if (type === "command") {
-        const commandName = match[1].trim();
+        const commandName = (match[1] || "").trim();
         const availableCommands = getAvailableCommands();
         const matchedCommand = availableCommands.find((cmd) => cmd.name === commandName);
         if (matchedCommand) {
@@ -6008,7 +9770,7 @@ function instance($$self, $$props, $$invalidate) {
     if (!contentElement)
       return;
     const currentCursor = getCurrentCursorPosition();
-    $$invalidate(2, contentElement.innerHTML = renderTokensAsHtml(), contentElement);
+    $$invalidate(4, contentElement.innerHTML = renderTokensAsHtml(), contentElement);
     tick().then(() => {
       setCursorPosition(currentCursor);
     });
@@ -6017,8 +9779,30 @@ function instance($$self, $$props, $$invalidate) {
     providerName = pName;
     modelName = mName;
     const base = [providerName, modelName].filter(Boolean).join(" \xB7 ");
-    $$invalidate(0, providerLabel = creativityBadge ? `${base} \xB7 ${creativityBadge}` : base);
+    const extras = [creativityBadge].filter(Boolean).join(" \xB7 ");
+    $$invalidate(0, providerLabel = extras ? `${base} \xB7 ${extras}` : base);
   }
+  function highlightBadgeTemporarily() {
+    $$invalidate(18, badgeHighlight = true);
+    setTimeout(
+      () => {
+        $$invalidate(18, badgeHighlight = false);
+      },
+      900
+    );
+  }
+  function applyHistoryEntry(text2) {
+    textContent = text2;
+    cursorPosition = textContent.length;
+    selectedFiles = [];
+    textTokens = parseTextToTokens(textContent);
+    hideDropdown();
+    updateContentDisplay();
+    tick().then(() => {
+      setCursorPosition(textContent.length);
+    });
+  }
+  restoreSelectedSystemPrompt();
   onMount(() => {
     queueMicrotask(() => {
       contentElement === null || contentElement === void 0 ? void 0 : contentElement.focus();
@@ -6029,156 +9813,79 @@ function instance($$self, $$props, $$invalidate) {
       }
     });
   });
+  function restoreSelectedSystemPrompt() {
+    if (!selectedSystemPromptId || !getSystemPrompts) {
+      $$invalidate(19, selectedSystemPromptName = "");
+      selectedSystemPromptValue = void 0;
+      return;
+    }
+    const availablePrompts = getSystemPrompts();
+    const matchedPrompt = availablePrompts.find((prompt) => prompt.id === selectedSystemPromptId);
+    if (!matchedPrompt) {
+      void (onSystemPromptChange === null || onSystemPromptChange === void 0 ? void 0 : onSystemPromptChange(null));
+      $$invalidate(19, selectedSystemPromptName = "");
+      selectedSystemPromptValue = void 0;
+      return;
+    }
+    $$invalidate(19, selectedSystemPromptName = matchedPrompt.name);
+    selectedSystemPromptValue = matchedPrompt.system;
+  }
   function handleDropdownNavigation(event) {
-    if (isDropdownVisible) {
-      switch (event.key) {
-        case "ArrowDown":
-          event.preventDefault();
-          $$invalidate(18, selectedDropdownIndex = Math.min(selectedDropdownIndex + 1, filteredFiles.length - 1));
-          scrollSelectedIntoView(dropdownElement, selectedDropdownIndex);
-          return true;
-        case "ArrowUp":
-          event.preventDefault();
-          $$invalidate(18, selectedDropdownIndex = Math.max(selectedDropdownIndex - 1, -1));
-          scrollSelectedIntoView(dropdownElement, selectedDropdownIndex);
-          return true;
-        case "Enter":
-        case "Tab":
-          event.preventDefault();
-          if (selectedDropdownIndex >= 0 && filteredFiles[selectedDropdownIndex]) {
-            insertFileAtCursor(filteredFiles[selectedDropdownIndex]);
-          }
-          return true;
-        case "Escape":
-          event.preventDefault();
-          hideDropdown();
-          return true;
-        default:
-          return false;
-      }
+    if (activeDropdown === "none" || filteredItems.length === 0)
+      return false;
+    function moveSelection(delta) {
+      $$invalidate(17, selectedIndex = Math.min(Math.max(selectedIndex + delta, -1), filteredItems.length - 1));
+      scrollSelectedIntoView(getDropdownElementForActiveType(), selectedIndex);
     }
-    if (isCommandDropdownVisible) {
-      switch (event.key) {
-        case "ArrowDown":
-          event.preventDefault();
-          $$invalidate(19, selectedCommandIndex = Math.min(selectedCommandIndex + 1, filteredCommands.length - 1));
-          scrollSelectedIntoView(commandDropdownElement, selectedCommandIndex);
-          return true;
-        case "ArrowUp":
-          event.preventDefault();
-          $$invalidate(19, selectedCommandIndex = Math.max(selectedCommandIndex - 1, -1));
-          scrollSelectedIntoView(commandDropdownElement, selectedCommandIndex);
-          return true;
-        case "Enter":
-        case "Tab":
-          event.preventDefault();
-          if (selectedCommandIndex >= 0 && filteredCommands[selectedCommandIndex]) {
-            insertCommandAtCursor(filteredCommands[selectedCommandIndex]);
-          }
-          return true;
-        case "Escape":
-          event.preventDefault();
-          hideCommandDropdown();
-          return true;
-        default:
+    switch (event.key) {
+      case "ArrowDown":
+        event.preventDefault();
+        moveSelection(1);
+        return true;
+      case "ArrowUp":
+        event.preventDefault();
+        moveSelection(-1);
+        return true;
+      case "Enter":
+        if (event.shiftKey)
           return false;
-      }
+      case "Tab":
+        event.preventDefault();
+        if (selectedIndex >= 0 && filteredItems[selectedIndex]) {
+          handleSelection(filteredItems[selectedIndex]);
+        }
+        return true;
+      case "Escape":
+        event.preventDefault();
+        hideDropdown();
+        return true;
+      default:
+        return false;
     }
-    return false;
   }
-  function handleProviderDropdownNavigation(event) {
-    if (isProviderDropdownVisible) {
-      switch (event.key) {
-        case "ArrowDown":
-          event.preventDefault();
-          $$invalidate(20, selectedProviderIndex = Math.min(selectedProviderIndex + 1, filteredProviders.length - 1));
-          scrollSelectedIntoView(providerDropdownElement, selectedProviderIndex);
-          return true;
-        case "ArrowUp":
-          event.preventDefault();
-          $$invalidate(20, selectedProviderIndex = Math.max(selectedProviderIndex - 1, -1));
-          scrollSelectedIntoView(providerDropdownElement, selectedProviderIndex);
-          return true;
-        case "Enter":
-        case "Tab":
-          event.preventDefault();
-          if (selectedProviderIndex >= 0 && filteredProviders[selectedProviderIndex]) {
-            selectProvider(filteredProviders[selectedProviderIndex]);
-          }
-          return true;
-        case "Escape":
-          event.preventDefault();
-          hideProviderDropdown();
-          return true;
-        default:
-          return false;
-      }
+  function getDropdownElementForActiveType() {
+    switch (activeDropdown) {
+      case "file":
+        return dropdownElement;
+      case "command":
+        return commandDropdownElement;
+      case "provider":
+        return providerDropdownElement;
+      case "model":
+        return modelDropdownElement;
+      case "creativity":
+        return creativityDropdownElement;
+      case "system":
+        return systemDropdownElement;
+      default:
+        return null;
     }
-    return false;
-  }
-  function handleModelDropdownNavigation(event) {
-    if (isModelDropdownVisible) {
-      switch (event.key) {
-        case "ArrowDown":
-          event.preventDefault();
-          $$invalidate(21, selectedModelIndex = Math.min(selectedModelIndex + 1, filteredModels.length - 1));
-          scrollSelectedIntoView(modelDropdownElement, selectedModelIndex);
-          return true;
-        case "ArrowUp":
-          event.preventDefault();
-          $$invalidate(21, selectedModelIndex = Math.max(selectedModelIndex - 1, -1));
-          scrollSelectedIntoView(modelDropdownElement, selectedModelIndex);
-          return true;
-        case "Enter":
-        case "Tab":
-          event.preventDefault();
-          if (selectedModelIndex >= 0 && filteredModels[selectedModelIndex]) {
-            selectModel(filteredModels[selectedModelIndex]);
-          }
-          return true;
-        case "Escape":
-          event.preventDefault();
-          hideModelDropdown();
-          return true;
-        default:
-          return false;
-      }
-    }
-    return false;
-  }
-  function handleCreativityDropdownNavigation(event) {
-    if (isCreativityDropdownVisible) {
-      switch (event.key) {
-        case "ArrowDown":
-          event.preventDefault();
-          $$invalidate(22, selectedCreativityIndex = Math.min(selectedCreativityIndex + 1, filteredCreativities.length - 1));
-          scrollSelectedIntoView(creativityDropdownElement, selectedCreativityIndex);
-          return true;
-        case "ArrowUp":
-          event.preventDefault();
-          $$invalidate(22, selectedCreativityIndex = Math.max(selectedCreativityIndex - 1, -1));
-          scrollSelectedIntoView(creativityDropdownElement, selectedCreativityIndex);
-          return true;
-        case "Enter":
-        case "Tab":
-          event.preventDefault();
-          if (selectedCreativityIndex >= 0 && filteredCreativities[selectedCreativityIndex]) {
-            selectCreativity(filteredCreativities[selectedCreativityIndex]);
-          }
-          return true;
-        case "Escape":
-          event.preventDefault();
-          hideCreativityDropdown();
-          return true;
-        default:
-          return false;
-      }
-    }
-    return false;
   }
   function handleGeneralNavigation(event) {
     switch (event.key) {
       case "Enter":
+        if (event.shiftKey)
+          return;
         event.preventDefault();
         submitAction();
         break;
@@ -6192,29 +9899,65 @@ function instance($$self, $$props, $$invalidate) {
     if (handleDropdownNavigation(event)) {
       return;
     }
-    if (handleProviderDropdownNavigation(event)) {
-      return;
-    }
-    if (handleModelDropdownNavigation(event)) {
-      return;
-    }
-    if (handleCreativityDropdownNavigation(event)) {
+    if (handleHistoryNavigation(event)) {
       return;
     }
     handleGeneralNavigation(event);
+  }
+  function handleHistoryNavigation(event) {
+    const isHistoryKey = event.key === "ArrowUp" || event.key === "ArrowDown";
+    if (!isHistoryKey || activeDropdown !== "none") {
+      return false;
+    }
+    const currentPosition = getCurrentCursorPosition();
+    cursorPosition = currentPosition;
+    if (event.key === "ArrowUp" && !isCursorOnFirstLine(currentPosition)) {
+      return false;
+    }
+    if (event.key === "ArrowDown" && !isCursorOnLastLine(currentPosition)) {
+      return false;
+    }
+    const historyLength = getPromptHistoryLength();
+    if (historyLength === 0)
+      return false;
+    if (historyIndex === historyLength) {
+      draftBeforeHistory = textContent;
+    }
+    if (event.key === "ArrowUp") {
+      if (historyIndex > 0) {
+        historyIndex -= 1;
+      }
+    } else if (event.key === "ArrowDown") {
+      if (historyIndex < historyLength) {
+        historyIndex += 1;
+      }
+    }
+    const entry = historyIndex >= 0 && historyIndex < historyLength ? getPromptHistoryEntry(historyIndex) : draftBeforeHistory;
+    event.preventDefault();
+    applyHistoryEntry(entry || "");
+    return true;
+  }
+  function isCursorOnFirstLine(position) {
+    const index2 = Math.max(position - 1, 0);
+    return textContent.lastIndexOf("\n", index2) === -1;
+  }
+  function isCursorOnLastLine(position) {
+    return textContent.indexOf("\n", position) === -1;
   }
   function handleInput(event) {
     const target = event.target;
     const newTextContent = target.textContent || "";
     textContent = newTextContent;
     cursorPosition = getCurrentCursorPosition();
+    historyIndex = getPromptHistoryLength();
+    draftBeforeHistory = textContent;
     textTokens = parseTextToTokens(textContent);
     checkForMentionTrigger();
     checkForCommandTrigger();
-    if (isProviderDropdownVisible) {
+    if (activeDropdown === "provider") {
       applyProviderFilter();
     }
-    if (isModelDropdownVisible) {
+    if (activeDropdown === "model") {
       applyModelFilter();
     }
     const newHtmlContent = renderTokensAsHtml();
@@ -6237,6 +9980,21 @@ function instance($$self, $$props, $$invalidate) {
   function isCompleteCommand(commandText) {
     const availableCommands = getAvailableCommands();
     return availableCommands.some((cmd) => commandText === `${COMMAND_PREFIX}${cmd.name}`);
+  }
+  function getCommandQuery(commandName) {
+    const beforeCursor = textContent.substring(0, cursorPosition);
+    const token = `${COMMAND_PREFIX}${commandName}`;
+    const foundIndex = beforeCursor.lastIndexOf(token);
+    if (foundIndex === -1)
+      return "";
+    const charBefore = foundIndex > 0 ? beforeCursor[foundIndex - 1] : " ";
+    if (foundIndex > 0 && !isCharacterWhitespace(charBefore))
+      return "";
+    const afterNameIndex = foundIndex + token.length;
+    const afterName = textContent.substring(afterNameIndex);
+    const hasSpace = afterName.startsWith(SPACE_AFTER_COMMAND);
+    const queryStart = hasSpace ? afterNameIndex + SPACE_AFTER_COMMAND.length : afterNameIndex;
+    return textContent.substring(queryStart, cursorPosition).trim().toLowerCase();
   }
   function filterAvailableCommands(query) {
     const availableCommands = getAvailableCommands();
@@ -6278,37 +10036,24 @@ function instance($$self, $$props, $$invalidate) {
       return;
     }
     mentionStartIndex = mentionIndex;
-    $$invalidate(13, filteredFiles = filterAvailableFiles(textAfterMention));
-    if (filteredFiles.length > 0) {
-      $$invalidate(8, isDropdownVisible = true);
-      $$invalidate(18, selectedDropdownIndex = 0);
+    $$invalidate(3, filteredItems = filterAvailableFiles(textAfterMention));
+    if (filteredItems.length > 0) {
+      $$invalidate(2, activeDropdown = "file");
+      $$invalidate(17, selectedIndex = 0);
     } else {
       hideDropdown();
     }
   }
   function hideDropdown() {
-    $$invalidate(8, isDropdownVisible = false);
-    $$invalidate(13, filteredFiles = []);
-    $$invalidate(18, selectedDropdownIndex = -1);
+    $$invalidate(2, activeDropdown = "none");
+    $$invalidate(3, filteredItems = []);
+    $$invalidate(17, selectedIndex = -1);
     mentionStartIndex = -1;
-  }
-  function hideCommandDropdown() {
-    $$invalidate(9, isCommandDropdownVisible = false);
-    $$invalidate(14, filteredCommands = []);
-    $$invalidate(19, selectedCommandIndex = -1);
     commandStartIndex = -1;
-  }
-  function hideProviderDropdown() {
-    $$invalidate(10, isProviderDropdownVisible = false);
-    $$invalidate(15, filteredProviders = []);
-    $$invalidate(20, selectedProviderIndex = -1);
     allProviders = [];
-  }
-  function hideModelDropdown() {
-    $$invalidate(11, isModelDropdownVisible = false);
-    $$invalidate(16, filteredModels = []);
-    $$invalidate(21, selectedModelIndex = -1);
     allModels = [];
+    allCreativities = [];
+    allSystemPrompts = [];
   }
   function insertFileAtCursor(file) {
     if (mentionStartIndex === -1)
@@ -6335,16 +10080,16 @@ function instance($$self, $$props, $$invalidate) {
     const beforeCursor = textContent.substring(0, cursorPosition);
     const commandIndex = beforeCursor.lastIndexOf(COMMAND_PREFIX);
     if (commandIndex === -1) {
-      hideCommandDropdown();
-      hideProviderDropdown();
-      hideModelDropdown();
+      if (activeDropdown !== "file") {
+        hideDropdown();
+      }
       return;
     }
     const characterBeforeCommand = commandIndex > 0 ? beforeCursor[commandIndex - 1] : " ";
     if (commandIndex > 0 && !isCharacterWhitespace(characterBeforeCommand)) {
-      hideCommandDropdown();
-      hideProviderDropdown();
-      hideModelDropdown();
+      if (activeDropdown !== "file") {
+        hideDropdown();
+      }
       return;
     }
     const textAfterCommand = beforeCursor.substring(commandIndex + 1);
@@ -6352,111 +10097,68 @@ function instance($$self, $$props, $$invalidate) {
     const typedName = firstTokenMatch ? firstTokenMatch[1] : "";
     const commandName = typedName.toLowerCase();
     commandStartIndex = commandIndex;
-    if (commandName === "provider") {
-      if (!isProviderDropdownVisible) {
-        void showProviderDropdown();
+    const dropdownController = dropdownControllers[commandName];
+    if (dropdownController) {
+      if (activeDropdown !== dropdownController.kind) {
+        void dropdownController.show();
       } else {
-        applyProviderFilter();
+        dropdownController.refresh();
       }
-      hideCommandDropdown();
-      hideModelDropdown();
       return;
     }
-    if (commandName === "model") {
-      if (!isModelDropdownVisible) {
-        void showModelDropdown();
-      } else {
-        applyModelFilter();
-      }
-      hideCommandDropdown();
-      hideProviderDropdown();
-      return;
+    if (["provider", "model", "creativity", "system"].includes(activeDropdown)) {
+      hideDropdown();
     }
-    if (commandName === "creativity") {
-      if (!isCreativityDropdownVisible) {
-        void showCreativityDropdown();
-      } else {
-        applyCreativityFilter();
-      }
-      hideCommandDropdown();
-      hideProviderDropdown();
-      hideModelDropdown();
-      return;
-    }
-    hideProviderDropdown();
-    hideModelDropdown();
-    hideCreativityDropdown();
-    $$invalidate(14, filteredCommands = filterAvailableCommands(textAfterCommand));
-    if (filteredCommands.length > 0) {
-      $$invalidate(9, isCommandDropdownVisible = true);
-      $$invalidate(19, selectedCommandIndex = 0);
+    $$invalidate(3, filteredItems = filterAvailableCommands(textAfterCommand));
+    if (filteredItems.length > 0) {
+      $$invalidate(2, activeDropdown = "command");
+      $$invalidate(17, selectedIndex = 0);
     } else {
-      hideCommandDropdown();
+      hideDropdown();
     }
   }
   function insertCommandAtCursor(command) {
     if (commandStartIndex === -1)
       return;
-    const beforeCommand = textContent.substring(0, commandStartIndex);
-    const afterCursor = textContent.substring(cursorPosition);
-    if (command.name === "provider") {
-      const newText2 = beforeCommand + COMMAND_PREFIX + command.name + SPACE_AFTER_COMMAND + afterCursor;
-      textContent = newText2;
-      textTokens = parseTextToTokens(textContent);
-      hideCommandDropdown();
-      if (contentElement) {
-        updateContentDisplay();
-        tick().then(() => {
-          const newCursorPosition = beforeCommand.length + command.name.length + 2;
-          setCursorPosition(newCursorPosition);
-        });
-      }
-      showProviderDropdown();
+    const dropdownController = dropdownControllers[command.name];
+    if (dropdownController) {
+      insertCommand(command.name);
+      void dropdownController.show();
       return;
     }
-    if (command.name === "model") {
-      const newText2 = beforeCommand + COMMAND_PREFIX + command.name + SPACE_AFTER_COMMAND + afterCursor;
-      textContent = newText2;
-      textTokens = parseTextToTokens(textContent);
-      hideCommandDropdown();
-      if (contentElement) {
-        updateContentDisplay();
-        tick().then(() => {
-          const newCursorPosition = beforeCommand.length + command.name.length + 2;
-          setCursorPosition(newCursorPosition);
-        });
-      }
-      showModelDropdown();
-      return;
-    }
-    if (command.name === "creativity") {
-      const newText2 = beforeCommand + COMMAND_PREFIX + command.name + SPACE_AFTER_COMMAND + afterCursor;
-      textContent = newText2;
-      textTokens = parseTextToTokens(textContent);
-      hideCommandDropdown();
-      if (contentElement) {
-        updateContentDisplay();
-        tick().then(() => {
-          const newCursorPosition = beforeCommand.length + command.name.length + 2;
-          setCursorPosition(newCursorPosition);
-        });
-      }
-      showCreativityDropdown();
-      return;
-    }
-    const newText = beforeCommand + COMMAND_PREFIX + command.name + SPACE_AFTER_COMMAND + afterCursor;
-    textContent = newText;
-    textTokens = parseTextToTokens(textContent);
-    hideCommandDropdown();
+    insertCommand(command.name);
     const commandLength = COMMAND_PREFIX.length + command.name.length + SPACE_AFTER_COMMAND.length;
     removeCommandFromText(commandStartIndex, commandLength);
+  }
+  function insertCommand(commandName) {
+    if (commandStartIndex === -1)
+      return;
+    const beforeCommand = textContent.substring(0, commandStartIndex);
+    const afterCursor = textContent.substring(cursorPosition);
+    const newText = beforeCommand + COMMAND_PREFIX + commandName + SPACE_AFTER_COMMAND + afterCursor;
+    textContent = newText;
+    textTokens = parseTextToTokens(textContent);
+    hideDropdown();
     if (contentElement) {
       updateContentDisplay();
       tick().then(() => {
-        const newCursorPosition = beforeCommand.length + command.name.length + 2;
+        const newCursorPosition = beforeCommand.length + commandName.length + 2;
         setCursorPosition(newCursorPosition);
       });
     }
+  }
+  const selectionHandlers = {
+    none: () => void 0,
+    file: (item) => insertFileAtCursor(item),
+    command: (item) => insertCommandAtCursor(item),
+    provider: (item) => selectProvider(item),
+    model: (item) => selectModel(item),
+    creativity: (item) => selectCreativity(item),
+    system: (item) => selectSystemPrompt(item)
+  };
+  function handleSelection(item) {
+    var _a2;
+    void ((_a2 = selectionHandlers[activeDropdown]) === null || _a2 === void 0 ? void 0 : _a2.call(selectionHandlers, item));
   }
   function selectProvider(provider) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -6465,21 +10167,14 @@ function instance($$self, $$props, $$invalidate) {
           yield onProviderChange(provider.id);
         }
         setProviderBadgeLabel(provider.providerName, provider.name);
-        $$invalidate(33, providerId = provider.id);
+        $$invalidate(25, providerId = provider.id);
         providerName = provider.providerName;
-        $$invalidate(23, badgeHighlight = true);
-        setTimeout(
-          () => {
-            $$invalidate(23, badgeHighlight = false);
-          },
-          900
-        );
-        removeProviderCommandAndQuery();
-        hideProviderDropdown();
-        hideModelDropdown();
+        highlightBadgeTemporarily();
+        removeCommandAndQuery("provider");
+        hideDropdown();
       } catch (error) {
         console.error("Error selecting provider:", error);
-        hideProviderDropdown();
+        hideDropdown();
       }
     });
   }
@@ -6490,57 +10185,143 @@ function instance($$self, $$props, $$invalidate) {
           yield onModelChange(model.name);
         }
         setProviderBadgeLabel(providerName, model.name);
-        $$invalidate(23, badgeHighlight = true);
-        setTimeout(
-          () => {
-            $$invalidate(23, badgeHighlight = false);
-          },
-          900
-        );
-        removeModelCommandAndQuery();
-        hideModelDropdown();
+        highlightBadgeTemporarily();
+        removeCommandAndQuery("model");
+        hideDropdown();
       } catch (error) {
         console.error("Error selecting model:", error);
-        hideModelDropdown();
+        hideDropdown();
       }
     });
-  }
-  function getCreativityQuery() {
-    const beforeCursor = textContent.substring(0, cursorPosition);
-    const token = `${COMMAND_PREFIX}creativity`;
-    const foundIndex = beforeCursor.lastIndexOf(token);
-    if (foundIndex === -1)
-      return "";
-    const charBefore = foundIndex > 0 ? beforeCursor[foundIndex - 1] : " ";
-    if (foundIndex > 0 && !isCharacterWhitespace(charBefore))
-      return "";
-    const afterNameIndex = foundIndex + token.length;
-    const afterName = textContent.substring(afterNameIndex);
-    const hasSpace = afterName.startsWith(SPACE_AFTER_COMMAND);
-    const queryStart = hasSpace ? afterNameIndex + SPACE_AFTER_COMMAND.length : afterNameIndex;
-    const query = textContent.substring(queryStart, cursorPosition);
-    return query.trim().toLowerCase();
   }
   function applyCreativityFilter() {
     if (!allCreativities || allCreativities.length === 0)
       return;
-    const q = getCreativityQuery();
-    $$invalidate(17, filteredCreativities = allCreativities.filter((c) => fuzzyMatch(c.name, q)).slice(0, MAX_DROPDOWN_RESULTS));
-    if (filteredCreativities.length === 0) {
-      $$invalidate(22, selectedCreativityIndex = -1);
-    } else if (selectedCreativityIndex < 0 || selectedCreativityIndex >= filteredCreativities.length) {
-      $$invalidate(22, selectedCreativityIndex = 0);
-    }
+    const q = getCommandQuery("creativity");
+    const matches2 = allCreativities.filter((c) => fuzzyMatch(c.name, q)).slice(0, MAX_DROPDOWN_RESULTS);
+    updateFilteredDropdownItems(matches2);
     if (q) {
       const norm = (s) => s.toLowerCase();
-      const exact = filteredCreativities.find((c) => norm(c.name) === norm(q));
+      const exact = matches2.find((c) => norm(c.name) === norm(q));
       if (exact) {
         void selectCreativity(exact);
       }
     }
   }
-  function removeCreativityCommandAndQuery() {
-    const token = `${COMMAND_PREFIX}creativity`;
+  function showCreativityDropdown() {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        allCreativities = getCreativityOptions();
+        applyCreativityFilter();
+        if (filteredItems.length > 0) {
+          $$invalidate(2, activeDropdown = "creativity");
+          $$invalidate(17, selectedIndex = 0);
+        }
+      } catch (error) {
+        console.error("Error showing creativity dropdown:", error);
+      }
+    });
+  }
+  function selectCreativity(option2) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        if (onCreativityChange) {
+          yield onCreativityChange(option2.id);
+        }
+        creativityBadge = option2.name;
+        setProviderBadgeLabel(providerName, modelName);
+        highlightBadgeTemporarily();
+        removeCommandAndQuery("creativity");
+        hideDropdown();
+      } catch (error) {
+        console.error("Error selecting creativity:", error);
+        hideDropdown();
+      }
+    });
+  }
+  function applySystemFilter() {
+    if (!allSystemPrompts || allSystemPrompts.length === 0)
+      return;
+    const q = getCommandQuery("system");
+    const normalizedQuery = q.toLowerCase();
+    const resetOption = allSystemPrompts.find((s) => s.id === CLEAR_SYSTEM_PROMPT_ID);
+    const promptOptions = allSystemPrompts.filter((s) => s.id !== CLEAR_SYSTEM_PROMPT_ID);
+    const matches2 = promptOptions.filter((s) => normalizedQuery ? s.name.toLowerCase().includes(normalizedQuery) : true).sort((a, b) => a.name.localeCompare(b.name)).slice(0, resetOption && (!normalizedQuery || resetOption.name.toLowerCase().includes(normalizedQuery)) ? MAX_DROPDOWN_RESULTS - 1 : MAX_DROPDOWN_RESULTS);
+    const visibleMatches = resetOption && (!normalizedQuery || resetOption.name.toLowerCase().includes(normalizedQuery)) ? [resetOption, ...matches2] : matches2;
+    updateFilteredDropdownItems(visibleMatches);
+    if (q) {
+      const norm = (s) => s.toLowerCase();
+      const exact = promptOptions.find((s) => norm(s.name) === norm(q));
+      if (exact) {
+        void selectSystemPrompt(exact);
+      }
+    }
+  }
+  function showSystemDropdown() {
+    return __awaiter(this, void 0, void 0, function* () {
+      if (!getSystemPrompts)
+        return;
+      try {
+        const prompts = getSystemPrompts();
+        allSystemPrompts = selectedSystemPromptName ? [
+          {
+            id: CLEAR_SYSTEM_PROMPT_ID,
+            name: I18n.t("commands.actionPalette.clearSystemPrompt"),
+            system: ""
+          },
+          ...prompts
+        ] : prompts;
+        applySystemFilter();
+        if (filteredItems.length > 0) {
+          $$invalidate(2, activeDropdown = "system");
+          $$invalidate(17, selectedIndex = 0);
+        }
+      } catch (error) {
+        console.error("Error showing system dropdown:", error);
+      }
+    });
+  }
+  function selectSystemPrompt(option2) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        if (option2.id === CLEAR_SYSTEM_PROMPT_ID) {
+          yield clearSystemPromptSelection();
+          removeCommandAndQuery("system");
+          hideDropdown();
+          return;
+        }
+        selectedSystemPromptValue = option2.system;
+        $$invalidate(19, selectedSystemPromptName = option2.name);
+        yield onSystemPromptChange === null || onSystemPromptChange === void 0 ? void 0 : onSystemPromptChange(option2.id);
+        highlightBadgeTemporarily();
+        removeCommandAndQuery("system");
+        hideDropdown();
+      } catch (error) {
+        console.error("Error selecting system prompt:", error);
+        hideDropdown();
+      }
+    });
+  }
+  function clearSystemPromptSelection() {
+    return __awaiter(this, void 0, void 0, function* () {
+      selectedSystemPromptValue = void 0;
+      $$invalidate(19, selectedSystemPromptName = "");
+      yield onSystemPromptChange === null || onSystemPromptChange === void 0 ? void 0 : onSystemPromptChange(null);
+      highlightBadgeTemporarily();
+    });
+  }
+  function applyProviderFilter() {
+    if (!allProviders || allProviders.length === 0)
+      return;
+    const q = getCommandQuery("provider");
+    const matches2 = allProviders.filter((p) => fuzzyMatch(p.name, q) || fuzzyMatch(p.providerName, q)).slice(0, MAX_DROPDOWN_RESULTS);
+    updateFilteredDropdownItems(matches2);
+    if (q && matches2.length === 1 && matches2[0].name.toLowerCase() === q) {
+      void selectProvider(matches2[0]);
+    }
+  }
+  function removeCommandAndQuery(commandName) {
+    const token = `${COMMAND_PREFIX}${commandName}`;
     const foundIndex = textContent.lastIndexOf(token);
     if (foundIndex === -1)
       return;
@@ -6570,110 +10351,6 @@ function instance($$self, $$props, $$invalidate) {
       });
     }
   }
-  function showCreativityDropdown() {
-    return __awaiter(this, void 0, void 0, function* () {
-      try {
-        allCreativities = getCreativityOptions();
-        applyCreativityFilter();
-        if (filteredCreativities.length > 0) {
-          $$invalidate(12, isCreativityDropdownVisible = true);
-          $$invalidate(22, selectedCreativityIndex = 0);
-        }
-      } catch (error) {
-        console.error("Error showing creativity dropdown:", error);
-      }
-    });
-  }
-  function hideCreativityDropdown() {
-    $$invalidate(12, isCreativityDropdownVisible = false);
-    $$invalidate(17, filteredCreativities = []);
-    $$invalidate(22, selectedCreativityIndex = -1);
-    allCreativities = [];
-  }
-  function selectCreativity(option2) {
-    return __awaiter(this, void 0, void 0, function* () {
-      try {
-        if (onCreativityChange) {
-          yield onCreativityChange(option2.id);
-        }
-        creativityBadge = option2.name;
-        setProviderBadgeLabel(providerName, modelName);
-        $$invalidate(23, badgeHighlight = true);
-        setTimeout(
-          () => {
-            $$invalidate(23, badgeHighlight = false);
-          },
-          900
-        );
-        removeCreativityCommandAndQuery();
-        hideCreativityDropdown();
-      } catch (error) {
-        console.error("Error selecting creativity:", error);
-        hideCreativityDropdown();
-      }
-    });
-  }
-  function getProviderQuery() {
-    const beforeCursor = textContent.substring(0, cursorPosition);
-    const providerToken = `${COMMAND_PREFIX}provider`;
-    const foundIndex = beforeCursor.lastIndexOf(providerToken);
-    if (foundIndex === -1)
-      return "";
-    const charBefore = foundIndex > 0 ? beforeCursor[foundIndex - 1] : " ";
-    if (foundIndex > 0 && !isCharacterWhitespace(charBefore))
-      return "";
-    const afterNameIndex = foundIndex + providerToken.length;
-    const afterName = textContent.substring(afterNameIndex);
-    const hasSpace = afterName.startsWith(SPACE_AFTER_COMMAND);
-    const queryStart = hasSpace ? afterNameIndex + SPACE_AFTER_COMMAND.length : afterNameIndex;
-    const query = textContent.substring(queryStart, cursorPosition);
-    return query.trim().toLowerCase();
-  }
-  function applyProviderFilter() {
-    if (!allProviders || allProviders.length === 0)
-      return;
-    const q = getProviderQuery();
-    $$invalidate(15, filteredProviders = allProviders.filter((p) => fuzzyMatch(p.name, q) || fuzzyMatch(p.providerName, q)).slice(0, MAX_DROPDOWN_RESULTS));
-    if (filteredProviders.length === 0) {
-      $$invalidate(20, selectedProviderIndex = -1);
-    } else if (selectedProviderIndex < 0 || selectedProviderIndex >= filteredProviders.length) {
-      $$invalidate(20, selectedProviderIndex = 0);
-    }
-    if (q && filteredProviders.length === 1 && filteredProviders[0].name.toLowerCase() === q) {
-      void selectProvider(filteredProviders[0]);
-    }
-  }
-  function removeProviderCommandAndQuery() {
-    const providerToken = `${COMMAND_PREFIX}provider`;
-    const foundIndex = textContent.lastIndexOf(providerToken);
-    if (foundIndex === -1)
-      return;
-    const charBefore = foundIndex > 0 ? textContent[foundIndex - 1] : " ";
-    if (foundIndex > 0 && !isCharacterWhitespace(charBefore))
-      return;
-    let removalStart = foundIndex;
-    let idx = foundIndex + providerToken.length;
-    if (textContent[idx] === SPACE_AFTER_COMMAND) {
-      idx += SPACE_AFTER_COMMAND.length;
-    }
-    while (idx < textContent.length) {
-      const ch = textContent[idx];
-      if (isCharacterWhitespace(ch) || ch === "/" || ch === "@")
-        break;
-      idx++;
-    }
-    const removalEnd = idx;
-    const before = textContent.substring(0, removalStart);
-    const after = textContent.substring(removalEnd);
-    textContent = before + after;
-    textTokens = parseTextToTokens(textContent);
-    if (contentElement) {
-      updateContentDisplay();
-      tick().then(() => {
-        setCursorPosition(before.length);
-      });
-    }
-  }
   function showProviderDropdown() {
     return __awaiter(this, void 0, void 0, function* () {
       if (!getProviders)
@@ -6682,9 +10359,9 @@ function instance($$self, $$props, $$invalidate) {
         const providers = yield fetchAvailableProviders();
         allProviders = providers;
         applyProviderFilter();
-        if (filteredProviders.length > 0) {
-          $$invalidate(10, isProviderDropdownVisible = true);
-          $$invalidate(20, selectedProviderIndex = 0);
+        if (filteredItems.length > 0) {
+          $$invalidate(2, activeDropdown = "provider");
+          $$invalidate(17, selectedIndex = 0);
         } else {
           console.warn("No providers available");
         }
@@ -6693,65 +10370,14 @@ function instance($$self, $$props, $$invalidate) {
       }
     });
   }
-  function getModelQuery() {
-    const beforeCursor = textContent.substring(0, cursorPosition);
-    const modelToken = `${COMMAND_PREFIX}model`;
-    const foundIndex = beforeCursor.lastIndexOf(modelToken);
-    if (foundIndex === -1)
-      return "";
-    const charBefore = foundIndex > 0 ? beforeCursor[foundIndex - 1] : " ";
-    if (foundIndex > 0 && !isCharacterWhitespace(charBefore))
-      return "";
-    const afterNameIndex = foundIndex + modelToken.length;
-    const afterName = textContent.substring(afterNameIndex);
-    const hasSpace = afterName.startsWith(SPACE_AFTER_COMMAND);
-    const queryStart = hasSpace ? afterNameIndex + SPACE_AFTER_COMMAND.length : afterNameIndex;
-    const query = textContent.substring(queryStart, cursorPosition);
-    return query.trim().toLowerCase();
-  }
   function applyModelFilter() {
     if (!allModels || allModels.length === 0)
       return;
-    const q = getModelQuery();
-    $$invalidate(16, filteredModels = allModels.filter((m) => fuzzyMatch(m.name, q)).slice(0, MAX_DROPDOWN_RESULTS));
-    if (filteredModels.length === 0) {
-      $$invalidate(21, selectedModelIndex = -1);
-    } else if (selectedModelIndex < 0 || selectedModelIndex >= filteredModels.length) {
-      $$invalidate(21, selectedModelIndex = 0);
-    }
-    if (q && filteredModels.length === 1 && filteredModels[0].name.toLowerCase() === q) {
-      void selectModel(filteredModels[0]);
-    }
-  }
-  function removeModelCommandAndQuery() {
-    const modelToken = `${COMMAND_PREFIX}model`;
-    const foundIndex = textContent.lastIndexOf(modelToken);
-    if (foundIndex === -1)
-      return;
-    const charBefore = foundIndex > 0 ? textContent[foundIndex - 1] : " ";
-    if (foundIndex > 0 && !isCharacterWhitespace(charBefore))
-      return;
-    let removalStart = foundIndex;
-    let idx = foundIndex + modelToken.length;
-    if (textContent[idx] === SPACE_AFTER_COMMAND) {
-      idx += SPACE_AFTER_COMMAND.length;
-    }
-    while (idx < textContent.length) {
-      const ch = textContent[idx];
-      if (isCharacterWhitespace(ch) || ch === "/" || ch === "@")
-        break;
-      idx++;
-    }
-    const removalEnd = idx;
-    const before = textContent.substring(0, removalStart);
-    const after = textContent.substring(removalEnd);
-    textContent = before + after;
-    textTokens = parseTextToTokens(textContent);
-    if (contentElement) {
-      updateContentDisplay();
-      tick().then(() => {
-        setCursorPosition(before.length);
-      });
+    const q = getCommandQuery("model");
+    const matches2 = allModels.filter((m) => fuzzyMatch(m.name, q)).slice(0, MAX_DROPDOWN_RESULTS);
+    updateFilteredDropdownItems(matches2);
+    if (q && matches2.length === 1 && matches2[0].name.toLowerCase() === q) {
+      void selectModel(matches2[0]);
     }
   }
   function showModelDropdown() {
@@ -6762,9 +10388,9 @@ function instance($$self, $$props, $$invalidate) {
         const models = yield fetchAvailableModels();
         allModels = models;
         applyModelFilter();
-        if (filteredModels.length > 0) {
-          $$invalidate(11, isModelDropdownVisible = true);
-          $$invalidate(21, selectedModelIndex = 0);
+        if (filteredItems.length > 0) {
+          $$invalidate(2, activeDropdown = "model");
+          $$invalidate(17, selectedIndex = 0);
         } else {
           console.warn("No models available");
         }
@@ -6808,7 +10434,14 @@ function instance($$self, $$props, $$invalidate) {
     }
   }
   function submitAction() {
-    dispatch("submit", { text: textContent, selectedFiles });
+    addToPromptHistory(textContent);
+    historyIndex = getPromptHistoryLength();
+    draftBeforeHistory = textContent;
+    dispatch("submit", {
+      text: textContent,
+      selectedFiles,
+      systemPrompt: selectedSystemPromptValue
+    });
   }
   function handleKeyup(event) {
     if (event.key === "Backspace" || event.key === "Delete") {
@@ -6822,118 +10455,141 @@ function instance($$self, $$props, $$invalidate) {
   function div0_binding($$value) {
     binding_callbacks[$$value ? "unshift" : "push"](() => {
       contentElement = $$value;
-      $$invalidate(2, contentElement);
+      $$invalidate(4, contentElement);
     });
   }
-  const click_handler = (file) => insertFileAtCursor(file);
-  const keydown_handler = (file, event) => event.key === "Enter" && insertFileAtCursor(file);
-  function div_binding($$value) {
+  const click_handler = (item) => handleSelection(item);
+  const keydown_handler = (item, event) => event.key === "Enter" && handleSelection(item);
+  function div0_binding_1($$value) {
     binding_callbacks[$$value ? "unshift" : "push"](() => {
       dropdownElement = $$value;
-      $$invalidate(3, dropdownElement);
+      $$invalidate(5, dropdownElement);
     });
   }
-  const click_handler_1 = (command) => insertCommandAtCursor(command);
-  const keydown_handler_1 = (command, event) => event.key === "Enter" && insertCommandAtCursor(command);
-  function div_binding_1($$value) {
+  const click_handler_1 = (item) => handleSelection(item);
+  const keydown_handler_1 = (item, event) => event.key === "Enter" && handleSelection(item);
+  function div1_binding($$value) {
     binding_callbacks[$$value ? "unshift" : "push"](() => {
       commandDropdownElement = $$value;
-      $$invalidate(4, commandDropdownElement);
+      $$invalidate(6, commandDropdownElement);
     });
   }
-  const click_handler_2 = (model) => selectModel(model);
-  const keydown_handler_2 = (model, event) => {
-    if (event.key === "Enter" || event.key === "Tab") {
-      event.preventDefault();
-      selectModel(model);
-    }
-  };
-  function div_binding_2($$value) {
-    binding_callbacks[$$value ? "unshift" : "push"](() => {
-      modelDropdownElement = $$value;
-      $$invalidate(6, modelDropdownElement);
-    });
-  }
-  const click_handler_3 = (item) => selectCreativity(item);
-  const keydown_handler_3 = (item, event) => {
-    if (event.key === "Enter" || event.key === "Tab") {
-      event.preventDefault();
-      selectCreativity(item);
-    }
-  };
-  function div_binding_3($$value) {
-    binding_callbacks[$$value ? "unshift" : "push"](() => {
-      creativityDropdownElement = $$value;
-      $$invalidate(7, creativityDropdownElement);
-    });
-  }
-  const click_handler_4 = (provider) => selectProvider(provider);
-  const keydown_handler_4 = (provider, event) => {
-    if (event.key === "Enter" || event.key === "Tab") {
-      event.preventDefault();
-      selectProvider(provider);
-    }
-  };
-  function div_binding_4($$value) {
+  const click_handler_2 = (item) => handleSelection(item);
+  const keydown_handler_2 = (item, event) => event.key === "Enter" && handleSelection(item);
+  function div2_binding($$value) {
     binding_callbacks[$$value ? "unshift" : "push"](() => {
       providerDropdownElement = $$value;
-      $$invalidate(5, providerDropdownElement);
+      $$invalidate(7, providerDropdownElement);
+    });
+  }
+  const click_handler_3 = (item) => handleSelection(item);
+  const keydown_handler_3 = (item, event) => event.key === "Enter" && handleSelection(item);
+  function div3_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      modelDropdownElement = $$value;
+      $$invalidate(8, modelDropdownElement);
+    });
+  }
+  const click_handler_4 = (item) => handleSelection(item);
+  const keydown_handler_4 = (item, event) => event.key === "Enter" && handleSelection(item);
+  function div4_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      creativityDropdownElement = $$value;
+      $$invalidate(9, creativityDropdownElement);
+    });
+  }
+  const click_handler_5 = (item) => handleSelection(item);
+  const keydown_handler_5 = (item, event) => event.key === "Enter" && handleSelection(item);
+  function div5_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      systemDropdownElement = $$value;
+      $$invalidate(10, systemDropdownElement);
     });
   }
   $$self.$$set = ($$props2) => {
     if ("placeholder" in $$props2)
       $$invalidate(1, placeholder = $$props2.placeholder);
     if ("value" in $$props2)
-      $$invalidate(34, value = $$props2.value);
+      $$invalidate(26, value = $$props2.value);
     if ("providerLabel" in $$props2)
       $$invalidate(0, providerLabel = $$props2.providerLabel);
     if ("providerId" in $$props2)
-      $$invalidate(33, providerId = $$props2.providerId);
+      $$invalidate(25, providerId = $$props2.providerId);
     if ("getFiles" in $$props2)
-      $$invalidate(35, getFiles = $$props2.getFiles);
+      $$invalidate(27, getFiles = $$props2.getFiles);
     if ("getProviders" in $$props2)
-      $$invalidate(36, getProviders = $$props2.getProviders);
+      $$invalidate(28, getProviders = $$props2.getProviders);
     if ("onProviderChange" in $$props2)
-      $$invalidate(37, onProviderChange = $$props2.onProviderChange);
+      $$invalidate(29, onProviderChange = $$props2.onProviderChange);
     if ("getModels" in $$props2)
-      $$invalidate(38, getModels = $$props2.getModels);
+      $$invalidate(30, getModels = $$props2.getModels);
     if ("onModelChange" in $$props2)
-      $$invalidate(39, onModelChange = $$props2.onModelChange);
+      $$invalidate(31, onModelChange = $$props2.onModelChange);
     if ("onCreativityChange" in $$props2)
-      $$invalidate(40, onCreativityChange = $$props2.onCreativityChange);
+      $$invalidate(32, onCreativityChange = $$props2.onCreativityChange);
+    if ("getSystemPrompts" in $$props2)
+      $$invalidate(33, getSystemPrompts = $$props2.getSystemPrompts);
+    if ("selectedSystemPromptId" in $$props2)
+      $$invalidate(34, selectedSystemPromptId = $$props2.selectedSystemPromptId);
+    if ("onSystemPromptChange" in $$props2)
+      $$invalidate(35, onSystemPromptChange = $$props2.onSystemPromptChange);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty[0] & /*activeDropdown, filteredItems*/
+    12) {
+      $:
+        $$invalidate(11, fileItems = activeDropdown === "file" ? filteredItems : []);
+    }
+    if ($$self.$$.dirty[0] & /*activeDropdown, filteredItems*/
+    12) {
+      $:
+        $$invalidate(12, commandItems = activeDropdown === "command" ? filteredItems : []);
+    }
+    if ($$self.$$.dirty[0] & /*activeDropdown, filteredItems*/
+    12) {
+      $:
+        $$invalidate(13, providerItems = activeDropdown === "provider" ? filteredItems : []);
+    }
+    if ($$self.$$.dirty[0] & /*activeDropdown, filteredItems*/
+    12) {
+      $:
+        $$invalidate(14, modelItems = activeDropdown === "model" ? filteredItems : []);
+    }
+    if ($$self.$$.dirty[0] & /*activeDropdown, filteredItems*/
+    12) {
+      $:
+        $$invalidate(15, creativityItems = activeDropdown === "creativity" ? filteredItems : []);
+    }
+    if ($$self.$$.dirty[0] & /*activeDropdown, filteredItems*/
+    12) {
+      $:
+        $$invalidate(16, systemItems = activeDropdown === "system" ? filteredItems : []);
+    }
   };
   return [
     providerLabel,
     placeholder,
+    activeDropdown,
+    filteredItems,
     contentElement,
     dropdownElement,
     commandDropdownElement,
     providerDropdownElement,
     modelDropdownElement,
     creativityDropdownElement,
-    isDropdownVisible,
-    isCommandDropdownVisible,
-    isProviderDropdownVisible,
-    isModelDropdownVisible,
-    isCreativityDropdownVisible,
-    filteredFiles,
-    filteredCommands,
-    filteredProviders,
-    filteredModels,
-    filteredCreativities,
-    selectedDropdownIndex,
-    selectedCommandIndex,
-    selectedProviderIndex,
-    selectedModelIndex,
-    selectedCreativityIndex,
+    systemDropdownElement,
+    fileItems,
+    commandItems,
+    providerItems,
+    modelItems,
+    creativityItems,
+    systemItems,
+    selectedIndex,
     badgeHighlight,
+    selectedSystemPromptName,
     handleKeydown,
     handleInput,
-    insertFileAtCursor,
-    insertCommandAtCursor,
-    selectProvider,
-    selectModel,
-    selectCreativity,
+    handleSelection,
     handleContentClick,
     handleKeyup,
     providerId,
@@ -6944,22 +10600,28 @@ function instance($$self, $$props, $$invalidate) {
     getModels,
     onModelChange,
     onCreativityChange,
+    getSystemPrompts,
+    selectedSystemPromptId,
+    onSystemPromptChange,
     div0_binding,
     click_handler,
     keydown_handler,
-    div_binding,
+    div0_binding_1,
     click_handler_1,
     keydown_handler_1,
-    div_binding_1,
+    div1_binding,
     click_handler_2,
     keydown_handler_2,
-    div_binding_2,
+    div2_binding,
     click_handler_3,
     keydown_handler_3,
-    div_binding_3,
+    div3_binding,
     click_handler_4,
     keydown_handler_4,
-    div_binding_4
+    div4_binding,
+    click_handler_5,
+    keydown_handler_5,
+    div5_binding
   ];
 }
 var ActionPalette = class extends SvelteComponent {
@@ -6973,18 +10635,21 @@ var ActionPalette = class extends SvelteComponent {
       safe_not_equal,
       {
         placeholder: 1,
-        value: 34,
+        value: 26,
         providerLabel: 0,
-        providerId: 33,
-        getFiles: 35,
-        getProviders: 36,
-        onProviderChange: 37,
-        getModels: 38,
-        onModelChange: 39,
-        onCreativityChange: 40
+        providerId: 25,
+        getFiles: 27,
+        getProviders: 28,
+        onProviderChange: 29,
+        getModels: 30,
+        onModelChange: 31,
+        onCreativityChange: 32,
+        getSystemPrompts: 33,
+        selectedSystemPromptId: 34,
+        onSystemPromptChange: 35
       },
       null,
-      [-1, -1, -1, -1]
+      [-1, -1, -1, -1, -1]
     );
   }
 };
@@ -7006,7 +10671,7 @@ var SvelteActionPaletteWidget = class extends import_view2.WidgetType {
     this.app = new ActionPalette_default({
       target: mountTarget,
       props: {
-        placeholder: this.options.placeholder || "Type\u2026",
+        placeholder: this.options.placeholder || I18n.t("commands.actionPalette.placeholder"),
         providerLabel: this.options.modelLabel || "",
         providerId: this.options.providerId,
         getFiles: this.options.getFiles,
@@ -7014,14 +10679,22 @@ var SvelteActionPaletteWidget = class extends import_view2.WidgetType {
         onProviderChange: this.options.onProviderChange,
         getModels: this.options.getModels,
         onModelChange: this.options.onModelChange,
-        onCreativityChange: this.options.onCreativityChange
+        onCreativityChange: this.options.onCreativityChange,
+        getSystemPrompts: this.options.getSystemPrompts,
+        selectedSystemPromptId: this.options.selectedSystemPromptId,
+        onSystemPromptChange: this.options.onSystemPromptChange
       }
     });
     this.app.$on(
       "submit",
       (e) => {
         var _a2, _b;
-        (_b = (_a2 = this.options).onSubmit) == null ? void 0 : _b.call(_a2, e.detail.text, e.detail.selectedFiles);
+        (_b = (_a2 = this.options).onSubmit) == null ? void 0 : _b.call(
+          _a2,
+          e.detail.text,
+          e.detail.selectedFiles,
+          e.detail.systemPrompt
+        );
       }
     );
     this.app.$on("cancel", () => {
@@ -7037,8 +10710,8 @@ var SvelteActionPaletteWidget = class extends import_view2.WidgetType {
     this.container = null;
   }
 };
-var ShowActionPaletteEffect = import_state2.StateEffect.define();
-var HideActionPaletteEffect = import_state2.StateEffect.define();
+var ShowActionPaletteEffect = import_state3.StateEffect.define();
+var HideActionPaletteEffect = import_state3.StateEffect.define();
 function captureSelectionSnapshot(view) {
   const rangesAll = view.state.selection.ranges.map((r) => ({
     from: r.from,
@@ -7058,7 +10731,7 @@ function mapRanges(ranges, changes) {
   })) : null;
 }
 function buildDecorations(pos, options, fakeSelections) {
-  const builder = new import_state2.RangeSetBuilder();
+  const builder = new import_state3.RangeSetBuilder();
   const widget = new SvelteActionPaletteWidget(options);
   builder.add(pos, pos, import_view2.Decoration.widget({ widget, side: -1, block: true }));
   if (fakeSelections) {
@@ -7072,7 +10745,7 @@ function buildDecorations(pos, options, fakeSelections) {
   }
   return builder.finish();
 }
-var actionPaletteStateField = import_state2.StateField.define({
+var actionPaletteStateField = import_state3.StateField.define({
   create() {
     return {
       deco: import_view2.Decoration.none,
@@ -7144,9 +10817,9 @@ function hideActionPalette(view) {
   const state = view.state.field(actionPaletteStateField, false);
   if (state) {
     if (state.previousSelectionRanges && state.previousSelectionRanges.length) {
-      const selection = import_state2.EditorSelection.create(
+      const selection = import_state3.EditorSelection.create(
         state.previousSelectionRanges.map(
-          (r) => import_state2.EditorSelection.range(r.from, r.to)
+          (r) => import_state3.EditorSelection.range(r.from, r.to)
         )
       );
       view.dispatch({ selection });
@@ -7159,8 +10832,21 @@ function hideActionPalette(view) {
   view.dispatch({ effects: HideActionPaletteEffect.of(null) });
 }
 
+// src/actionMenu.ts
+var populateActionContextMenu = (menu, actions, onAction) => {
+  actions.forEach((action) => {
+    if (isSeparatorAction(action)) {
+      menu.addSeparator();
+      return;
+    }
+    menu.addItem((item) => {
+      item.setTitle(action.name).onClick(() => onAction(action));
+    });
+  });
+};
+
 // src/rag.ts
-var import_obsidian2 = require("obsidian");
+var import_obsidian4 = require("obsidian");
 
 // node_modules/pdfjs-dist/build/pdf.mjs
 var __webpack_require__ = {};
@@ -28122,6 +31808,9 @@ var fileCache = new FileCache();
 
 // src/rag.ts
 var MAX_DEPTH = 10;
+var WIKI_LINK_REGEX = /\[\[([^\]|#]+)(?:#[^\]|]+)?(?:\|[^\]]+)?\]\]/g;
+var MARKDOWN_LINK_REGEX = /\[[^\]]+\]\(([^)]+)\)/g;
+var SUPPORTED_RAG_EXTENSIONS = /* @__PURE__ */ new Set(["md", "pdf"]);
 async function startProcessing(linkedFiles, vault, metadataCache, activeFile, updateCompletedSteps) {
   logger.info("Starting RAG processing");
   const processedDocs = /* @__PURE__ */ new Map();
@@ -28151,10 +31840,16 @@ async function getFileContent(file, vault) {
   return vault.cachedRead(file);
 }
 async function processDocumentForRAG(file, context, processedDocs, depth, isBacklink) {
-  if (depth > MAX_DEPTH || processedDocs.has(file.path) || file.path === context.activeFile.path) {
+  if (depth > MAX_DEPTH || processedDocs.has(file.path)) {
     return processedDocs;
   }
   try {
+    if (file.path === context.activeFile.path) {
+      await traverseLinkedGraph(file, context, processedDocs, depth, {
+        includeBacklinks: false
+      });
+      return processedDocs;
+    }
     const content = await getFileContent(file, context.vault);
     processedDocs.set(file.path, {
       content,
@@ -28166,62 +31861,122 @@ async function processDocumentForRAG(file, context, processedDocs, depth, isBack
         isBacklink
       }
     });
-    if (file.extension === "md" && !isBacklink) {
-      const linkedFiles = getLinkedFiles(
+    if (file.extension === "md") {
+      await traverseLinkedGraph(file, context, processedDocs, depth, {
         content,
-        context.vault,
-        context.metadataCache,
-        file.path
-      );
-      const backlinkFiles = getBacklinkFiles(
-        file,
-        context,
-        processedDocs
-      );
-      await Promise.all([
-        ...linkedFiles.map(
-          (linkedFile) => processDocumentForRAG(
-            linkedFile,
-            context,
-            processedDocs,
-            depth + 1,
-            false
-          )
-        ),
-        ...backlinkFiles.map(
-          (backlinkFile) => processDocumentForRAG(
-            backlinkFile,
-            context,
-            processedDocs,
-            depth,
-            true
-          )
-        )
-      ]);
+        includeForwardLinks: !isBacklink
+      });
     }
   } catch (error) {
     console.error(`Error processing document ${file.path}:`, error);
   }
   return processedDocs;
 }
-function getLinkedFiles(content, vault, metadataCache, currentFilePath) {
-  const linkRegex = /\[\[([^\]|#]+)(?:#[^\]|]+)?(?:\|[^\]]+)?\]\]/g;
-  return Array.from(content.matchAll(linkRegex), (match) => match[1]).map((linkText) => {
+async function traverseLinkedGraph(file, context, processedDocs, depth, options) {
+  var _a2, _b;
+  const includeForwardLinks = (_a2 = options == null ? void 0 : options.includeForwardLinks) != null ? _a2 : true;
+  const includeBacklinks = (_b = options == null ? void 0 : options.includeBacklinks) != null ? _b : true;
+  const linkedFiles = includeForwardLinks ? resolveForwardLinks(file, context, options == null ? void 0 : options.content) : [];
+  const backlinkFiles = includeBacklinks ? getBacklinkFiles(file, context, processedDocs) : [];
+  await Promise.all([
+    ...processFilesForRAG(
+      linkedFiles,
+      context,
+      processedDocs,
+      depth + 1,
+      false
+    ),
+    ...processFilesForRAG(
+      backlinkFiles,
+      context,
+      processedDocs,
+      depth,
+      true
+    )
+  ]);
+}
+function resolveForwardLinks(file, context, content) {
+  if (content !== void 0) {
+    return getLinkedFiles(
+      content,
+      context.vault,
+      context.metadataCache,
+      file.path,
+      true
+    );
+  }
+  return getResolvedLinkedFiles(
+    file.path,
+    context.vault,
+    context.metadataCache
+  );
+}
+function processFilesForRAG(files, context, processedDocs, depth, isBacklink) {
+  return files.map(
+    (candidate) => processDocumentForRAG(
+      candidate,
+      context,
+      processedDocs,
+      depth,
+      isBacklink
+    )
+  );
+}
+function getResolvedLinkedFiles(currentFilePath, vault, metadataCache) {
+  const resolvedLinks = metadataCache == null ? void 0 : metadataCache.resolvedLinks;
+  const links = resolvedLinks == null ? void 0 : resolvedLinks[currentFilePath];
+  if (!links)
+    return [];
+  return Object.keys(links).map((targetPath) => vault.getAbstractFileByPath(targetPath)).filter(isSupportedRagFile);
+}
+function getLinkedFiles(content, vault, metadataCache, currentFilePath, includeAllMarkdownLinks = false) {
+  const sanitizedContent = sanitizeMarkdownForLinks(content);
+  const wikiLinks = Array.from(
+    sanitizedContent.matchAll(WIKI_LINK_REGEX),
+    (match) => match[1]
+  );
+  const markdownCandidates = Array.from(
+    sanitizedContent.matchAll(MARKDOWN_LINK_REGEX),
+    (match) => normalizeMarkdownLink(match[1])
+  ).filter((link) => Boolean(link));
+  const markdownLinks = includeAllMarkdownLinks || wikiLinks.length === 0 && markdownCandidates.length === 1 ? markdownCandidates : [];
+  return [...wikiLinks, ...markdownLinks].map((linkText) => {
     const linkPath = metadataCache.getFirstLinkpathDest(
       linkText,
       currentFilePath
     );
     return linkPath ? vault.getAbstractFileByPath(linkPath.path) : null;
-  }).filter(
-    (file) => file instanceof import_obsidian2.TFile && (file.extension === "md" || file.extension === "pdf")
-  );
+  }).filter(isSupportedRagFile);
+}
+function isSupportedRagFile(file) {
+  return file instanceof import_obsidian4.TFile && SUPPORTED_RAG_EXTENSIONS.has(file.extension);
+}
+function sanitizeMarkdownForLinks(content) {
+  return content.replace(/```[\s\S]*?```/g, "").replace(/<!--[\s\S]*?-->/g, "").replace(/`[^`]*`/g, "");
+}
+function normalizeMarkdownLink(rawLink) {
+  const withoutAnchor = rawLink.split("#")[0].trim();
+  const normalized = withoutAnchor.replace(/^<|>$/g, "");
+  if (!normalized || normalized.startsWith("/") || /^[a-z]+:/i.test(normalized)) {
+    return null;
+  }
+  return normalized;
 }
 function getBacklinkFiles(file, context, processedDocs) {
-  return Object.entries(context.metadataCache.resolvedLinks).filter(
-    ([sourcePath, links]) => links[file.path] && !processedDocs.has(sourcePath)
-  ).map(([sourcePath]) => context.vault.getAbstractFileByPath(sourcePath)).filter(
-    (backlinkFile) => backlinkFile instanceof import_obsidian2.TFile && backlinkFile.extension === "md"
-  );
+  const resolvedLinks = context.metadataCache.resolvedLinks || {};
+  const backlinks = [];
+  for (const [sourcePath, links] of Object.entries(resolvedLinks)) {
+    if (processedDocs.has(sourcePath) || !(links == null ? void 0 : links[file.path])) {
+      continue;
+    }
+    const backlinkFile = context.vault.getAbstractFileByPath(
+      sourcePath
+    );
+    if ((backlinkFile == null ? void 0 : backlinkFile.extension) === "md") {
+      backlinks.push(backlinkFile);
+    }
+  }
+  return backlinks;
 }
 async function searchDocuments(query, documents, aiProviders, embeddingProvider, abortController, updateCompletedSteps, addTotalProgressSteps, contextLimit) {
   if (abortController == null ? void 0 : abortController.signal.aborted)
@@ -28262,44 +32017,67 @@ async function searchDocuments(query, documents, aiProviders, embeddingProvider,
   }
 }
 function formatResults(results, contextLimit) {
-  var _a2;
   if (!(results == null ? void 0 : results.length))
     return "";
-  const groupedResults = /* @__PURE__ */ new Map();
-  for (const result of results) {
+  const groupedResults = groupResultsByBasename(results);
+  const sortedGroups = sortResultGroups(groupedResults);
+  const { text: text2, length } = formatGroupedResults(sortedGroups, contextLimit);
+  logger.info("Total length of context", length);
+  return text2;
+}
+function groupResultsByBasename(results) {
+  return results.reduce((map, result) => {
+    var _a2;
     const basename = (_a2 = result.document.meta) == null ? void 0 : _a2.basename;
-    if (!groupedResults.has(basename)) {
-      groupedResults.set(basename, []);
-    }
-    groupedResults.get(basename).push(result);
-  }
-  const sortedGroups = Array.from(groupedResults.entries()).sort(
+    const existing = map.get(basename) || [];
+    existing.push(result);
+    map.set(basename, existing);
+    return map;
+  }, /* @__PURE__ */ new Map());
+}
+function sortResultGroups(groupedResults) {
+  return Array.from(groupedResults.entries()).sort(
     (a, b) => {
-      var _a3, _b, _c, _d, _e, _f;
-      return (((_c = (_b = (_a3 = b[1][0]) == null ? void 0 : _a3.document.meta) == null ? void 0 : _b.stat) == null ? void 0 : _c.ctime) || 0) - (((_f = (_e = (_d = a[1][0]) == null ? void 0 : _d.document.meta) == null ? void 0 : _e.stat) == null ? void 0 : _f.ctime) || 0);
+      var _a2, _b, _c, _d, _e, _f;
+      return (((_c = (_b = (_a2 = b[1][0]) == null ? void 0 : _a2.document.meta) == null ? void 0 : _b.stat) == null ? void 0 : _c.ctime) || 0) - (((_f = (_e = (_d = a[1][0]) == null ? void 0 : _d.document.meta) == null ? void 0 : _e.stat) == null ? void 0 : _f.ctime) || 0);
     }
   );
+}
+function formatGroupedResults(groups, contextLimit) {
   let formattedResults = "";
   let totalLength = 0;
-  for (const [basename, groupResults] of sortedGroups) {
+  for (const [basename, groupResults] of groups) {
     if (totalLength >= contextLimit)
       break;
     formattedResults += `[[${basename}]]
 `;
-    const sortedResults = groupResults.sort((a, b) => b.score - a.score);
-    for (const result of sortedResults) {
-      const content = result.content.trim();
-      if (content && totalLength + content.length < contextLimit) {
-        formattedResults += `${content}
+    const { text: text2, length } = formatSingleGroup(
+      groupResults,
+      contextLimit,
+      totalLength
+    );
+    formattedResults += text2;
+    totalLength += length;
+  }
+  const trimmed = formattedResults.trim();
+  return { text: trimmed, length: trimmed.length };
+}
+function formatSingleGroup(groupResults, contextLimit, currentLength) {
+  let groupText = "";
+  let addedLength = 0;
+  const sortedResults = [...groupResults].sort((a, b) => b.score - a.score);
+  for (const result of sortedResults) {
+    const content = result.content.trim();
+    const projectedLength = currentLength + addedLength + content.length + 2;
+    if (!content || projectedLength >= contextLimit) {
+      continue;
+    }
+    groupText += `${content}
 
 `;
-        totalLength += content.length + 2;
-      }
-    }
+    addedLength += content.length + 2;
   }
-  formattedResults = formattedResults.trim();
-  logger.info("Total length of context", formattedResults.length);
-  return formattedResults;
+  return { text: groupText, length: addedLength };
 }
 
 // src/main.ts
@@ -28307,18 +32085,26 @@ var import_sdk2 = __toESM(require_dist());
 
 // src/utils.ts
 function preparePrompt(prompt = "", selectedText, context) {
+  const withSelection = mergeSelection(prompt, selectedText);
+  const withContext = injectContext(withSelection, context);
+  return resolveConditionalContext(withContext, context);
+}
+function mergeSelection(prompt, selectedText) {
   if (prompt.includes(SELECTION_KEYWORD)) {
-    prompt = prompt.replace(SELECTION_KEYWORD, selectedText || "");
-  } else {
-    prompt = [prompt, selectedText].filter(Boolean).join("\n\n");
+    return prompt.replace(SELECTION_KEYWORD, selectedText || "");
   }
+  return [prompt, selectedText].filter(Boolean).join("\n\n");
+}
+function injectContext(prompt, context) {
   if (prompt.includes(CONTEXT_KEYWORD)) {
-    prompt = prompt.replace(CONTEXT_KEYWORD, context || "");
-  } else {
-    if (context.trim()) {
-      prompt = [prompt, "Context:\n" + context].filter(Boolean).join("\n\n");
-    }
+    return prompt.replace(CONTEXT_KEYWORD, context || "");
   }
+  if (context.trim()) {
+    return [prompt, "Context:\n" + context].filter(Boolean).join("\n\n");
+  }
+  return prompt;
+}
+function resolveConditionalContext(prompt, context) {
   if (prompt.includes(CONTEXT_CONDITION_START) && prompt.includes(CONTEXT_CONDITION_END)) {
     const start = prompt.indexOf(CONTEXT_CONDITION_START) - 1;
     const end = prompt.indexOf(CONTEXT_CONDITION_END);
@@ -28340,7 +32126,9 @@ function preparePrompt(prompt = "", selectedText, context) {
 function removeThinkingTags(text2) {
   return text2.replace(/^<think>[\s\S]*?<\/think>\s*/, "");
 }
-var LocalGPT = class extends import_obsidian3.Plugin {
+var MIN_BASE_SPEED = 0.02 / 16;
+var MAX_BASE_SPEED = 3 / 16;
+var LocalGPT = class extends import_obsidian5.Plugin {
   constructor() {
     super(...arguments);
     this.actionPaletteProviderId = null;
@@ -28362,6 +32150,33 @@ var LocalGPT = class extends import_obsidian3.Plugin {
     // controls when we can show 100%
     this.totalProgressSteps = 0;
     this.completedProgressSteps = 0;
+    // Legacy provider defaults used by older settings migrations
+    this.legacyDefaultProviders = {
+      ollama: {
+        url: "http://localhost:11434",
+        defaultModel: "gemma2",
+        embeddingModel: "",
+        type: "ollama"
+      },
+      ollama_fallback: {
+        url: "http://localhost:11434",
+        defaultModel: "gemma2",
+        embeddingModel: "",
+        type: "ollama"
+      },
+      openaiCompatible: {
+        url: "http://localhost:8080/v1",
+        apiKey: "",
+        embeddingModel: "",
+        type: "openaiCompatible"
+      },
+      openaiCompatible_fallback: {
+        url: "http://localhost:8080/v1",
+        apiKey: "",
+        embeddingModel: "",
+        type: "openaiCompatible"
+      }
+    };
     this.escapeHandler = (event) => {
       if (event.key === "Escape") {
         this.abortControllers.forEach(
@@ -28418,6 +32233,7 @@ var LocalGPT = class extends import_obsidian3.Plugin {
         }, 5e3);
       });
       this.registerEditorExtension(spinnerPlugin);
+      this.registerEditorExtension(requestPositionTracker);
       this.registerEditorExtension(actionPalettePlugin);
       this.initializeStatusBar();
     });
@@ -28426,6 +32242,11 @@ var LocalGPT = class extends import_obsidian3.Plugin {
     this.statusBarItem = this.addStatusBarItem();
     this.statusBarItem.addClass("local-gpt-status");
     this.statusBarItem.hide();
+  }
+  getLegacyActionPaletteSystemPromptStorageKey() {
+    var _a2, _b, _c;
+    const vaultName = (_c = (_b = (_a2 = this.app) == null ? void 0 : _a2.vault) == null ? void 0 : _b.getName) == null ? void 0 : _c.call(_b);
+    return vaultName ? `${this.manifest.id}:action-palette-system-prompt:${vaultName}` : `${this.manifest.id}:action-palette-system-prompt`;
   }
   processText(text2, selectedText) {
     if (!text2.trim()) {
@@ -28444,14 +32265,12 @@ var LocalGPT = class extends import_obsidian3.Plugin {
         const editorView = editor.cm;
         const cursorPositionFrom = editor.getCursor("from");
         const cursorPositionTo = editor.getCursor("to");
-        const contextMenu = new import_obsidian3.Menu();
-        this.settings.actions.forEach((action) => {
-          contextMenu.addItem((item) => {
-            item.setTitle(action.name).onClick(
-              this.runAction.bind(this, action, editor)
-            );
-          });
-        });
+        const contextMenu = new import_obsidian5.Menu();
+        populateActionContextMenu(
+          contextMenu,
+          this.settings.actions,
+          (action) => this.runAction(action, editor)
+        );
         const fromRect = editorView.coordsAtPos(
           editor.posToOffset(cursorPositionFrom)
         );
@@ -28464,7 +32283,7 @@ var LocalGPT = class extends import_obsidian3.Plugin {
         });
       }
     });
-    this.settings.actions.forEach((action, index2) => {
+    getRunnableActions(this.settings.actions).forEach((action, index2) => {
       this.addCommand({
         id: `quick-access-${index2 + 1}`,
         name: `${index2 + 1} | ${action.name}`,
@@ -28477,7 +32296,7 @@ var LocalGPT = class extends import_obsidian3.Plugin {
       id: "local-gpt-action-palette",
       name: I18n.t("commands.actionPalette.name"),
       editorCallback: async (editor) => {
-        var _a2, _b;
+        var _a2, _b, _c, _d;
         const editorView = editor.cm;
         const cursorPositionFrom = editor.getCursor("from");
         const insertPos = editor.posToOffset({
@@ -28513,17 +32332,18 @@ var LocalGPT = class extends import_obsidian3.Plugin {
         } catch (e) {
         }
         showActionPalette(editorView, insertPos, {
-          onSubmit: (text2, selectedFiles = []) => {
-            var _a3, _b2, _c;
+          onSubmit: (text2, selectedFiles = [], systemPrompt) => {
+            var _a3, _b2, _c2;
             const overrideProviderId = this.actionPaletteProviderId || this.settings.aiProviders.main;
             const creativityKey = (_b2 = (_a3 = this.actionPaletteCreativityKey) != null ? _a3 : this.settings.defaults.creativity) != null ? _b2 : "";
-            const temperatureOverride = (_c = CREATIVITY[creativityKey]) == null ? void 0 : _c.temperature;
+            const temperatureOverride = (_c2 = CREATIVITY[creativityKey]) == null ? void 0 : _c2.temperature;
             this.runFreeform(
               editor,
               text2,
               selectedFiles,
               overrideProviderId,
-              temperatureOverride
+              temperatureOverride,
+              systemPrompt
             ).finally(() => {
             });
             hideActionPalette(editorView);
@@ -28551,7 +32371,9 @@ var LocalGPT = class extends import_obsidian3.Plugin {
               const aiProviders = await aiRequestWaiter.promise;
               return aiProviders.providers.filter((p) => Boolean(p.model)).map((p) => ({
                 id: p.id,
-                name: p.model || "Unknown Model",
+                name: p.model || I18n.t(
+                  "commands.actionPalette.unknownModel"
+                ),
                 providerName: p.name,
                 providerUrl: p.url || ""
               }));
@@ -28588,17 +32410,32 @@ var LocalGPT = class extends import_obsidian3.Plugin {
           },
           onCreativityChange: async (creativityKey) => {
             this.actionPaletteCreativityKey = creativityKey;
+          },
+          getSystemPrompts: () => {
+            return getRunnableActions(this.settings.actions).filter((action) => action.system).map((action) => ({
+              id: getActionIdentifier(action),
+              name: action.name,
+              system: action.system
+            }));
+          },
+          selectedSystemPromptId: (_d = (_c = this.settings.actionPalette) == null ? void 0 : _c.systemPromptActionId) != null ? _d : null,
+          onSystemPromptChange: async (systemPromptId) => {
+            this.settings.actionPalette = {
+              ...this.settings.actionPalette || {},
+              systemPromptActionId: systemPromptId
+            };
+            await this.saveData(this.settings);
           }
         });
         this.app.workspace.updateOptions();
       }
     });
   }
-  async runFreeform(editor, userInput, selectedFiles = [], overrideProviderId, customTemperature) {
+  async runFreeform(editor, userInput, selectedFiles = [], overrideProviderId, customTemperature, systemPrompt) {
     return this.executeAction(
       {
         prompt: userInput,
-        system: void 0,
+        system: systemPrompt,
         replace: false,
         selectedFiles,
         overrideProviderId: overrideProviderId || void 0,
@@ -28619,153 +32456,248 @@ var LocalGPT = class extends import_obsidian3.Plugin {
     );
   }
   async executeAction(params, editor) {
+    const {
+      editorView,
+      cursorOffsetFrom,
+      cursorOffsetTo,
+      selectedTextRef
+    } = this.extractSelectionContext(editor);
+    const { abortController, hideSpinner, onUpdate } = this.createExecutionContext(
+      editorView,
+      cursorOffsetTo,
+      selectedTextRef
+    );
+    let selectionTrackerId = trackSelectionRange(
+      editorView,
+      cursorOffsetFrom,
+      cursorOffsetTo
+    );
+    const releaseSelectionTracker = () => {
+      if (!selectionTrackerId) {
+        return;
+      }
+      releaseTrackedRange(editorView, selectionTrackerId);
+      selectionTrackerId = null;
+    };
+    abortController.signal.addEventListener(
+      "abort",
+      releaseSelectionTracker
+    );
+    try {
+      const { cleanedText, imagesInBase64 } = await this.extractImagesFromSelection(selectedTextRef.value);
+      selectedTextRef.value = cleanedText;
+      logger.time("Processing Embeddings");
+      logger.timeEnd("Processing Embeddings");
+      logger.debug("Selected text", cleanedText);
+      const aiRequestWaiter = await (0, import_sdk2.waitForAI)();
+      const aiProviders = await aiRequestWaiter.promise;
+      const embeddingProvider = aiProviders.providers.find(
+        (provider2) => provider2.id === this.settings.aiProviders.embedding
+      );
+      const context = await this.enhanceWithContext(
+        cleanedText,
+        aiProviders,
+        embeddingProvider,
+        abortController,
+        params.selectedFiles
+      );
+      const provider = this.selectProvider(
+        aiProviders,
+        imagesInBase64.length > 0,
+        params.overrideProviderId
+      );
+      const adjustedProvider = this.overrideProviderModel(
+        provider,
+        params
+      );
+      let fullText = "";
+      try {
+        fullText = await this.executeProviderRequest(
+          aiProviders,
+          adjustedProvider,
+          params,
+          cleanedText,
+          context,
+          imagesInBase64,
+          abortController,
+          onUpdate
+        );
+      } finally {
+        hideSpinner && hideSpinner();
+        this.app.workspace.updateOptions();
+      }
+      if (abortController.signal.aborted) {
+        return;
+      }
+      const finalText = removeThinkingTags(fullText).trim();
+      const trackedRange = selectionTrackerId ? getTrackedRange(editorView, selectionTrackerId) : null;
+      const mappedRange = trackedRange || {
+        from: cursorOffsetFrom,
+        to: cursorOffsetTo,
+        insertAfter: cursorOffsetTo
+      };
+      const insertionOffset = params.replace ? mappedRange.to : mappedRange.insertAfter;
+      this.applyTextResult(
+        editor,
+        params.replace,
+        finalText,
+        selectedTextRef.value,
+        mappedRange.from,
+        insertionOffset
+      );
+    } finally {
+      releaseSelectionTracker();
+    }
+  }
+  extractSelectionContext(editor) {
     const editorView = editor.cm;
     const selection = editor.getSelection();
-    let selectedText = selection || editor.getValue();
+    const selectedTextRef = { value: selection || editor.getValue() };
     const cursorPositionFrom = editor.getCursor("from");
     const cursorPositionTo = editor.getCursor("to");
+    const cursorOffsetFrom = editor.posToOffset(cursorPositionFrom);
+    const cursorOffsetTo = editor.posToOffset(cursorPositionTo);
+    return {
+      editorView,
+      cursorOffsetFrom,
+      cursorOffsetTo,
+      selectedTextRef
+    };
+  }
+  createExecutionContext(editorView, cursorOffsetTo, selectedTextRef) {
     const abortController = new AbortController();
     this.abortControllers.push(abortController);
     const spinner = editorView.plugin(spinnerPlugin) || void 0;
-    const hideSpinner = spinner == null ? void 0 : spinner.show(editor.posToOffset(cursorPositionTo));
+    const hideSpinner = spinner == null ? void 0 : spinner.show(cursorOffsetTo);
     this.app.workspace.updateOptions();
     abortController.signal.addEventListener("abort", () => {
       hideSpinner && hideSpinner();
       this.app.workspace.updateOptions();
     });
     const onUpdate = (updatedString) => {
+      if (!spinner)
+        return;
       spinner.processText(
         updatedString,
-        (text2) => this.processText(text2, selectedText)
+        (text2) => this.processText(text2, selectedTextRef.value),
+        cursorOffsetTo
       );
       this.app.workspace.updateOptions();
     };
+    return { abortController, hideSpinner, onUpdate };
+  }
+  async extractImagesFromSelection(selectedText) {
     const regexp = /!\[\[(.+?\.(?:png|jpe?g))]]/gi;
     const fileNames = Array.from(
       selectedText.matchAll(regexp),
       (match) => match[1]
     );
-    selectedText = selectedText.replace(regexp, "");
+    const cleanedText = selectedText.replace(regexp, "");
     const imagesInBase64 = (await Promise.all(
-      fileNames.map((fileName) => {
-        const filePath = this.app.metadataCache.getFirstLinkpathDest(
-          fileName,
-          // @ts-ignore
-          this.app.workspace.getActiveFile().path
-        );
-        if (!filePath) {
-          return Promise.resolve("");
-        }
-        return this.app.vault.adapter.readBinary(filePath.path).then((buffer) => {
-          const extension = filePath.extension.toLowerCase();
-          const mimeType = extension === "jpg" ? "jpeg" : extension;
-          const blob = new Blob([buffer], {
-            type: `image/${mimeType}`
-          });
-          return new Promise((resolve) => {
-            const reader = new FileReader();
-            reader.onloadend = () => resolve(reader.result);
-            reader.readAsDataURL(blob);
-          });
-        });
-      })
+      fileNames.map(
+        (fileName) => this.readImageAsDataUrl(fileName)
+      )
     )).filter(Boolean) || [];
-    logger.time("Processing Embeddings");
-    logger.timeEnd("Processing Embeddings");
-    logger.debug("Selected text", selectedText);
-    const aiRequestWaiter = await (0, import_sdk2.waitForAI)();
-    const aiProviders = await aiRequestWaiter.promise;
-    const context = await this.enhanceWithContext(
-      selectedText,
-      aiProviders,
-      aiProviders.providers.find(
-        (provider2) => provider2.id === this.settings.aiProviders.embedding
-      ),
-      abortController,
-      params.selectedFiles
+    return { cleanedText, imagesInBase64 };
+  }
+  async readImageAsDataUrl(fileName) {
+    const filePath = this.app.metadataCache.getFirstLinkpathDest(
+      fileName,
+      // @ts-ignore
+      this.app.workspace.getActiveFile().path
     );
-    let provider;
-    if (imagesInBase64.length) {
-      provider = aiProviders.providers.find(
-        (p) => p.id === this.settings.aiProviders.vision
-      );
+    if (!filePath) {
+      return "";
     }
-    if (!provider) {
-      const preferredProviderId = params.overrideProviderId || this.settings.aiProviders.main;
-      provider = aiProviders.providers.find(
-        (p) => p.id === preferredProviderId
-      );
-    }
+    return this.app.vault.adapter.readBinary(filePath.path).then((buffer) => {
+      const extension = filePath.extension.toLowerCase();
+      const mimeType = extension === "jpg" ? "jpeg" : extension;
+      const blob = new Blob([buffer], {
+        type: `image/${mimeType}`
+      });
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
+      });
+    });
+  }
+  selectProvider(aiProviders, hasImages, overrideProviderId) {
+    const visionCandidate = hasImages ? aiProviders.providers.find(
+      (p) => p.id === this.settings.aiProviders.vision
+    ) : void 0;
+    const preferredProviderId = overrideProviderId || this.settings.aiProviders.main;
+    const fallback = aiProviders.providers.find(
+      (p) => p.id === preferredProviderId
+    );
+    const provider = visionCandidate || fallback;
     if (!provider) {
       throw new Error("No AI provider found");
     }
+    return provider;
+  }
+  overrideProviderModel(provider, params) {
     if (this.actionPaletteModel && params.overrideProviderId && this.actionPaletteModelProviderId === params.overrideProviderId) {
-      provider = { ...provider, model: this.actionPaletteModel };
+      return { ...provider, model: this.actionPaletteModel };
     }
-    let fullText = "";
+    return provider;
+  }
+  async executeProviderRequest(aiProviders, provider, params, selectedText, context, imagesInBase64, abortController, onUpdate) {
+    var _a2;
     try {
-      fullText = await aiProviders.execute({
+      return await aiProviders.execute({
         provider,
         prompt: preparePrompt(params.prompt, selectedText, context),
         images: imagesInBase64,
         systemPrompt: params.system,
         options: {
-          temperature: params.temperature || CREATIVITY[this.settings.defaults.creativity].temperature
+          temperature: (_a2 = params.temperature) != null ? _a2 : CREATIVITY[this.settings.defaults.creativity].temperature
         },
-        onProgress: (chunk, accumulatedText) => {
+        onProgress: (_chunk, accumulatedText) => {
           onUpdate(accumulatedText);
         },
         abortController
       });
     } catch (error) {
       if (!abortController.signal.aborted) {
-        new import_obsidian3.Notice(
+        new import_obsidian5.Notice(
           I18n.t("notices.errorGenerating", {
             message: error.message
           })
         );
       }
       logger.separator();
-    } finally {
-      hideSpinner && hideSpinner();
-      this.app.workspace.updateOptions();
+      return "";
     }
-    if (abortController.signal.aborted) {
-      return;
-    }
-    const finalText = removeThinkingTags(fullText).trim();
-    if (params.replace) {
+  }
+  applyTextResult(editor, replaceSelection, finalText, selectedText, cursorOffsetFrom, cursorOffsetTo) {
+    const cursorPositionFrom = editor.offsetToPos(cursorOffsetFrom);
+    const cursorPositionTo = editor.offsetToPos(cursorOffsetTo);
+    if (replaceSelection) {
       editor.replaceRange(
         finalText,
         cursorPositionFrom,
         cursorPositionTo
       );
-    } else {
-      const isLastLine = editor.lastLine() === cursorPositionTo.line;
-      const text2 = this.processText(finalText, selectedText);
-      editor.replaceRange(isLastLine ? "\n" + text2 : text2, {
-        ch: 0,
-        line: cursorPositionTo.line + 1
-      });
+      return;
     }
+    const isLastLine = editor.lastLine() === cursorPositionTo.line;
+    const text2 = this.processText(finalText, selectedText);
+    editor.replaceRange(isLastLine ? "\n" + text2 : text2, {
+      ch: 0,
+      line: cursorPositionTo.line + 1
+    });
   }
   async enhanceWithContext(selectedText, aiProviders, aiProvider, abortController, selectedFiles) {
     const activeFile = this.app.workspace.getActiveFile();
     if (!activeFile || !aiProvider || (abortController == null ? void 0 : abortController.signal.aborted)) {
       return "";
     }
-    const linkedFiles = getLinkedFiles(
+    const allLinkedFiles = this.collectLinkedFilesForContext(
       selectedText,
-      this.app.vault,
-      this.app.metadataCache,
+      selectedFiles,
       activeFile.path
     );
-    const additionalFiles = (selectedFiles == null ? void 0 : selectedFiles.map(
-      (filePath) => this.app.vault.getAbstractFileByPath(filePath)
-    ).filter(
-      (file) => file !== null && file instanceof import_obsidian3.TFile && (file.extension === "md" || file.extension === "pdf")
-    )) || [];
-    const allLinkedFiles = [...linkedFiles, ...additionalFiles];
     if (allLinkedFiles.length === 0) {
       return "";
     }
@@ -28778,26 +32710,14 @@ var LocalGPT = class extends import_obsidian3.Plugin {
         activeFile,
         this.updateCompletedSteps.bind(this)
       );
-      if (processedDocs.size === 0 || (abortController == null ? void 0 : abortController.signal.aborted)) {
-        this.hideStatusBar();
-        return "";
+      if (this.shouldAbortProcessing(processedDocs, abortController)) {
+        return this.finishContextProcessing("");
       }
       const retrieveDocuments = Array.from(processedDocs.values());
       if (abortController == null ? void 0 : abortController.signal.aborted) {
-        this.hideStatusBar();
-        return "";
+        return this.finishContextProcessing("");
       }
-      const contextLimit = (() => {
-        var _a2, _b;
-        const preset = (_b = (_a2 = this.settings) == null ? void 0 : _a2.defaults) == null ? void 0 : _b.contextLimit;
-        const map = {
-          local: 1e4,
-          cloud: 32e3,
-          advanced: 1e5,
-          max: 3e6
-        };
-        return map[preset];
-      })();
+      const contextLimit = this.resolveContextLimit();
       const relevantContext = await searchDocuments(
         selectedText,
         retrieveDocuments,
@@ -28808,20 +32728,54 @@ var LocalGPT = class extends import_obsidian3.Plugin {
         this.addTotalProgressSteps.bind(this),
         contextLimit
       );
-      this.hideStatusBar();
-      return relevantContext.trim() || "";
+      return this.finishContextProcessing(relevantContext.trim() || "");
     } catch (error) {
-      this.hideStatusBar();
-      if (!(abortController == null ? void 0 : abortController.signal.aborted)) {
-        console.error("Error processing RAG:", error);
-        new import_obsidian3.Notice(
-          I18n.t("notices.errorProcessingRag", {
-            message: error.message
-          })
-        );
-      }
-      return "";
+      return this.handleContextError(error, abortController);
     }
+  }
+  collectLinkedFilesForContext(selectedText, selectedFiles, activeFilePath) {
+    const linkedFiles = getLinkedFiles(
+      selectedText,
+      this.app.vault,
+      this.app.metadataCache,
+      activeFilePath
+    );
+    const additionalFiles = (selectedFiles == null ? void 0 : selectedFiles.map(
+      (filePath) => this.app.vault.getAbstractFileByPath(filePath)
+    ).filter(
+      (file) => file !== null && file instanceof import_obsidian5.TFile && (file.extension === "md" || file.extension === "pdf")
+    )) || [];
+    return [...linkedFiles, ...additionalFiles];
+  }
+  shouldAbortProcessing(processedDocs, abortController) {
+    return processedDocs.size === 0 || (abortController == null ? void 0 : abortController.signal.aborted);
+  }
+  resolveContextLimit() {
+    var _a2, _b;
+    const preset = (_b = (_a2 = this.settings) == null ? void 0 : _a2.defaults) == null ? void 0 : _b.contextLimit;
+    const map = {
+      local: 1e4,
+      cloud: 32e3,
+      advanced: 1e5,
+      max: 3e6
+    };
+    return map[preset];
+  }
+  finishContextProcessing(result) {
+    this.hideStatusBar();
+    return result;
+  }
+  handleContextError(error, abortController) {
+    this.hideStatusBar();
+    if (!(abortController == null ? void 0 : abortController.signal.aborted)) {
+      console.error("Error processing RAG:", error);
+      new import_obsidian5.Notice(
+        I18n.t("notices.errorProcessingRag", {
+          message: error.message
+        })
+      );
+    }
+    return "";
   }
   onunload() {
     document.removeEventListener("keydown", this.escapeHandler);
@@ -28832,182 +32786,273 @@ var LocalGPT = class extends import_obsidian3.Plugin {
   }
   async loadSettings() {
     const loadedData = await this.loadData();
-    let needToSave = false;
-    if (loadedData) {
-      const oldDefaultProviders = {
-        ollama: {
-          url: "http://localhost:11434",
-          defaultModel: "gemma2",
-          embeddingModel: "",
-          type: "ollama"
-        },
-        ollama_fallback: {
-          url: "http://localhost:11434",
-          defaultModel: "gemma2",
-          embeddingModel: "",
-          type: "ollama"
-        },
-        openaiCompatible: {
-          url: "http://localhost:8080/v1",
-          apiKey: "",
-          embeddingModel: "",
-          type: "openaiCompatible"
-        },
-        openaiCompatible_fallback: {
-          url: "http://localhost:8080/v1",
-          apiKey: "",
-          embeddingModel: "",
-          type: "openaiCompatible"
+    const { settings, changed } = await this.migrateSettings(loadedData);
+    this.settings = Object.assign({}, DEFAULT_SETTINGS, settings);
+    const { actions: actionsWithIds, changed: actionIdsChanged } = ensureActionIds(this.settings.actions || []);
+    this.settings.actions = actionsWithIds;
+    if (changed || actionIdsChanged) {
+      await this.saveData(this.settings);
+    }
+  }
+  async migrateSettings(loadedData) {
+    if (!loadedData) {
+      return { settings: loadedData, changed: false };
+    }
+    const preAsyncMigrations = [
+      this.migrateToVersion2,
+      this.migrateToVersion3,
+      this.migrateToVersion4,
+      this.migrateToVersion5,
+      this.migrateToVersion6
+    ];
+    const postAsyncMigrations = [
+      this.migrateToVersion8,
+      this.migrateToVersion9,
+      this.migrateToVersion10
+    ];
+    const changed = preAsyncMigrations.reduce(
+      (hasChanged, migrate) => migrate.call(this, loadedData) || hasChanged,
+      false
+    );
+    const changedAsync = await this.migrateToVersion7(loadedData);
+    const changedPostAsync = postAsyncMigrations.reduce(
+      (hasChanged, migrate) => migrate.call(this, loadedData) || hasChanged,
+      false
+    );
+    return {
+      settings: loadedData,
+      changed: changed || changedAsync || changedPostAsync
+    };
+  }
+  migrateToVersion2(settings) {
+    if (settings._version && settings._version >= 1) {
+      return false;
+    }
+    const providers = JSON.parse(
+      JSON.stringify(this.legacyDefaultProviders)
+    );
+    settings.providers = providers;
+    settings.providers.ollama.ollamaUrl = settings.ollamaUrl;
+    delete settings.ollamaUrl;
+    settings.providers.ollama.defaultModel = settings.defaultModel;
+    delete settings.defaultModel;
+    settings.providers.openaiCompatible && (settings.providers.openaiCompatible.apiKey = "");
+    settings._version = 2;
+    return true;
+  }
+  migrateToVersion3(settings) {
+    if (settings._version && settings._version >= 3) {
+      return false;
+    }
+    settings.defaultProvider = settings.selectedProvider || "ollama";
+    delete settings.selectedProvider;
+    const providers = settings.providers;
+    if (providers) {
+      Object.keys(providers).forEach((key) => {
+        providers[key].type = key;
+      });
+    }
+    settings._version = 3;
+    return true;
+  }
+  migrateToVersion4(settings) {
+    if (settings._version && settings._version >= 4) {
+      return false;
+    }
+    settings.defaults = {
+      provider: settings.defaultProvider || "ollama",
+      fallbackProvider: settings.fallbackProvider || "",
+      creativity: "low"
+    };
+    delete settings.defaultProvider;
+    delete settings.fallbackProvider;
+    settings._version = 4;
+    return true;
+  }
+  migrateToVersion5(settings) {
+    if (settings._version && settings._version >= 5) {
+      return false;
+    }
+    const providers = settings.providers;
+    if (providers) {
+      Object.keys(this.legacyDefaultProviders).forEach((provider) => {
+        if (providers[provider]) {
+          providers[provider].embeddingModel = this.legacyDefaultProviders[provider].embeddingModel;
         }
-      };
-      if (!loadedData._version || loadedData._version < 1) {
-        needToSave = true;
-        loadedData.providers = oldDefaultProviders;
-        loadedData.providers.ollama.ollamaUrl = loadedData.ollamaUrl;
-        delete loadedData.ollamaUrl;
-        loadedData.providers.ollama.defaultModel = loadedData.defaultModel;
-        delete loadedData.defaultModel;
-        loadedData.providers.openaiCompatible && (loadedData.providers.openaiCompatible.apiKey = "");
-        loadedData._version = 2;
-      }
-      if (loadedData._version < 3) {
-        needToSave = true;
-        loadedData.defaultProvider = loadedData.selectedProvider || "ollama";
-        delete loadedData.selectedProvider;
-        const providers = loadedData.providers;
-        if (providers) {
-          Object.keys(providers).forEach((key) => {
-            providers[key].type = key;
-          });
-        }
-        loadedData._version = 3;
-      }
-      if (loadedData._version < 4) {
-        needToSave = true;
-        loadedData.defaults = {
-          provider: loadedData.defaultProvider || "ollama",
-          fallbackProvider: loadedData.fallbackProvider || "",
-          creativity: "low"
-        };
-        delete loadedData.defaultProvider;
-        delete loadedData.fallbackProvider;
-        loadedData._version = 4;
-      }
-      if (loadedData._version < 5) {
-        needToSave = true;
-        const providers = loadedData.providers;
-        if (providers) {
-          Object.keys(oldDefaultProviders).forEach((provider) => {
-            if (providers[provider]) {
-              providers[provider].embeddingModel = oldDefaultProviders[provider].embeddingModel;
-            }
-          });
-        }
-        loadedData._version = 5;
-        setTimeout(() => {
-          new import_obsidian3.Notice(
-            `\u{1F389} LocalGPT can finally use
+      });
+    }
+    settings._version = 5;
+    setTimeout(() => {
+      new import_obsidian5.Notice(
+        `\u{1F389} LocalGPT can finally use
 context from links!
 Check the Settings!`,
-            0
-          );
-        }, 1e4);
-      }
-      if (loadedData._version < 6) {
-        needToSave = true;
-        const providers = loadedData.providers;
-        if (providers) {
-          Object.keys(oldDefaultProviders).forEach((provider) => {
-            var _a2, _b;
-            if (((_a2 = providers[provider]) == null ? void 0 : _a2.type) === "ollama") {
-              providers[provider].url = providers[provider].ollamaUrl;
-              delete providers[provider].ollamaUrl;
-            }
-            if (((_b = providers[provider]) == null ? void 0 : _b.type) === "openaiCompatible") {
-              providers[provider].url = providers[provider].url.replace(/\/+$/i, "") + "/v1";
-            }
-          });
-        }
-        loadedData._version = 6;
-      }
-      if (loadedData._version < 7) {
-        needToSave = true;
-        new import_obsidian3.Notice(I18n.t("notices.importantUpdate"), 0);
-        const aiRequestWaiter = await (0, import_sdk2.waitForAI)();
-        const aiProviders = await aiRequestWaiter.promise;
-        loadedData.aiProviders = {
-          main: null,
-          embedding: null,
-          vision: null
-        };
-        const oldProviders = loadedData.providers;
-        const oldDefaults = loadedData.defaults;
-        if (oldProviders && (oldDefaults == null ? void 0 : oldDefaults.provider)) {
-          const provider = oldDefaults.provider;
-          const typesMap = {
-            ollama: "ollama",
-            openaiCompatible: "openai"
-          };
-          const providerConfig = oldProviders[provider];
-          if (providerConfig) {
-            const type = typesMap[providerConfig.type];
-            if (providerConfig.defaultModel) {
-              let model = providerConfig.defaultModel;
-              if (type === "ollama" && !model.endsWith(":latest")) {
-                model = model + ":latest";
-              }
-              const id = `id-${Date.now().toString()}`;
-              const newProvider = await aiProviders.migrateProvider({
-                id,
-                name: `Local GPT ${provider}`,
-                apiKey: providerConfig.apiKey,
-                url: providerConfig.url,
-                type,
-                model
-              });
-              if (newProvider) {
-                loadedData.aiProviders.main = newProvider.id;
-              }
-            }
-            if (providerConfig.embeddingModel) {
-              let model = providerConfig.embeddingModel;
-              if (type === "ollama" && !model.endsWith(":latest")) {
-                model = model + ":latest";
-              }
-              const id = `id-${Date.now().toString()}`;
-              const newProvider = await aiProviders.migrateProvider({
-                id,
-                name: `Local GPT ${provider} embeddings`,
-                apiKey: providerConfig.apiKey,
-                url: providerConfig.url,
-                type,
-                model
-              });
-              if (newProvider) {
-                loadedData.aiProviders.embedding = newProvider.id;
-              }
-            }
-          }
-        }
-        delete loadedData.defaults;
-        delete loadedData.providers;
-        loadedData._version = 7;
-      }
-      if (loadedData._version < 8) {
-        needToSave = true;
-        loadedData.defaults = loadedData.defaults || {};
-        loadedData.defaults.contextLimit = loadedData.defaults.contextLimit || "local";
-        loadedData._version = 8;
-      }
+        0
+      );
+    }, 1e4);
+    return true;
+  }
+  migrateToVersion6(settings) {
+    if (settings._version && settings._version >= 6) {
+      return false;
     }
-    this.settings = Object.assign({}, DEFAULT_SETTINGS, loadedData);
-    if (needToSave) {
-      await this.saveData(this.settings);
+    const providers = settings.providers;
+    if (providers) {
+      Object.keys(this.legacyDefaultProviders).forEach((provider) => {
+        var _a2, _b;
+        if (((_a2 = providers[provider]) == null ? void 0 : _a2.type) === "ollama") {
+          providers[provider].url = providers[provider].ollamaUrl;
+          delete providers[provider].ollamaUrl;
+        }
+        if (((_b = providers[provider]) == null ? void 0 : _b.type) === "openaiCompatible") {
+          providers[provider].url = providers[provider].url.replace(/\/+$/i, "") + "/v1";
+        }
+      });
+    }
+    settings._version = 6;
+    return true;
+  }
+  async migrateToVersion7(settings) {
+    if (settings._version && settings._version >= 7) {
+      return false;
+    }
+    new import_obsidian5.Notice(I18n.t("notices.importantUpdate"), 0);
+    const aiRequestWaiter = await (0, import_sdk2.waitForAI)();
+    const aiProviders = await aiRequestWaiter.promise;
+    settings.aiProviders = {
+      main: null,
+      embedding: null,
+      vision: null
+    };
+    const oldProviders = settings.providers;
+    const oldDefaults = settings.defaults;
+    if (oldProviders && (oldDefaults == null ? void 0 : oldDefaults.provider)) {
+      await this.migrateLegacyProviderConfig(
+        settings,
+        aiProviders,
+        oldProviders,
+        oldDefaults
+      );
+    }
+    delete settings.defaults;
+    delete settings.providers;
+    settings._version = 7;
+    return true;
+  }
+  async migrateLegacyProviderConfig(settings, aiProviders, oldProviders, oldDefaults) {
+    const provider = oldDefaults.provider;
+    const typesMap = {
+      ollama: "ollama",
+      openaiCompatible: "openai"
+    };
+    const providerConfig = oldProviders[provider];
+    if (!providerConfig) {
+      return;
+    }
+    const type = typesMap[providerConfig.type];
+    await this.createMigratedProvider(
+      settings,
+      aiProviders,
+      provider,
+      providerConfig,
+      type,
+      "main",
+      providerConfig.defaultModel
+    );
+    await this.createMigratedProvider(
+      settings,
+      aiProviders,
+      provider,
+      providerConfig,
+      type,
+      "embedding",
+      providerConfig.embeddingModel
+    );
+  }
+  async createMigratedProvider(settings, aiProviders, provider, providerConfig, type, targetKey, model) {
+    if (!model) {
+      return;
+    }
+    let adjustedModel = model;
+    if (type === "ollama" && !adjustedModel.endsWith(":latest")) {
+      adjustedModel = `${adjustedModel}:latest`;
+    }
+    const id = `id-${Date.now().toString()}`;
+    const newProvider = await aiProviders.migrateProvider({
+      id,
+      name: targetKey === "main" ? `Local GPT ${provider}` : `Local GPT ${provider} embeddings`,
+      apiKey: providerConfig.apiKey,
+      url: providerConfig.url,
+      type,
+      model: adjustedModel
+    });
+    if (newProvider) {
+      settings.aiProviders[targetKey] = newProvider.id;
+    }
+  }
+  migrateToVersion8(settings) {
+    if (settings._version && settings._version >= 8) {
+      return false;
+    }
+    settings.defaults = settings.defaults || {};
+    settings.defaults.contextLimit = settings.defaults.contextLimit || "local";
+    settings._version = 8;
+    return true;
+  }
+  migrateToVersion9(settings) {
+    if (settings._version && settings._version >= 9) {
+      return false;
+    }
+    const { actions } = ensureActionIds(settings.actions || []);
+    settings.actions = actions;
+    settings._version = 9;
+    return true;
+  }
+  migrateToVersion10(settings) {
+    if (settings._version && settings._version >= 10) {
+      return false;
+    }
+    settings.actionPalette = settings.actionPalette || {};
+    if (settings.actionPalette.systemPromptActionId == null) {
+      settings.actionPalette.systemPromptActionId = this.readLegacyActionPaletteSystemPromptId();
+    }
+    this.clearLegacyActionPaletteSystemPromptId();
+    settings._version = 10;
+    return true;
+  }
+  readLegacyActionPaletteSystemPromptId() {
+    try {
+      const raw = window.localStorage.getItem(
+        this.getLegacyActionPaletteSystemPromptStorageKey()
+      );
+      if (!raw) {
+        return null;
+      }
+      const parsed = JSON.parse(raw);
+      return parsed && typeof parsed.id === "string" ? parsed.id : null;
+    } catch (error) {
+      console.error(
+        "Failed to migrate Action Palette system prompt selection:",
+        error
+      );
+      return null;
+    }
+  }
+  clearLegacyActionPaletteSystemPromptId() {
+    try {
+      window.localStorage.removeItem(
+        this.getLegacyActionPaletteSystemPromptStorageKey()
+      );
+    } catch (error) {
+      console.error(
+        "Failed to clean up legacy Action Palette system prompt selection:",
+        error
+      );
     }
   }
   async checkUpdates() {
     try {
-      const { json: response } = await (0, import_obsidian3.requestUrl)({
+      const { json: response } = await (0, import_obsidian5.requestUrl)({
         url: "https://api.github.com/repos/pfrankov/obsidian-local-gpt/releases/latest",
         method: "GET",
         headers: {
@@ -29016,7 +33061,7 @@ Check the Settings!`,
         contentType: "application/json"
       });
       if (response.tag_name !== this.manifest.version) {
-        new import_obsidian3.Notice(I18n.t("notices.newVersion"));
+        new import_obsidian5.Notice(I18n.t("notices.newVersion"));
       }
     } catch (error) {
       console.error("Error checking for updates:", error);
@@ -29062,45 +33107,45 @@ Check the Settings!`,
     this.updateProgressBar();
   }
   updateProgressBar() {
-    let ratio = 0;
-    if (this.totalProgressSteps > 0) {
-      ratio = this.completedProgressSteps / this.totalProgressSteps;
-    }
-    if (ratio > 1) {
-      ratio = 1;
-    }
-    const newTarget = Math.floor(ratio * 100);
+    const newTarget = this.calculateTargetPercentage();
     if (newTarget === this.targetPercentage) {
       return;
     }
     const now2 = performance.now();
-    if (this.lastTargetUpdateTime !== null) {
-      const dt = now2 - this.lastTargetUpdateTime;
-      const diff = newTarget - this.targetPercentage;
-      if (dt > 0 && diff > 0) {
-        const instantaneous = diff / dt;
-        const alpha = 0.25;
-        if (this.baseSpeed === 0) {
-          this.baseSpeed = instantaneous;
-        } else {
-          this.baseSpeed = this.baseSpeed * (1 - alpha) + instantaneous * alpha;
-        }
-        const MIN = 0.02 / 16;
-        const MAX = 3 / 16;
-        if (this.baseSpeed < MIN) {
-          this.baseSpeed = MIN;
-        }
-        if (this.baseSpeed > MAX) {
-          this.baseSpeed = MAX;
-        }
-      }
-    }
+    this.baseSpeed = this.calculateBaseSpeed(newTarget, now2);
     this.targetPercentage = newTarget;
     this.lastTargetUpdateTime = now2;
-    if (this.frameId === null) {
-      this.lastFrameTime = null;
-      this.frameId = requestAnimationFrame(this.animationLoop);
+    this.ensureAnimationLoop();
+  }
+  calculateTargetPercentage() {
+    if (this.totalProgressSteps <= 0) {
+      return 0;
     }
+    const ratio = Math.min(
+      this.completedProgressSteps / this.totalProgressSteps,
+      1
+    );
+    return Math.floor(ratio * 100);
+  }
+  calculateBaseSpeed(newTarget, now2) {
+    if (this.lastTargetUpdateTime === null) {
+      return this.baseSpeed;
+    }
+    const dt = now2 - this.lastTargetUpdateTime;
+    const diff = newTarget - this.targetPercentage;
+    if (dt <= 0 || diff <= 0) {
+      return this.baseSpeed;
+    }
+    const instantaneous = diff / dt;
+    const blended = this.baseSpeed === 0 ? instantaneous : this.baseSpeed * 0.75 + instantaneous * 0.25;
+    return Math.min(MAX_BASE_SPEED, Math.max(MIN_BASE_SPEED, blended));
+  }
+  ensureAnimationLoop() {
+    if (this.frameId !== null) {
+      return;
+    }
+    this.lastFrameTime = null;
+    this.frameId = requestAnimationFrame(this.animationLoop);
   }
   updateStatusBar() {
     const shown = this.progressFinished ? this.currentPercentage : Math.min(this.currentPercentage, 99);

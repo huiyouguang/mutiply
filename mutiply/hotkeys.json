@@ -50,13 +50,21 @@
       "key": "D"
     }
   ],
-  "editor:toggle-numbered-list": [],
+  "editor:toggle-numbered-list": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "Y"
+    }
+  ],
   "editor:toggle-checklist-status": [],
   "obsidian-regex-replace:obsidian-regex-replace": [],
   "editor:toggle-blockquote": [
     {
       "modifiers": [
-        "Mod"
+        "Mod",
+        "Shift"
       ],
       "key": "Y"
     }
@@ -143,15 +151,6 @@
   ],
   "editor:open-link-in-new-leaf": [],
   "easy-typing-obsidian:easy-typing-goto-new-line-after-cur-line": [],
-  "editing-toolbar:insert-callout": [
-    {
-      "modifiers": [
-        "Mod",
-        "Shift"
-      ],
-      "key": "W"
-    }
-  ],
   "workspace:close": [],
   "workspace:close-window": [],
   "file-explorer:open": [
@@ -160,6 +159,46 @@
         "Mod"
       ],
       "key": "J"
+    }
+  ],
+  "editing-toolbar:custom-去除空行": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "3"
+    }
+  ],
+  "workspace:goto-tab-3": [],
+  "workspace:goto-tab-1": [],
+  "workspace:goto-tab-2": [],
+  "workspace:goto-tab-4": [],
+  "workspace:goto-tab-5": [],
+  "workspace:goto-tab-6": [],
+  "workspace:goto-tab-7": [],
+  "workspace:goto-tab-8": [],
+  "cloze:add-cloze": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "C"
+    }
+  ],
+  "cloze:toggle-cloze": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "V"
+    }
+  ],
+  "editing-toolbar:insert-callout": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "W"
     }
   ]
 }

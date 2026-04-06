@@ -281,5 +281,17 @@
   "kanban-styles@@kanban-fold": true,
   "kanban-styles@@kanban-card-items": true,
   "background-image-settings@@background-image-saturate": 1,
-  "pln@@pln-vision": false
+  "pln@@pln-vision": false,
+  "blue-topaz-theme@@toggle-split-note-background": true,
+  "blue-topaz-theme@@remove-cloze-style": true,
+  "blue-topaz-theme@@background-image-settings-switch": true,
+  "blue-topaz-theme@@toggle-nonoverlapping-bg": true,
+  "blue-topaz-theme@@background-notebook-liked-switch": true,
+  "blue-topaz-theme@@notebook-liked-markdown-page-options": "notebook-liked-markdown-page-grid-notebook-2",
+  "blue-topaz-theme@@background-image-settings-markdown-page-options": "background-image-settings-markdown-page-custom",
+  "blue-topaz-theme@@custom-markdown-page-background-color@@light": "#F5F1E4",
+  "blue-topaz-theme@@custom-markdown-page-background-color@@dark": "#F5F1E4",
+  "blue-topaz-theme@@toggle-fixed-pattern": false,
+  "anuppuccin-theme-settings@@anp-colorful-frame-opacity": 0.1,
+  "anuppuccin-theme-settings@@anp-canvas-dark-bg": false
 }

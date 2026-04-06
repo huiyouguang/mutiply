@@ -34,6 +34,7 @@
     "完成状态": "multitext",
     "subject": "multitext",
     "结束日期": "date",
-    "能量值": "multitext"
+    "能量值": "multitext",
+    "TQ_show_toolbar": "checkbox"
   }
 }

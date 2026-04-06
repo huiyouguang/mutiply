@@ -1,5 +1,6 @@
 {
   "pluginList": [
+    "eondrcode/obsidian-i18n",
     "Quorafind/Obsidian-Task-Genius",
     "sean2077/obsidian-dynamic-theme-background",
     "ted-marozzi/task-list",
@@ -7,12 +8,16 @@
   ],
   "pluginSubListFrozenVersion": [
     {
+      "repo": "eondrcode/obsidian-i18n",
+      "version": "latest"
+    },
+    {
       "repo": "Quorafind/Obsidian-Task-Genius",
       "version": "9.9.4"
     },
     {
       "repo": "sean2077/obsidian-dynamic-theme-background",
-      "version": "2.7.2"
+      "version": "2.9.0"
     },
     {
       "repo": "ted-marozzi/task-list",
@@ -32,6 +37,7 @@
   "loggingVerboseEnabled": false,
   "debuggingMode": false,
   "notificationsEnabled": true,
+  "globalTokenName": "",
   "personalAccessToken": "",
   "selectLatestPluginVersionByDefault": false,
   "allowIncompatiblePlugins": false

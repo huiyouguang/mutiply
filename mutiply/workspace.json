@@ -4,71 +4,25 @@
     "type": "split",
     "children": [
       {
-        "id": "3df38ed076ac7e94",
+        "id": "464eb0a839acfd71",
         "type": "tabs",
         "children": [
           {
-            "id": "b73777511fd4ed86",
+            "id": "a4f6aa9941ac855c",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "模板/Obsidian_日记系统_周回顾.md",
+                "file": "04成长/知识管理/004 注会/002 审计/审计职业道德.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "Obsidian_日记系统_周回顾"
-            }
-          },
-          {
-            "id": "df6b782c1249bfbb",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "模板/T-笔记模板.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "T-笔记模板"
-            }
-          },
-          {
-            "id": "4c6bab89b2512478",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "模板/T-电影模板.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "T-电影模板"
-            }
-          },
-          {
-            "id": "a9b4cae1185550f7",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "模板/T-书籍模板.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "T-书籍模板"
+              "title": "审计职业道德"
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "vertical"
@@ -124,7 +78,8 @@
               "title": "tg-left-sidebar"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -137,7 +92,7 @@
       {
         "id": "adf2a2e115a738af",
         "type": "tabs",
-        "dimension": 34.84126984126984,
+        "dimension": 32.18842001962708,
         "children": [
           {
             "id": "b9300c107b96873a",
@@ -243,8 +198,8 @@
             "state": {
               "type": "advanced-tables-toolbar",
               "state": {},
-              "icon": "spreadsheet",
-              "title": "Advanced Tables"
+              "icon": "lucide-ghost",
+              "title": "advanced-tables-toolbar"
             }
           },
           {
@@ -273,8 +228,8 @@
             "state": {
               "type": "tag-group-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "标签概览"
+              "icon": "lucide-ghost",
+              "title": "tag-group-view"
             }
           },
           {
@@ -288,21 +243,27 @@
             }
           },
           {
-            "id": "805509ddc4d5d9f2",
+            "id": "fb47b3b795913ee1",
             "type": "leaf",
             "state": {
-              "type": "outline",
-              "state": {
-                "followCursor": false,
-                "showSearch": false,
-                "searchQuery": ""
-              },
-              "icon": "lucide-list",
-              "title": "大纲"
+              "type": "pw.todo-list",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "pw.todo-list"
             }
           },
           {
-            "id": "fb47b3b795913ee1",
+            "id": "d54aca3bccd55bdb",
+            "type": "leaf",
+            "state": {
+              "type": "pw.todo-list",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "pw.todo-list"
+            }
+          },
+          {
+            "id": "a852be4e0c1678ee",
             "type": "leaf",
             "state": {
               "type": "pw.todo-list",
@@ -315,28 +276,9 @@
         "currentTab": 9
       },
       {
-        "id": "03534a259ef09a3f",
-        "type": "tabs",
-        "dimension": 34.84126984126984,
-        "children": [
-          {
-            "id": "cbcecab3fd579f13",
-            "type": "leaf",
-            "state": {
-              "type": "footnotes",
-              "state": {
-                "file": "005 注册税务师/税一/刷题/增值税.md"
-              },
-              "icon": "lucide-ghost",
-              "title": "footnotes"
-            }
-          }
-        ]
-      },
-      {
         "id": "2ae9a1777f445b93",
         "type": "tabs",
-        "dimension": 30.317460317460316,
+        "dimension": 27.870461236506376,
         "children": [
           {
             "id": "16f821bb0ae7704d",
@@ -349,6 +291,28 @@
             }
           }
         ]
+      },
+      {
+        "id": "5b54931936dbc764",
+        "type": "tabs",
+        "dimension": 39.94111874386654,
+        "children": [
+          {
+            "id": "805509ddc4d5d9f2",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "04成长/知识管理/004 注会/002 审计/审计职业道德.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "审计职业道德 的大纲"
+            }
+          }
+        ]
       }
     ],
     "direction": "horizontal",
@@ -356,38 +320,51 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "keep-the-rhythm:Word Count Stats": false,
-      "templates:插入模板": false,
-      "proletarian-wizard:Open planning": false,
       "cmdr:重新加载 Obsidian（不保存当前编辑内容）": false,
       "cmdr:上下分屏": false,
-      "explorer-hider:Disable hiding": false,
+      "bases:新建数据库": false,
+      "templates:插入模板": false,
       "canvas:新建白板": false,
-      "tag-group-manager:标签概览": false,
-      "bases:创建新数据库": false,
-      "switcher:打开快速切换": false,
       "graph:查看关系图谱": false,
       "command-palette:打开命令面板": false,
-      "markdown-importer:打开 Markdown 格式转换器": false,
       "workspaces:管理工作区布局": false,
+      "daily-notes:打开/创建今天的日记": false,
       "table-editor-obsidian:Advanced Tables Toolbar": false,
       "obsidian42-brat:BRAT": false,
       "cloze:显/隐所有填空": false,
       "edit-history:Open edit history": false,
+      "explorer-hider:Disable hiding": false,
       "i18n:I18N": false,
       "iconic:打开规则书": false,
-      "templater-obsidian:Templater": false,
-      "dynamic-theme-background:🌈 Obsidian DTB": false,
-      "obsidian-kanban:创建新看板": false,
+      "keep-the-rhythm:Word Count Stats": false,
       "obsidian-memos:Thino": false,
-      "daily-notes:打开/创建今天的日记": false,
-      "copilot:打开 Copilot 对话": false,
+      "templater-obsidian:Templater": false,
+      "tag-group-manager:标签概览": false,
       "obsidian-git:打开Git源代码管理": false,
-      "obsidian-task-progress-bar:打开 Task Genius 视图": false
+      "copilot:打开 Copilot 对话": false,
+      "obsidian-kanban:创建新看板": false,
+      "proletarian-wizard:Open planning": false,
+      "obsidian-memos:Thino Super": false,
+      "css-editor:Open CSS editor quick switcher": false,
+      "pkmer:打开 Pkmer 插件市场": false,
+      "obsidian-task-progress-bar:打开 Task Genius 视图": false,
+      "i18n:common.i18n": false
     }
   },
-  "active": "a9b4cae1185550f7",
+  "active": "a4f6aa9941ac855c",
   "lastOpenFiles": [
+    "04成长/知识管理/004 注会/002 审计/审计职业道德.md",
+    "copilot/system-prompts/Migrated Custom System Prompt.md.edtz",
+    "copilot/system-prompts/Migrated Custom System Prompt.md",
+    "copilot/system-prompts",
+    "04成长/知识管理/004 注会/002 审计/完成审计工作+报告+内控.md",
+    "04成长/知识管理/004 注会/002 审计/审计职业道德.md.edtz",
+    "03Life os/05书籍/001 纳瓦尔宝典.md.edtz",
+    "README.md",
+    "README.md.edtz",
+    "BT_Example/99-Attach/Pasted image 20260406140123.png",
+    "BT_Example/99-Attach",
+    "BT_Example",
     "模板/T-电影模板.md",
     "模板/T-笔记模板.md",
     "模板/Obsidian_日记系统_周回顾.md",
@@ -396,16 +373,9 @@
     "003 中级/中级实务/刷题/错题整理.md.edtz",
     "003 中级/中级实务/刷题",
     "模板/T-人物模板.md.edtz",
-    "模板/T-书籍模板.md.edtz",
-    "模板/T-项目模板.md.edtz",
-    "时间管理/艾维利工作法.md.edtz",
     "时间管理/艾维利工作法.md",
-    "时间管理/时间保护.md.edtz",
     "时间管理/时间保护.md",
-    "时间管理/GTD.md.edtz",
     "时间管理/GTD.md",
-    "时间管理",
-    "模板/PDCA循环法.md.edtz",
     "模板/PDCA循环法.md",
     "模板/Obsidian生产力系统.md",
     "模板/Obsidian_日记系统.md",
@@ -420,10 +390,6 @@
     "07People/T-电影模板.md",
     "模板/T-项目模板.md",
     "模板/T-书籍模板.md",
-    "模板/T-人物模板.md",
-    "05Books/T-人物模板.md",
-    "T-Daily.md",
-    "T-项目模板.md",
     "未命名 1.canvas",
     "005 注册税务师/税一/刷题/未命名 3.canvas",
     "005 注册税务师/税一/刷题/未命名 2.canvas",

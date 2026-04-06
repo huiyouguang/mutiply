@@ -1,0 +1,11 @@
+{
+    "plugins": {},
+    "themes": {
+        "AnuPpuccin": {
+            "id": "AnuPpuccin",
+            "isApplied": true,
+            "pluginVersion": "1.5.0",
+            "translationVersion": "1.0.0"
+        }
+    }
+}

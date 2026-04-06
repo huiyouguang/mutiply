@@ -4,7 +4,8 @@
       "name": "组名",
       "tags": [
         "必备经济法法条"
-      ]
+      ],
+      "id": "969a442f-41bc-4529-aa0c-5bf5731c3e86"
     },
     {
       "name": "日常",
@@ -89,7 +90,8 @@
         "人生",
         "人生不言弃",
         "学习"
-      ]
+      ],
+      "id": "6a45b4f5-34f5-4b5f-85c5-3c1ac1cb915c"
     },
     {
       "name": "记忆难点分类",
@@ -98,53 +100,90 @@
         "easy",
         "progress",
         "enhance"
-      ]
+      ],
+      "id": "b4ffd7a3-416c-42d1-8b01-591de4463480"
     },
     {
       "name": "组名",
-      "tags": []
+      "tags": [],
+      "id": "1bd6d829-429c-4c3e-9d4f-d684062f180a"
     },
     {
       "name": "组名",
-      "tags": []
+      "tags": [],
+      "id": "9728a82d-93e6-4aa9-9934-afdda4c2d5ee"
     },
     {
       "name": "组名",
-      "tags": []
+      "tags": [],
+      "id": "445fd1ec-01c0-4848-b6b9-10b8191e5400"
     },
     {
       "name": "组名",
-      "tags": []
+      "tags": [],
+      "id": "bd3a1c17-2ea8-4ad9-ba34-4d2eb5f5092c"
     },
     {
       "name": "组名",
-      "tags": []
+      "tags": [],
+      "id": "ab0ba3d3-29a1-4bbb-a763-d0658d258f9d"
     },
     {
       "name": "组名",
-      "tags": []
+      "tags": [],
+      "id": "f72ef031-47be-4a67-a139-8ec327e18d29"
     },
     {
       "name": "组名",
-      "tags": []
+      "tags": [],
+      "id": "bcabdd35-abf5-4993-a4af-b0980bec79ce"
     },
     {
       "name": "组名",
-      "tags": []
+      "tags": [],
+      "id": "63f0f17b-96de-4425-9b76-d64dae92d1aa"
     },
     {
       "name": "组名",
-      "tags": []
+      "tags": [],
+      "id": "ce891d41-bed4-423e-ad56-512e32543ea2"
     },
     {
       "name": "组名",
-      "tags": []
+      "tags": [],
+      "id": "14239f84-c456-45a4-bcbe-93bae35fca8b"
     },
     {
       "name": "组名",
-      "tags": []
+      "tags": [],
+      "id": "b48f9d8e-b3aa-4117-b05d-b445712e64bd"
     }
   ],
   "showStarButton": true,
+  "tagColorMappings": [],
+  "enableCustomColors": false,
+  "customColors": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "tagColors": {},
+  "tagGroupSets": [],
+  "lastSeenVersion": "1.8.7",
+  "autoExpandMultiLevelTags": false,
+  "autoAddTags": false,
+  "autoAddRules": "",
+  "multiLevelAutoAdd": {
+    "enabled": true,
+    "matchMode": "level2",
+    "createIfNotExists": false
+  },
+  "enableTextTagStyling": false,
+  "expandTagPrefixes": "",
+  "expandDepth": 3,
   "language": "zh"
 }

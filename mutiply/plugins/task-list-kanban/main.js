@@ -10,7 +10,10 @@ var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __typeError = (msg) => {
+  throw TypeError(msg);
+};
+var __defNormalProp = (obj, key2, value) => key2 in obj ? __defProp(obj, key2, { enumerable: true, configurable: true, writable: true, value }) : obj[key2] = value;
 var __commonJS = (cb, mod) => function __require() {
   return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
@@ -20,9 +23,9 @@ var __export = (target, all) => {
 };
 var __copyProps = (to, from, except, desc) => {
   if (from && typeof from === "object" || typeof from === "function") {
-    for (let key of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+    for (let key2 of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key2) && key2 !== except)
+        __defProp(to, key2, { get: () => from[key2], enumerable: !(desc = __getOwnPropDesc(from, key2)) || desc.enumerable });
   }
   return to;
 };
@@ -35,7 +38,12 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
+var __publicField = (obj, key2, value) => __defNormalProp(obj, typeof key2 !== "symbol" ? key2 + "" : key2, value);
+var __accessCheck = (obj, member, msg) => member.has(obj) || __typeError("Cannot " + msg);
+var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read from private field"), getter ? getter.call(obj) : member.get(obj));
+var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
+var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
+var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 
 // node_modules/front-matter/node_modules/js-yaml/lib/js-yaml/common.js
 var require_common = __commonJS({
@@ -52,13 +60,13 @@ var require_common = __commonJS({
       else if (isNothing(sequence)) return [];
       return [sequence];
     }
-    function extend(target, source) {
-      var index, length, key, sourceKeys;
-      if (source) {
-        sourceKeys = Object.keys(source);
-        for (index = 0, length = sourceKeys.length; index < length; index += 1) {
-          key = sourceKeys[index];
-          target[key] = source[key];
+    function extend(target, source2) {
+      var index2, length, key2, sourceKeys;
+      if (source2) {
+        sourceKeys = Object.keys(source2);
+        for (index2 = 0, length = sourceKeys.length; index2 < length; index2 += 1) {
+          key2 = sourceKeys[index2];
+          target[key2] = source2[key2];
         }
       }
       return target;
@@ -125,16 +133,16 @@ var require_mark = __commonJS({
       this.column = column;
     }
     Mark.prototype.getSnippet = function getSnippet(indent, maxLength) {
-      var head, start, tail, end, snippet;
+      var head2, start, tail, end, snippet2;
       if (!this.buffer) return null;
       indent = indent || 4;
       maxLength = maxLength || 75;
-      head = "";
+      head2 = "";
       start = this.position;
       while (start > 0 && "\0\r\n\x85\u2028\u2029".indexOf(this.buffer.charAt(start - 1)) === -1) {
         start -= 1;
         if (this.position - start > maxLength / 2 - 1) {
-          head = " ... ";
+          head2 = " ... ";
           start += 5;
           break;
         }
@@ -149,19 +157,19 @@ var require_mark = __commonJS({
           break;
         }
       }
-      snippet = this.buffer.slice(start, end);
-      return common.repeat(" ", indent) + head + snippet + tail + "\n" + common.repeat(" ", indent + this.position - start + head.length) + "^";
+      snippet2 = this.buffer.slice(start, end);
+      return common.repeat(" ", indent) + head2 + snippet2 + tail + "\n" + common.repeat(" ", indent + this.position - start + head2.length) + "^";
     };
     Mark.prototype.toString = function toString(compact) {
-      var snippet, where = "";
+      var snippet2, where = "";
       if (this.name) {
         where += 'in "' + this.name + '" ';
       }
       where += "at line " + (this.line + 1) + ", column " + (this.column + 1);
       if (!compact) {
-        snippet = this.getSnippet();
-        if (snippet) {
-          where += ":\n" + snippet;
+        snippet2 = this.getSnippet();
+        if (snippet2) {
+          where += ":\n" + snippet2;
         }
       }
       return where;
@@ -201,14 +209,14 @@ var require_type = __commonJS({
       }
       return result;
     }
-    function Type(tag, options) {
+    function Type(tag2, options) {
       options = options || {};
       Object.keys(options).forEach(function(name) {
         if (TYPE_CONSTRUCTOR_OPTIONS.indexOf(name) === -1) {
-          throw new YAMLException('Unknown option "' + name + '" is met in definition of "' + tag + '" YAML type.');
+          throw new YAMLException('Unknown option "' + name + '" is met in definition of "' + tag2 + '" YAML type.');
         }
       });
-      this.tag = tag;
+      this.tag = tag2;
       this.kind = options["kind"] || null;
       this.resolve = options["resolve"] || function() {
         return true;
@@ -222,7 +230,7 @@ var require_type = __commonJS({
       this.defaultStyle = options["defaultStyle"] || null;
       this.styleAliases = compileStyleAliases(options["styleAliases"] || null);
       if (YAML_NODE_KINDS.indexOf(this.kind) === -1) {
-        throw new YAMLException('Unknown kind "' + this.kind + '" is specified for "' + tag + '" YAML type.');
+        throw new YAMLException('Unknown kind "' + this.kind + '" is specified for "' + tag2 + '" YAML type.');
       }
     }
     module2.exports = Type;
@@ -249,8 +257,8 @@ var require_schema = __commonJS({
         });
         result.push(currentType);
       });
-      return result.filter(function(type, index) {
-        return exclude.indexOf(index) === -1;
+      return result.filter(function(type, index2) {
+        return exclude.indexOf(index2) === -1;
       });
     }
     function compileMap() {
@@ -259,12 +267,12 @@ var require_schema = __commonJS({
         sequence: {},
         mapping: {},
         fallback: {}
-      }, index, length;
+      }, index2, length;
       function collectType(type) {
         result[type.kind][type.tag] = result["fallback"][type.tag] = type;
       }
-      for (index = 0, length = arguments.length; index < length; index += 1) {
-        arguments[index].forEach(collectType);
+      for (index2 = 0, length = arguments.length; index2 < length; index2 += 1) {
+        arguments[index2].forEach(collectType);
       }
       return result;
     }
@@ -468,19 +476,19 @@ var require_int = __commonJS({
     }
     function resolveYamlInteger(data) {
       if (data === null) return false;
-      var max2 = data.length, index = 0, hasDigits = false, ch;
+      var max2 = data.length, index2 = 0, hasDigits = false, ch;
       if (!max2) return false;
-      ch = data[index];
+      ch = data[index2];
       if (ch === "-" || ch === "+") {
-        ch = data[++index];
+        ch = data[++index2];
       }
       if (ch === "0") {
-        if (index + 1 === max2) return true;
-        ch = data[++index];
+        if (index2 + 1 === max2) return true;
+        ch = data[++index2];
         if (ch === "b") {
-          index++;
-          for (; index < max2; index++) {
-            ch = data[index];
+          index2++;
+          for (; index2 < max2; index2++) {
+            ch = data[index2];
             if (ch === "_") continue;
             if (ch !== "0" && ch !== "1") return false;
             hasDigits = true;
@@ -488,36 +496,36 @@ var require_int = __commonJS({
           return hasDigits && ch !== "_";
         }
         if (ch === "x") {
-          index++;
-          for (; index < max2; index++) {
-            ch = data[index];
+          index2++;
+          for (; index2 < max2; index2++) {
+            ch = data[index2];
             if (ch === "_") continue;
-            if (!isHexCode(data.charCodeAt(index))) return false;
+            if (!isHexCode(data.charCodeAt(index2))) return false;
             hasDigits = true;
           }
           return hasDigits && ch !== "_";
         }
-        for (; index < max2; index++) {
-          ch = data[index];
+        for (; index2 < max2; index2++) {
+          ch = data[index2];
           if (ch === "_") continue;
-          if (!isOctCode(data.charCodeAt(index))) return false;
+          if (!isOctCode(data.charCodeAt(index2))) return false;
           hasDigits = true;
         }
         return hasDigits && ch !== "_";
       }
       if (ch === "_") return false;
-      for (; index < max2; index++) {
-        ch = data[index];
+      for (; index2 < max2; index2++) {
+        ch = data[index2];
         if (ch === "_") continue;
         if (ch === ":") break;
-        if (!isDecCode(data.charCodeAt(index))) {
+        if (!isDecCode(data.charCodeAt(index2))) {
           return false;
         }
         hasDigits = true;
       }
       if (!hasDigits || ch === "_") return false;
       if (ch !== ":") return true;
-      return /^(:[0-5]?[0-9])+$/.test(data.slice(index));
+      return /^(:[0-5]?[0-9])+$/.test(data.slice(index2));
     }
     function constructYamlInteger(data) {
       var value = data, sign = 1, ch, base, digits = [];
@@ -889,9 +897,9 @@ var require_omap = __commonJS({
     var _toString = Object.prototype.toString;
     function resolveYamlOmap(data) {
       if (data === null) return true;
-      var objectKeys = [], index, length, pair, pairKey, pairHasKey, object = data;
-      for (index = 0, length = object.length; index < length; index += 1) {
-        pair = object[index];
+      var objectKeys = [], index2, length, pair, pairKey, pairHasKey, object = data;
+      for (index2 = 0, length = object.length; index2 < length; index2 += 1) {
+        pair = object[index2];
         pairHasKey = false;
         if (_toString.call(pair) !== "[object Object]") return false;
         for (pairKey in pair) {
@@ -925,25 +933,25 @@ var require_pairs = __commonJS({
     var _toString = Object.prototype.toString;
     function resolveYamlPairs(data) {
       if (data === null) return true;
-      var index, length, pair, keys, result, object = data;
+      var index2, length, pair, keys, result, object = data;
       result = new Array(object.length);
-      for (index = 0, length = object.length; index < length; index += 1) {
-        pair = object[index];
+      for (index2 = 0, length = object.length; index2 < length; index2 += 1) {
+        pair = object[index2];
         if (_toString.call(pair) !== "[object Object]") return false;
         keys = Object.keys(pair);
         if (keys.length !== 1) return false;
-        result[index] = [keys[0], pair[keys[0]]];
+        result[index2] = [keys[0], pair[keys[0]]];
       }
       return true;
     }
     function constructYamlPairs(data) {
       if (data === null) return [];
-      var index, length, pair, keys, result, object = data;
+      var index2, length, pair, keys, result, object = data;
       result = new Array(object.length);
-      for (index = 0, length = object.length; index < length; index += 1) {
-        pair = object[index];
+      for (index2 = 0, length = object.length; index2 < length; index2 += 1) {
+        pair = object[index2];
         keys = Object.keys(pair);
-        result[index] = [keys[0], pair[keys[0]]];
+        result[index2] = [keys[0], pair[keys[0]]];
       }
       return result;
     }
@@ -963,10 +971,10 @@ var require_set = __commonJS({
     var _hasOwnProperty = Object.prototype.hasOwnProperty;
     function resolveYamlSet(data) {
       if (data === null) return true;
-      var key, object = data;
-      for (key in object) {
-        if (_hasOwnProperty.call(object, key)) {
-          if (object[key] !== null) return false;
+      var key2, object = data;
+      for (key2 in object) {
+        if (_hasOwnProperty.call(object, key2)) {
+          if (object[key2] !== null) return false;
         }
       }
       return true;
@@ -1092,7 +1100,7 @@ var require_function = __commonJS({
     function resolveJavascriptFunction(data) {
       if (data === null) return false;
       try {
-        var source = "(" + data + ")", ast = esprima.parse(source, { range: true });
+        var source2 = "(" + data + ")", ast = esprima.parse(source2, { range: true });
         if (ast.type !== "Program" || ast.body.length !== 1 || ast.body[0].type !== "ExpressionStatement" || ast.body[0].expression.type !== "ArrowFunctionExpression" && ast.body[0].expression.type !== "FunctionExpression") {
           return false;
         }
@@ -1102,7 +1110,7 @@ var require_function = __commonJS({
       }
     }
     function constructJavascriptFunction(data) {
-      var source = "(" + data + ")", ast = esprima.parse(source, { range: true }), params = [], body;
+      var source2 = "(" + data + ")", ast = esprima.parse(source2, { range: true }), params = [], body;
       if (ast.type !== "Program" || ast.body.length !== 1 || ast.body[0].type !== "ExpressionStatement" || ast.body[0].expression.type !== "ArrowFunctionExpression" && ast.body[0].expression.type !== "FunctionExpression") {
         throw new Error("Failed to resolve function");
       }
@@ -1111,9 +1119,9 @@ var require_function = __commonJS({
       });
       body = ast.body[0].expression.body.range;
       if (ast.body[0].expression.body.type === "BlockStatement") {
-        return new Function(params, source.slice(body[0] + 1, body[1] - 1));
+        return new Function(params, source2.slice(body[0] + 1, body[1] - 1));
       }
-      return new Function(params, "return " + source.slice(body[0], body[1]));
+      return new Function(params, "return " + source2.slice(body[0], body[1]));
     }
     function representJavascriptFunction(object) {
       return object.toString();
@@ -1227,6 +1235,18 @@ var require_loader = __commonJS({
         (c - 65536 & 1023) + 56320
       );
     }
+    function setProperty(object, key2, value) {
+      if (key2 === "__proto__") {
+        Object.defineProperty(object, key2, {
+          configurable: true,
+          enumerable: true,
+          writable: true,
+          value
+        });
+      } else {
+        object[key2] = value;
+      }
+    }
     var simpleEscapeCheck = new Array(256);
     var simpleEscapeMap = new Array(256);
     for (i = 0; i < 256; i++) {
@@ -1251,104 +1271,104 @@ var require_loader = __commonJS({
       this.lineIndent = 0;
       this.documents = [];
     }
-    function generateError(state, message) {
+    function generateError(state2, message) {
       return new YAMLException(
         message,
-        new Mark(state.filename, state.input, state.position, state.line, state.position - state.lineStart)
+        new Mark(state2.filename, state2.input, state2.position, state2.line, state2.position - state2.lineStart)
       );
     }
-    function throwError(state, message) {
-      throw generateError(state, message);
+    function throwError(state2, message) {
+      throw generateError(state2, message);
     }
-    function throwWarning(state, message) {
-      if (state.onWarning) {
-        state.onWarning.call(null, generateError(state, message));
+    function throwWarning(state2, message) {
+      if (state2.onWarning) {
+        state2.onWarning.call(null, generateError(state2, message));
       }
     }
     var directiveHandlers = {
-      YAML: function handleYamlDirective(state, name, args) {
+      YAML: function handleYamlDirective(state2, name, args) {
         var match, major, minor;
-        if (state.version !== null) {
-          throwError(state, "duplication of %YAML directive");
+        if (state2.version !== null) {
+          throwError(state2, "duplication of %YAML directive");
         }
         if (args.length !== 1) {
-          throwError(state, "YAML directive accepts exactly one argument");
+          throwError(state2, "YAML directive accepts exactly one argument");
         }
         match = /^([0-9]+)\.([0-9]+)$/.exec(args[0]);
         if (match === null) {
-          throwError(state, "ill-formed argument of the YAML directive");
+          throwError(state2, "ill-formed argument of the YAML directive");
         }
         major = parseInt(match[1], 10);
         minor = parseInt(match[2], 10);
         if (major !== 1) {
-          throwError(state, "unacceptable YAML version of the document");
+          throwError(state2, "unacceptable YAML version of the document");
         }
-        state.version = args[0];
-        state.checkLineBreaks = minor < 2;
+        state2.version = args[0];
+        state2.checkLineBreaks = minor < 2;
         if (minor !== 1 && minor !== 2) {
-          throwWarning(state, "unsupported YAML version of the document");
+          throwWarning(state2, "unsupported YAML version of the document");
         }
       },
-      TAG: function handleTagDirective(state, name, args) {
+      TAG: function handleTagDirective(state2, name, args) {
         var handle, prefix;
         if (args.length !== 2) {
-          throwError(state, "TAG directive accepts exactly two arguments");
+          throwError(state2, "TAG directive accepts exactly two arguments");
         }
         handle = args[0];
         prefix = args[1];
         if (!PATTERN_TAG_HANDLE.test(handle)) {
-          throwError(state, "ill-formed tag handle (first argument) of the TAG directive");
+          throwError(state2, "ill-formed tag handle (first argument) of the TAG directive");
         }
-        if (_hasOwnProperty.call(state.tagMap, handle)) {
-          throwError(state, 'there is a previously declared suffix for "' + handle + '" tag handle');
+        if (_hasOwnProperty.call(state2.tagMap, handle)) {
+          throwError(state2, 'there is a previously declared suffix for "' + handle + '" tag handle');
         }
         if (!PATTERN_TAG_URI.test(prefix)) {
-          throwError(state, "ill-formed tag prefix (second argument) of the TAG directive");
+          throwError(state2, "ill-formed tag prefix (second argument) of the TAG directive");
         }
-        state.tagMap[handle] = prefix;
+        state2.tagMap[handle] = prefix;
       }
     };
-    function captureSegment(state, start, end, checkJson) {
+    function captureSegment(state2, start, end, checkJson) {
       var _position, _length, _character, _result;
       if (start < end) {
-        _result = state.input.slice(start, end);
+        _result = state2.input.slice(start, end);
         if (checkJson) {
           for (_position = 0, _length = _result.length; _position < _length; _position += 1) {
             _character = _result.charCodeAt(_position);
             if (!(_character === 9 || 32 <= _character && _character <= 1114111)) {
-              throwError(state, "expected valid JSON character");
+              throwError(state2, "expected valid JSON character");
             }
           }
         } else if (PATTERN_NON_PRINTABLE.test(_result)) {
-          throwError(state, "the stream contains non-printable characters");
+          throwError(state2, "the stream contains non-printable characters");
         }
-        state.result += _result;
+        state2.result += _result;
       }
     }
-    function mergeMappings(state, destination, source, overridableKeys) {
-      var sourceKeys, key, index, quantity;
-      if (!common.isObject(source)) {
-        throwError(state, "cannot merge mappings; the provided source object is unacceptable");
+    function mergeMappings(state2, destination, source2, overridableKeys) {
+      var sourceKeys, key2, index2, quantity;
+      if (!common.isObject(source2)) {
+        throwError(state2, "cannot merge mappings; the provided source object is unacceptable");
       }
-      sourceKeys = Object.keys(source);
-      for (index = 0, quantity = sourceKeys.length; index < quantity; index += 1) {
-        key = sourceKeys[index];
-        if (!_hasOwnProperty.call(destination, key)) {
-          destination[key] = source[key];
-          overridableKeys[key] = true;
+      sourceKeys = Object.keys(source2);
+      for (index2 = 0, quantity = sourceKeys.length; index2 < quantity; index2 += 1) {
+        key2 = sourceKeys[index2];
+        if (!_hasOwnProperty.call(destination, key2)) {
+          setProperty(destination, key2, source2[key2]);
+          overridableKeys[key2] = true;
         }
       }
     }
-    function storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, valueNode, startLine, startPos) {
-      var index, quantity;
+    function storeMappingPair(state2, _result, overridableKeys, keyTag, keyNode, valueNode, startLine, startPos) {
+      var index2, quantity;
       if (Array.isArray(keyNode)) {
         keyNode = Array.prototype.slice.call(keyNode);
-        for (index = 0, quantity = keyNode.length; index < quantity; index += 1) {
-          if (Array.isArray(keyNode[index])) {
-            throwError(state, "nested arrays are not supported inside keys");
+        for (index2 = 0, quantity = keyNode.length; index2 < quantity; index2 += 1) {
+          if (Array.isArray(keyNode[index2])) {
+            throwError(state2, "nested arrays are not supported inside keys");
           }
-          if (typeof keyNode === "object" && _class(keyNode[index]) === "[object Object]") {
-            keyNode[index] = "[object Object]";
+          if (typeof keyNode === "object" && _class(keyNode[index2]) === "[object Object]") {
+            keyNode[index2] = "[object Object]";
           }
         }
       }
@@ -1361,242 +1381,242 @@ var require_loader = __commonJS({
       }
       if (keyTag === "tag:yaml.org,2002:merge") {
         if (Array.isArray(valueNode)) {
-          for (index = 0, quantity = valueNode.length; index < quantity; index += 1) {
-            mergeMappings(state, _result, valueNode[index], overridableKeys);
+          for (index2 = 0, quantity = valueNode.length; index2 < quantity; index2 += 1) {
+            mergeMappings(state2, _result, valueNode[index2], overridableKeys);
           }
         } else {
-          mergeMappings(state, _result, valueNode, overridableKeys);
+          mergeMappings(state2, _result, valueNode, overridableKeys);
         }
       } else {
-        if (!state.json && !_hasOwnProperty.call(overridableKeys, keyNode) && _hasOwnProperty.call(_result, keyNode)) {
-          state.line = startLine || state.line;
-          state.position = startPos || state.position;
-          throwError(state, "duplicated mapping key");
+        if (!state2.json && !_hasOwnProperty.call(overridableKeys, keyNode) && _hasOwnProperty.call(_result, keyNode)) {
+          state2.line = startLine || state2.line;
+          state2.position = startPos || state2.position;
+          throwError(state2, "duplicated mapping key");
         }
-        _result[keyNode] = valueNode;
+        setProperty(_result, keyNode, valueNode);
         delete overridableKeys[keyNode];
       }
       return _result;
     }
-    function readLineBreak(state) {
+    function readLineBreak(state2) {
       var ch;
-      ch = state.input.charCodeAt(state.position);
+      ch = state2.input.charCodeAt(state2.position);
       if (ch === 10) {
-        state.position++;
+        state2.position++;
       } else if (ch === 13) {
-        state.position++;
-        if (state.input.charCodeAt(state.position) === 10) {
-          state.position++;
+        state2.position++;
+        if (state2.input.charCodeAt(state2.position) === 10) {
+          state2.position++;
         }
       } else {
-        throwError(state, "a line break is expected");
+        throwError(state2, "a line break is expected");
       }
-      state.line += 1;
-      state.lineStart = state.position;
+      state2.line += 1;
+      state2.lineStart = state2.position;
     }
-    function skipSeparationSpace(state, allowComments, checkIndent) {
-      var lineBreaks = 0, ch = state.input.charCodeAt(state.position);
+    function skipSeparationSpace(state2, allowComments, checkIndent) {
+      var lineBreaks = 0, ch = state2.input.charCodeAt(state2.position);
       while (ch !== 0) {
         while (is_WHITE_SPACE(ch)) {
-          ch = state.input.charCodeAt(++state.position);
+          ch = state2.input.charCodeAt(++state2.position);
         }
         if (allowComments && ch === 35) {
           do {
-            ch = state.input.charCodeAt(++state.position);
+            ch = state2.input.charCodeAt(++state2.position);
           } while (ch !== 10 && ch !== 13 && ch !== 0);
         }
         if (is_EOL(ch)) {
-          readLineBreak(state);
-          ch = state.input.charCodeAt(state.position);
+          readLineBreak(state2);
+          ch = state2.input.charCodeAt(state2.position);
           lineBreaks++;
-          state.lineIndent = 0;
+          state2.lineIndent = 0;
           while (ch === 32) {
-            state.lineIndent++;
-            ch = state.input.charCodeAt(++state.position);
+            state2.lineIndent++;
+            ch = state2.input.charCodeAt(++state2.position);
           }
         } else {
           break;
         }
       }
-      if (checkIndent !== -1 && lineBreaks !== 0 && state.lineIndent < checkIndent) {
-        throwWarning(state, "deficient indentation");
+      if (checkIndent !== -1 && lineBreaks !== 0 && state2.lineIndent < checkIndent) {
+        throwWarning(state2, "deficient indentation");
       }
       return lineBreaks;
     }
-    function testDocumentSeparator(state) {
-      var _position = state.position, ch;
-      ch = state.input.charCodeAt(_position);
-      if ((ch === 45 || ch === 46) && ch === state.input.charCodeAt(_position + 1) && ch === state.input.charCodeAt(_position + 2)) {
+    function testDocumentSeparator(state2) {
+      var _position = state2.position, ch;
+      ch = state2.input.charCodeAt(_position);
+      if ((ch === 45 || ch === 46) && ch === state2.input.charCodeAt(_position + 1) && ch === state2.input.charCodeAt(_position + 2)) {
         _position += 3;
-        ch = state.input.charCodeAt(_position);
+        ch = state2.input.charCodeAt(_position);
         if (ch === 0 || is_WS_OR_EOL(ch)) {
           return true;
         }
       }
       return false;
     }
-    function writeFoldedLines(state, count) {
+    function writeFoldedLines(state2, count) {
       if (count === 1) {
-        state.result += " ";
+        state2.result += " ";
       } else if (count > 1) {
-        state.result += common.repeat("\n", count - 1);
+        state2.result += common.repeat("\n", count - 1);
       }
     }
-    function readPlainScalar(state, nodeIndent, withinFlowCollection) {
-      var preceding, following, captureStart, captureEnd, hasPendingContent, _line, _lineStart, _lineIndent, _kind = state.kind, _result = state.result, ch;
-      ch = state.input.charCodeAt(state.position);
+    function readPlainScalar(state2, nodeIndent, withinFlowCollection) {
+      var preceding, following, captureStart, captureEnd, hasPendingContent, _line, _lineStart, _lineIndent, _kind = state2.kind, _result = state2.result, ch;
+      ch = state2.input.charCodeAt(state2.position);
       if (is_WS_OR_EOL(ch) || is_FLOW_INDICATOR(ch) || ch === 35 || ch === 38 || ch === 42 || ch === 33 || ch === 124 || ch === 62 || ch === 39 || ch === 34 || ch === 37 || ch === 64 || ch === 96) {
         return false;
       }
       if (ch === 63 || ch === 45) {
-        following = state.input.charCodeAt(state.position + 1);
+        following = state2.input.charCodeAt(state2.position + 1);
         if (is_WS_OR_EOL(following) || withinFlowCollection && is_FLOW_INDICATOR(following)) {
           return false;
         }
       }
-      state.kind = "scalar";
-      state.result = "";
-      captureStart = captureEnd = state.position;
+      state2.kind = "scalar";
+      state2.result = "";
+      captureStart = captureEnd = state2.position;
       hasPendingContent = false;
       while (ch !== 0) {
         if (ch === 58) {
-          following = state.input.charCodeAt(state.position + 1);
+          following = state2.input.charCodeAt(state2.position + 1);
           if (is_WS_OR_EOL(following) || withinFlowCollection && is_FLOW_INDICATOR(following)) {
             break;
           }
         } else if (ch === 35) {
-          preceding = state.input.charCodeAt(state.position - 1);
+          preceding = state2.input.charCodeAt(state2.position - 1);
           if (is_WS_OR_EOL(preceding)) {
             break;
           }
-        } else if (state.position === state.lineStart && testDocumentSeparator(state) || withinFlowCollection && is_FLOW_INDICATOR(ch)) {
+        } else if (state2.position === state2.lineStart && testDocumentSeparator(state2) || withinFlowCollection && is_FLOW_INDICATOR(ch)) {
           break;
         } else if (is_EOL(ch)) {
-          _line = state.line;
-          _lineStart = state.lineStart;
-          _lineIndent = state.lineIndent;
-          skipSeparationSpace(state, false, -1);
-          if (state.lineIndent >= nodeIndent) {
+          _line = state2.line;
+          _lineStart = state2.lineStart;
+          _lineIndent = state2.lineIndent;
+          skipSeparationSpace(state2, false, -1);
+          if (state2.lineIndent >= nodeIndent) {
             hasPendingContent = true;
-            ch = state.input.charCodeAt(state.position);
+            ch = state2.input.charCodeAt(state2.position);
             continue;
           } else {
-            state.position = captureEnd;
-            state.line = _line;
-            state.lineStart = _lineStart;
-            state.lineIndent = _lineIndent;
+            state2.position = captureEnd;
+            state2.line = _line;
+            state2.lineStart = _lineStart;
+            state2.lineIndent = _lineIndent;
             break;
           }
         }
         if (hasPendingContent) {
-          captureSegment(state, captureStart, captureEnd, false);
-          writeFoldedLines(state, state.line - _line);
-          captureStart = captureEnd = state.position;
+          captureSegment(state2, captureStart, captureEnd, false);
+          writeFoldedLines(state2, state2.line - _line);
+          captureStart = captureEnd = state2.position;
           hasPendingContent = false;
         }
         if (!is_WHITE_SPACE(ch)) {
-          captureEnd = state.position + 1;
+          captureEnd = state2.position + 1;
         }
-        ch = state.input.charCodeAt(++state.position);
+        ch = state2.input.charCodeAt(++state2.position);
       }
-      captureSegment(state, captureStart, captureEnd, false);
-      if (state.result) {
+      captureSegment(state2, captureStart, captureEnd, false);
+      if (state2.result) {
         return true;
       }
-      state.kind = _kind;
-      state.result = _result;
+      state2.kind = _kind;
+      state2.result = _result;
       return false;
     }
-    function readSingleQuotedScalar(state, nodeIndent) {
+    function readSingleQuotedScalar(state2, nodeIndent) {
       var ch, captureStart, captureEnd;
-      ch = state.input.charCodeAt(state.position);
+      ch = state2.input.charCodeAt(state2.position);
       if (ch !== 39) {
         return false;
       }
-      state.kind = "scalar";
-      state.result = "";
-      state.position++;
-      captureStart = captureEnd = state.position;
-      while ((ch = state.input.charCodeAt(state.position)) !== 0) {
+      state2.kind = "scalar";
+      state2.result = "";
+      state2.position++;
+      captureStart = captureEnd = state2.position;
+      while ((ch = state2.input.charCodeAt(state2.position)) !== 0) {
         if (ch === 39) {
-          captureSegment(state, captureStart, state.position, true);
-          ch = state.input.charCodeAt(++state.position);
+          captureSegment(state2, captureStart, state2.position, true);
+          ch = state2.input.charCodeAt(++state2.position);
           if (ch === 39) {
-            captureStart = state.position;
-            state.position++;
-            captureEnd = state.position;
+            captureStart = state2.position;
+            state2.position++;
+            captureEnd = state2.position;
           } else {
             return true;
           }
         } else if (is_EOL(ch)) {
-          captureSegment(state, captureStart, captureEnd, true);
-          writeFoldedLines(state, skipSeparationSpace(state, false, nodeIndent));
-          captureStart = captureEnd = state.position;
-        } else if (state.position === state.lineStart && testDocumentSeparator(state)) {
-          throwError(state, "unexpected end of the document within a single quoted scalar");
+          captureSegment(state2, captureStart, captureEnd, true);
+          writeFoldedLines(state2, skipSeparationSpace(state2, false, nodeIndent));
+          captureStart = captureEnd = state2.position;
+        } else if (state2.position === state2.lineStart && testDocumentSeparator(state2)) {
+          throwError(state2, "unexpected end of the document within a single quoted scalar");
         } else {
-          state.position++;
-          captureEnd = state.position;
+          state2.position++;
+          captureEnd = state2.position;
         }
       }
-      throwError(state, "unexpected end of the stream within a single quoted scalar");
+      throwError(state2, "unexpected end of the stream within a single quoted scalar");
     }
-    function readDoubleQuotedScalar(state, nodeIndent) {
+    function readDoubleQuotedScalar(state2, nodeIndent) {
       var captureStart, captureEnd, hexLength, hexResult, tmp, ch;
-      ch = state.input.charCodeAt(state.position);
+      ch = state2.input.charCodeAt(state2.position);
       if (ch !== 34) {
         return false;
       }
-      state.kind = "scalar";
-      state.result = "";
-      state.position++;
-      captureStart = captureEnd = state.position;
-      while ((ch = state.input.charCodeAt(state.position)) !== 0) {
+      state2.kind = "scalar";
+      state2.result = "";
+      state2.position++;
+      captureStart = captureEnd = state2.position;
+      while ((ch = state2.input.charCodeAt(state2.position)) !== 0) {
         if (ch === 34) {
-          captureSegment(state, captureStart, state.position, true);
-          state.position++;
+          captureSegment(state2, captureStart, state2.position, true);
+          state2.position++;
           return true;
         } else if (ch === 92) {
-          captureSegment(state, captureStart, state.position, true);
-          ch = state.input.charCodeAt(++state.position);
+          captureSegment(state2, captureStart, state2.position, true);
+          ch = state2.input.charCodeAt(++state2.position);
           if (is_EOL(ch)) {
-            skipSeparationSpace(state, false, nodeIndent);
+            skipSeparationSpace(state2, false, nodeIndent);
           } else if (ch < 256 && simpleEscapeCheck[ch]) {
-            state.result += simpleEscapeMap[ch];
-            state.position++;
+            state2.result += simpleEscapeMap[ch];
+            state2.position++;
           } else if ((tmp = escapedHexLen(ch)) > 0) {
             hexLength = tmp;
             hexResult = 0;
             for (; hexLength > 0; hexLength--) {
-              ch = state.input.charCodeAt(++state.position);
+              ch = state2.input.charCodeAt(++state2.position);
               if ((tmp = fromHexCode(ch)) >= 0) {
                 hexResult = (hexResult << 4) + tmp;
               } else {
-                throwError(state, "expected hexadecimal character");
+                throwError(state2, "expected hexadecimal character");
               }
             }
-            state.result += charFromCodepoint(hexResult);
-            state.position++;
+            state2.result += charFromCodepoint(hexResult);
+            state2.position++;
           } else {
-            throwError(state, "unknown escape sequence");
+            throwError(state2, "unknown escape sequence");
           }
-          captureStart = captureEnd = state.position;
+          captureStart = captureEnd = state2.position;
         } else if (is_EOL(ch)) {
-          captureSegment(state, captureStart, captureEnd, true);
-          writeFoldedLines(state, skipSeparationSpace(state, false, nodeIndent));
-          captureStart = captureEnd = state.position;
-        } else if (state.position === state.lineStart && testDocumentSeparator(state)) {
-          throwError(state, "unexpected end of the document within a double quoted scalar");
+          captureSegment(state2, captureStart, captureEnd, true);
+          writeFoldedLines(state2, skipSeparationSpace(state2, false, nodeIndent));
+          captureStart = captureEnd = state2.position;
+        } else if (state2.position === state2.lineStart && testDocumentSeparator(state2)) {
+          throwError(state2, "unexpected end of the document within a double quoted scalar");
         } else {
-          state.position++;
-          captureEnd = state.position;
+          state2.position++;
+          captureEnd = state2.position;
         }
       }
-      throwError(state, "unexpected end of the stream within a double quoted scalar");
+      throwError(state2, "unexpected end of the stream within a double quoted scalar");
     }
-    function readFlowCollection(state, nodeIndent) {
-      var readNext = true, _line, _tag = state.tag, _result, _anchor = state.anchor, following, terminator, isPair, isExplicitPair, isMapping, overridableKeys = {}, keyNode, keyTag, valueNode, ch;
-      ch = state.input.charCodeAt(state.position);
+    function readFlowCollection(state2, nodeIndent) {
+      var readNext = true, _line, _tag = state2.tag, _result, _anchor2 = state2.anchor, following, terminator, isPair, isExplicitPair, isMapping, overridableKeys = {}, keyNode, keyTag, valueNode, ch;
+      ch = state2.input.charCodeAt(state2.position);
       if (ch === 91) {
         terminator = 93;
         isMapping = false;
@@ -1608,67 +1628,67 @@ var require_loader = __commonJS({
       } else {
         return false;
       }
-      if (state.anchor !== null) {
-        state.anchorMap[state.anchor] = _result;
+      if (state2.anchor !== null) {
+        state2.anchorMap[state2.anchor] = _result;
       }
-      ch = state.input.charCodeAt(++state.position);
+      ch = state2.input.charCodeAt(++state2.position);
       while (ch !== 0) {
-        skipSeparationSpace(state, true, nodeIndent);
-        ch = state.input.charCodeAt(state.position);
+        skipSeparationSpace(state2, true, nodeIndent);
+        ch = state2.input.charCodeAt(state2.position);
         if (ch === terminator) {
-          state.position++;
-          state.tag = _tag;
-          state.anchor = _anchor;
-          state.kind = isMapping ? "mapping" : "sequence";
-          state.result = _result;
+          state2.position++;
+          state2.tag = _tag;
+          state2.anchor = _anchor2;
+          state2.kind = isMapping ? "mapping" : "sequence";
+          state2.result = _result;
           return true;
         } else if (!readNext) {
-          throwError(state, "missed comma between flow collection entries");
+          throwError(state2, "missed comma between flow collection entries");
         }
         keyTag = keyNode = valueNode = null;
         isPair = isExplicitPair = false;
         if (ch === 63) {
-          following = state.input.charCodeAt(state.position + 1);
+          following = state2.input.charCodeAt(state2.position + 1);
           if (is_WS_OR_EOL(following)) {
             isPair = isExplicitPair = true;
-            state.position++;
-            skipSeparationSpace(state, true, nodeIndent);
+            state2.position++;
+            skipSeparationSpace(state2, true, nodeIndent);
           }
         }
-        _line = state.line;
-        composeNode(state, nodeIndent, CONTEXT_FLOW_IN, false, true);
-        keyTag = state.tag;
-        keyNode = state.result;
-        skipSeparationSpace(state, true, nodeIndent);
-        ch = state.input.charCodeAt(state.position);
-        if ((isExplicitPair || state.line === _line) && ch === 58) {
+        _line = state2.line;
+        composeNode(state2, nodeIndent, CONTEXT_FLOW_IN, false, true);
+        keyTag = state2.tag;
+        keyNode = state2.result;
+        skipSeparationSpace(state2, true, nodeIndent);
+        ch = state2.input.charCodeAt(state2.position);
+        if ((isExplicitPair || state2.line === _line) && ch === 58) {
           isPair = true;
-          ch = state.input.charCodeAt(++state.position);
-          skipSeparationSpace(state, true, nodeIndent);
-          composeNode(state, nodeIndent, CONTEXT_FLOW_IN, false, true);
-          valueNode = state.result;
+          ch = state2.input.charCodeAt(++state2.position);
+          skipSeparationSpace(state2, true, nodeIndent);
+          composeNode(state2, nodeIndent, CONTEXT_FLOW_IN, false, true);
+          valueNode = state2.result;
         }
         if (isMapping) {
-          storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, valueNode);
+          storeMappingPair(state2, _result, overridableKeys, keyTag, keyNode, valueNode);
         } else if (isPair) {
-          _result.push(storeMappingPair(state, null, overridableKeys, keyTag, keyNode, valueNode));
+          _result.push(storeMappingPair(state2, null, overridableKeys, keyTag, keyNode, valueNode));
         } else {
           _result.push(keyNode);
         }
-        skipSeparationSpace(state, true, nodeIndent);
-        ch = state.input.charCodeAt(state.position);
+        skipSeparationSpace(state2, true, nodeIndent);
+        ch = state2.input.charCodeAt(state2.position);
         if (ch === 44) {
           readNext = true;
-          ch = state.input.charCodeAt(++state.position);
+          ch = state2.input.charCodeAt(++state2.position);
         } else {
           readNext = false;
         }
       }
-      throwError(state, "unexpected end of the stream within a flow collection");
+      throwError(state2, "unexpected end of the stream within a flow collection");
     }
-    function readBlockScalar(state, nodeIndent) {
+    function readBlockScalar(state2, nodeIndent) {
       var captureStart, folding, chomping = CHOMPING_CLIP, didReadContent = false, detectedIndent = false, textIndent = nodeIndent, emptyLines = 0, atMoreIndented = false, tmp, ch;
-      ch = state.input.charCodeAt(state.position);
+      ch = state2.input.charCodeAt(state2.position);
       if (ch === 124) {
         folding = false;
       } else if (ch === 62) {
@@ -1676,24 +1696,24 @@ var require_loader = __commonJS({
       } else {
         return false;
       }
-      state.kind = "scalar";
-      state.result = "";
+      state2.kind = "scalar";
+      state2.result = "";
       while (ch !== 0) {
-        ch = state.input.charCodeAt(++state.position);
+        ch = state2.input.charCodeAt(++state2.position);
         if (ch === 43 || ch === 45) {
           if (CHOMPING_CLIP === chomping) {
             chomping = ch === 43 ? CHOMPING_KEEP : CHOMPING_STRIP;
           } else {
-            throwError(state, "repeat of a chomping mode identifier");
+            throwError(state2, "repeat of a chomping mode identifier");
           }
         } else if ((tmp = fromDecimalCode(ch)) >= 0) {
           if (tmp === 0) {
-            throwError(state, "bad explicit indentation width of a block scalar; it cannot be less than one");
+            throwError(state2, "bad explicit indentation width of a block scalar; it cannot be less than one");
           } else if (!detectedIndent) {
             textIndent = nodeIndent + tmp - 1;
             detectedIndent = true;
           } else {
-            throwError(state, "repeat of an indentation width identifier");
+            throwError(state2, "repeat of an indentation width identifier");
           }
         } else {
           break;
@@ -1701,35 +1721,35 @@ var require_loader = __commonJS({
       }
       if (is_WHITE_SPACE(ch)) {
         do {
-          ch = state.input.charCodeAt(++state.position);
+          ch = state2.input.charCodeAt(++state2.position);
         } while (is_WHITE_SPACE(ch));
         if (ch === 35) {
           do {
-            ch = state.input.charCodeAt(++state.position);
+            ch = state2.input.charCodeAt(++state2.position);
           } while (!is_EOL(ch) && ch !== 0);
         }
       }
       while (ch !== 0) {
-        readLineBreak(state);
-        state.lineIndent = 0;
-        ch = state.input.charCodeAt(state.position);
-        while ((!detectedIndent || state.lineIndent < textIndent) && ch === 32) {
-          state.lineIndent++;
-          ch = state.input.charCodeAt(++state.position);
+        readLineBreak(state2);
+        state2.lineIndent = 0;
+        ch = state2.input.charCodeAt(state2.position);
+        while ((!detectedIndent || state2.lineIndent < textIndent) && ch === 32) {
+          state2.lineIndent++;
+          ch = state2.input.charCodeAt(++state2.position);
         }
-        if (!detectedIndent && state.lineIndent > textIndent) {
-          textIndent = state.lineIndent;
+        if (!detectedIndent && state2.lineIndent > textIndent) {
+          textIndent = state2.lineIndent;
         }
         if (is_EOL(ch)) {
           emptyLines++;
           continue;
         }
-        if (state.lineIndent < textIndent) {
+        if (state2.lineIndent < textIndent) {
           if (chomping === CHOMPING_KEEP) {
-            state.result += common.repeat("\n", didReadContent ? 1 + emptyLines : emptyLines);
+            state2.result += common.repeat("\n", didReadContent ? 1 + emptyLines : emptyLines);
           } else if (chomping === CHOMPING_CLIP) {
             if (didReadContent) {
-              state.result += "\n";
+              state2.result += "\n";
             }
           }
           break;
@@ -1737,88 +1757,88 @@ var require_loader = __commonJS({
         if (folding) {
           if (is_WHITE_SPACE(ch)) {
             atMoreIndented = true;
-            state.result += common.repeat("\n", didReadContent ? 1 + emptyLines : emptyLines);
+            state2.result += common.repeat("\n", didReadContent ? 1 + emptyLines : emptyLines);
           } else if (atMoreIndented) {
             atMoreIndented = false;
-            state.result += common.repeat("\n", emptyLines + 1);
+            state2.result += common.repeat("\n", emptyLines + 1);
           } else if (emptyLines === 0) {
             if (didReadContent) {
-              state.result += " ";
+              state2.result += " ";
             }
           } else {
-            state.result += common.repeat("\n", emptyLines);
+            state2.result += common.repeat("\n", emptyLines);
           }
         } else {
-          state.result += common.repeat("\n", didReadContent ? 1 + emptyLines : emptyLines);
+          state2.result += common.repeat("\n", didReadContent ? 1 + emptyLines : emptyLines);
         }
         didReadContent = true;
         detectedIndent = true;
         emptyLines = 0;
-        captureStart = state.position;
+        captureStart = state2.position;
         while (!is_EOL(ch) && ch !== 0) {
-          ch = state.input.charCodeAt(++state.position);
+          ch = state2.input.charCodeAt(++state2.position);
         }
-        captureSegment(state, captureStart, state.position, false);
+        captureSegment(state2, captureStart, state2.position, false);
       }
       return true;
     }
-    function readBlockSequence(state, nodeIndent) {
-      var _line, _tag = state.tag, _anchor = state.anchor, _result = [], following, detected = false, ch;
-      if (state.anchor !== null) {
-        state.anchorMap[state.anchor] = _result;
+    function readBlockSequence(state2, nodeIndent) {
+      var _line, _tag = state2.tag, _anchor2 = state2.anchor, _result = [], following, detected = false, ch;
+      if (state2.anchor !== null) {
+        state2.anchorMap[state2.anchor] = _result;
       }
-      ch = state.input.charCodeAt(state.position);
+      ch = state2.input.charCodeAt(state2.position);
       while (ch !== 0) {
         if (ch !== 45) {
           break;
         }
-        following = state.input.charCodeAt(state.position + 1);
+        following = state2.input.charCodeAt(state2.position + 1);
         if (!is_WS_OR_EOL(following)) {
           break;
         }
         detected = true;
-        state.position++;
-        if (skipSeparationSpace(state, true, -1)) {
-          if (state.lineIndent <= nodeIndent) {
+        state2.position++;
+        if (skipSeparationSpace(state2, true, -1)) {
+          if (state2.lineIndent <= nodeIndent) {
             _result.push(null);
-            ch = state.input.charCodeAt(state.position);
+            ch = state2.input.charCodeAt(state2.position);
             continue;
           }
         }
-        _line = state.line;
-        composeNode(state, nodeIndent, CONTEXT_BLOCK_IN, false, true);
-        _result.push(state.result);
-        skipSeparationSpace(state, true, -1);
-        ch = state.input.charCodeAt(state.position);
-        if ((state.line === _line || state.lineIndent > nodeIndent) && ch !== 0) {
-          throwError(state, "bad indentation of a sequence entry");
-        } else if (state.lineIndent < nodeIndent) {
+        _line = state2.line;
+        composeNode(state2, nodeIndent, CONTEXT_BLOCK_IN, false, true);
+        _result.push(state2.result);
+        skipSeparationSpace(state2, true, -1);
+        ch = state2.input.charCodeAt(state2.position);
+        if ((state2.line === _line || state2.lineIndent > nodeIndent) && ch !== 0) {
+          throwError(state2, "bad indentation of a sequence entry");
+        } else if (state2.lineIndent < nodeIndent) {
           break;
         }
       }
       if (detected) {
-        state.tag = _tag;
-        state.anchor = _anchor;
-        state.kind = "sequence";
-        state.result = _result;
+        state2.tag = _tag;
+        state2.anchor = _anchor2;
+        state2.kind = "sequence";
+        state2.result = _result;
         return true;
       }
       return false;
     }
-    function readBlockMapping(state, nodeIndent, flowIndent) {
-      var following, allowCompact, _line, _pos, _tag = state.tag, _anchor = state.anchor, _result = {}, overridableKeys = {}, keyTag = null, keyNode = null, valueNode = null, atExplicitKey = false, detected = false, ch;
-      if (state.anchor !== null) {
-        state.anchorMap[state.anchor] = _result;
+    function readBlockMapping(state2, nodeIndent, flowIndent) {
+      var following, allowCompact, _line, _pos, _tag = state2.tag, _anchor2 = state2.anchor, _result = {}, overridableKeys = {}, keyTag = null, keyNode = null, valueNode = null, atExplicitKey = false, detected = false, ch;
+      if (state2.anchor !== null) {
+        state2.anchorMap[state2.anchor] = _result;
       }
-      ch = state.input.charCodeAt(state.position);
+      ch = state2.input.charCodeAt(state2.position);
       while (ch !== 0) {
-        following = state.input.charCodeAt(state.position + 1);
-        _line = state.line;
-        _pos = state.position;
+        following = state2.input.charCodeAt(state2.position + 1);
+        _line = state2.line;
+        _pos = state2.position;
         if ((ch === 63 || ch === 58) && is_WS_OR_EOL(following)) {
           if (ch === 63) {
             if (atExplicitKey) {
-              storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, null);
+              storeMappingPair(state2, _result, overridableKeys, keyTag, keyNode, null);
               keyTag = keyNode = valueNode = null;
             }
             detected = true;
@@ -1828,215 +1848,215 @@ var require_loader = __commonJS({
             atExplicitKey = false;
             allowCompact = true;
           } else {
-            throwError(state, "incomplete explicit mapping pair; a key node is missed; or followed by a non-tabulated empty line");
+            throwError(state2, "incomplete explicit mapping pair; a key node is missed; or followed by a non-tabulated empty line");
           }
-          state.position += 1;
+          state2.position += 1;
           ch = following;
-        } else if (composeNode(state, flowIndent, CONTEXT_FLOW_OUT, false, true)) {
-          if (state.line === _line) {
-            ch = state.input.charCodeAt(state.position);
+        } else if (composeNode(state2, flowIndent, CONTEXT_FLOW_OUT, false, true)) {
+          if (state2.line === _line) {
+            ch = state2.input.charCodeAt(state2.position);
             while (is_WHITE_SPACE(ch)) {
-              ch = state.input.charCodeAt(++state.position);
+              ch = state2.input.charCodeAt(++state2.position);
             }
             if (ch === 58) {
-              ch = state.input.charCodeAt(++state.position);
+              ch = state2.input.charCodeAt(++state2.position);
               if (!is_WS_OR_EOL(ch)) {
-                throwError(state, "a whitespace character is expected after the key-value separator within a block mapping");
+                throwError(state2, "a whitespace character is expected after the key-value separator within a block mapping");
               }
               if (atExplicitKey) {
-                storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, null);
+                storeMappingPair(state2, _result, overridableKeys, keyTag, keyNode, null);
                 keyTag = keyNode = valueNode = null;
               }
               detected = true;
               atExplicitKey = false;
               allowCompact = false;
-              keyTag = state.tag;
-              keyNode = state.result;
+              keyTag = state2.tag;
+              keyNode = state2.result;
             } else if (detected) {
-              throwError(state, "can not read an implicit mapping pair; a colon is missed");
+              throwError(state2, "can not read an implicit mapping pair; a colon is missed");
             } else {
-              state.tag = _tag;
-              state.anchor = _anchor;
+              state2.tag = _tag;
+              state2.anchor = _anchor2;
               return true;
             }
           } else if (detected) {
-            throwError(state, "can not read a block mapping entry; a multiline key may not be an implicit key");
+            throwError(state2, "can not read a block mapping entry; a multiline key may not be an implicit key");
           } else {
-            state.tag = _tag;
-            state.anchor = _anchor;
+            state2.tag = _tag;
+            state2.anchor = _anchor2;
             return true;
           }
         } else {
           break;
         }
-        if (state.line === _line || state.lineIndent > nodeIndent) {
-          if (composeNode(state, nodeIndent, CONTEXT_BLOCK_OUT, true, allowCompact)) {
+        if (state2.line === _line || state2.lineIndent > nodeIndent) {
+          if (composeNode(state2, nodeIndent, CONTEXT_BLOCK_OUT, true, allowCompact)) {
             if (atExplicitKey) {
-              keyNode = state.result;
+              keyNode = state2.result;
             } else {
-              valueNode = state.result;
+              valueNode = state2.result;
             }
           }
           if (!atExplicitKey) {
-            storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, valueNode, _line, _pos);
+            storeMappingPair(state2, _result, overridableKeys, keyTag, keyNode, valueNode, _line, _pos);
             keyTag = keyNode = valueNode = null;
           }
-          skipSeparationSpace(state, true, -1);
-          ch = state.input.charCodeAt(state.position);
+          skipSeparationSpace(state2, true, -1);
+          ch = state2.input.charCodeAt(state2.position);
         }
-        if (state.lineIndent > nodeIndent && ch !== 0) {
-          throwError(state, "bad indentation of a mapping entry");
-        } else if (state.lineIndent < nodeIndent) {
+        if (state2.lineIndent > nodeIndent && ch !== 0) {
+          throwError(state2, "bad indentation of a mapping entry");
+        } else if (state2.lineIndent < nodeIndent) {
           break;
         }
       }
       if (atExplicitKey) {
-        storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, null);
+        storeMappingPair(state2, _result, overridableKeys, keyTag, keyNode, null);
       }
       if (detected) {
-        state.tag = _tag;
-        state.anchor = _anchor;
-        state.kind = "mapping";
-        state.result = _result;
+        state2.tag = _tag;
+        state2.anchor = _anchor2;
+        state2.kind = "mapping";
+        state2.result = _result;
       }
       return detected;
     }
-    function readTagProperty(state) {
+    function readTagProperty(state2) {
       var _position, isVerbatim = false, isNamed = false, tagHandle, tagName, ch;
-      ch = state.input.charCodeAt(state.position);
+      ch = state2.input.charCodeAt(state2.position);
       if (ch !== 33) return false;
-      if (state.tag !== null) {
-        throwError(state, "duplication of a tag property");
+      if (state2.tag !== null) {
+        throwError(state2, "duplication of a tag property");
       }
-      ch = state.input.charCodeAt(++state.position);
+      ch = state2.input.charCodeAt(++state2.position);
       if (ch === 60) {
         isVerbatim = true;
-        ch = state.input.charCodeAt(++state.position);
+        ch = state2.input.charCodeAt(++state2.position);
       } else if (ch === 33) {
         isNamed = true;
         tagHandle = "!!";
-        ch = state.input.charCodeAt(++state.position);
+        ch = state2.input.charCodeAt(++state2.position);
       } else {
         tagHandle = "!";
       }
-      _position = state.position;
+      _position = state2.position;
       if (isVerbatim) {
         do {
-          ch = state.input.charCodeAt(++state.position);
+          ch = state2.input.charCodeAt(++state2.position);
         } while (ch !== 0 && ch !== 62);
-        if (state.position < state.length) {
-          tagName = state.input.slice(_position, state.position);
-          ch = state.input.charCodeAt(++state.position);
+        if (state2.position < state2.length) {
+          tagName = state2.input.slice(_position, state2.position);
+          ch = state2.input.charCodeAt(++state2.position);
         } else {
-          throwError(state, "unexpected end of the stream within a verbatim tag");
+          throwError(state2, "unexpected end of the stream within a verbatim tag");
         }
       } else {
         while (ch !== 0 && !is_WS_OR_EOL(ch)) {
           if (ch === 33) {
             if (!isNamed) {
-              tagHandle = state.input.slice(_position - 1, state.position + 1);
+              tagHandle = state2.input.slice(_position - 1, state2.position + 1);
               if (!PATTERN_TAG_HANDLE.test(tagHandle)) {
-                throwError(state, "named tag handle cannot contain such characters");
+                throwError(state2, "named tag handle cannot contain such characters");
               }
               isNamed = true;
-              _position = state.position + 1;
+              _position = state2.position + 1;
             } else {
-              throwError(state, "tag suffix cannot contain exclamation marks");
+              throwError(state2, "tag suffix cannot contain exclamation marks");
             }
           }
-          ch = state.input.charCodeAt(++state.position);
+          ch = state2.input.charCodeAt(++state2.position);
         }
-        tagName = state.input.slice(_position, state.position);
+        tagName = state2.input.slice(_position, state2.position);
         if (PATTERN_FLOW_INDICATORS.test(tagName)) {
-          throwError(state, "tag suffix cannot contain flow indicator characters");
+          throwError(state2, "tag suffix cannot contain flow indicator characters");
         }
       }
       if (tagName && !PATTERN_TAG_URI.test(tagName)) {
-        throwError(state, "tag name cannot contain such characters: " + tagName);
+        throwError(state2, "tag name cannot contain such characters: " + tagName);
       }
       if (isVerbatim) {
-        state.tag = tagName;
-      } else if (_hasOwnProperty.call(state.tagMap, tagHandle)) {
-        state.tag = state.tagMap[tagHandle] + tagName;
+        state2.tag = tagName;
+      } else if (_hasOwnProperty.call(state2.tagMap, tagHandle)) {
+        state2.tag = state2.tagMap[tagHandle] + tagName;
       } else if (tagHandle === "!") {
-        state.tag = "!" + tagName;
+        state2.tag = "!" + tagName;
       } else if (tagHandle === "!!") {
-        state.tag = "tag:yaml.org,2002:" + tagName;
+        state2.tag = "tag:yaml.org,2002:" + tagName;
       } else {
-        throwError(state, 'undeclared tag handle "' + tagHandle + '"');
+        throwError(state2, 'undeclared tag handle "' + tagHandle + '"');
       }
       return true;
     }
-    function readAnchorProperty(state) {
+    function readAnchorProperty(state2) {
       var _position, ch;
-      ch = state.input.charCodeAt(state.position);
+      ch = state2.input.charCodeAt(state2.position);
       if (ch !== 38) return false;
-      if (state.anchor !== null) {
-        throwError(state, "duplication of an anchor property");
+      if (state2.anchor !== null) {
+        throwError(state2, "duplication of an anchor property");
       }
-      ch = state.input.charCodeAt(++state.position);
-      _position = state.position;
+      ch = state2.input.charCodeAt(++state2.position);
+      _position = state2.position;
       while (ch !== 0 && !is_WS_OR_EOL(ch) && !is_FLOW_INDICATOR(ch)) {
-        ch = state.input.charCodeAt(++state.position);
+        ch = state2.input.charCodeAt(++state2.position);
       }
-      if (state.position === _position) {
-        throwError(state, "name of an anchor node must contain at least one character");
+      if (state2.position === _position) {
+        throwError(state2, "name of an anchor node must contain at least one character");
       }
-      state.anchor = state.input.slice(_position, state.position);
+      state2.anchor = state2.input.slice(_position, state2.position);
       return true;
     }
-    function readAlias(state) {
+    function readAlias(state2) {
       var _position, alias, ch;
-      ch = state.input.charCodeAt(state.position);
+      ch = state2.input.charCodeAt(state2.position);
       if (ch !== 42) return false;
-      ch = state.input.charCodeAt(++state.position);
-      _position = state.position;
+      ch = state2.input.charCodeAt(++state2.position);
+      _position = state2.position;
       while (ch !== 0 && !is_WS_OR_EOL(ch) && !is_FLOW_INDICATOR(ch)) {
-        ch = state.input.charCodeAt(++state.position);
+        ch = state2.input.charCodeAt(++state2.position);
       }
-      if (state.position === _position) {
-        throwError(state, "name of an alias node must contain at least one character");
+      if (state2.position === _position) {
+        throwError(state2, "name of an alias node must contain at least one character");
       }
-      alias = state.input.slice(_position, state.position);
-      if (!_hasOwnProperty.call(state.anchorMap, alias)) {
-        throwError(state, 'unidentified alias "' + alias + '"');
+      alias = state2.input.slice(_position, state2.position);
+      if (!_hasOwnProperty.call(state2.anchorMap, alias)) {
+        throwError(state2, 'unidentified alias "' + alias + '"');
       }
-      state.result = state.anchorMap[alias];
-      skipSeparationSpace(state, true, -1);
+      state2.result = state2.anchorMap[alias];
+      skipSeparationSpace(state2, true, -1);
       return true;
     }
-    function composeNode(state, parentIndent, nodeContext, allowToSeek, allowCompact) {
+    function composeNode(state2, parentIndent, nodeContext, allowToSeek, allowCompact) {
       var allowBlockStyles, allowBlockScalars, allowBlockCollections, indentStatus = 1, atNewLine = false, hasContent = false, typeIndex, typeQuantity, type, flowIndent, blockIndent;
-      if (state.listener !== null) {
-        state.listener("open", state);
+      if (state2.listener !== null) {
+        state2.listener("open", state2);
       }
-      state.tag = null;
-      state.anchor = null;
-      state.kind = null;
-      state.result = null;
+      state2.tag = null;
+      state2.anchor = null;
+      state2.kind = null;
+      state2.result = null;
       allowBlockStyles = allowBlockScalars = allowBlockCollections = CONTEXT_BLOCK_OUT === nodeContext || CONTEXT_BLOCK_IN === nodeContext;
       if (allowToSeek) {
-        if (skipSeparationSpace(state, true, -1)) {
+        if (skipSeparationSpace(state2, true, -1)) {
           atNewLine = true;
-          if (state.lineIndent > parentIndent) {
+          if (state2.lineIndent > parentIndent) {
             indentStatus = 1;
-          } else if (state.lineIndent === parentIndent) {
+          } else if (state2.lineIndent === parentIndent) {
             indentStatus = 0;
-          } else if (state.lineIndent < parentIndent) {
+          } else if (state2.lineIndent < parentIndent) {
             indentStatus = -1;
           }
         }
       }
       if (indentStatus === 1) {
-        while (readTagProperty(state) || readAnchorProperty(state)) {
-          if (skipSeparationSpace(state, true, -1)) {
+        while (readTagProperty(state2) || readAnchorProperty(state2)) {
+          if (skipSeparationSpace(state2, true, -1)) {
             atNewLine = true;
             allowBlockCollections = allowBlockStyles;
-            if (state.lineIndent > parentIndent) {
+            if (state2.lineIndent > parentIndent) {
               indentStatus = 1;
-            } else if (state.lineIndent === parentIndent) {
+            } else if (state2.lineIndent === parentIndent) {
               indentStatus = 0;
-            } else if (state.lineIndent < parentIndent) {
+            } else if (state2.lineIndent < parentIndent) {
               indentStatus = -1;
             }
           } else {
@@ -2053,139 +2073,139 @@ var require_loader = __commonJS({
         } else {
           flowIndent = parentIndent + 1;
         }
-        blockIndent = state.position - state.lineStart;
+        blockIndent = state2.position - state2.lineStart;
         if (indentStatus === 1) {
-          if (allowBlockCollections && (readBlockSequence(state, blockIndent) || readBlockMapping(state, blockIndent, flowIndent)) || readFlowCollection(state, flowIndent)) {
+          if (allowBlockCollections && (readBlockSequence(state2, blockIndent) || readBlockMapping(state2, blockIndent, flowIndent)) || readFlowCollection(state2, flowIndent)) {
             hasContent = true;
           } else {
-            if (allowBlockScalars && readBlockScalar(state, flowIndent) || readSingleQuotedScalar(state, flowIndent) || readDoubleQuotedScalar(state, flowIndent)) {
+            if (allowBlockScalars && readBlockScalar(state2, flowIndent) || readSingleQuotedScalar(state2, flowIndent) || readDoubleQuotedScalar(state2, flowIndent)) {
               hasContent = true;
-            } else if (readAlias(state)) {
+            } else if (readAlias(state2)) {
               hasContent = true;
-              if (state.tag !== null || state.anchor !== null) {
-                throwError(state, "alias node should not have any properties");
+              if (state2.tag !== null || state2.anchor !== null) {
+                throwError(state2, "alias node should not have any properties");
               }
-            } else if (readPlainScalar(state, flowIndent, CONTEXT_FLOW_IN === nodeContext)) {
+            } else if (readPlainScalar(state2, flowIndent, CONTEXT_FLOW_IN === nodeContext)) {
               hasContent = true;
-              if (state.tag === null) {
-                state.tag = "?";
+              if (state2.tag === null) {
+                state2.tag = "?";
               }
             }
-            if (state.anchor !== null) {
-              state.anchorMap[state.anchor] = state.result;
+            if (state2.anchor !== null) {
+              state2.anchorMap[state2.anchor] = state2.result;
             }
           }
         } else if (indentStatus === 0) {
-          hasContent = allowBlockCollections && readBlockSequence(state, blockIndent);
+          hasContent = allowBlockCollections && readBlockSequence(state2, blockIndent);
         }
       }
-      if (state.tag !== null && state.tag !== "!") {
-        if (state.tag === "?") {
-          if (state.result !== null && state.kind !== "scalar") {
-            throwError(state, 'unacceptable node kind for !<?> tag; it should be "scalar", not "' + state.kind + '"');
+      if (state2.tag !== null && state2.tag !== "!") {
+        if (state2.tag === "?") {
+          if (state2.result !== null && state2.kind !== "scalar") {
+            throwError(state2, 'unacceptable node kind for !<?> tag; it should be "scalar", not "' + state2.kind + '"');
           }
-          for (typeIndex = 0, typeQuantity = state.implicitTypes.length; typeIndex < typeQuantity; typeIndex += 1) {
-            type = state.implicitTypes[typeIndex];
-            if (type.resolve(state.result)) {
-              state.result = type.construct(state.result);
-              state.tag = type.tag;
-              if (state.anchor !== null) {
-                state.anchorMap[state.anchor] = state.result;
+          for (typeIndex = 0, typeQuantity = state2.implicitTypes.length; typeIndex < typeQuantity; typeIndex += 1) {
+            type = state2.implicitTypes[typeIndex];
+            if (type.resolve(state2.result)) {
+              state2.result = type.construct(state2.result);
+              state2.tag = type.tag;
+              if (state2.anchor !== null) {
+                state2.anchorMap[state2.anchor] = state2.result;
               }
               break;
             }
           }
-        } else if (_hasOwnProperty.call(state.typeMap[state.kind || "fallback"], state.tag)) {
-          type = state.typeMap[state.kind || "fallback"][state.tag];
-          if (state.result !== null && type.kind !== state.kind) {
-            throwError(state, "unacceptable node kind for !<" + state.tag + '> tag; it should be "' + type.kind + '", not "' + state.kind + '"');
+        } else if (_hasOwnProperty.call(state2.typeMap[state2.kind || "fallback"], state2.tag)) {
+          type = state2.typeMap[state2.kind || "fallback"][state2.tag];
+          if (state2.result !== null && type.kind !== state2.kind) {
+            throwError(state2, "unacceptable node kind for !<" + state2.tag + '> tag; it should be "' + type.kind + '", not "' + state2.kind + '"');
           }
-          if (!type.resolve(state.result)) {
-            throwError(state, "cannot resolve a node with !<" + state.tag + "> explicit tag");
+          if (!type.resolve(state2.result)) {
+            throwError(state2, "cannot resolve a node with !<" + state2.tag + "> explicit tag");
           } else {
-            state.result = type.construct(state.result);
-            if (state.anchor !== null) {
-              state.anchorMap[state.anchor] = state.result;
+            state2.result = type.construct(state2.result);
+            if (state2.anchor !== null) {
+              state2.anchorMap[state2.anchor] = state2.result;
             }
           }
         } else {
-          throwError(state, "unknown tag !<" + state.tag + ">");
+          throwError(state2, "unknown tag !<" + state2.tag + ">");
         }
       }
-      if (state.listener !== null) {
-        state.listener("close", state);
+      if (state2.listener !== null) {
+        state2.listener("close", state2);
       }
-      return state.tag !== null || state.anchor !== null || hasContent;
+      return state2.tag !== null || state2.anchor !== null || hasContent;
     }
-    function readDocument(state) {
-      var documentStart = state.position, _position, directiveName, directiveArgs, hasDirectives = false, ch;
-      state.version = null;
-      state.checkLineBreaks = state.legacy;
-      state.tagMap = {};
-      state.anchorMap = {};
-      while ((ch = state.input.charCodeAt(state.position)) !== 0) {
-        skipSeparationSpace(state, true, -1);
-        ch = state.input.charCodeAt(state.position);
-        if (state.lineIndent > 0 || ch !== 37) {
+    function readDocument(state2) {
+      var documentStart = state2.position, _position, directiveName, directiveArgs, hasDirectives = false, ch;
+      state2.version = null;
+      state2.checkLineBreaks = state2.legacy;
+      state2.tagMap = {};
+      state2.anchorMap = {};
+      while ((ch = state2.input.charCodeAt(state2.position)) !== 0) {
+        skipSeparationSpace(state2, true, -1);
+        ch = state2.input.charCodeAt(state2.position);
+        if (state2.lineIndent > 0 || ch !== 37) {
           break;
         }
         hasDirectives = true;
-        ch = state.input.charCodeAt(++state.position);
-        _position = state.position;
+        ch = state2.input.charCodeAt(++state2.position);
+        _position = state2.position;
         while (ch !== 0 && !is_WS_OR_EOL(ch)) {
-          ch = state.input.charCodeAt(++state.position);
+          ch = state2.input.charCodeAt(++state2.position);
         }
-        directiveName = state.input.slice(_position, state.position);
+        directiveName = state2.input.slice(_position, state2.position);
         directiveArgs = [];
         if (directiveName.length < 1) {
-          throwError(state, "directive name must not be less than one character in length");
+          throwError(state2, "directive name must not be less than one character in length");
         }
         while (ch !== 0) {
           while (is_WHITE_SPACE(ch)) {
-            ch = state.input.charCodeAt(++state.position);
+            ch = state2.input.charCodeAt(++state2.position);
           }
           if (ch === 35) {
             do {
-              ch = state.input.charCodeAt(++state.position);
+              ch = state2.input.charCodeAt(++state2.position);
             } while (ch !== 0 && !is_EOL(ch));
             break;
           }
           if (is_EOL(ch)) break;
-          _position = state.position;
+          _position = state2.position;
           while (ch !== 0 && !is_WS_OR_EOL(ch)) {
-            ch = state.input.charCodeAt(++state.position);
+            ch = state2.input.charCodeAt(++state2.position);
           }
-          directiveArgs.push(state.input.slice(_position, state.position));
+          directiveArgs.push(state2.input.slice(_position, state2.position));
         }
-        if (ch !== 0) readLineBreak(state);
+        if (ch !== 0) readLineBreak(state2);
         if (_hasOwnProperty.call(directiveHandlers, directiveName)) {
-          directiveHandlers[directiveName](state, directiveName, directiveArgs);
+          directiveHandlers[directiveName](state2, directiveName, directiveArgs);
         } else {
-          throwWarning(state, 'unknown document directive "' + directiveName + '"');
+          throwWarning(state2, 'unknown document directive "' + directiveName + '"');
         }
       }
-      skipSeparationSpace(state, true, -1);
-      if (state.lineIndent === 0 && state.input.charCodeAt(state.position) === 45 && state.input.charCodeAt(state.position + 1) === 45 && state.input.charCodeAt(state.position + 2) === 45) {
-        state.position += 3;
-        skipSeparationSpace(state, true, -1);
+      skipSeparationSpace(state2, true, -1);
+      if (state2.lineIndent === 0 && state2.input.charCodeAt(state2.position) === 45 && state2.input.charCodeAt(state2.position + 1) === 45 && state2.input.charCodeAt(state2.position + 2) === 45) {
+        state2.position += 3;
+        skipSeparationSpace(state2, true, -1);
       } else if (hasDirectives) {
-        throwError(state, "directives end mark is expected");
+        throwError(state2, "directives end mark is expected");
       }
-      composeNode(state, state.lineIndent - 1, CONTEXT_BLOCK_OUT, false, true);
-      skipSeparationSpace(state, true, -1);
-      if (state.checkLineBreaks && PATTERN_NON_ASCII_LINE_BREAKS.test(state.input.slice(documentStart, state.position))) {
-        throwWarning(state, "non-ASCII line breaks are interpreted as content");
+      composeNode(state2, state2.lineIndent - 1, CONTEXT_BLOCK_OUT, false, true);
+      skipSeparationSpace(state2, true, -1);
+      if (state2.checkLineBreaks && PATTERN_NON_ASCII_LINE_BREAKS.test(state2.input.slice(documentStart, state2.position))) {
+        throwWarning(state2, "non-ASCII line breaks are interpreted as content");
       }
-      state.documents.push(state.result);
-      if (state.position === state.lineStart && testDocumentSeparator(state)) {
-        if (state.input.charCodeAt(state.position) === 46) {
-          state.position += 3;
-          skipSeparationSpace(state, true, -1);
+      state2.documents.push(state2.result);
+      if (state2.position === state2.lineStart && testDocumentSeparator(state2)) {
+        if (state2.input.charCodeAt(state2.position) === 46) {
+          state2.position += 3;
+          skipSeparationSpace(state2, true, -1);
         }
         return;
       }
-      if (state.position < state.length - 1) {
-        throwError(state, "end of the stream or a document separator is expected");
+      if (state2.position < state2.length - 1) {
+        throwError(state2, "end of the stream or a document separator is expected");
       } else {
         return;
       }
@@ -2201,21 +2221,21 @@ var require_loader = __commonJS({
           input = input.slice(1);
         }
       }
-      var state = new State(input, options);
+      var state2 = new State(input, options);
       var nullpos = input.indexOf("\0");
       if (nullpos !== -1) {
-        state.position = nullpos;
-        throwError(state, "null byte is not allowed in input");
+        state2.position = nullpos;
+        throwError(state2, "null byte is not allowed in input");
       }
-      state.input += "\0";
-      while (state.input.charCodeAt(state.position) === 32) {
-        state.lineIndent += 1;
-        state.position += 1;
+      state2.input += "\0";
+      while (state2.input.charCodeAt(state2.position) === 32) {
+        state2.lineIndent += 1;
+        state2.position += 1;
       }
-      while (state.position < state.length - 1) {
-        readDocument(state);
+      while (state2.position < state2.length - 1) {
+        readDocument(state2);
       }
-      return state.documents;
+      return state2.documents;
     }
     function loadAll(input, iterator, options) {
       if (iterator !== null && typeof iterator === "object" && typeof options === "undefined") {
@@ -2226,8 +2246,8 @@ var require_loader = __commonJS({
       if (typeof iterator !== "function") {
         return documents;
       }
-      for (var index = 0, length = documents.length; index < length; index += 1) {
-        iterator(documents[index]);
+      for (var index2 = 0, length = documents.length; index2 < length; index2 += 1) {
+        iterator(documents[index2]);
       }
     }
     function load(input, options) {
@@ -2325,21 +2345,21 @@ var require_dumper = __commonJS({
       "OFF"
     ];
     function compileStyleMap(schema, map) {
-      var result, keys, index, length, tag, style, type;
+      var result, keys, index2, length, tag2, style, type;
       if (map === null) return {};
       result = {};
       keys = Object.keys(map);
-      for (index = 0, length = keys.length; index < length; index += 1) {
-        tag = keys[index];
-        style = String(map[tag]);
-        if (tag.slice(0, 2) === "!!") {
-          tag = "tag:yaml.org,2002:" + tag.slice(2);
+      for (index2 = 0, length = keys.length; index2 < length; index2 += 1) {
+        tag2 = keys[index2];
+        style = String(map[tag2]);
+        if (tag2.slice(0, 2) === "!!") {
+          tag2 = "tag:yaml.org,2002:" + tag2.slice(2);
         }
-        type = schema.compiledTypeMap["fallback"][tag];
+        type = schema.compiledTypeMap["fallback"][tag2];
         if (type && _hasOwnProperty.call(type.styleAliases, style)) {
           style = type.styleAliases[style];
         }
-        result[tag] = style;
+        result[tag2] = style;
       }
       return result;
     }
@@ -2380,28 +2400,28 @@ var require_dumper = __commonJS({
       this.usedDuplicates = null;
     }
     function indentString(string, spaces) {
-      var ind = common.repeat(" ", spaces), position = 0, next = -1, result = "", line, length = string.length;
+      var ind = common.repeat(" ", spaces), position = 0, next2 = -1, result = "", line, length = string.length;
       while (position < length) {
-        next = string.indexOf("\n", position);
-        if (next === -1) {
+        next2 = string.indexOf("\n", position);
+        if (next2 === -1) {
           line = string.slice(position);
           position = length;
         } else {
-          line = string.slice(position, next + 1);
-          position = next + 1;
+          line = string.slice(position, next2 + 1);
+          position = next2 + 1;
         }
         if (line.length && line !== "\n") result += ind;
         result += line;
       }
       return result;
     }
-    function generateNextLine(state, level) {
-      return "\n" + common.repeat(" ", state.indent * level);
+    function generateNextLine(state2, level) {
+      return "\n" + common.repeat(" ", state2.indent * level);
     }
-    function testImplicitResolving(state, str) {
-      var index, length, type;
-      for (index = 0, length = state.implicitTypes.length; index < length; index += 1) {
-        type = state.implicitTypes[index];
+    function testImplicitResolving(state2, str) {
+      var index2, length, type;
+      for (index2 = 0, length = state2.implicitTypes.length; index2 < length; index2 += 1) {
+        type = state2.implicitTypes[index2];
         if (type.resolve(str)) {
           return true;
         }
@@ -2475,29 +2495,29 @@ var require_dumper = __commonJS({
       }
       return hasFoldableLine ? STYLE_FOLDED : STYLE_LITERAL;
     }
-    function writeScalar(state, string, level, iskey) {
-      state.dump = function() {
+    function writeScalar(state2, string, level, iskey) {
+      state2.dump = function() {
         if (string.length === 0) {
           return "''";
         }
-        if (!state.noCompatMode && DEPRECATED_BOOLEANS_SYNTAX.indexOf(string) !== -1) {
+        if (!state2.noCompatMode && DEPRECATED_BOOLEANS_SYNTAX.indexOf(string) !== -1) {
           return "'" + string + "'";
         }
-        var indent = state.indent * Math.max(1, level);
-        var lineWidth = state.lineWidth === -1 ? -1 : Math.max(Math.min(state.lineWidth, 40), state.lineWidth - indent);
-        var singleLineOnly = iskey || state.flowLevel > -1 && level >= state.flowLevel;
+        var indent = state2.indent * Math.max(1, level);
+        var lineWidth = state2.lineWidth === -1 ? -1 : Math.max(Math.min(state2.lineWidth, 40), state2.lineWidth - indent);
+        var singleLineOnly = iskey || state2.flowLevel > -1 && level >= state2.flowLevel;
         function testAmbiguity(string2) {
-          return testImplicitResolving(state, string2);
+          return testImplicitResolving(state2, string2);
         }
-        switch (chooseScalarStyle(string, singleLineOnly, state.indent, lineWidth, testAmbiguity)) {
+        switch (chooseScalarStyle(string, singleLineOnly, state2.indent, lineWidth, testAmbiguity)) {
           case STYLE_PLAIN:
             return string;
           case STYLE_SINGLE:
             return "'" + string.replace(/'/g, "''") + "'";
           case STYLE_LITERAL:
-            return "|" + blockHeader(string, state.indent) + dropEndingNewline(indentString(string, indent));
+            return "|" + blockHeader(string, state2.indent) + dropEndingNewline(indentString(string, indent));
           case STYLE_FOLDED:
-            return ">" + blockHeader(string, state.indent) + dropEndingNewline(indentString(foldString(string, lineWidth), indent));
+            return ">" + blockHeader(string, state2.indent) + dropEndingNewline(indentString(foldString(string, lineWidth), indent));
           case STYLE_DOUBLE:
             return '"' + escapeString(string, lineWidth) + '"';
           default:
@@ -2538,16 +2558,16 @@ var require_dumper = __commonJS({
       if (line === "" || line[0] === " ") return line;
       var breakRe = / [^ ]/g;
       var match;
-      var start = 0, end, curr = 0, next = 0;
+      var start = 0, end, curr = 0, next2 = 0;
       var result = "";
       while (match = breakRe.exec(line)) {
-        next = match.index;
-        if (next - start > width) {
-          end = curr > start ? curr : next;
+        next2 = match.index;
+        if (next2 - start > width) {
+          end = curr > start ? curr : next2;
           result += "\n" + line.slice(start, end);
           start = end + 1;
         }
-        curr = next;
+        curr = next2;
       }
       result += "\n";
       if (line.length - start > width && curr > start) {
@@ -2576,111 +2596,111 @@ var require_dumper = __commonJS({
       }
       return result;
     }
-    function writeFlowSequence(state, level, object) {
-      var _result = "", _tag = state.tag, index, length;
-      for (index = 0, length = object.length; index < length; index += 1) {
-        if (writeNode(state, level, object[index], false, false)) {
-          if (index !== 0) _result += "," + (!state.condenseFlow ? " " : "");
-          _result += state.dump;
+    function writeFlowSequence(state2, level, object) {
+      var _result = "", _tag = state2.tag, index2, length;
+      for (index2 = 0, length = object.length; index2 < length; index2 += 1) {
+        if (writeNode(state2, level, object[index2], false, false)) {
+          if (index2 !== 0) _result += "," + (!state2.condenseFlow ? " " : "");
+          _result += state2.dump;
         }
       }
-      state.tag = _tag;
-      state.dump = "[" + _result + "]";
+      state2.tag = _tag;
+      state2.dump = "[" + _result + "]";
     }
-    function writeBlockSequence(state, level, object, compact) {
-      var _result = "", _tag = state.tag, index, length;
-      for (index = 0, length = object.length; index < length; index += 1) {
-        if (writeNode(state, level + 1, object[index], true, true)) {
-          if (!compact || index !== 0) {
-            _result += generateNextLine(state, level);
+    function writeBlockSequence(state2, level, object, compact) {
+      var _result = "", _tag = state2.tag, index2, length;
+      for (index2 = 0, length = object.length; index2 < length; index2 += 1) {
+        if (writeNode(state2, level + 1, object[index2], true, true)) {
+          if (!compact || index2 !== 0) {
+            _result += generateNextLine(state2, level);
           }
-          if (state.dump && CHAR_LINE_FEED === state.dump.charCodeAt(0)) {
+          if (state2.dump && CHAR_LINE_FEED === state2.dump.charCodeAt(0)) {
             _result += "-";
           } else {
             _result += "- ";
           }
-          _result += state.dump;
+          _result += state2.dump;
         }
       }
-      state.tag = _tag;
-      state.dump = _result || "[]";
+      state2.tag = _tag;
+      state2.dump = _result || "[]";
     }
-    function writeFlowMapping(state, level, object) {
-      var _result = "", _tag = state.tag, objectKeyList = Object.keys(object), index, length, objectKey, objectValue, pairBuffer;
-      for (index = 0, length = objectKeyList.length; index < length; index += 1) {
+    function writeFlowMapping(state2, level, object) {
+      var _result = "", _tag = state2.tag, objectKeyList = Object.keys(object), index2, length, objectKey, objectValue, pairBuffer;
+      for (index2 = 0, length = objectKeyList.length; index2 < length; index2 += 1) {
         pairBuffer = "";
-        if (index !== 0) pairBuffer += ", ";
-        if (state.condenseFlow) pairBuffer += '"';
-        objectKey = objectKeyList[index];
+        if (index2 !== 0) pairBuffer += ", ";
+        if (state2.condenseFlow) pairBuffer += '"';
+        objectKey = objectKeyList[index2];
         objectValue = object[objectKey];
-        if (!writeNode(state, level, objectKey, false, false)) {
+        if (!writeNode(state2, level, objectKey, false, false)) {
           continue;
         }
-        if (state.dump.length > 1024) pairBuffer += "? ";
-        pairBuffer += state.dump + (state.condenseFlow ? '"' : "") + ":" + (state.condenseFlow ? "" : " ");
-        if (!writeNode(state, level, objectValue, false, false)) {
+        if (state2.dump.length > 1024) pairBuffer += "? ";
+        pairBuffer += state2.dump + (state2.condenseFlow ? '"' : "") + ":" + (state2.condenseFlow ? "" : " ");
+        if (!writeNode(state2, level, objectValue, false, false)) {
           continue;
         }
-        pairBuffer += state.dump;
+        pairBuffer += state2.dump;
         _result += pairBuffer;
       }
-      state.tag = _tag;
-      state.dump = "{" + _result + "}";
+      state2.tag = _tag;
+      state2.dump = "{" + _result + "}";
     }
-    function writeBlockMapping(state, level, object, compact) {
-      var _result = "", _tag = state.tag, objectKeyList = Object.keys(object), index, length, objectKey, objectValue, explicitPair, pairBuffer;
-      if (state.sortKeys === true) {
+    function writeBlockMapping(state2, level, object, compact) {
+      var _result = "", _tag = state2.tag, objectKeyList = Object.keys(object), index2, length, objectKey, objectValue, explicitPair, pairBuffer;
+      if (state2.sortKeys === true) {
         objectKeyList.sort();
-      } else if (typeof state.sortKeys === "function") {
-        objectKeyList.sort(state.sortKeys);
-      } else if (state.sortKeys) {
+      } else if (typeof state2.sortKeys === "function") {
+        objectKeyList.sort(state2.sortKeys);
+      } else if (state2.sortKeys) {
         throw new YAMLException("sortKeys must be a boolean or a function");
       }
-      for (index = 0, length = objectKeyList.length; index < length; index += 1) {
+      for (index2 = 0, length = objectKeyList.length; index2 < length; index2 += 1) {
         pairBuffer = "";
-        if (!compact || index !== 0) {
-          pairBuffer += generateNextLine(state, level);
+        if (!compact || index2 !== 0) {
+          pairBuffer += generateNextLine(state2, level);
         }
-        objectKey = objectKeyList[index];
+        objectKey = objectKeyList[index2];
         objectValue = object[objectKey];
-        if (!writeNode(state, level + 1, objectKey, true, true, true)) {
+        if (!writeNode(state2, level + 1, objectKey, true, true, true)) {
           continue;
         }
-        explicitPair = state.tag !== null && state.tag !== "?" || state.dump && state.dump.length > 1024;
+        explicitPair = state2.tag !== null && state2.tag !== "?" || state2.dump && state2.dump.length > 1024;
         if (explicitPair) {
-          if (state.dump && CHAR_LINE_FEED === state.dump.charCodeAt(0)) {
+          if (state2.dump && CHAR_LINE_FEED === state2.dump.charCodeAt(0)) {
             pairBuffer += "?";
           } else {
             pairBuffer += "? ";
           }
         }
-        pairBuffer += state.dump;
+        pairBuffer += state2.dump;
         if (explicitPair) {
-          pairBuffer += generateNextLine(state, level);
+          pairBuffer += generateNextLine(state2, level);
         }
-        if (!writeNode(state, level + 1, objectValue, true, explicitPair)) {
+        if (!writeNode(state2, level + 1, objectValue, true, explicitPair)) {
           continue;
         }
-        if (state.dump && CHAR_LINE_FEED === state.dump.charCodeAt(0)) {
+        if (state2.dump && CHAR_LINE_FEED === state2.dump.charCodeAt(0)) {
           pairBuffer += ":";
         } else {
           pairBuffer += ": ";
         }
-        pairBuffer += state.dump;
+        pairBuffer += state2.dump;
         _result += pairBuffer;
       }
-      state.tag = _tag;
-      state.dump = _result || "{}";
+      state2.tag = _tag;
+      state2.dump = _result || "{}";
     }
-    function detectType(state, object, explicit) {
-      var _result, typeList, index, length, type, style;
-      typeList = explicit ? state.explicitTypes : state.implicitTypes;
-      for (index = 0, length = typeList.length; index < length; index += 1) {
-        type = typeList[index];
+    function detectType(state2, object, explicit) {
+      var _result, typeList, index2, length, type, style;
+      typeList = explicit ? state2.explicitTypes : state2.implicitTypes;
+      for (index2 = 0, length = typeList.length; index2 < length; index2 += 1) {
+        type = typeList[index2];
         if ((type.instanceOf || type.predicate) && (!type.instanceOf || typeof object === "object" && object instanceof type.instanceOf) && (!type.predicate || type.predicate(object))) {
-          state.tag = explicit ? type.tag : "?";
+          state2.tag = explicit ? type.tag : "?";
           if (type.represent) {
-            style = state.styleMap[type.tag] || type.defaultStyle;
+            style = state2.styleMap[type.tag] || type.defaultStyle;
             if (_toString.call(type.represent) === "[object Function]") {
               _result = type.represent(object, style);
             } else if (_hasOwnProperty.call(type.represent, style)) {
@@ -2688,102 +2708,102 @@ var require_dumper = __commonJS({
             } else {
               throw new YAMLException("!<" + type.tag + '> tag resolver accepts not "' + style + '" style');
             }
-            state.dump = _result;
+            state2.dump = _result;
           }
           return true;
         }
       }
       return false;
     }
-    function writeNode(state, level, object, block, compact, iskey) {
-      state.tag = null;
-      state.dump = object;
-      if (!detectType(state, object, false)) {
-        detectType(state, object, true);
+    function writeNode(state2, level, object, block2, compact, iskey) {
+      state2.tag = null;
+      state2.dump = object;
+      if (!detectType(state2, object, false)) {
+        detectType(state2, object, true);
       }
-      var type = _toString.call(state.dump);
-      if (block) {
-        block = state.flowLevel < 0 || state.flowLevel > level;
+      var type = _toString.call(state2.dump);
+      if (block2) {
+        block2 = state2.flowLevel < 0 || state2.flowLevel > level;
       }
       var objectOrArray = type === "[object Object]" || type === "[object Array]", duplicateIndex, duplicate;
       if (objectOrArray) {
-        duplicateIndex = state.duplicates.indexOf(object);
+        duplicateIndex = state2.duplicates.indexOf(object);
         duplicate = duplicateIndex !== -1;
       }
-      if (state.tag !== null && state.tag !== "?" || duplicate || state.indent !== 2 && level > 0) {
+      if (state2.tag !== null && state2.tag !== "?" || duplicate || state2.indent !== 2 && level > 0) {
         compact = false;
       }
-      if (duplicate && state.usedDuplicates[duplicateIndex]) {
-        state.dump = "*ref_" + duplicateIndex;
+      if (duplicate && state2.usedDuplicates[duplicateIndex]) {
+        state2.dump = "*ref_" + duplicateIndex;
       } else {
-        if (objectOrArray && duplicate && !state.usedDuplicates[duplicateIndex]) {
-          state.usedDuplicates[duplicateIndex] = true;
+        if (objectOrArray && duplicate && !state2.usedDuplicates[duplicateIndex]) {
+          state2.usedDuplicates[duplicateIndex] = true;
         }
         if (type === "[object Object]") {
-          if (block && Object.keys(state.dump).length !== 0) {
-            writeBlockMapping(state, level, state.dump, compact);
+          if (block2 && Object.keys(state2.dump).length !== 0) {
+            writeBlockMapping(state2, level, state2.dump, compact);
             if (duplicate) {
-              state.dump = "&ref_" + duplicateIndex + state.dump;
+              state2.dump = "&ref_" + duplicateIndex + state2.dump;
             }
           } else {
-            writeFlowMapping(state, level, state.dump);
+            writeFlowMapping(state2, level, state2.dump);
             if (duplicate) {
-              state.dump = "&ref_" + duplicateIndex + " " + state.dump;
+              state2.dump = "&ref_" + duplicateIndex + " " + state2.dump;
             }
           }
         } else if (type === "[object Array]") {
-          var arrayLevel = state.noArrayIndent && level > 0 ? level - 1 : level;
-          if (block && state.dump.length !== 0) {
-            writeBlockSequence(state, arrayLevel, state.dump, compact);
+          var arrayLevel = state2.noArrayIndent && level > 0 ? level - 1 : level;
+          if (block2 && state2.dump.length !== 0) {
+            writeBlockSequence(state2, arrayLevel, state2.dump, compact);
             if (duplicate) {
-              state.dump = "&ref_" + duplicateIndex + state.dump;
+              state2.dump = "&ref_" + duplicateIndex + state2.dump;
             }
           } else {
-            writeFlowSequence(state, arrayLevel, state.dump);
+            writeFlowSequence(state2, arrayLevel, state2.dump);
             if (duplicate) {
-              state.dump = "&ref_" + duplicateIndex + " " + state.dump;
+              state2.dump = "&ref_" + duplicateIndex + " " + state2.dump;
             }
           }
         } else if (type === "[object String]") {
-          if (state.tag !== "?") {
-            writeScalar(state, state.dump, level, iskey);
+          if (state2.tag !== "?") {
+            writeScalar(state2, state2.dump, level, iskey);
           }
         } else {
-          if (state.skipInvalid) return false;
+          if (state2.skipInvalid) return false;
           throw new YAMLException("unacceptable kind of an object to dump " + type);
         }
-        if (state.tag !== null && state.tag !== "?") {
-          state.dump = "!<" + state.tag + "> " + state.dump;
+        if (state2.tag !== null && state2.tag !== "?") {
+          state2.dump = "!<" + state2.tag + "> " + state2.dump;
         }
       }
       return true;
     }
-    function getDuplicateReferences(object, state) {
-      var objects = [], duplicatesIndexes = [], index, length;
+    function getDuplicateReferences(object, state2) {
+      var objects = [], duplicatesIndexes = [], index2, length;
       inspectNode(object, objects, duplicatesIndexes);
-      for (index = 0, length = duplicatesIndexes.length; index < length; index += 1) {
-        state.duplicates.push(objects[duplicatesIndexes[index]]);
+      for (index2 = 0, length = duplicatesIndexes.length; index2 < length; index2 += 1) {
+        state2.duplicates.push(objects[duplicatesIndexes[index2]]);
       }
-      state.usedDuplicates = new Array(length);
+      state2.usedDuplicates = new Array(length);
     }
     function inspectNode(object, objects, duplicatesIndexes) {
-      var objectKeyList, index, length;
+      var objectKeyList, index2, length;
       if (object !== null && typeof object === "object") {
-        index = objects.indexOf(object);
-        if (index !== -1) {
-          if (duplicatesIndexes.indexOf(index) === -1) {
-            duplicatesIndexes.push(index);
+        index2 = objects.indexOf(object);
+        if (index2 !== -1) {
+          if (duplicatesIndexes.indexOf(index2) === -1) {
+            duplicatesIndexes.push(index2);
           }
         } else {
           objects.push(object);
           if (Array.isArray(object)) {
-            for (index = 0, length = object.length; index < length; index += 1) {
-              inspectNode(object[index], objects, duplicatesIndexes);
+            for (index2 = 0, length = object.length; index2 < length; index2 += 1) {
+              inspectNode(object[index2], objects, duplicatesIndexes);
             }
           } else {
             objectKeyList = Object.keys(object);
-            for (index = 0, length = objectKeyList.length; index < length; index += 1) {
-              inspectNode(object[objectKeyList[index]], objects, duplicatesIndexes);
+            for (index2 = 0, length = objectKeyList.length; index2 < length; index2 += 1) {
+              inspectNode(object[objectKeyList[index2]], objects, duplicatesIndexes);
             }
           }
         }
@@ -2791,9 +2811,9 @@ var require_dumper = __commonJS({
     }
     function dump(input, options) {
       options = options || {};
-      var state = new State(options);
-      if (!state.noRefs) getDuplicateReferences(input, state);
-      if (writeNode(state, 0, input, true, true)) return state.dump + "\n";
+      var state2 = new State(options);
+      if (!state2.noRefs) getDuplicateReferences(input, state2);
+      if (writeNode(state2, 0, input, true, true)) return state2.dump + "\n";
       return "";
     }
     function safeDump(input, options) {
@@ -2918,13 +2938,13 @@ var require_front_matter = __commonJS({
 // node_modules/crypto-js/core.js
 var require_core2 = __commonJS({
   "node_modules/crypto-js/core.js"(exports, module2) {
-    (function(root, factory) {
+    (function(root11, factory) {
       if (typeof exports === "object") {
         module2.exports = exports = factory();
       } else if (typeof define === "function" && define.amd) {
         define([], factory);
       } else {
-        root.CryptoJS = factory();
+        root11.CryptoJS = factory();
       }
     })(exports, function() {
       var CryptoJS = CryptoJS || function(Math2, undefined2) {
@@ -3027,9 +3047,9 @@ var require_core2 = __commonJS({
              *     var instance = MyType.create();
              */
             create: function() {
-              var instance10 = this.extend();
-              instance10.init.apply(instance10, arguments);
-              return instance10;
+              var instance = this.extend();
+              instance.init.apply(instance, arguments);
+              return instance;
             },
             /**
              * Initializes a newly created object.
@@ -3474,8 +3494,8 @@ var require_core2 = __commonJS({
             if (messageUpdate) {
               this._append(messageUpdate);
             }
-            var hash = this._doFinalize();
-            return hash;
+            var hash2 = this._doFinalize();
+            return hash2;
           },
           blockSize: 512 / 32,
           /**
@@ -3510,8 +3530,8 @@ var require_core2 = __commonJS({
            *     var HmacSHA256 = CryptoJS.lib.Hasher._createHmacHelper(CryptoJS.algo.SHA256);
            */
           _createHmacHelper: function(hasher) {
-            return function(message, key) {
-              return new C_algo.HMAC.init(hasher, key).finalize(message);
+            return function(message, key2) {
+              return new C_algo.HMAC.init(hasher, key2).finalize(message);
             };
           }
         });
@@ -3526,13 +3546,13 @@ var require_core2 = __commonJS({
 // node_modules/crypto-js/sha256.js
 var require_sha256 = __commonJS({
   "node_modules/crypto-js/sha256.js"(exports, module2) {
-    (function(root, factory) {
+    (function(root11, factory) {
       if (typeof exports === "object") {
         module2.exports = exports = factory(require_core2());
       } else if (typeof define === "function" && define.amd) {
         define(["./core"], factory);
       } else {
-        factory(root.CryptoJS);
+        factory(root11.CryptoJS);
       }
     })(exports, function(CryptoJS) {
       (function(Math2) {
@@ -3650,673 +3670,6815 @@ __export(entry_exports, {
   default: () => Base
 });
 module.exports = __toCommonJS(entry_exports);
-var import_obsidian9 = require("obsidian");
+var import_obsidian10 = require("obsidian");
 
 // src/ui/text_view.ts
-var import_obsidian8 = require("obsidian");
+var import_obsidian9 = require("obsidian");
 var import_front_matter = __toESM(require_front_matter());
 
-// node_modules/svelte/src/runtime/internal/utils.js
-function noop() {
-}
-function assign(tar, src) {
-  for (const k in src) tar[k] = src[k];
-  return (
-    /** @type {T & S} */
-    tar
-  );
-}
+// node_modules/svelte/src/internal/client/constants.js
+var DERIVED = 1 << 1;
+var EFFECT = 1 << 2;
+var RENDER_EFFECT = 1 << 3;
+var MANAGED_EFFECT = 1 << 24;
+var BLOCK_EFFECT = 1 << 4;
+var BRANCH_EFFECT = 1 << 5;
+var ROOT_EFFECT = 1 << 6;
+var BOUNDARY_EFFECT = 1 << 7;
+var CONNECTED = 1 << 9;
+var CLEAN = 1 << 10;
+var DIRTY = 1 << 11;
+var MAYBE_DIRTY = 1 << 12;
+var INERT = 1 << 13;
+var DESTROYED = 1 << 14;
+var REACTION_RAN = 1 << 15;
+var DESTROYING = 1 << 25;
+var EFFECT_TRANSPARENT = 1 << 16;
+var EAGER_EFFECT = 1 << 17;
+var HEAD_EFFECT = 1 << 18;
+var EFFECT_PRESERVED = 1 << 19;
+var USER_EFFECT = 1 << 20;
+var EFFECT_OFFSCREEN = 1 << 25;
+var WAS_MARKED = 1 << 16;
+var REACTION_IS_UPDATING = 1 << 21;
+var ASYNC = 1 << 22;
+var ERROR_VALUE = 1 << 23;
+var STATE_SYMBOL = Symbol("$state");
+var LEGACY_PROPS = Symbol("legacy props");
+var LOADING_ATTR_SYMBOL = Symbol("");
+var PROXY_PATH_SYMBOL = Symbol("proxy path");
+var STALE_REACTION = new class StaleReactionError extends Error {
+  constructor() {
+    super(...arguments);
+    __publicField(this, "name", "StaleReactionError");
+    __publicField(this, "message", "The reaction that called `getAbortSignal()` was re-run or destroyed");
+  }
+}();
+var _a;
+var IS_XHTML = (
+  // We gotta write it like this because after downleveling the pure comment may end up in the wrong location
+  !!((_a = globalThis.document) == null ? void 0 : _a.contentType) && /* @__PURE__ */ globalThis.document.contentType.includes("xml")
+);
+var TEXT_NODE = 3;
+var COMMENT_NODE = 8;
+
+// node_modules/esm-env/dev-fallback.js
+var _a2, _b;
+var node_env = (_b = (_a2 = globalThis.process) == null ? void 0 : _a2.env) == null ? void 0 : _b.NODE_ENV;
+var dev_fallback_default = node_env && !node_env.toLowerCase().startsWith("prod");
+
+// node_modules/svelte/src/internal/shared/utils.js
+var is_array = Array.isArray;
+var index_of = Array.prototype.indexOf;
+var includes = Array.prototype.includes;
+var array_from = Array.from;
+var object_keys = Object.keys;
+var define_property = Object.defineProperty;
+var get_descriptor = Object.getOwnPropertyDescriptor;
+var get_descriptors = Object.getOwnPropertyDescriptors;
+var object_prototype = Object.prototype;
+var array_prototype = Array.prototype;
+var get_prototype_of = Object.getPrototypeOf;
+var is_extensible = Object.isExtensible;
+var noop = () => {
+};
 function run(fn) {
   return fn();
 }
-function blank_object() {
-  return /* @__PURE__ */ Object.create(null);
+function run_all(arr) {
+  for (var i = 0; i < arr.length; i++) {
+    arr[i]();
+  }
 }
-function run_all(fns) {
-  fns.forEach(run);
+function deferred() {
+  var resolve;
+  var reject;
+  var promise = new Promise((res, rej) => {
+    resolve = res;
+    reject = rej;
+  });
+  return { promise, resolve, reject };
 }
-function is_function(thing) {
-  return typeof thing === "function";
+function fallback(value, fallback2, lazy = false) {
+  return value === void 0 ? lazy ? (
+    /** @type {() => V} */
+    fallback2()
+  ) : (
+    /** @type {V} */
+    fallback2
+  ) : value;
+}
+
+// node_modules/svelte/src/internal/client/reactivity/equality.js
+function equals(value) {
+  return value === this.v;
 }
 function safe_not_equal(a, b) {
-  return a != a ? b == b : a !== b || a && typeof a === "object" || typeof a === "function";
+  return a != a ? b == b : a !== b || a !== null && typeof a === "object" || typeof a === "function";
 }
-function is_empty(obj) {
-  return Object.keys(obj).length === 0;
+function safe_equals(value) {
+  return !safe_not_equal(value, this.v);
 }
-function subscribe(store, ...callbacks) {
-  if (store == null) {
-    for (const callback of callbacks) {
-      callback(void 0);
-    }
-    return noop;
+
+// node_modules/svelte/src/internal/shared/errors.js
+function invariant_violation(message) {
+  if (dev_fallback_default) {
+    const error = new Error(`invariant_violation
+An invariant violation occurred, meaning Svelte's internal assumptions were flawed. This is a bug in Svelte, not your app \u2014 please open an issue at https://github.com/sveltejs/svelte, citing the following message: "${message}"
+https://svelte.dev/e/invariant_violation`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/invariant_violation`);
   }
-  const unsub = store.subscribe(...callbacks);
-  return unsub.unsubscribe ? () => unsub.unsubscribe() : unsub;
 }
-function get_store_value(store) {
-  let value;
-  subscribe(store, (_) => value = _)();
+function lifecycle_outside_component(name) {
+  if (dev_fallback_default) {
+    const error = new Error(`lifecycle_outside_component
+\`${name}(...)\` can only be used during component initialisation
+https://svelte.dev/e/lifecycle_outside_component`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/lifecycle_outside_component`);
+  }
+}
+
+// node_modules/svelte/src/internal/client/errors.js
+function async_derived_orphan() {
+  if (dev_fallback_default) {
+    const error = new Error(`async_derived_orphan
+Cannot create a \`$derived(...)\` with an \`await\` expression outside of an effect tree
+https://svelte.dev/e/async_derived_orphan`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/async_derived_orphan`);
+  }
+}
+function bind_invalid_checkbox_value() {
+  if (dev_fallback_default) {
+    const error = new Error(`bind_invalid_checkbox_value
+Using \`bind:value\` together with a checkbox input is not allowed. Use \`bind:checked\` instead
+https://svelte.dev/e/bind_invalid_checkbox_value`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/bind_invalid_checkbox_value`);
+  }
+}
+function derived_references_self() {
+  if (dev_fallback_default) {
+    const error = new Error(`derived_references_self
+A derived value cannot reference itself recursively
+https://svelte.dev/e/derived_references_self`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/derived_references_self`);
+  }
+}
+function each_key_duplicate(a, b, value) {
+  if (dev_fallback_default) {
+    const error = new Error(`each_key_duplicate
+${value ? `Keyed each block has duplicate key \`${value}\` at indexes ${a} and ${b}` : `Keyed each block has duplicate key at indexes ${a} and ${b}`}
+https://svelte.dev/e/each_key_duplicate`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/each_key_duplicate`);
+  }
+}
+function each_key_volatile(index2, a, b) {
+  if (dev_fallback_default) {
+    const error = new Error(`each_key_volatile
+Keyed each block has key that is not idempotent \u2014 the key for item at index ${index2} was \`${a}\` but is now \`${b}\`. Keys must be the same each time for a given item
+https://svelte.dev/e/each_key_volatile`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/each_key_volatile`);
+  }
+}
+function effect_in_teardown(rune) {
+  if (dev_fallback_default) {
+    const error = new Error(`effect_in_teardown
+\`${rune}\` cannot be used inside an effect cleanup function
+https://svelte.dev/e/effect_in_teardown`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/effect_in_teardown`);
+  }
+}
+function effect_in_unowned_derived() {
+  if (dev_fallback_default) {
+    const error = new Error(`effect_in_unowned_derived
+Effect cannot be created inside a \`$derived\` value that was not itself created inside an effect
+https://svelte.dev/e/effect_in_unowned_derived`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/effect_in_unowned_derived`);
+  }
+}
+function effect_orphan(rune) {
+  if (dev_fallback_default) {
+    const error = new Error(`effect_orphan
+\`${rune}\` can only be used inside an effect (e.g. during component initialisation)
+https://svelte.dev/e/effect_orphan`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/effect_orphan`);
+  }
+}
+function effect_update_depth_exceeded() {
+  if (dev_fallback_default) {
+    const error = new Error(`effect_update_depth_exceeded
+Maximum update depth exceeded. This typically indicates that an effect reads and writes the same piece of state
+https://svelte.dev/e/effect_update_depth_exceeded`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/effect_update_depth_exceeded`);
+  }
+}
+function hydration_failed() {
+  if (dev_fallback_default) {
+    const error = new Error(`hydration_failed
+Failed to hydrate the application
+https://svelte.dev/e/hydration_failed`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/hydration_failed`);
+  }
+}
+function lifecycle_legacy_only(name) {
+  if (dev_fallback_default) {
+    const error = new Error(`lifecycle_legacy_only
+\`${name}(...)\` cannot be used in runes mode
+https://svelte.dev/e/lifecycle_legacy_only`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/lifecycle_legacy_only`);
+  }
+}
+function props_invalid_value(key2) {
+  if (dev_fallback_default) {
+    const error = new Error(`props_invalid_value
+Cannot do \`bind:${key2}={undefined}\` when \`${key2}\` has a fallback value
+https://svelte.dev/e/props_invalid_value`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/props_invalid_value`);
+  }
+}
+function rune_outside_svelte(rune) {
+  if (dev_fallback_default) {
+    const error = new Error(`rune_outside_svelte
+The \`${rune}\` rune is only available inside \`.svelte\` and \`.svelte.js/ts\` files
+https://svelte.dev/e/rune_outside_svelte`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/rune_outside_svelte`);
+  }
+}
+function state_descriptors_fixed() {
+  if (dev_fallback_default) {
+    const error = new Error(`state_descriptors_fixed
+Property descriptors defined on \`$state\` objects must contain \`value\` and always be \`enumerable\`, \`configurable\` and \`writable\`.
+https://svelte.dev/e/state_descriptors_fixed`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/state_descriptors_fixed`);
+  }
+}
+function state_prototype_fixed() {
+  if (dev_fallback_default) {
+    const error = new Error(`state_prototype_fixed
+Cannot set prototype of \`$state\` object
+https://svelte.dev/e/state_prototype_fixed`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/state_prototype_fixed`);
+  }
+}
+function state_unsafe_mutation() {
+  if (dev_fallback_default) {
+    const error = new Error(`state_unsafe_mutation
+Updating state inside \`$derived(...)\`, \`$inspect(...)\` or a template expression is forbidden. If the value should not be reactive, declare it without \`$state\`
+https://svelte.dev/e/state_unsafe_mutation`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/state_unsafe_mutation`);
+  }
+}
+function svelte_boundary_reset_onerror() {
+  if (dev_fallback_default) {
+    const error = new Error(`svelte_boundary_reset_onerror
+A \`<svelte:boundary>\` \`reset\` function cannot be called while an error is still being handled
+https://svelte.dev/e/svelte_boundary_reset_onerror`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/svelte_boundary_reset_onerror`);
+  }
+}
+
+// node_modules/svelte/src/internal/flags/index.js
+var async_mode_flag = false;
+var legacy_mode_flag = false;
+var tracing_mode_flag = false;
+function enable_legacy_mode_flag() {
+  legacy_mode_flag = true;
+}
+
+// node_modules/svelte/src/constants.js
+var EACH_ITEM_REACTIVE = 1;
+var EACH_INDEX_REACTIVE = 1 << 1;
+var EACH_IS_CONTROLLED = 1 << 2;
+var EACH_IS_ANIMATED = 1 << 3;
+var EACH_ITEM_IMMUTABLE = 1 << 4;
+var PROPS_IS_IMMUTABLE = 1;
+var PROPS_IS_RUNES = 1 << 1;
+var PROPS_IS_UPDATED = 1 << 2;
+var PROPS_IS_BINDABLE = 1 << 3;
+var PROPS_IS_LAZY_INITIAL = 1 << 4;
+var TRANSITION_OUT = 1 << 1;
+var TRANSITION_GLOBAL = 1 << 2;
+var TEMPLATE_FRAGMENT = 1;
+var TEMPLATE_USE_IMPORT_NODE = 1 << 1;
+var TEMPLATE_USE_SVG = 1 << 2;
+var TEMPLATE_USE_MATHML = 1 << 3;
+var HYDRATION_START = "[";
+var HYDRATION_START_ELSE = "[!";
+var HYDRATION_START_FAILED = "[?";
+var HYDRATION_END = "]";
+var HYDRATION_ERROR = {};
+var ELEMENT_PRESERVE_ATTRIBUTE_CASE = 1 << 1;
+var ELEMENT_IS_INPUT = 1 << 2;
+var UNINITIALIZED = Symbol();
+var FILENAME = Symbol("filename");
+var HMR = Symbol("hmr");
+var NAMESPACE_HTML = "http://www.w3.org/1999/xhtml";
+var ATTACHMENT_KEY = "@attach";
+
+// node_modules/svelte/src/internal/client/dev/tracing.js
+var tracing_expressions = null;
+function tag(source2, label) {
+  source2.label = label;
+  tag_proxy(source2.v, label);
+  return source2;
+}
+function tag_proxy(value, label) {
+  var _a5;
+  (_a5 = value == null ? void 0 : value[PROXY_PATH_SYMBOL]) == null ? void 0 : _a5.call(value, label);
   return value;
 }
-function component_subscribe(component, store, callback) {
-  component.$$.on_destroy.push(subscribe(store, callback));
+
+// node_modules/svelte/src/internal/shared/dev.js
+function get_error(label) {
+  const error = new Error();
+  const stack2 = get_stack();
+  if (stack2.length === 0) {
+    return null;
+  }
+  stack2.unshift("\n");
+  define_property(error, "stack", {
+    value: stack2.join("\n")
+  });
+  define_property(error, "name", {
+    value: label
+  });
+  return (
+    /** @type {Error & { stack: string }} */
+    error
+  );
 }
-function create_slot(definition, ctx, $$scope, fn) {
-  if (definition) {
-    const slot_ctx = get_slot_context(definition, ctx, $$scope, fn);
-    return definition[0](slot_ctx);
+function get_stack() {
+  const limit = Error.stackTraceLimit;
+  Error.stackTraceLimit = Infinity;
+  const stack2 = new Error().stack;
+  Error.stackTraceLimit = limit;
+  if (!stack2) return [];
+  const lines = stack2.split("\n");
+  const new_lines = [];
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const posixified = line.replaceAll("\\", "/");
+    if (line.trim() === "Error") {
+      continue;
+    }
+    if (line.includes("validate_each_keys")) {
+      return [];
+    }
+    if (posixified.includes("svelte/src/internal") || posixified.includes("node_modules/.vite")) {
+      continue;
+    }
+    new_lines.push(line);
+  }
+  return new_lines;
+}
+function invariant(condition, message) {
+  if (!dev_fallback_default) {
+    throw new Error("invariant(...) was not guarded by if (DEV)");
+  }
+  if (!condition) invariant_violation(message);
+}
+
+// node_modules/svelte/src/internal/client/context.js
+var component_context = null;
+function set_component_context(context) {
+  component_context = context;
+}
+var dev_stack = null;
+function set_dev_stack(stack2) {
+  dev_stack = stack2;
+}
+var dev_current_component_function = null;
+function set_dev_current_component_function(fn) {
+  dev_current_component_function = fn;
+}
+function push(props, runes = false, fn) {
+  component_context = {
+    p: component_context,
+    i: false,
+    c: null,
+    e: null,
+    s: props,
+    x: null,
+    r: (
+      /** @type {Effect} */
+      active_effect
+    ),
+    l: legacy_mode_flag && !runes ? { s: null, u: null, $: [] } : null
+  };
+  if (dev_fallback_default) {
+    component_context.function = fn;
+    dev_current_component_function = fn;
   }
 }
-function get_slot_context(definition, ctx, $$scope, fn) {
-  return definition[1] && fn ? assign($$scope.ctx.slice(), definition[1](fn(ctx))) : $$scope.ctx;
-}
-function get_slot_changes(definition, $$scope, dirty, fn) {
-  if (definition[2] && fn) {
-    const lets = definition[2](fn(dirty));
-    if ($$scope.dirty === void 0) {
-      return lets;
+function pop(component2) {
+  var _a5;
+  var context = (
+    /** @type {ComponentContext} */
+    component_context
+  );
+  var effects = context.e;
+  if (effects !== null) {
+    context.e = null;
+    for (var fn of effects) {
+      create_user_effect(fn);
     }
-    if (typeof lets === "object") {
-      const merged = [];
-      const len = Math.max($$scope.dirty.length, lets.length);
-      for (let i = 0; i < len; i += 1) {
-        merged[i] = $$scope.dirty[i] | lets[i];
+  }
+  if (component2 !== void 0) {
+    context.x = component2;
+  }
+  context.i = true;
+  component_context = context.p;
+  if (dev_fallback_default) {
+    dev_current_component_function = (_a5 = component_context == null ? void 0 : component_context.function) != null ? _a5 : null;
+  }
+  return component2 != null ? component2 : (
+    /** @type {T} */
+    {}
+  );
+}
+function is_runes() {
+  return !legacy_mode_flag || component_context !== null && component_context.l === null;
+}
+
+// node_modules/svelte/src/internal/client/dom/task.js
+var micro_tasks = [];
+function run_micro_tasks() {
+  var tasks = micro_tasks;
+  micro_tasks = [];
+  run_all(tasks);
+}
+function queue_micro_task(fn) {
+  if (micro_tasks.length === 0 && !is_flushing_sync) {
+    var tasks = micro_tasks;
+    queueMicrotask(() => {
+      if (tasks === micro_tasks) run_micro_tasks();
+    });
+  }
+  micro_tasks.push(fn);
+}
+function flush_tasks() {
+  while (micro_tasks.length > 0) {
+    run_micro_tasks();
+  }
+}
+
+// node_modules/svelte/src/internal/client/warnings.js
+var bold = "font-weight: bold";
+var normal = "font-weight: normal";
+function await_waterfall(name, location) {
+  if (dev_fallback_default) {
+    console.warn(`%c[svelte] await_waterfall
+%cAn async derived, \`${name}\` (${location}) was not read immediately after it resolved. This often indicates an unnecessary waterfall, which can slow down your app
+https://svelte.dev/e/await_waterfall`, bold, normal);
+  } else {
+    console.warn(`https://svelte.dev/e/await_waterfall`);
+  }
+}
+function hydration_attribute_changed(attribute, html2, value) {
+  if (dev_fallback_default) {
+    console.warn(`%c[svelte] hydration_attribute_changed
+%cThe \`${attribute}\` attribute on \`${html2}\` changed its value between server and client renders. The client value, \`${value}\`, will be ignored in favour of the server value
+https://svelte.dev/e/hydration_attribute_changed`, bold, normal);
+  } else {
+    console.warn(`https://svelte.dev/e/hydration_attribute_changed`);
+  }
+}
+function hydration_mismatch(location) {
+  if (dev_fallback_default) {
+    console.warn(
+      `%c[svelte] hydration_mismatch
+%c${location ? `Hydration failed because the initial UI does not match what was rendered on the server. The error occurred near ${location}` : "Hydration failed because the initial UI does not match what was rendered on the server"}
+https://svelte.dev/e/hydration_mismatch`,
+      bold,
+      normal
+    );
+  } else {
+    console.warn(`https://svelte.dev/e/hydration_mismatch`);
+  }
+}
+function lifecycle_double_unmount() {
+  if (dev_fallback_default) {
+    console.warn(`%c[svelte] lifecycle_double_unmount
+%cTried to unmount a component that was not mounted
+https://svelte.dev/e/lifecycle_double_unmount`, bold, normal);
+  } else {
+    console.warn(`https://svelte.dev/e/lifecycle_double_unmount`);
+  }
+}
+function select_multiple_invalid_value() {
+  if (dev_fallback_default) {
+    console.warn(`%c[svelte] select_multiple_invalid_value
+%cThe \`value\` property of a \`<select multiple>\` element should be an array, but it received a non-array value. The selection will be kept as is.
+https://svelte.dev/e/select_multiple_invalid_value`, bold, normal);
+  } else {
+    console.warn(`https://svelte.dev/e/select_multiple_invalid_value`);
+  }
+}
+function state_proxy_equality_mismatch(operator) {
+  if (dev_fallback_default) {
+    console.warn(`%c[svelte] state_proxy_equality_mismatch
+%cReactive \`$state(...)\` proxies and the values they proxy have different identities. Because of this, comparisons with \`${operator}\` will produce unexpected results
+https://svelte.dev/e/state_proxy_equality_mismatch`, bold, normal);
+  } else {
+    console.warn(`https://svelte.dev/e/state_proxy_equality_mismatch`);
+  }
+}
+function state_proxy_unmount() {
+  if (dev_fallback_default) {
+    console.warn(`%c[svelte] state_proxy_unmount
+%cTried to unmount a state proxy, rather than a component
+https://svelte.dev/e/state_proxy_unmount`, bold, normal);
+  } else {
+    console.warn(`https://svelte.dev/e/state_proxy_unmount`);
+  }
+}
+function svelte_boundary_reset_noop() {
+  if (dev_fallback_default) {
+    console.warn(`%c[svelte] svelte_boundary_reset_noop
+%cA \`<svelte:boundary>\` \`reset\` function only resets the boundary the first time it is called
+https://svelte.dev/e/svelte_boundary_reset_noop`, bold, normal);
+  } else {
+    console.warn(`https://svelte.dev/e/svelte_boundary_reset_noop`);
+  }
+}
+
+// node_modules/svelte/src/internal/client/dom/hydration.js
+var hydrating = false;
+function set_hydrating(value) {
+  hydrating = value;
+}
+var hydrate_node;
+function set_hydrate_node(node) {
+  if (node === null) {
+    hydration_mismatch();
+    throw HYDRATION_ERROR;
+  }
+  return hydrate_node = node;
+}
+function hydrate_next() {
+  return set_hydrate_node(get_next_sibling(hydrate_node));
+}
+function reset(node) {
+  if (!hydrating) return;
+  if (get_next_sibling(hydrate_node) !== null) {
+    hydration_mismatch();
+    throw HYDRATION_ERROR;
+  }
+  hydrate_node = node;
+}
+function next(count = 1) {
+  if (hydrating) {
+    var i = count;
+    var node = hydrate_node;
+    while (i--) {
+      node = /** @type {TemplateNode} */
+      get_next_sibling(node);
+    }
+    hydrate_node = node;
+  }
+}
+function skip_nodes(remove = true) {
+  var depth = 0;
+  var node = hydrate_node;
+  while (true) {
+    if (node.nodeType === COMMENT_NODE) {
+      var data = (
+        /** @type {Comment} */
+        node.data
+      );
+      if (data === HYDRATION_END) {
+        if (depth === 0) return node;
+        depth -= 1;
+      } else if (data === HYDRATION_START || data === HYDRATION_START_ELSE || // "[1", "[2", etc. for if blocks
+      data[0] === "[" && !isNaN(Number(data.slice(1)))) {
+        depth += 1;
       }
-      return merged;
     }
-    return $$scope.dirty | lets;
-  }
-  return $$scope.dirty;
-}
-function update_slot_base(slot, slot_definition, ctx, $$scope, slot_changes, get_slot_context_fn) {
-  if (slot_changes) {
-    const slot_context = get_slot_context(slot_definition, ctx, $$scope, get_slot_context_fn);
-    slot.p(slot_context, slot_changes);
+    var next2 = (
+      /** @type {TemplateNode} */
+      get_next_sibling(node)
+    );
+    if (remove) node.remove();
+    node = next2;
   }
 }
-function get_all_dirty_from_scope($$scope) {
-  if ($$scope.ctx.length > 32) {
-    const dirty = [];
-    const length = $$scope.ctx.length / 32;
-    for (let i = 0; i < length; i++) {
-      dirty[i] = -1;
-    }
-    return dirty;
+function read_hydration_instruction(node) {
+  if (!node || node.nodeType !== COMMENT_NODE) {
+    hydration_mismatch();
+    throw HYDRATION_ERROR;
   }
-  return -1;
-}
-function compute_slots(slots) {
-  const result = {};
-  for (const key in slots) {
-    result[key] = true;
-  }
-  return result;
-}
-function set_store_value(store, ret, value) {
-  store.set(value);
-  return ret;
-}
-function action_destroyer(action_result) {
-  return action_result && is_function(action_result.destroy) ? action_result.destroy : noop;
+  return (
+    /** @type {Comment} */
+    node.data
+  );
 }
 
-// node_modules/svelte/src/runtime/internal/globals.js
-var globals = typeof window !== "undefined" ? window : typeof globalThis !== "undefined" ? globalThis : (
-  // @ts-ignore Node typings have this
-  global
-);
-
-// node_modules/svelte/src/runtime/internal/ResizeObserverSingleton.js
-var ResizeObserverSingleton = class _ResizeObserverSingleton {
-  /** @param {ResizeObserverOptions} options */
-  constructor(options) {
-    /**
-     * @private
-     * @readonly
-     * @type {WeakMap<Element, import('./private.js').Listener>}
-     */
-    __publicField(this, "_listeners", "WeakMap" in globals ? /* @__PURE__ */ new WeakMap() : void 0);
-    /**
-     * @private
-     * @type {ResizeObserver}
-     */
-    __publicField(this, "_observer");
-    /** @type {ResizeObserverOptions} */
-    __publicField(this, "options");
-    this.options = options;
+// node_modules/svelte/src/internal/client/proxy.js
+var regex_is_valid_identifier = /^[a-zA-Z_$][a-zA-Z_$0-9]*$/;
+function proxy(value) {
+  if (typeof value !== "object" || value === null || STATE_SYMBOL in value) {
+    return value;
   }
-  /**
-   * @param {Element} element
-   * @param {import('./private.js').Listener} listener
-   * @returns {() => void}
-   */
-  observe(element2, listener) {
-    this._listeners.set(element2, listener);
-    this._getObserver().observe(element2, this.options);
+  const prototype = get_prototype_of(value);
+  if (prototype !== object_prototype && prototype !== array_prototype) {
+    return value;
+  }
+  var sources = /* @__PURE__ */ new Map();
+  var is_proxied_array = is_array(value);
+  var version = state(0);
+  var stack2 = dev_fallback_default && tracing_mode_flag ? get_error("created at") : null;
+  var parent_version = update_version;
+  var with_parent = (fn) => {
+    if (update_version === parent_version) {
+      return fn();
+    }
+    var reaction = active_reaction;
+    var version2 = update_version;
+    set_active_reaction(null);
+    set_update_version(parent_version);
+    var result = fn();
+    set_active_reaction(reaction);
+    set_update_version(version2);
+    return result;
+  };
+  if (is_proxied_array) {
+    sources.set("length", state(
+      /** @type {any[]} */
+      value.length,
+      stack2
+    ));
+    if (dev_fallback_default) {
+      value = /** @type {any} */
+      inspectable_array(
+        /** @type {any[]} */
+        value
+      );
+    }
+  }
+  var path = "";
+  let updating = false;
+  function update_path(new_path) {
+    if (updating) return;
+    updating = true;
+    path = new_path;
+    tag(version, `${path} version`);
+    for (const [prop2, source2] of sources) {
+      tag(source2, get_label(path, prop2));
+    }
+    updating = false;
+  }
+  return new Proxy(
+    /** @type {any} */
+    value,
+    {
+      defineProperty(_, prop2, descriptor) {
+        if (!("value" in descriptor) || descriptor.configurable === false || descriptor.enumerable === false || descriptor.writable === false) {
+          state_descriptors_fixed();
+        }
+        var s = sources.get(prop2);
+        if (s === void 0) {
+          with_parent(() => {
+            var s2 = state(descriptor.value, stack2);
+            sources.set(prop2, s2);
+            if (dev_fallback_default && typeof prop2 === "string") {
+              tag(s2, get_label(path, prop2));
+            }
+            return s2;
+          });
+        } else {
+          set(s, descriptor.value, true);
+        }
+        return true;
+      },
+      deleteProperty(target, prop2) {
+        var s = sources.get(prop2);
+        if (s === void 0) {
+          if (prop2 in target) {
+            const s2 = with_parent(() => state(UNINITIALIZED, stack2));
+            sources.set(prop2, s2);
+            increment(version);
+            if (dev_fallback_default) {
+              tag(s2, get_label(path, prop2));
+            }
+          }
+        } else {
+          set(s, UNINITIALIZED);
+          increment(version);
+        }
+        return true;
+      },
+      get(target, prop2, receiver) {
+        var _a5;
+        if (prop2 === STATE_SYMBOL) {
+          return value;
+        }
+        if (dev_fallback_default && prop2 === PROXY_PATH_SYMBOL) {
+          return update_path;
+        }
+        var s = sources.get(prop2);
+        var exists = prop2 in target;
+        if (s === void 0 && (!exists || ((_a5 = get_descriptor(target, prop2)) == null ? void 0 : _a5.writable))) {
+          s = with_parent(() => {
+            var p = proxy(exists ? target[prop2] : UNINITIALIZED);
+            var s2 = state(p, stack2);
+            if (dev_fallback_default) {
+              tag(s2, get_label(path, prop2));
+            }
+            return s2;
+          });
+          sources.set(prop2, s);
+        }
+        if (s !== void 0) {
+          var v = get(s);
+          return v === UNINITIALIZED ? void 0 : v;
+        }
+        return Reflect.get(target, prop2, receiver);
+      },
+      getOwnPropertyDescriptor(target, prop2) {
+        var descriptor = Reflect.getOwnPropertyDescriptor(target, prop2);
+        if (descriptor && "value" in descriptor) {
+          var s = sources.get(prop2);
+          if (s) descriptor.value = get(s);
+        } else if (descriptor === void 0) {
+          var source2 = sources.get(prop2);
+          var value2 = source2 == null ? void 0 : source2.v;
+          if (source2 !== void 0 && value2 !== UNINITIALIZED) {
+            return {
+              enumerable: true,
+              configurable: true,
+              value: value2,
+              writable: true
+            };
+          }
+        }
+        return descriptor;
+      },
+      has(target, prop2) {
+        var _a5;
+        if (prop2 === STATE_SYMBOL) {
+          return true;
+        }
+        var s = sources.get(prop2);
+        var has = s !== void 0 && s.v !== UNINITIALIZED || Reflect.has(target, prop2);
+        if (s !== void 0 || active_effect !== null && (!has || ((_a5 = get_descriptor(target, prop2)) == null ? void 0 : _a5.writable))) {
+          if (s === void 0) {
+            s = with_parent(() => {
+              var p = has ? proxy(target[prop2]) : UNINITIALIZED;
+              var s2 = state(p, stack2);
+              if (dev_fallback_default) {
+                tag(s2, get_label(path, prop2));
+              }
+              return s2;
+            });
+            sources.set(prop2, s);
+          }
+          var value2 = get(s);
+          if (value2 === UNINITIALIZED) {
+            return false;
+          }
+        }
+        return has;
+      },
+      set(target, prop2, value2, receiver) {
+        var _a5;
+        var s = sources.get(prop2);
+        var has = prop2 in target;
+        if (is_proxied_array && prop2 === "length") {
+          for (var i = value2; i < /** @type {Source<number>} */
+          s.v; i += 1) {
+            var other_s = sources.get(i + "");
+            if (other_s !== void 0) {
+              set(other_s, UNINITIALIZED);
+            } else if (i in target) {
+              other_s = with_parent(() => state(UNINITIALIZED, stack2));
+              sources.set(i + "", other_s);
+              if (dev_fallback_default) {
+                tag(other_s, get_label(path, i));
+              }
+            }
+          }
+        }
+        if (s === void 0) {
+          if (!has || ((_a5 = get_descriptor(target, prop2)) == null ? void 0 : _a5.writable)) {
+            s = with_parent(() => state(void 0, stack2));
+            if (dev_fallback_default) {
+              tag(s, get_label(path, prop2));
+            }
+            set(s, proxy(value2));
+            sources.set(prop2, s);
+          }
+        } else {
+          has = s.v !== UNINITIALIZED;
+          var p = with_parent(() => proxy(value2));
+          set(s, p);
+        }
+        var descriptor = Reflect.getOwnPropertyDescriptor(target, prop2);
+        if (descriptor == null ? void 0 : descriptor.set) {
+          descriptor.set.call(receiver, value2);
+        }
+        if (!has) {
+          if (is_proxied_array && typeof prop2 === "string") {
+            var ls = (
+              /** @type {Source<number>} */
+              sources.get("length")
+            );
+            var n = Number(prop2);
+            if (Number.isInteger(n) && n >= ls.v) {
+              set(ls, n + 1);
+            }
+          }
+          increment(version);
+        }
+        return true;
+      },
+      ownKeys(target) {
+        get(version);
+        var own_keys = Reflect.ownKeys(target).filter((key3) => {
+          var source3 = sources.get(key3);
+          return source3 === void 0 || source3.v !== UNINITIALIZED;
+        });
+        for (var [key2, source2] of sources) {
+          if (source2.v !== UNINITIALIZED && !(key2 in target)) {
+            own_keys.push(key2);
+          }
+        }
+        return own_keys;
+      },
+      setPrototypeOf() {
+        state_prototype_fixed();
+      }
+    }
+  );
+}
+function get_label(path, prop2) {
+  var _a5;
+  if (typeof prop2 === "symbol") return `${path}[Symbol(${(_a5 = prop2.description) != null ? _a5 : ""})]`;
+  if (regex_is_valid_identifier.test(prop2)) return `${path}.${prop2}`;
+  return /^\d+$/.test(prop2) ? `${path}[${prop2}]` : `${path}['${prop2}']`;
+}
+function get_proxied_value(value) {
+  try {
+    if (value !== null && typeof value === "object" && STATE_SYMBOL in value) {
+      return value[STATE_SYMBOL];
+    }
+  } catch (e) {
+  }
+  return value;
+}
+function is(a, b) {
+  return Object.is(get_proxied_value(a), get_proxied_value(b));
+}
+var ARRAY_MUTATING_METHODS = /* @__PURE__ */ new Set([
+  "copyWithin",
+  "fill",
+  "pop",
+  "push",
+  "reverse",
+  "shift",
+  "sort",
+  "splice",
+  "unshift"
+]);
+function inspectable_array(array) {
+  return new Proxy(array, {
+    get(target, prop2, receiver) {
+      var value = Reflect.get(target, prop2, receiver);
+      if (!ARRAY_MUTATING_METHODS.has(
+        /** @type {string} */
+        prop2
+      )) {
+        return value;
+      }
+      return function(...args) {
+        set_eager_effects_deferred();
+        var result = value.apply(this, args);
+        flush_eager_effects();
+        return result;
+      };
+    }
+  });
+}
+
+// node_modules/svelte/src/internal/client/dev/equality.js
+function init_array_prototype_warnings() {
+  const array_prototype2 = Array.prototype;
+  const cleanup = Array.__svelte_cleanup;
+  if (cleanup) {
+    cleanup();
+  }
+  const { indexOf, lastIndexOf, includes: includes2 } = array_prototype2;
+  array_prototype2.indexOf = function(item, from_index) {
+    const index2 = indexOf.call(this, item, from_index);
+    if (index2 === -1) {
+      for (let i = from_index != null ? from_index : 0; i < this.length; i += 1) {
+        if (get_proxied_value(this[i]) === item) {
+          state_proxy_equality_mismatch("array.indexOf(...)");
+          break;
+        }
+      }
+    }
+    return index2;
+  };
+  array_prototype2.lastIndexOf = function(item, from_index) {
+    const index2 = lastIndexOf.call(this, item, from_index != null ? from_index : this.length - 1);
+    if (index2 === -1) {
+      for (let i = 0; i <= (from_index != null ? from_index : this.length - 1); i += 1) {
+        if (get_proxied_value(this[i]) === item) {
+          state_proxy_equality_mismatch("array.lastIndexOf(...)");
+          break;
+        }
+      }
+    }
+    return index2;
+  };
+  array_prototype2.includes = function(item, from_index) {
+    const has = includes2.call(this, item, from_index);
+    if (!has) {
+      for (let i = 0; i < this.length; i += 1) {
+        if (get_proxied_value(this[i]) === item) {
+          state_proxy_equality_mismatch("array.includes(...)");
+          break;
+        }
+      }
+    }
+    return has;
+  };
+  Array.__svelte_cleanup = () => {
+    array_prototype2.indexOf = indexOf;
+    array_prototype2.lastIndexOf = lastIndexOf;
+    array_prototype2.includes = includes2;
+  };
+}
+
+// node_modules/svelte/src/internal/client/dom/operations.js
+var $window;
+var $document;
+var is_firefox;
+var first_child_getter;
+var next_sibling_getter;
+function init_operations() {
+  if ($window !== void 0) {
+    return;
+  }
+  $window = window;
+  $document = document;
+  is_firefox = /Firefox/.test(navigator.userAgent);
+  var element_prototype = Element.prototype;
+  var node_prototype = Node.prototype;
+  var text_prototype = Text.prototype;
+  first_child_getter = get_descriptor(node_prototype, "firstChild").get;
+  next_sibling_getter = get_descriptor(node_prototype, "nextSibling").get;
+  if (is_extensible(element_prototype)) {
+    element_prototype.__click = void 0;
+    element_prototype.__className = void 0;
+    element_prototype.__attributes = null;
+    element_prototype.__style = void 0;
+    element_prototype.__e = void 0;
+  }
+  if (is_extensible(text_prototype)) {
+    text_prototype.__t = void 0;
+  }
+  if (dev_fallback_default) {
+    element_prototype.__svelte_meta = null;
+    init_array_prototype_warnings();
+  }
+}
+function create_text(value = "") {
+  return document.createTextNode(value);
+}
+// @__NO_SIDE_EFFECTS__
+function get_first_child(node) {
+  return (
+    /** @type {TemplateNode | null} */
+    first_child_getter.call(node)
+  );
+}
+// @__NO_SIDE_EFFECTS__
+function get_next_sibling(node) {
+  return (
+    /** @type {TemplateNode | null} */
+    next_sibling_getter.call(node)
+  );
+}
+function child(node, is_text) {
+  if (!hydrating) {
+    return /* @__PURE__ */ get_first_child(node);
+  }
+  var child2 = /* @__PURE__ */ get_first_child(hydrate_node);
+  if (child2 === null) {
+    child2 = hydrate_node.appendChild(create_text());
+  } else if (is_text && child2.nodeType !== TEXT_NODE) {
+    var text2 = create_text();
+    child2 == null ? void 0 : child2.before(text2);
+    set_hydrate_node(text2);
+    return text2;
+  }
+  if (is_text) {
+    merge_text_nodes(
+      /** @type {Text} */
+      child2
+    );
+  }
+  set_hydrate_node(child2);
+  return child2;
+}
+function first_child(node, is_text = false) {
+  var _a5, _b3;
+  if (!hydrating) {
+    var first = /* @__PURE__ */ get_first_child(node);
+    if (first instanceof Comment && first.data === "") return /* @__PURE__ */ get_next_sibling(first);
+    return first;
+  }
+  if (is_text) {
+    if (((_a5 = hydrate_node) == null ? void 0 : _a5.nodeType) !== TEXT_NODE) {
+      var text2 = create_text();
+      (_b3 = hydrate_node) == null ? void 0 : _b3.before(text2);
+      set_hydrate_node(text2);
+      return text2;
+    }
+    merge_text_nodes(
+      /** @type {Text} */
+      hydrate_node
+    );
+  }
+  return hydrate_node;
+}
+function sibling(node, count = 1, is_text = false) {
+  let next_sibling = hydrating ? hydrate_node : node;
+  var last_sibling;
+  while (count--) {
+    last_sibling = next_sibling;
+    next_sibling = /** @type {TemplateNode} */
+    /* @__PURE__ */ get_next_sibling(next_sibling);
+  }
+  if (!hydrating) {
+    return next_sibling;
+  }
+  if (is_text) {
+    if ((next_sibling == null ? void 0 : next_sibling.nodeType) !== TEXT_NODE) {
+      var text2 = create_text();
+      if (next_sibling === null) {
+        last_sibling == null ? void 0 : last_sibling.after(text2);
+      } else {
+        next_sibling.before(text2);
+      }
+      set_hydrate_node(text2);
+      return text2;
+    }
+    merge_text_nodes(
+      /** @type {Text} */
+      next_sibling
+    );
+  }
+  set_hydrate_node(next_sibling);
+  return next_sibling;
+}
+function clear_text_content(node) {
+  node.textContent = "";
+}
+function should_defer_append() {
+  if (!async_mode_flag) return false;
+  if (eager_block_effects !== null) return false;
+  var flags2 = (
+    /** @type {Effect} */
+    active_effect.f
+  );
+  return (flags2 & REACTION_RAN) !== 0;
+}
+function create_element(tag2, namespace, is2) {
+  let options = is2 ? { is: is2 } : void 0;
+  return (
+    /** @type {T extends keyof HTMLElementTagNameMap ? HTMLElementTagNameMap[T] : Element} */
+    document.createElementNS(namespace != null ? namespace : NAMESPACE_HTML, tag2, options)
+  );
+}
+function merge_text_nodes(text2) {
+  if (
+    /** @type {string} */
+    text2.nodeValue.length < 65536
+  ) {
+    return;
+  }
+  let next2 = text2.nextSibling;
+  while (next2 !== null && next2.nodeType === TEXT_NODE) {
+    next2.remove();
+    text2.nodeValue += /** @type {string} */
+    next2.nodeValue;
+    next2 = text2.nextSibling;
+  }
+}
+
+// node_modules/svelte/src/internal/client/error-handling.js
+var adjustments = /* @__PURE__ */ new WeakMap();
+function handle_error(error) {
+  var effect2 = active_effect;
+  if (effect2 === null) {
+    active_reaction.f |= ERROR_VALUE;
+    return error;
+  }
+  if (dev_fallback_default && error instanceof Error && !adjustments.has(error)) {
+    adjustments.set(error, get_adjustments(error, effect2));
+  }
+  if ((effect2.f & REACTION_RAN) === 0 && (effect2.f & EFFECT) === 0) {
+    if (dev_fallback_default && !effect2.parent && error instanceof Error) {
+      apply_adjustments(error);
+    }
+    throw error;
+  }
+  invoke_error_boundary(error, effect2);
+}
+function invoke_error_boundary(error, effect2) {
+  while (effect2 !== null) {
+    if ((effect2.f & BOUNDARY_EFFECT) !== 0) {
+      if ((effect2.f & REACTION_RAN) === 0) {
+        throw error;
+      }
+      try {
+        effect2.b.error(error);
+        return;
+      } catch (e) {
+        error = e;
+      }
+    }
+    effect2 = effect2.parent;
+  }
+  if (dev_fallback_default && error instanceof Error) {
+    apply_adjustments(error);
+  }
+  throw error;
+}
+function get_adjustments(error, effect2) {
+  var _a5, _b3, _c2;
+  const message_descriptor = get_descriptor(error, "message");
+  if (message_descriptor && !message_descriptor.configurable) return;
+  var indent = is_firefox ? "  " : "	";
+  var component_stack = `
+${indent}in ${((_a5 = effect2.fn) == null ? void 0 : _a5.name) || "<unknown>"}`;
+  var context = effect2.ctx;
+  while (context !== null) {
+    component_stack += `
+${indent}in ${(_b3 = context.function) == null ? void 0 : _b3[FILENAME].split("/").pop()}`;
+    context = context.p;
+  }
+  return {
+    message: error.message + `
+${component_stack}
+`,
+    stack: (_c2 = error.stack) == null ? void 0 : _c2.split("\n").filter((line) => !line.includes("svelte/src/internal")).join("\n")
+  };
+}
+function apply_adjustments(error) {
+  const adjusted = adjustments.get(error);
+  if (adjusted) {
+    define_property(error, "message", {
+      value: adjusted.message
+    });
+    define_property(error, "stack", {
+      value: adjusted.stack
+    });
+  }
+}
+
+// node_modules/svelte/src/internal/client/reactivity/status.js
+var STATUS_MASK = ~(DIRTY | MAYBE_DIRTY | CLEAN);
+function set_signal_status(signal, status) {
+  signal.f = signal.f & STATUS_MASK | status;
+}
+function update_derived_status(derived3) {
+  if ((derived3.f & CONNECTED) !== 0 || derived3.deps === null) {
+    set_signal_status(derived3, CLEAN);
+  } else {
+    set_signal_status(derived3, MAYBE_DIRTY);
+  }
+}
+
+// node_modules/svelte/src/internal/client/reactivity/utils.js
+function clear_marked(deps) {
+  if (deps === null) return;
+  for (const dep of deps) {
+    if ((dep.f & DERIVED) === 0 || (dep.f & WAS_MARKED) === 0) {
+      continue;
+    }
+    dep.f ^= WAS_MARKED;
+    clear_marked(
+      /** @type {Derived} */
+      dep.deps
+    );
+  }
+}
+function defer_effect(effect2, dirty_effects, maybe_dirty_effects) {
+  if ((effect2.f & DIRTY) !== 0) {
+    dirty_effects.add(effect2);
+  } else if ((effect2.f & MAYBE_DIRTY) !== 0) {
+    maybe_dirty_effects.add(effect2);
+  }
+  clear_marked(effect2.deps);
+  set_signal_status(effect2, CLEAN);
+}
+
+// node_modules/svelte/src/store/utils.js
+function subscribe_to_store(store, run3, invalidate) {
+  if (store == null) {
+    run3(void 0);
+    if (invalidate) invalidate(void 0);
+    return noop;
+  }
+  const unsub = untrack(
+    () => store.subscribe(
+      run3,
+      // @ts-expect-error
+      invalidate
+    )
+  );
+  return unsub.unsubscribe ? () => unsub.unsubscribe() : unsub;
+}
+
+// node_modules/svelte/src/store/shared/index.js
+var subscriber_queue = [];
+function readable(value, start) {
+  return {
+    subscribe: writable(value, start).subscribe
+  };
+}
+function writable(value, start = noop) {
+  let stop = null;
+  const subscribers = /* @__PURE__ */ new Set();
+  function set2(new_value) {
+    if (safe_not_equal(value, new_value)) {
+      value = new_value;
+      if (stop) {
+        const run_queue = !subscriber_queue.length;
+        for (const subscriber of subscribers) {
+          subscriber[1]();
+          subscriber_queue.push(subscriber, value);
+        }
+        if (run_queue) {
+          for (let i = 0; i < subscriber_queue.length; i += 2) {
+            subscriber_queue[i][0](subscriber_queue[i + 1]);
+          }
+          subscriber_queue.length = 0;
+        }
+      }
+    }
+  }
+  function update2(fn) {
+    set2(fn(
+      /** @type {T} */
+      value
+    ));
+  }
+  function subscribe(run3, invalidate = noop) {
+    const subscriber = [run3, invalidate];
+    subscribers.add(subscriber);
+    if (subscribers.size === 1) {
+      stop = start(set2, update2) || noop;
+    }
+    run3(
+      /** @type {T} */
+      value
+    );
     return () => {
-      this._listeners.delete(element2);
-      this._observer.unobserve(element2);
+      subscribers.delete(subscriber);
+      if (subscribers.size === 0 && stop) {
+        stop();
+        stop = null;
+      }
     };
   }
+  return { set: set2, update: update2, subscribe };
+}
+function derived(stores, fn, initial_value) {
+  const single = !Array.isArray(stores);
+  const stores_array = single ? [stores] : stores;
+  if (!stores_array.every(Boolean)) {
+    throw new Error("derived() expects stores as input, got a falsy value");
+  }
+  const auto = fn.length < 2;
+  return readable(initial_value, (set2, update2) => {
+    let started = false;
+    const values = [];
+    let pending2 = 0;
+    let cleanup = noop;
+    const sync = () => {
+      if (pending2) {
+        return;
+      }
+      cleanup();
+      const result = fn(single ? values[0] : values, set2, update2);
+      if (auto) {
+        set2(result);
+      } else {
+        cleanup = typeof result === "function" ? result : noop;
+      }
+    };
+    const unsubscribers = stores_array.map(
+      (store, i) => subscribe_to_store(
+        store,
+        (value) => {
+          values[i] = value;
+          pending2 &= ~(1 << i);
+          if (started) {
+            sync();
+          }
+        },
+        () => {
+          pending2 |= 1 << i;
+        }
+      )
+    );
+    started = true;
+    sync();
+    return function stop() {
+      run_all(unsubscribers);
+      cleanup();
+      started = false;
+    };
+  });
+}
+function get2(store) {
+  let value;
+  subscribe_to_store(store, (_) => value = _)();
+  return value;
+}
+
+// node_modules/svelte/src/internal/client/reactivity/store.js
+var legacy_is_updating_store = false;
+var is_store_binding = false;
+var IS_UNMOUNTED = Symbol();
+function store_get(store, store_name, stores) {
+  var _a5;
+  const entry = (_a5 = stores[store_name]) != null ? _a5 : stores[store_name] = {
+    store: null,
+    source: mutable_source(void 0),
+    unsubscribe: noop
+  };
+  if (dev_fallback_default) {
+    entry.source.label = store_name;
+  }
+  if (entry.store !== store && !(IS_UNMOUNTED in stores)) {
+    entry.unsubscribe();
+    entry.store = store != null ? store : null;
+    if (store == null) {
+      entry.source.v = void 0;
+      entry.unsubscribe = noop;
+    } else {
+      var is_synchronous_callback = true;
+      entry.unsubscribe = subscribe_to_store(store, (v) => {
+        if (is_synchronous_callback) {
+          entry.source.v = v;
+        } else {
+          set(entry.source, v);
+        }
+      });
+      is_synchronous_callback = false;
+    }
+  }
+  if (store && IS_UNMOUNTED in stores) {
+    return get2(store);
+  }
+  return get(entry.source);
+}
+function setup_stores() {
+  const stores = {};
+  function cleanup() {
+    teardown(() => {
+      for (var store_name in stores) {
+        const ref = stores[store_name];
+        ref.unsubscribe();
+      }
+      define_property(stores, IS_UNMOUNTED, {
+        enumerable: false,
+        value: true
+      });
+    });
+  }
+  return [stores, cleanup];
+}
+function update_with_flag(store, value) {
+  legacy_is_updating_store = true;
+  try {
+    store.set(value);
+  } finally {
+    legacy_is_updating_store = false;
+  }
+}
+function store_mutate(store, expression, new_value) {
+  update_with_flag(store, new_value);
+  return expression;
+}
+function capture_store_binding(fn) {
+  var previous_is_store_binding = is_store_binding;
+  try {
+    is_store_binding = false;
+    return [fn(), is_store_binding];
+  } finally {
+    is_store_binding = previous_is_store_binding;
+  }
+}
+
+// node_modules/svelte/src/internal/client/reactivity/batch.js
+var batches = /* @__PURE__ */ new Set();
+var current_batch = null;
+var previous_batch = null;
+var batch_values = null;
+var last_scheduled_effect = null;
+var is_flushing_sync = false;
+var is_processing = false;
+var collected_effects = null;
+var legacy_updates = null;
+var flush_count = 0;
+var source_stacks = dev_fallback_default ? /* @__PURE__ */ new Set() : null;
+var uid = 1;
+var _commit_callbacks, _discard_callbacks, _pending, _blocking_pending, _deferred, _roots, _dirty_effects, _maybe_dirty_effects, _skipped_branches, _decrement_queued, _Batch_instances, is_deferred_fn, process_fn, traverse_fn, defer_effects_fn, commit_fn;
+var _Batch = class _Batch {
+  constructor() {
+    __privateAdd(this, _Batch_instances);
+    // for debugging. TODO remove once async is stable
+    __publicField(this, "id", uid++);
+    /**
+     * The current values of any sources that are updated in this batch
+     * They keys of this map are identical to `this.#previous`
+     * @type {Map<Source, any>}
+     */
+    __publicField(this, "current", /* @__PURE__ */ new Map());
+    /**
+     * The values of any sources that are updated in this batch _before_ those updates took place.
+     * They keys of this map are identical to `this.#current`
+     * @type {Map<Source, any>}
+     */
+    __publicField(this, "previous", /* @__PURE__ */ new Map());
+    /**
+     * When the batch is committed (and the DOM is updated), we need to remove old branches
+     * and append new ones by calling the functions added inside (if/each/key/etc) blocks
+     * @type {Set<(batch: Batch) => void>}
+     */
+    __privateAdd(this, _commit_callbacks, /* @__PURE__ */ new Set());
+    /**
+     * If a fork is discarded, we need to destroy any effects that are no longer needed
+     * @type {Set<(batch: Batch) => void>}
+     */
+    __privateAdd(this, _discard_callbacks, /* @__PURE__ */ new Set());
+    /**
+     * The number of async effects that are currently in flight
+     */
+    __privateAdd(this, _pending, 0);
+    /**
+     * The number of async effects that are currently in flight, _not_ inside a pending boundary
+     */
+    __privateAdd(this, _blocking_pending, 0);
+    /**
+     * A deferred that resolves when the batch is committed, used with `settled()`
+     * TODO replace with Promise.withResolvers once supported widely enough
+     * @type {{ promise: Promise<void>, resolve: (value?: any) => void, reject: (reason: unknown) => void } | null}
+     */
+    __privateAdd(this, _deferred, null);
+    /**
+     * The root effects that need to be flushed
+     * @type {Effect[]}
+     */
+    __privateAdd(this, _roots, []);
+    /**
+     * Deferred effects (which run after async work has completed) that are DIRTY
+     * @type {Set<Effect>}
+     */
+    __privateAdd(this, _dirty_effects, /* @__PURE__ */ new Set());
+    /**
+     * Deferred effects that are MAYBE_DIRTY
+     * @type {Set<Effect>}
+     */
+    __privateAdd(this, _maybe_dirty_effects, /* @__PURE__ */ new Set());
+    /**
+     * A map of branches that still exist, but will be destroyed when this batch
+     * is committed — we skip over these during `process`.
+     * The value contains child effects that were dirty/maybe_dirty before being reset,
+     * so they can be rescheduled if the branch survives.
+     * @type {Map<Effect, { d: Effect[], m: Effect[] }>}
+     */
+    __privateAdd(this, _skipped_branches, /* @__PURE__ */ new Map());
+    __publicField(this, "is_fork", false);
+    __privateAdd(this, _decrement_queued, false);
+  }
   /**
-   * @private
+   * Add an effect to the #skipped_branches map and reset its children
+   * @param {Effect} effect
    */
-  _getObserver() {
-    var _a;
-    return (_a = this._observer) != null ? _a : this._observer = new ResizeObserver((entries) => {
-      var _a2;
-      for (const entry of entries) {
-        _ResizeObserverSingleton.entries.set(entry.target, entry);
-        (_a2 = this._listeners.get(entry.target)) == null ? void 0 : _a2(entry);
+  skip_effect(effect2) {
+    if (!__privateGet(this, _skipped_branches).has(effect2)) {
+      __privateGet(this, _skipped_branches).set(effect2, { d: [], m: [] });
+    }
+  }
+  /**
+   * Remove an effect from the #skipped_branches map and reschedule
+   * any tracked dirty/maybe_dirty child effects
+   * @param {Effect} effect
+   */
+  unskip_effect(effect2) {
+    var tracked = __privateGet(this, _skipped_branches).get(effect2);
+    if (tracked) {
+      __privateGet(this, _skipped_branches).delete(effect2);
+      for (var e of tracked.d) {
+        set_signal_status(e, DIRTY);
+        this.schedule(e);
+      }
+      for (e of tracked.m) {
+        set_signal_status(e, MAYBE_DIRTY);
+        this.schedule(e);
+      }
+    }
+  }
+  /**
+   * Associate a change to a given source with the current
+   * batch, noting its previous and current values
+   * @param {Source} source
+   * @param {any} old_value
+   */
+  capture(source2, old_value) {
+    if (old_value !== UNINITIALIZED && !this.previous.has(source2)) {
+      this.previous.set(source2, old_value);
+    }
+    if ((source2.f & ERROR_VALUE) === 0) {
+      this.current.set(source2, source2.v);
+      batch_values == null ? void 0 : batch_values.set(source2, source2.v);
+    }
+  }
+  activate() {
+    current_batch = this;
+  }
+  deactivate() {
+    current_batch = null;
+    batch_values = null;
+  }
+  flush() {
+    var source_stacks2 = dev_fallback_default ? /* @__PURE__ */ new Set() : null;
+    try {
+      is_processing = true;
+      current_batch = this;
+      __privateMethod(this, _Batch_instances, process_fn).call(this);
+    } finally {
+      flush_count = 0;
+      last_scheduled_effect = null;
+      collected_effects = null;
+      legacy_updates = null;
+      is_processing = false;
+      current_batch = null;
+      batch_values = null;
+      old_values.clear();
+      if (dev_fallback_default) {
+        for (
+          const source2 of
+          /** @type {Set<Source>} */
+          source_stacks2
+        ) {
+          source2.updated = null;
+        }
+      }
+    }
+  }
+  discard() {
+    for (const fn of __privateGet(this, _discard_callbacks)) fn(this);
+    __privateGet(this, _discard_callbacks).clear();
+  }
+  /**
+   *
+   * @param {boolean} blocking
+   */
+  increment(blocking) {
+    __privateSet(this, _pending, __privateGet(this, _pending) + 1);
+    if (blocking) __privateSet(this, _blocking_pending, __privateGet(this, _blocking_pending) + 1);
+  }
+  /**
+   * @param {boolean} blocking
+   * @param {boolean} skip - whether to skip updates (because this is triggered by a stale reaction)
+   */
+  decrement(blocking, skip) {
+    __privateSet(this, _pending, __privateGet(this, _pending) - 1);
+    if (blocking) __privateSet(this, _blocking_pending, __privateGet(this, _blocking_pending) - 1);
+    if (__privateGet(this, _decrement_queued) || skip) return;
+    __privateSet(this, _decrement_queued, true);
+    queue_micro_task(() => {
+      __privateSet(this, _decrement_queued, false);
+      this.flush();
+    });
+  }
+  /**
+   * @param {Set<Effect>} dirty_effects
+   * @param {Set<Effect>} maybe_dirty_effects
+   */
+  transfer_effects(dirty_effects, maybe_dirty_effects) {
+    for (const e of dirty_effects) {
+      __privateGet(this, _dirty_effects).add(e);
+    }
+    for (const e of maybe_dirty_effects) {
+      __privateGet(this, _maybe_dirty_effects).add(e);
+    }
+    dirty_effects.clear();
+    maybe_dirty_effects.clear();
+  }
+  /** @param {(batch: Batch) => void} fn */
+  oncommit(fn) {
+    __privateGet(this, _commit_callbacks).add(fn);
+  }
+  /** @param {(batch: Batch) => void} fn */
+  ondiscard(fn) {
+    __privateGet(this, _discard_callbacks).add(fn);
+  }
+  settled() {
+    var _a5;
+    return ((_a5 = __privateGet(this, _deferred)) != null ? _a5 : __privateSet(this, _deferred, deferred())).promise;
+  }
+  static ensure() {
+    if (current_batch === null) {
+      const batch = current_batch = new _Batch();
+      if (!is_processing) {
+        batches.add(current_batch);
+        if (!is_flushing_sync) {
+          queue_micro_task(() => {
+            if (current_batch !== batch) {
+              return;
+            }
+            batch.flush();
+          });
+        }
+      }
+    }
+    return current_batch;
+  }
+  apply() {
+    if (!async_mode_flag || !this.is_fork && batches.size === 1) {
+      batch_values = null;
+      return;
+    }
+    batch_values = new Map(this.current);
+    for (const batch of batches) {
+      if (batch === this || batch.is_fork) continue;
+      for (const [source2, previous] of batch.previous) {
+        if (!batch_values.has(source2)) {
+          batch_values.set(source2, previous);
+        }
+      }
+    }
+  }
+  /**
+   *
+   * @param {Effect} effect
+   */
+  schedule(effect2) {
+    var _a5;
+    last_scheduled_effect = effect2;
+    if (((_a5 = effect2.b) == null ? void 0 : _a5.is_pending) && (effect2.f & (EFFECT | RENDER_EFFECT | MANAGED_EFFECT)) !== 0 && (effect2.f & REACTION_RAN) === 0) {
+      effect2.b.defer_effect(effect2);
+      return;
+    }
+    var e = effect2;
+    while (e.parent !== null) {
+      e = e.parent;
+      var flags2 = e.f;
+      if (collected_effects !== null && e === active_effect) {
+        if (async_mode_flag) return;
+        if ((active_reaction === null || (active_reaction.f & DERIVED) === 0) && !legacy_is_updating_store) {
+          return;
+        }
+      }
+      if ((flags2 & (ROOT_EFFECT | BRANCH_EFFECT)) !== 0) {
+        if ((flags2 & CLEAN) === 0) {
+          return;
+        }
+        e.f ^= CLEAN;
+      }
+    }
+    __privateGet(this, _roots).push(e);
+  }
+};
+_commit_callbacks = new WeakMap();
+_discard_callbacks = new WeakMap();
+_pending = new WeakMap();
+_blocking_pending = new WeakMap();
+_deferred = new WeakMap();
+_roots = new WeakMap();
+_dirty_effects = new WeakMap();
+_maybe_dirty_effects = new WeakMap();
+_skipped_branches = new WeakMap();
+_decrement_queued = new WeakMap();
+_Batch_instances = new WeakSet();
+is_deferred_fn = function() {
+  return this.is_fork || __privateGet(this, _blocking_pending) > 0;
+};
+process_fn = function() {
+  var _a5, _b3;
+  if (flush_count++ > 1e3) {
+    batches.delete(this);
+    infinite_loop_guard();
+  }
+  if (!__privateMethod(this, _Batch_instances, is_deferred_fn).call(this)) {
+    for (const e of __privateGet(this, _dirty_effects)) {
+      __privateGet(this, _maybe_dirty_effects).delete(e);
+      set_signal_status(e, DIRTY);
+      this.schedule(e);
+    }
+    for (const e of __privateGet(this, _maybe_dirty_effects)) {
+      set_signal_status(e, MAYBE_DIRTY);
+      this.schedule(e);
+    }
+  }
+  const roots = __privateGet(this, _roots);
+  __privateSet(this, _roots, []);
+  this.apply();
+  var effects = collected_effects = [];
+  var render_effects = [];
+  var updates = legacy_updates = [];
+  for (const root11 of roots) {
+    try {
+      __privateMethod(this, _Batch_instances, traverse_fn).call(this, root11, effects, render_effects);
+    } catch (e) {
+      reset_all(root11);
+      throw e;
+    }
+  }
+  current_batch = null;
+  if (updates.length > 0) {
+    var batch = _Batch.ensure();
+    for (const e of updates) {
+      batch.schedule(e);
+    }
+  }
+  collected_effects = null;
+  legacy_updates = null;
+  if (__privateMethod(this, _Batch_instances, is_deferred_fn).call(this)) {
+    __privateMethod(this, _Batch_instances, defer_effects_fn).call(this, render_effects);
+    __privateMethod(this, _Batch_instances, defer_effects_fn).call(this, effects);
+    for (const [e, t] of __privateGet(this, _skipped_branches)) {
+      reset_branch(e, t);
+    }
+  } else {
+    if (__privateGet(this, _pending) === 0) {
+      batches.delete(this);
+    }
+    __privateGet(this, _dirty_effects).clear();
+    __privateGet(this, _maybe_dirty_effects).clear();
+    for (const fn of __privateGet(this, _commit_callbacks)) fn(this);
+    __privateGet(this, _commit_callbacks).clear();
+    previous_batch = this;
+    flush_queued_effects(render_effects);
+    flush_queued_effects(effects);
+    previous_batch = null;
+    (_a5 = __privateGet(this, _deferred)) == null ? void 0 : _a5.resolve();
+  }
+  var next_batch = (
+    /** @type {Batch | null} */
+    /** @type {unknown} */
+    current_batch
+  );
+  if (__privateGet(this, _roots).length > 0) {
+    const batch2 = next_batch != null ? next_batch : next_batch = this;
+    __privateGet(batch2, _roots).push(...__privateGet(this, _roots).filter((r2) => !__privateGet(batch2, _roots).includes(r2)));
+  }
+  if (next_batch !== null) {
+    batches.add(next_batch);
+    if (dev_fallback_default) {
+      for (const source2 of this.current.keys()) {
+        source_stacks.add(source2);
+      }
+    }
+    __privateMethod(_b3 = next_batch, _Batch_instances, process_fn).call(_b3);
+  }
+  if (!batches.has(this)) {
+    __privateMethod(this, _Batch_instances, commit_fn).call(this);
+  }
+};
+/**
+ * Traverse the effect tree, executing effects or stashing
+ * them for later execution as appropriate
+ * @param {Effect} root
+ * @param {Effect[]} effects
+ * @param {Effect[]} render_effects
+ */
+traverse_fn = function(root11, effects, render_effects) {
+  root11.f ^= CLEAN;
+  var effect2 = root11.first;
+  while (effect2 !== null) {
+    var flags2 = effect2.f;
+    var is_branch = (flags2 & (BRANCH_EFFECT | ROOT_EFFECT)) !== 0;
+    var is_skippable_branch = is_branch && (flags2 & CLEAN) !== 0;
+    var skip = is_skippable_branch || (flags2 & INERT) !== 0 || __privateGet(this, _skipped_branches).has(effect2);
+    if (!skip && effect2.fn !== null) {
+      if (is_branch) {
+        effect2.f ^= CLEAN;
+      } else if ((flags2 & EFFECT) !== 0) {
+        effects.push(effect2);
+      } else if (async_mode_flag && (flags2 & (RENDER_EFFECT | MANAGED_EFFECT)) !== 0) {
+        render_effects.push(effect2);
+      } else if (is_dirty(effect2)) {
+        if ((flags2 & BLOCK_EFFECT) !== 0) __privateGet(this, _maybe_dirty_effects).add(effect2);
+        update_effect(effect2);
+      }
+      var child2 = effect2.first;
+      if (child2 !== null) {
+        effect2 = child2;
+        continue;
+      }
+    }
+    while (effect2 !== null) {
+      var next2 = effect2.next;
+      if (next2 !== null) {
+        effect2 = next2;
+        break;
+      }
+      effect2 = effect2.parent;
+    }
+  }
+};
+/**
+ * @param {Effect[]} effects
+ */
+defer_effects_fn = function(effects) {
+  for (var i = 0; i < effects.length; i += 1) {
+    defer_effect(effects[i], __privateGet(this, _dirty_effects), __privateGet(this, _maybe_dirty_effects));
+  }
+};
+commit_fn = function() {
+  var _a5;
+  for (const batch of batches) {
+    var is_earlier = batch.id < this.id;
+    var sources = [];
+    for (const [source3, value] of this.current) {
+      if (batch.current.has(source3)) {
+        if (is_earlier && value !== batch.current.get(source3)) {
+          batch.current.set(source3, value);
+        } else {
+          continue;
+        }
+      }
+      sources.push(source3);
+    }
+    if (sources.length === 0) {
+      continue;
+    }
+    var others = [...batch.current.keys()].filter((s) => !this.current.has(s));
+    if (others.length > 0) {
+      if (dev_fallback_default) {
+        invariant(__privateGet(batch, _roots).length === 0, "Batch has scheduled roots");
+      }
+      batch.activate();
+      var marked = /* @__PURE__ */ new Set();
+      var checked = /* @__PURE__ */ new Map();
+      for (var source2 of sources) {
+        mark_effects(source2, others, marked, checked);
+      }
+      if (__privateGet(batch, _roots).length > 0) {
+        batch.apply();
+        for (var root11 of __privateGet(batch, _roots)) {
+          __privateMethod(_a5 = batch, _Batch_instances, traverse_fn).call(_a5, root11, [], []);
+        }
+        __privateSet(batch, _roots, []);
+      }
+      batch.deactivate();
+    }
+  }
+};
+var Batch = _Batch;
+function flushSync(fn) {
+  var was_flushing_sync = is_flushing_sync;
+  is_flushing_sync = true;
+  try {
+    var result;
+    if (fn) {
+      if (current_batch !== null && !current_batch.is_fork) {
+        current_batch.flush();
+      }
+      result = fn();
+    }
+    while (true) {
+      flush_tasks();
+      if (current_batch === null) {
+        return (
+          /** @type {T} */
+          result
+        );
+      }
+      current_batch.flush();
+    }
+  } finally {
+    is_flushing_sync = was_flushing_sync;
+  }
+}
+function infinite_loop_guard() {
+  var _a5;
+  if (dev_fallback_default) {
+    var updates = /* @__PURE__ */ new Map();
+    for (
+      const source2 of
+      /** @type {Batch} */
+      current_batch.current.keys()
+    ) {
+      for (const [stack2, update2] of (_a5 = source2.updated) != null ? _a5 : []) {
+        var entry = updates.get(stack2);
+        if (!entry) {
+          entry = { error: update2.error, count: 0 };
+          updates.set(stack2, entry);
+        }
+        entry.count += update2.count;
+      }
+    }
+    for (const update2 of updates.values()) {
+      if (update2.error) {
+        console.error(update2.error);
+      }
+    }
+  }
+  try {
+    effect_update_depth_exceeded();
+  } catch (error) {
+    if (dev_fallback_default) {
+      define_property(error, "stack", { value: "" });
+    }
+    invoke_error_boundary(error, last_scheduled_effect);
+  }
+}
+var eager_block_effects = null;
+function flush_queued_effects(effects) {
+  var length = effects.length;
+  if (length === 0) return;
+  var i = 0;
+  while (i < length) {
+    var effect2 = effects[i++];
+    if ((effect2.f & (DESTROYED | INERT)) === 0 && is_dirty(effect2)) {
+      eager_block_effects = /* @__PURE__ */ new Set();
+      update_effect(effect2);
+      if (effect2.deps === null && effect2.first === null && effect2.nodes === null && effect2.teardown === null && effect2.ac === null) {
+        unlink_effect(effect2);
+      }
+      if ((eager_block_effects == null ? void 0 : eager_block_effects.size) > 0) {
+        old_values.clear();
+        for (const e of eager_block_effects) {
+          if ((e.f & (DESTROYED | INERT)) !== 0) continue;
+          const ordered_effects = [e];
+          let ancestor = e.parent;
+          while (ancestor !== null) {
+            if (eager_block_effects.has(ancestor)) {
+              eager_block_effects.delete(ancestor);
+              ordered_effects.push(ancestor);
+            }
+            ancestor = ancestor.parent;
+          }
+          for (let j = ordered_effects.length - 1; j >= 0; j--) {
+            const e2 = ordered_effects[j];
+            if ((e2.f & (DESTROYED | INERT)) !== 0) continue;
+            update_effect(e2);
+          }
+        }
+        eager_block_effects.clear();
+      }
+    }
+  }
+  eager_block_effects = null;
+}
+function mark_effects(value, sources, marked, checked) {
+  if (marked.has(value)) return;
+  marked.add(value);
+  if (value.reactions !== null) {
+    for (const reaction of value.reactions) {
+      const flags2 = reaction.f;
+      if ((flags2 & DERIVED) !== 0) {
+        mark_effects(
+          /** @type {Derived} */
+          reaction,
+          sources,
+          marked,
+          checked
+        );
+      } else if ((flags2 & (ASYNC | BLOCK_EFFECT)) !== 0 && (flags2 & DIRTY) === 0 && depends_on(reaction, sources, checked)) {
+        set_signal_status(reaction, DIRTY);
+        schedule_effect(
+          /** @type {Effect} */
+          reaction
+        );
+      }
+    }
+  }
+}
+function depends_on(reaction, sources, checked) {
+  const depends = checked.get(reaction);
+  if (depends !== void 0) return depends;
+  if (reaction.deps !== null) {
+    for (const dep of reaction.deps) {
+      if (includes.call(sources, dep)) {
+        return true;
+      }
+      if ((dep.f & DERIVED) !== 0 && depends_on(
+        /** @type {Derived} */
+        dep,
+        sources,
+        checked
+      )) {
+        checked.set(
+          /** @type {Derived} */
+          dep,
+          true
+        );
+        return true;
+      }
+    }
+  }
+  checked.set(reaction, false);
+  return false;
+}
+function schedule_effect(effect2) {
+  current_batch.schedule(effect2);
+}
+function reset_branch(effect2, tracked) {
+  if ((effect2.f & BRANCH_EFFECT) !== 0 && (effect2.f & CLEAN) !== 0) {
+    return;
+  }
+  if ((effect2.f & DIRTY) !== 0) {
+    tracked.d.push(effect2);
+  } else if ((effect2.f & MAYBE_DIRTY) !== 0) {
+    tracked.m.push(effect2);
+  }
+  set_signal_status(effect2, CLEAN);
+  var e = effect2.first;
+  while (e !== null) {
+    reset_branch(e, tracked);
+    e = e.next;
+  }
+}
+function reset_all(effect2) {
+  set_signal_status(effect2, CLEAN);
+  var e = effect2.first;
+  while (e !== null) {
+    reset_all(e);
+    e = e.next;
+  }
+}
+
+// node_modules/svelte/src/reactivity/create-subscriber.js
+function createSubscriber(start) {
+  let subscribers = 0;
+  let version = source(0);
+  let stop;
+  if (dev_fallback_default) {
+    tag(version, "createSubscriber version");
+  }
+  return () => {
+    if (effect_tracking()) {
+      get(version);
+      render_effect(() => {
+        if (subscribers === 0) {
+          stop = untrack(() => start(() => increment(version)));
+        }
+        subscribers += 1;
+        return () => {
+          queue_micro_task(() => {
+            subscribers -= 1;
+            if (subscribers === 0) {
+              stop == null ? void 0 : stop();
+              stop = void 0;
+              increment(version);
+            }
+          });
+        };
+      });
+    }
+  };
+}
+
+// node_modules/svelte/src/internal/client/dom/blocks/boundary.js
+var flags = EFFECT_TRANSPARENT | EFFECT_PRESERVED;
+function boundary(node, props, children, transform_error) {
+  new Boundary(node, props, children, transform_error);
+}
+var _anchor, _hydrate_open, _props, _children, _effect, _main_effect, _pending_effect, _failed_effect, _offscreen_fragment, _local_pending_count, _pending_count, _pending_count_update_queued, _dirty_effects2, _maybe_dirty_effects2, _effect_pending, _effect_pending_subscriber, _Boundary_instances, hydrate_resolved_content_fn, hydrate_failed_content_fn, hydrate_pending_content_fn, render_fn, resolve_fn, run_fn, update_pending_count_fn;
+var Boundary = class {
+  /**
+   * @param {TemplateNode} node
+   * @param {BoundaryProps} props
+   * @param {((anchor: Node) => void)} children
+   * @param {((error: unknown) => unknown) | undefined} [transform_error]
+   */
+  constructor(node, props, children, transform_error) {
+    __privateAdd(this, _Boundary_instances);
+    /** @type {Boundary | null} */
+    __publicField(this, "parent");
+    __publicField(this, "is_pending", false);
+    /**
+     * API-level transformError transform function. Transforms errors before they reach the `failed` snippet.
+     * Inherited from parent boundary, or defaults to identity.
+     * @type {(error: unknown) => unknown}
+     */
+    __publicField(this, "transform_error");
+    /** @type {TemplateNode} */
+    __privateAdd(this, _anchor);
+    /** @type {TemplateNode | null} */
+    __privateAdd(this, _hydrate_open, hydrating ? hydrate_node : null);
+    /** @type {BoundaryProps} */
+    __privateAdd(this, _props);
+    /** @type {((anchor: Node) => void)} */
+    __privateAdd(this, _children);
+    /** @type {Effect} */
+    __privateAdd(this, _effect);
+    /** @type {Effect | null} */
+    __privateAdd(this, _main_effect, null);
+    /** @type {Effect | null} */
+    __privateAdd(this, _pending_effect, null);
+    /** @type {Effect | null} */
+    __privateAdd(this, _failed_effect, null);
+    /** @type {DocumentFragment | null} */
+    __privateAdd(this, _offscreen_fragment, null);
+    __privateAdd(this, _local_pending_count, 0);
+    __privateAdd(this, _pending_count, 0);
+    __privateAdd(this, _pending_count_update_queued, false);
+    /** @type {Set<Effect>} */
+    __privateAdd(this, _dirty_effects2, /* @__PURE__ */ new Set());
+    /** @type {Set<Effect>} */
+    __privateAdd(this, _maybe_dirty_effects2, /* @__PURE__ */ new Set());
+    /**
+     * A source containing the number of pending async deriveds/expressions.
+     * Only created if `$effect.pending()` is used inside the boundary,
+     * otherwise updating the source results in needless `Batch.ensure()`
+     * calls followed by no-op flushes
+     * @type {Source<number> | null}
+     */
+    __privateAdd(this, _effect_pending, null);
+    __privateAdd(this, _effect_pending_subscriber, createSubscriber(() => {
+      __privateSet(this, _effect_pending, source(__privateGet(this, _local_pending_count)));
+      if (dev_fallback_default) {
+        tag(__privateGet(this, _effect_pending), "$effect.pending()");
+      }
+      return () => {
+        __privateSet(this, _effect_pending, null);
+      };
+    }));
+    var _a5, _b3;
+    __privateSet(this, _anchor, node);
+    __privateSet(this, _props, props);
+    __privateSet(this, _children, (anchor) => {
+      var effect2 = (
+        /** @type {Effect} */
+        active_effect
+      );
+      effect2.b = this;
+      effect2.f |= BOUNDARY_EFFECT;
+      children(anchor);
+    });
+    this.parent = /** @type {Effect} */
+    active_effect.b;
+    this.transform_error = (_b3 = transform_error != null ? transform_error : (_a5 = this.parent) == null ? void 0 : _a5.transform_error) != null ? _b3 : (e) => e;
+    __privateSet(this, _effect, block(() => {
+      if (hydrating) {
+        const comment2 = (
+          /** @type {Comment} */
+          __privateGet(this, _hydrate_open)
+        );
+        hydrate_next();
+        const server_rendered_pending = comment2.data === HYDRATION_START_ELSE;
+        const server_rendered_failed = comment2.data.startsWith(HYDRATION_START_FAILED);
+        if (server_rendered_failed) {
+          const serialized_error = JSON.parse(comment2.data.slice(HYDRATION_START_FAILED.length));
+          __privateMethod(this, _Boundary_instances, hydrate_failed_content_fn).call(this, serialized_error);
+        } else if (server_rendered_pending) {
+          __privateMethod(this, _Boundary_instances, hydrate_pending_content_fn).call(this);
+        } else {
+          __privateMethod(this, _Boundary_instances, hydrate_resolved_content_fn).call(this);
+        }
+      } else {
+        __privateMethod(this, _Boundary_instances, render_fn).call(this);
+      }
+    }, flags));
+    if (hydrating) {
+      __privateSet(this, _anchor, hydrate_node);
+    }
+  }
+  /**
+   * Defer an effect inside a pending boundary until the boundary resolves
+   * @param {Effect} effect
+   */
+  defer_effect(effect2) {
+    defer_effect(effect2, __privateGet(this, _dirty_effects2), __privateGet(this, _maybe_dirty_effects2));
+  }
+  /**
+   * Returns `false` if the effect exists inside a boundary whose pending snippet is shown
+   * @returns {boolean}
+   */
+  is_rendered() {
+    return !this.is_pending && (!this.parent || this.parent.is_rendered());
+  }
+  has_pending_snippet() {
+    return !!__privateGet(this, _props).pending;
+  }
+  /**
+   * Update the source that powers `$effect.pending()` inside this boundary,
+   * and controls when the current `pending` snippet (if any) is removed.
+   * Do not call from inside the class
+   * @param {1 | -1} d
+   * @param {Batch} batch
+   */
+  update_pending_count(d, batch) {
+    __privateMethod(this, _Boundary_instances, update_pending_count_fn).call(this, d, batch);
+    __privateSet(this, _local_pending_count, __privateGet(this, _local_pending_count) + d);
+    if (!__privateGet(this, _effect_pending) || __privateGet(this, _pending_count_update_queued)) return;
+    __privateSet(this, _pending_count_update_queued, true);
+    queue_micro_task(() => {
+      __privateSet(this, _pending_count_update_queued, false);
+      if (__privateGet(this, _effect_pending)) {
+        internal_set(__privateGet(this, _effect_pending), __privateGet(this, _local_pending_count));
+      }
+    });
+  }
+  get_effect_pending() {
+    __privateGet(this, _effect_pending_subscriber).call(this);
+    return get(
+      /** @type {Source<number>} */
+      __privateGet(this, _effect_pending)
+    );
+  }
+  /** @param {unknown} error */
+  error(error) {
+    var onerror = __privateGet(this, _props).onerror;
+    let failed = __privateGet(this, _props).failed;
+    if (!onerror && !failed) {
+      throw error;
+    }
+    if (__privateGet(this, _main_effect)) {
+      destroy_effect(__privateGet(this, _main_effect));
+      __privateSet(this, _main_effect, null);
+    }
+    if (__privateGet(this, _pending_effect)) {
+      destroy_effect(__privateGet(this, _pending_effect));
+      __privateSet(this, _pending_effect, null);
+    }
+    if (__privateGet(this, _failed_effect)) {
+      destroy_effect(__privateGet(this, _failed_effect));
+      __privateSet(this, _failed_effect, null);
+    }
+    if (hydrating) {
+      set_hydrate_node(
+        /** @type {TemplateNode} */
+        __privateGet(this, _hydrate_open)
+      );
+      next();
+      set_hydrate_node(skip_nodes());
+    }
+    var did_reset = false;
+    var calling_on_error = false;
+    const reset2 = () => {
+      if (did_reset) {
+        svelte_boundary_reset_noop();
+        return;
+      }
+      did_reset = true;
+      if (calling_on_error) {
+        svelte_boundary_reset_onerror();
+      }
+      if (__privateGet(this, _failed_effect) !== null) {
+        pause_effect(__privateGet(this, _failed_effect), () => {
+          __privateSet(this, _failed_effect, null);
+        });
+      }
+      __privateMethod(this, _Boundary_instances, run_fn).call(this, () => {
+        __privateMethod(this, _Boundary_instances, render_fn).call(this);
+      });
+    };
+    const handle_error_result = (transformed_error) => {
+      try {
+        calling_on_error = true;
+        onerror == null ? void 0 : onerror(transformed_error, reset2);
+        calling_on_error = false;
+      } catch (error2) {
+        invoke_error_boundary(error2, __privateGet(this, _effect) && __privateGet(this, _effect).parent);
+      }
+      if (failed) {
+        __privateSet(this, _failed_effect, __privateMethod(this, _Boundary_instances, run_fn).call(this, () => {
+          try {
+            return branch(() => {
+              var effect2 = (
+                /** @type {Effect} */
+                active_effect
+              );
+              effect2.b = this;
+              effect2.f |= BOUNDARY_EFFECT;
+              failed(
+                __privateGet(this, _anchor),
+                () => transformed_error,
+                () => reset2
+              );
+            });
+          } catch (error2) {
+            invoke_error_boundary(
+              error2,
+              /** @type {Effect} */
+              __privateGet(this, _effect).parent
+            );
+            return null;
+          }
+        }));
+      }
+    };
+    queue_micro_task(() => {
+      var result;
+      try {
+        result = this.transform_error(error);
+      } catch (e) {
+        invoke_error_boundary(e, __privateGet(this, _effect) && __privateGet(this, _effect).parent);
+        return;
+      }
+      if (result !== null && typeof result === "object" && typeof /** @type {any} */
+      result.then === "function") {
+        result.then(
+          handle_error_result,
+          /** @param {unknown} e */
+          (e) => invoke_error_boundary(e, __privateGet(this, _effect) && __privateGet(this, _effect).parent)
+        );
+      } else {
+        handle_error_result(result);
       }
     });
   }
 };
-ResizeObserverSingleton.entries = "WeakMap" in globals ? /* @__PURE__ */ new WeakMap() : void 0;
+_anchor = new WeakMap();
+_hydrate_open = new WeakMap();
+_props = new WeakMap();
+_children = new WeakMap();
+_effect = new WeakMap();
+_main_effect = new WeakMap();
+_pending_effect = new WeakMap();
+_failed_effect = new WeakMap();
+_offscreen_fragment = new WeakMap();
+_local_pending_count = new WeakMap();
+_pending_count = new WeakMap();
+_pending_count_update_queued = new WeakMap();
+_dirty_effects2 = new WeakMap();
+_maybe_dirty_effects2 = new WeakMap();
+_effect_pending = new WeakMap();
+_effect_pending_subscriber = new WeakMap();
+_Boundary_instances = new WeakSet();
+hydrate_resolved_content_fn = function() {
+  try {
+    __privateSet(this, _main_effect, branch(() => __privateGet(this, _children).call(this, __privateGet(this, _anchor))));
+  } catch (error) {
+    this.error(error);
+  }
+};
+/**
+ * @param {unknown} error The deserialized error from the server's hydration comment
+ */
+hydrate_failed_content_fn = function(error) {
+  const failed = __privateGet(this, _props).failed;
+  if (!failed) return;
+  __privateSet(this, _failed_effect, branch(() => {
+    failed(
+      __privateGet(this, _anchor),
+      () => error,
+      () => () => {
+      }
+    );
+  }));
+};
+hydrate_pending_content_fn = function() {
+  const pending2 = __privateGet(this, _props).pending;
+  if (!pending2) return;
+  this.is_pending = true;
+  __privateSet(this, _pending_effect, branch(() => pending2(__privateGet(this, _anchor))));
+  queue_micro_task(() => {
+    var fragment = __privateSet(this, _offscreen_fragment, document.createDocumentFragment());
+    var anchor = create_text();
+    fragment.append(anchor);
+    __privateSet(this, _main_effect, __privateMethod(this, _Boundary_instances, run_fn).call(this, () => {
+      return branch(() => __privateGet(this, _children).call(this, anchor));
+    }));
+    if (__privateGet(this, _pending_count) === 0) {
+      __privateGet(this, _anchor).before(fragment);
+      __privateSet(this, _offscreen_fragment, null);
+      pause_effect(
+        /** @type {Effect} */
+        __privateGet(this, _pending_effect),
+        () => {
+          __privateSet(this, _pending_effect, null);
+        }
+      );
+      __privateMethod(this, _Boundary_instances, resolve_fn).call(
+        this,
+        /** @type {Batch} */
+        current_batch
+      );
+    }
+  });
+};
+render_fn = function() {
+  try {
+    this.is_pending = this.has_pending_snippet();
+    __privateSet(this, _pending_count, 0);
+    __privateSet(this, _local_pending_count, 0);
+    __privateSet(this, _main_effect, branch(() => {
+      __privateGet(this, _children).call(this, __privateGet(this, _anchor));
+    }));
+    if (__privateGet(this, _pending_count) > 0) {
+      var fragment = __privateSet(this, _offscreen_fragment, document.createDocumentFragment());
+      move_effect(__privateGet(this, _main_effect), fragment);
+      const pending2 = (
+        /** @type {(anchor: Node) => void} */
+        __privateGet(this, _props).pending
+      );
+      __privateSet(this, _pending_effect, branch(() => pending2(__privateGet(this, _anchor))));
+    } else {
+      __privateMethod(this, _Boundary_instances, resolve_fn).call(
+        this,
+        /** @type {Batch} */
+        current_batch
+      );
+    }
+  } catch (error) {
+    this.error(error);
+  }
+};
+/**
+ * @param {Batch} batch
+ */
+resolve_fn = function(batch) {
+  this.is_pending = false;
+  batch.transfer_effects(__privateGet(this, _dirty_effects2), __privateGet(this, _maybe_dirty_effects2));
+};
+/**
+ * @template T
+ * @param {() => T} fn
+ */
+run_fn = function(fn) {
+  var previous_effect = active_effect;
+  var previous_reaction = active_reaction;
+  var previous_ctx = component_context;
+  set_active_effect(__privateGet(this, _effect));
+  set_active_reaction(__privateGet(this, _effect));
+  set_component_context(__privateGet(this, _effect).ctx);
+  try {
+    Batch.ensure();
+    return fn();
+  } catch (e) {
+    handle_error(e);
+    return null;
+  } finally {
+    set_active_effect(previous_effect);
+    set_active_reaction(previous_reaction);
+    set_component_context(previous_ctx);
+  }
+};
+/**
+ * Updates the pending count associated with the currently visible pending snippet,
+ * if any, such that we can replace the snippet with content once work is done
+ * @param {1 | -1} d
+ * @param {Batch} batch
+ */
+update_pending_count_fn = function(d, batch) {
+  var _a5;
+  if (!this.has_pending_snippet()) {
+    if (this.parent) {
+      __privateMethod(_a5 = this.parent, _Boundary_instances, update_pending_count_fn).call(_a5, d, batch);
+    }
+    return;
+  }
+  __privateSet(this, _pending_count, __privateGet(this, _pending_count) + d);
+  if (__privateGet(this, _pending_count) === 0) {
+    __privateMethod(this, _Boundary_instances, resolve_fn).call(this, batch);
+    if (__privateGet(this, _pending_effect)) {
+      pause_effect(__privateGet(this, _pending_effect), () => {
+        __privateSet(this, _pending_effect, null);
+      });
+    }
+    if (__privateGet(this, _offscreen_fragment)) {
+      __privateGet(this, _anchor).before(__privateGet(this, _offscreen_fragment));
+      __privateSet(this, _offscreen_fragment, null);
+    }
+  }
+};
 
-// node_modules/svelte/src/runtime/internal/dom.js
-var is_hydrating = false;
-function start_hydrating() {
-  is_hydrating = true;
-}
-function end_hydrating() {
-  is_hydrating = false;
-}
-function append(target, node) {
-  target.appendChild(node);
-}
-function append_styles(target, style_sheet_id, styles) {
-  const append_styles_to = get_root_for_style(target);
-  if (!append_styles_to.getElementById(style_sheet_id)) {
-    const style = element("style");
-    style.id = style_sheet_id;
-    style.textContent = styles;
-    append_stylesheet(append_styles_to, style);
+// node_modules/svelte/src/internal/client/reactivity/async.js
+function flatten(blockers, sync, async2, fn) {
+  const d = is_runes() ? derived2 : derived_safe_equal;
+  var pending2 = blockers.filter((b) => !b.settled);
+  if (async2.length === 0 && pending2.length === 0) {
+    fn(sync.map(d));
+    return;
+  }
+  var parent = (
+    /** @type {Effect} */
+    active_effect
+  );
+  var restore = capture();
+  var blocker_promise = pending2.length === 1 ? pending2[0].promise : pending2.length > 1 ? Promise.all(pending2.map((b) => b.promise)) : null;
+  function finish(values) {
+    restore();
+    try {
+      fn(values);
+    } catch (error) {
+      if ((parent.f & DESTROYED) === 0) {
+        invoke_error_boundary(error, parent);
+      }
+    }
+    unset_context();
+  }
+  if (async2.length === 0) {
+    blocker_promise.then(() => finish(sync.map(d)));
+    return;
+  }
+  var decrement_pending = increment_pending();
+  function run3() {
+    Promise.all(async2.map((expression) => async_derived(expression))).then((result) => finish([...sync.map(d), ...result])).catch((error) => invoke_error_boundary(error, parent)).finally(() => decrement_pending());
+  }
+  if (blocker_promise) {
+    blocker_promise.then(() => {
+      restore();
+      run3();
+      unset_context();
+    });
+  } else {
+    run3();
   }
 }
-function get_root_for_style(node) {
-  if (!node) return document;
-  const root = node.getRootNode ? node.getRootNode() : node.ownerDocument;
-  if (root && /** @type {ShadowRoot} */
-  root.host) {
-    return (
-      /** @type {ShadowRoot} */
-      root
+function capture() {
+  var previous_effect = (
+    /** @type {Effect} */
+    active_effect
+  );
+  var previous_reaction = active_reaction;
+  var previous_component_context = component_context;
+  var previous_batch2 = (
+    /** @type {Batch} */
+    current_batch
+  );
+  if (dev_fallback_default) {
+    var previous_dev_stack = dev_stack;
+  }
+  return function restore(activate_batch = true) {
+    set_active_effect(previous_effect);
+    set_active_reaction(previous_reaction);
+    set_component_context(previous_component_context);
+    if (activate_batch && (previous_effect.f & DESTROYED) === 0) {
+      previous_batch2 == null ? void 0 : previous_batch2.activate();
+      previous_batch2 == null ? void 0 : previous_batch2.apply();
+    }
+    if (dev_fallback_default) {
+      set_from_async_derived(null);
+      set_dev_stack(previous_dev_stack);
+    }
+  };
+}
+function unset_context(deactivate_batch = true) {
+  var _a5;
+  set_active_effect(null);
+  set_active_reaction(null);
+  set_component_context(null);
+  if (deactivate_batch) (_a5 = current_batch) == null ? void 0 : _a5.deactivate();
+  if (dev_fallback_default) {
+    set_from_async_derived(null);
+    set_dev_stack(null);
+  }
+}
+function increment_pending() {
+  var boundary2 = (
+    /** @type {Boundary} */
+    /** @type {Effect} */
+    active_effect.b
+  );
+  var batch = (
+    /** @type {Batch} */
+    current_batch
+  );
+  var blocking = boundary2.is_rendered();
+  boundary2.update_pending_count(1, batch);
+  batch.increment(blocking);
+  return (skip = false) => {
+    boundary2.update_pending_count(-1, batch);
+    batch.decrement(blocking, skip);
+  };
+}
+
+// node_modules/svelte/src/internal/client/reactivity/deriveds.js
+var current_async_effect = null;
+function set_from_async_derived(v) {
+  current_async_effect = v;
+}
+var recent_async_deriveds = /* @__PURE__ */ new Set();
+// @__NO_SIDE_EFFECTS__
+function derived2(fn) {
+  var flags2 = DERIVED | DIRTY;
+  var parent_derived = active_reaction !== null && (active_reaction.f & DERIVED) !== 0 ? (
+    /** @type {Derived} */
+    active_reaction
+  ) : null;
+  if (active_effect !== null) {
+    active_effect.f |= EFFECT_PRESERVED;
+  }
+  const signal = {
+    ctx: component_context,
+    deps: null,
+    effects: null,
+    equals,
+    f: flags2,
+    fn,
+    reactions: null,
+    rv: 0,
+    v: (
+      /** @type {V} */
+      UNINITIALIZED
+    ),
+    wv: 0,
+    parent: parent_derived != null ? parent_derived : active_effect,
+    ac: null
+  };
+  if (dev_fallback_default && tracing_mode_flag) {
+    signal.created = get_error("created at");
+  }
+  return signal;
+}
+// @__NO_SIDE_EFFECTS__
+function async_derived(fn, label, location) {
+  let parent = (
+    /** @type {Effect | null} */
+    active_effect
+  );
+  if (parent === null) {
+    async_derived_orphan();
+  }
+  var promise = (
+    /** @type {Promise<V>} */
+    /** @type {unknown} */
+    void 0
+  );
+  var signal = source(
+    /** @type {V} */
+    UNINITIALIZED
+  );
+  if (dev_fallback_default) signal.label = label;
+  var should_suspend = !active_reaction;
+  var deferreds = /* @__PURE__ */ new Map();
+  async_effect(() => {
+    var _a5;
+    if (dev_fallback_default) current_async_effect = active_effect;
+    var effect2 = (
+      /** @type {Effect} */
+      active_effect
+    );
+    var d = deferred();
+    promise = d.promise;
+    try {
+      Promise.resolve(fn()).then(d.resolve, d.reject).finally(unset_context);
+    } catch (error) {
+      d.reject(error);
+      unset_context();
+    }
+    if (dev_fallback_default) current_async_effect = null;
+    var batch = (
+      /** @type {Batch} */
+      current_batch
+    );
+    if (should_suspend) {
+      if ((effect2.f & REACTION_RAN) !== 0) {
+        var decrement_pending = increment_pending();
+      }
+      if (
+        /** @type {Boundary} */
+        parent.b.is_rendered()
+      ) {
+        (_a5 = deferreds.get(batch)) == null ? void 0 : _a5.reject(STALE_REACTION);
+        deferreds.delete(batch);
+      } else {
+        for (const d2 of deferreds.values()) {
+          d2.reject(STALE_REACTION);
+        }
+        deferreds.clear();
+      }
+      deferreds.set(batch, d);
+    }
+    const handler = (value, error = void 0) => {
+      if (dev_fallback_default) current_async_effect = null;
+      if (decrement_pending) {
+        var skip = error === STALE_REACTION;
+        decrement_pending(skip);
+      }
+      if (error === STALE_REACTION || (effect2.f & DESTROYED) !== 0) {
+        return;
+      }
+      batch.activate();
+      if (error) {
+        signal.f |= ERROR_VALUE;
+        internal_set(signal, error);
+      } else {
+        if ((signal.f & ERROR_VALUE) !== 0) {
+          signal.f ^= ERROR_VALUE;
+        }
+        internal_set(signal, value);
+        for (const [b, d2] of deferreds) {
+          deferreds.delete(b);
+          if (b === batch) break;
+          d2.reject(STALE_REACTION);
+        }
+        if (dev_fallback_default && location !== void 0) {
+          recent_async_deriveds.add(signal);
+          setTimeout(() => {
+            if (recent_async_deriveds.has(signal)) {
+              await_waterfall(
+                /** @type {string} */
+                signal.label,
+                location
+              );
+              recent_async_deriveds.delete(signal);
+            }
+          });
+        }
+      }
+      batch.deactivate();
+    };
+    d.promise.then(handler, (e) => handler(null, e || "unknown"));
+  });
+  teardown(() => {
+    for (const d of deferreds.values()) {
+      d.reject(STALE_REACTION);
+    }
+  });
+  if (dev_fallback_default) {
+    signal.f |= ASYNC;
+  }
+  return new Promise((fulfil) => {
+    function next2(p) {
+      function go() {
+        if (p === promise) {
+          fulfil(signal);
+        } else {
+          next2(promise);
+        }
+      }
+      p.then(go, go);
+    }
+    next2(promise);
+  });
+}
+// @__NO_SIDE_EFFECTS__
+function user_derived(fn) {
+  const d = /* @__PURE__ */ derived2(fn);
+  if (!async_mode_flag) push_reaction_value(d);
+  return d;
+}
+// @__NO_SIDE_EFFECTS__
+function derived_safe_equal(fn) {
+  const signal = /* @__PURE__ */ derived2(fn);
+  signal.equals = safe_equals;
+  return signal;
+}
+function destroy_derived_effects(derived3) {
+  var effects = derived3.effects;
+  if (effects !== null) {
+    derived3.effects = null;
+    for (var i = 0; i < effects.length; i += 1) {
+      destroy_effect(
+        /** @type {Effect} */
+        effects[i]
+      );
+    }
+  }
+}
+var stack = [];
+function get_derived_parent_effect(derived3) {
+  var parent = derived3.parent;
+  while (parent !== null) {
+    if ((parent.f & DERIVED) === 0) {
+      return (parent.f & DESTROYED) === 0 ? (
+        /** @type {Effect} */
+        parent
+      ) : null;
+    }
+    parent = parent.parent;
+  }
+  return null;
+}
+function execute_derived(derived3) {
+  var value;
+  var prev_active_effect = active_effect;
+  set_active_effect(get_derived_parent_effect(derived3));
+  if (dev_fallback_default) {
+    let prev_eager_effects = eager_effects;
+    set_eager_effects(/* @__PURE__ */ new Set());
+    try {
+      if (includes.call(stack, derived3)) {
+        derived_references_self();
+      }
+      stack.push(derived3);
+      derived3.f &= ~WAS_MARKED;
+      destroy_derived_effects(derived3);
+      value = update_reaction(derived3);
+    } finally {
+      set_active_effect(prev_active_effect);
+      set_eager_effects(prev_eager_effects);
+      stack.pop();
+    }
+  } else {
+    try {
+      derived3.f &= ~WAS_MARKED;
+      destroy_derived_effects(derived3);
+      value = update_reaction(derived3);
+    } finally {
+      set_active_effect(prev_active_effect);
+    }
+  }
+  return value;
+}
+function update_derived(derived3) {
+  var _a5, _b3, _c2;
+  var old_value = derived3.v;
+  var value = execute_derived(derived3);
+  if (!derived3.equals(value)) {
+    derived3.wv = increment_write_version();
+    if (!((_a5 = current_batch) == null ? void 0 : _a5.is_fork) || derived3.deps === null) {
+      derived3.v = value;
+      (_b3 = current_batch) == null ? void 0 : _b3.capture(derived3, old_value);
+      if (derived3.deps === null) {
+        set_signal_status(derived3, CLEAN);
+        return;
+      }
+    }
+  }
+  if (is_destroying_effect) {
+    return;
+  }
+  if (batch_values !== null) {
+    if (effect_tracking() || ((_c2 = current_batch) == null ? void 0 : _c2.is_fork)) {
+      batch_values.set(derived3, value);
+    }
+  } else {
+    update_derived_status(derived3);
+  }
+}
+function freeze_derived_effects(derived3) {
+  var _a5, _b3;
+  if (derived3.effects === null) return;
+  for (const e of derived3.effects) {
+    if (e.teardown || e.ac) {
+      (_a5 = e.teardown) == null ? void 0 : _a5.call(e);
+      (_b3 = e.ac) == null ? void 0 : _b3.abort(STALE_REACTION);
+      e.teardown = noop;
+      e.ac = null;
+      remove_reactions(e, 0);
+      destroy_effect_children(e);
+    }
+  }
+}
+function unfreeze_derived_effects(derived3) {
+  if (derived3.effects === null) return;
+  for (const e of derived3.effects) {
+    if (e.teardown) {
+      update_effect(e);
+    }
+  }
+}
+
+// node_modules/svelte/src/internal/client/reactivity/sources.js
+var eager_effects = /* @__PURE__ */ new Set();
+var old_values = /* @__PURE__ */ new Map();
+function set_eager_effects(v) {
+  eager_effects = v;
+}
+var eager_effects_deferred = false;
+function set_eager_effects_deferred() {
+  eager_effects_deferred = true;
+}
+function source(v, stack2) {
+  var signal = {
+    f: 0,
+    // TODO ideally we could skip this altogether, but it causes type errors
+    v,
+    reactions: null,
+    equals,
+    rv: 0,
+    wv: 0
+  };
+  if (dev_fallback_default && tracing_mode_flag) {
+    signal.created = stack2 != null ? stack2 : get_error("created at");
+    signal.updated = null;
+    signal.set_during_effect = false;
+    signal.trace = null;
+  }
+  return signal;
+}
+// @__NO_SIDE_EFFECTS__
+function state(v, stack2) {
+  const s = source(v, stack2);
+  push_reaction_value(s);
+  return s;
+}
+// @__NO_SIDE_EFFECTS__
+function mutable_source(initial_value, immutable = false, trackable = true) {
+  var _a5, _b3;
+  const s = source(initial_value);
+  if (!immutable) {
+    s.equals = safe_equals;
+  }
+  if (legacy_mode_flag && trackable && component_context !== null && component_context.l !== null) {
+    ((_b3 = (_a5 = component_context.l).s) != null ? _b3 : _a5.s = []).push(s);
+  }
+  return s;
+}
+function mutate(source2, value) {
+  set(
+    source2,
+    untrack(() => get(source2))
+  );
+  return value;
+}
+function set(source2, value, should_proxy = false) {
+  if (active_reaction !== null && // since we are untracking the function inside `$inspect.with` we need to add this check
+  // to ensure we error if state is set inside an inspect effect
+  (!untracking || (active_reaction.f & EAGER_EFFECT) !== 0) && is_runes() && (active_reaction.f & (DERIVED | BLOCK_EFFECT | ASYNC | EAGER_EFFECT)) !== 0 && (current_sources === null || !includes.call(current_sources, source2))) {
+    state_unsafe_mutation();
+  }
+  let new_value = should_proxy ? proxy(value) : value;
+  if (dev_fallback_default) {
+    tag_proxy(
+      new_value,
+      /** @type {string} */
+      source2.label
     );
   }
-  return node.ownerDocument;
+  return internal_set(source2, new_value, legacy_updates);
 }
-function append_stylesheet(node, style) {
-  append(
-    /** @type {Document} */
-    node.head || node,
-    style
-  );
-  return style.sheet;
-}
-function insert(target, node, anchor) {
-  target.insertBefore(node, anchor || null);
-}
-function detach(node) {
-  if (node.parentNode) {
-    node.parentNode.removeChild(node);
-  }
-}
-function destroy_each(iterations, detaching) {
-  for (let i = 0; i < iterations.length; i += 1) {
-    if (iterations[i]) iterations[i].d(detaching);
-  }
-}
-function element(name) {
-  return document.createElement(name);
-}
-function svg_element(name) {
-  return document.createElementNS("http://www.w3.org/2000/svg", name);
-}
-function text(data) {
-  return document.createTextNode(data);
-}
-function space() {
-  return text(" ");
-}
-function empty() {
-  return text("");
-}
-function listen(node, event, handler, options) {
-  node.addEventListener(event, handler, options);
-  return () => node.removeEventListener(event, handler, options);
-}
-function prevent_default(fn) {
-  return function(event) {
-    event.preventDefault();
-    return fn.call(this, event);
-  };
-}
-function stop_propagation(fn) {
-  return function(event) {
-    event.stopPropagation();
-    return fn.call(this, event);
-  };
-}
-function attr(node, attribute, value) {
-  if (value == null) node.removeAttribute(attribute);
-  else if (node.getAttribute(attribute) !== value) node.setAttribute(attribute, value);
-}
-var always_set_through_set_attribute = ["width", "height"];
-function set_attributes(node, attributes) {
-  const descriptors = Object.getOwnPropertyDescriptors(node.__proto__);
-  for (const key in attributes) {
-    if (attributes[key] == null) {
-      node.removeAttribute(key);
-    } else if (key === "style") {
-      node.style.cssText = attributes[key];
-    } else if (key === "__value") {
-      node.value = node[key] = attributes[key];
-    } else if (descriptors[key] && descriptors[key].set && always_set_through_set_attribute.indexOf(key) === -1) {
-      node[key] = attributes[key];
+function internal_set(source2, value, updated_during_traversal = null) {
+  var _a5, _b3, _c2;
+  if (!source2.equals(value)) {
+    var old_value = source2.v;
+    if (is_destroying_effect) {
+      old_values.set(source2, value);
     } else {
-      attr(node, key, attributes[key]);
+      old_values.set(source2, old_value);
+    }
+    source2.v = value;
+    var batch = Batch.ensure();
+    batch.capture(source2, old_value);
+    if (dev_fallback_default) {
+      if (tracing_mode_flag || active_effect !== null) {
+        (_a5 = source2.updated) != null ? _a5 : source2.updated = /* @__PURE__ */ new Map();
+        const count = ((_c2 = (_b3 = source2.updated.get("")) == null ? void 0 : _b3.count) != null ? _c2 : 0) + 1;
+        source2.updated.set("", { error: (
+          /** @type {any} */
+          null
+        ), count });
+        if (tracing_mode_flag || count > 5) {
+          const error = get_error("updated at");
+          if (error !== null) {
+            let entry = source2.updated.get(error.stack);
+            if (!entry) {
+              entry = { error, count: 0 };
+              source2.updated.set(error.stack, entry);
+            }
+            entry.count++;
+          }
+        }
+      }
+      if (active_effect !== null) {
+        source2.set_during_effect = true;
+      }
+    }
+    if ((source2.f & DERIVED) !== 0) {
+      const derived3 = (
+        /** @type {Derived} */
+        source2
+      );
+      if ((source2.f & DIRTY) !== 0) {
+        execute_derived(derived3);
+      }
+      if (batch_values === null) {
+        update_derived_status(derived3);
+      }
+    }
+    source2.wv = increment_write_version();
+    mark_reactions(source2, DIRTY, updated_during_traversal);
+    if (is_runes() && active_effect !== null && (active_effect.f & CLEAN) !== 0 && (active_effect.f & (BRANCH_EFFECT | ROOT_EFFECT)) === 0) {
+      if (untracked_writes === null) {
+        set_untracked_writes([source2]);
+      } else {
+        untracked_writes.push(source2);
+      }
+    }
+    if (!batch.is_fork && eager_effects.size > 0 && !eager_effects_deferred) {
+      flush_eager_effects();
     }
   }
+  return value;
 }
-function children(element2) {
-  return Array.from(element2.childNodes);
-}
-function set_data(text2, data) {
-  data = "" + data;
-  if (text2.data === data) return;
-  text2.data = /** @type {string} */
-  data;
-}
-function set_input_value(input, value) {
-  input.value = value == null ? "" : value;
-}
-function set_style(node, key, value, important) {
-  if (value == null) {
-    node.style.removeProperty(key);
-  } else {
-    node.style.setProperty(key, value, important ? "important" : "");
-  }
-}
-function toggle_class(element2, name, toggle) {
-  element2.classList.toggle(name, !!toggle);
-}
-function custom_event(type, detail, { bubbles = false, cancelable = false } = {}) {
-  return new CustomEvent(type, { detail, bubbles, cancelable });
-}
-function get_custom_elements_slots(element2) {
-  const result = {};
-  element2.childNodes.forEach(
-    /** @param {Element} node */
-    (node) => {
-      result[node.slot || "default"] = true;
+function flush_eager_effects() {
+  eager_effects_deferred = false;
+  for (const effect2 of eager_effects) {
+    if ((effect2.f & CLEAN) !== 0) {
+      set_signal_status(effect2, MAYBE_DIRTY);
     }
-  );
+    if (is_dirty(effect2)) {
+      update_effect(effect2);
+    }
+  }
+  eager_effects.clear();
+}
+function update(source2, d = 1) {
+  var value = get(source2);
+  var result = d === 1 ? value++ : value--;
+  set(source2, value);
   return result;
 }
+function increment(source2) {
+  set(source2, source2.v + 1);
+}
+function mark_reactions(signal, status, updated_during_traversal) {
+  var _a5;
+  var reactions = signal.reactions;
+  if (reactions === null) return;
+  var runes = is_runes();
+  var length = reactions.length;
+  for (var i = 0; i < length; i++) {
+    var reaction = reactions[i];
+    var flags2 = reaction.f;
+    if (!runes && reaction === active_effect) continue;
+    if (dev_fallback_default && (flags2 & EAGER_EFFECT) !== 0) {
+      eager_effects.add(reaction);
+      continue;
+    }
+    var not_dirty = (flags2 & DIRTY) === 0;
+    if (not_dirty) {
+      set_signal_status(reaction, status);
+    }
+    if ((flags2 & DERIVED) !== 0) {
+      var derived3 = (
+        /** @type {Derived} */
+        reaction
+      );
+      (_a5 = batch_values) == null ? void 0 : _a5.delete(derived3);
+      if ((flags2 & WAS_MARKED) === 0) {
+        if (flags2 & CONNECTED) {
+          reaction.f |= WAS_MARKED;
+        }
+        mark_reactions(derived3, MAYBE_DIRTY, updated_during_traversal);
+      }
+    } else if (not_dirty) {
+      var effect2 = (
+        /** @type {Effect} */
+        reaction
+      );
+      if ((flags2 & BLOCK_EFFECT) !== 0 && eager_block_effects !== null) {
+        eager_block_effects.add(effect2);
+      }
+      if (updated_during_traversal !== null) {
+        updated_during_traversal.push(effect2);
+      } else {
+        schedule_effect(effect2);
+      }
+    }
+  }
+}
 
-// node_modules/svelte/src/runtime/internal/lifecycle.js
-var current_component;
-function set_current_component(component) {
-  current_component = component;
+// node_modules/svelte/src/internal/client/legacy.js
+var captured_signals = null;
+
+// node_modules/svelte/src/internal/client/dom/elements/misc.js
+function autofocus(dom, value) {
+  if (value) {
+    const body = document.body;
+    dom.autofocus = true;
+    queue_micro_task(() => {
+      if (document.activeElement === body) {
+        dom.focus();
+      }
+    });
+  }
 }
-function get_current_component() {
-  if (!current_component) throw new Error("Function called outside component initialization");
-  return current_component;
+function remove_textarea_child(dom) {
+  if (hydrating && get_first_child(dom) !== null) {
+    clear_text_content(dom);
+  }
 }
-function beforeUpdate(fn) {
-  get_current_component().$$.before_update.push(fn);
+var listening_to_form_reset = false;
+function add_form_reset_listener() {
+  if (!listening_to_form_reset) {
+    listening_to_form_reset = true;
+    document.addEventListener(
+      "reset",
+      (evt) => {
+        Promise.resolve().then(() => {
+          var _a5;
+          if (!evt.defaultPrevented) {
+            for (
+              const e of
+              /**@type {HTMLFormElement} */
+              evt.target.elements
+            ) {
+              (_a5 = e.__on_r) == null ? void 0 : _a5.call(e);
+            }
+          }
+        });
+      },
+      // In the capture phase to guarantee we get noticed of it (no possibility of stopPropagation)
+      { capture: true }
+    );
+  }
+}
+
+// node_modules/svelte/src/internal/client/dom/elements/bindings/shared.js
+function without_reactive_context(fn) {
+  var previous_reaction = active_reaction;
+  var previous_effect = active_effect;
+  set_active_reaction(null);
+  set_active_effect(null);
+  try {
+    return fn();
+  } finally {
+    set_active_reaction(previous_reaction);
+    set_active_effect(previous_effect);
+  }
+}
+function listen_to_event_and_reset_event(element2, event2, handler, on_reset = handler) {
+  element2.addEventListener(event2, () => without_reactive_context(handler));
+  const prev = element2.__on_r;
+  if (prev) {
+    element2.__on_r = () => {
+      prev();
+      on_reset(true);
+    };
+  } else {
+    element2.__on_r = () => on_reset(true);
+  }
+  add_form_reset_listener();
+}
+
+// node_modules/svelte/src/internal/client/runtime.js
+var is_updating_effect = false;
+var is_destroying_effect = false;
+function set_is_destroying_effect(value) {
+  is_destroying_effect = value;
+}
+var active_reaction = null;
+var untracking = false;
+function set_active_reaction(reaction) {
+  active_reaction = reaction;
+}
+var active_effect = null;
+function set_active_effect(effect2) {
+  active_effect = effect2;
+}
+var current_sources = null;
+function push_reaction_value(value) {
+  if (active_reaction !== null && (!async_mode_flag || (active_reaction.f & DERIVED) !== 0)) {
+    if (current_sources === null) {
+      current_sources = [value];
+    } else {
+      current_sources.push(value);
+    }
+  }
+}
+var new_deps = null;
+var skipped_deps = 0;
+var untracked_writes = null;
+function set_untracked_writes(value) {
+  untracked_writes = value;
+}
+var write_version = 1;
+var read_version = 0;
+var update_version = read_version;
+function set_update_version(value) {
+  update_version = value;
+}
+function increment_write_version() {
+  return ++write_version;
+}
+function is_dirty(reaction) {
+  var flags2 = reaction.f;
+  if ((flags2 & DIRTY) !== 0) {
+    return true;
+  }
+  if (flags2 & DERIVED) {
+    reaction.f &= ~WAS_MARKED;
+  }
+  if ((flags2 & MAYBE_DIRTY) !== 0) {
+    var dependencies = (
+      /** @type {Value[]} */
+      reaction.deps
+    );
+    var length = dependencies.length;
+    for (var i = 0; i < length; i++) {
+      var dependency = dependencies[i];
+      if (is_dirty(
+        /** @type {Derived} */
+        dependency
+      )) {
+        update_derived(
+          /** @type {Derived} */
+          dependency
+        );
+      }
+      if (dependency.wv > reaction.wv) {
+        return true;
+      }
+    }
+    if ((flags2 & CONNECTED) !== 0 && // During time traveling we don't want to reset the status so that
+    // traversal of the graph in the other batches still happens
+    batch_values === null) {
+      set_signal_status(reaction, CLEAN);
+    }
+  }
+  return false;
+}
+function schedule_possible_effect_self_invalidation(signal, effect2, root11 = true) {
+  var reactions = signal.reactions;
+  if (reactions === null) return;
+  if (!async_mode_flag && current_sources !== null && includes.call(current_sources, signal)) {
+    return;
+  }
+  for (var i = 0; i < reactions.length; i++) {
+    var reaction = reactions[i];
+    if ((reaction.f & DERIVED) !== 0) {
+      schedule_possible_effect_self_invalidation(
+        /** @type {Derived} */
+        reaction,
+        effect2,
+        false
+      );
+    } else if (effect2 === reaction) {
+      if (root11) {
+        set_signal_status(reaction, DIRTY);
+      } else if ((reaction.f & CLEAN) !== 0) {
+        set_signal_status(reaction, MAYBE_DIRTY);
+      }
+      schedule_effect(
+        /** @type {Effect} */
+        reaction
+      );
+    }
+  }
+}
+function update_reaction(reaction) {
+  var _a5, _b3, _c2;
+  var previous_deps = new_deps;
+  var previous_skipped_deps = skipped_deps;
+  var previous_untracked_writes = untracked_writes;
+  var previous_reaction = active_reaction;
+  var previous_sources = current_sources;
+  var previous_component_context = component_context;
+  var previous_untracking = untracking;
+  var previous_update_version = update_version;
+  var flags2 = reaction.f;
+  new_deps = /** @type {null | Value[]} */
+  null;
+  skipped_deps = 0;
+  untracked_writes = null;
+  active_reaction = (flags2 & (BRANCH_EFFECT | ROOT_EFFECT)) === 0 ? reaction : null;
+  current_sources = null;
+  set_component_context(reaction.ctx);
+  untracking = false;
+  update_version = ++read_version;
+  if (reaction.ac !== null) {
+    without_reactive_context(() => {
+      reaction.ac.abort(STALE_REACTION);
+    });
+    reaction.ac = null;
+  }
+  try {
+    reaction.f |= REACTION_IS_UPDATING;
+    var fn = (
+      /** @type {Function} */
+      reaction.fn
+    );
+    var result = fn();
+    reaction.f |= REACTION_RAN;
+    var deps = reaction.deps;
+    var is_fork = (_a5 = current_batch) == null ? void 0 : _a5.is_fork;
+    if (new_deps !== null) {
+      var i;
+      if (!is_fork) {
+        remove_reactions(reaction, skipped_deps);
+      }
+      if (deps !== null && skipped_deps > 0) {
+        deps.length = skipped_deps + new_deps.length;
+        for (i = 0; i < new_deps.length; i++) {
+          deps[skipped_deps + i] = new_deps[i];
+        }
+      } else {
+        reaction.deps = deps = new_deps;
+      }
+      if (effect_tracking() && (reaction.f & CONNECTED) !== 0) {
+        for (i = skipped_deps; i < deps.length; i++) {
+          ((_c2 = (_b3 = deps[i]).reactions) != null ? _c2 : _b3.reactions = []).push(reaction);
+        }
+      }
+    } else if (!is_fork && deps !== null && skipped_deps < deps.length) {
+      remove_reactions(reaction, skipped_deps);
+      deps.length = skipped_deps;
+    }
+    if (is_runes() && untracked_writes !== null && !untracking && deps !== null && (reaction.f & (DERIVED | MAYBE_DIRTY | DIRTY)) === 0) {
+      for (i = 0; i < /** @type {Source[]} */
+      untracked_writes.length; i++) {
+        schedule_possible_effect_self_invalidation(
+          untracked_writes[i],
+          /** @type {Effect} */
+          reaction
+        );
+      }
+    }
+    if (previous_reaction !== null && previous_reaction !== reaction) {
+      read_version++;
+      if (previous_reaction.deps !== null) {
+        for (let i2 = 0; i2 < previous_skipped_deps; i2 += 1) {
+          previous_reaction.deps[i2].rv = read_version;
+        }
+      }
+      if (previous_deps !== null) {
+        for (const dep of previous_deps) {
+          dep.rv = read_version;
+        }
+      }
+      if (untracked_writes !== null) {
+        if (previous_untracked_writes === null) {
+          previous_untracked_writes = untracked_writes;
+        } else {
+          previous_untracked_writes.push(.../** @type {Source[]} */
+          untracked_writes);
+        }
+      }
+    }
+    if ((reaction.f & ERROR_VALUE) !== 0) {
+      reaction.f ^= ERROR_VALUE;
+    }
+    return result;
+  } catch (error) {
+    return handle_error(error);
+  } finally {
+    reaction.f ^= REACTION_IS_UPDATING;
+    new_deps = previous_deps;
+    skipped_deps = previous_skipped_deps;
+    untracked_writes = previous_untracked_writes;
+    active_reaction = previous_reaction;
+    current_sources = previous_sources;
+    set_component_context(previous_component_context);
+    untracking = previous_untracking;
+    update_version = previous_update_version;
+  }
+}
+function remove_reaction(signal, dependency) {
+  let reactions = dependency.reactions;
+  if (reactions !== null) {
+    var index2 = index_of.call(reactions, signal);
+    if (index2 !== -1) {
+      var new_length = reactions.length - 1;
+      if (new_length === 0) {
+        reactions = dependency.reactions = null;
+      } else {
+        reactions[index2] = reactions[new_length];
+        reactions.pop();
+      }
+    }
+  }
+  if (reactions === null && (dependency.f & DERIVED) !== 0 && // Destroying a child effect while updating a parent effect can cause a dependency to appear
+  // to be unused, when in fact it is used by the currently-updating parent. Checking `new_deps`
+  // allows us to skip the expensive work of disconnecting and immediately reconnecting it
+  (new_deps === null || !includes.call(new_deps, dependency))) {
+    var derived3 = (
+      /** @type {Derived} */
+      dependency
+    );
+    if ((derived3.f & CONNECTED) !== 0) {
+      derived3.f ^= CONNECTED;
+      derived3.f &= ~WAS_MARKED;
+    }
+    update_derived_status(derived3);
+    freeze_derived_effects(derived3);
+    remove_reactions(derived3, 0);
+  }
+}
+function remove_reactions(signal, start_index) {
+  var dependencies = signal.deps;
+  if (dependencies === null) return;
+  for (var i = start_index; i < dependencies.length; i++) {
+    remove_reaction(signal, dependencies[i]);
+  }
+}
+function update_effect(effect2) {
+  var _a5;
+  var flags2 = effect2.f;
+  if ((flags2 & DESTROYED) !== 0) {
+    return;
+  }
+  set_signal_status(effect2, CLEAN);
+  var previous_effect = active_effect;
+  var was_updating_effect = is_updating_effect;
+  active_effect = effect2;
+  is_updating_effect = true;
+  if (dev_fallback_default) {
+    var previous_component_fn = dev_current_component_function;
+    set_dev_current_component_function(effect2.component_function);
+    var previous_stack = (
+      /** @type {any} */
+      dev_stack
+    );
+    set_dev_stack((_a5 = effect2.dev_stack) != null ? _a5 : dev_stack);
+  }
+  try {
+    if ((flags2 & (BLOCK_EFFECT | MANAGED_EFFECT)) !== 0) {
+      destroy_block_effect_children(effect2);
+    } else {
+      destroy_effect_children(effect2);
+    }
+    execute_effect_teardown(effect2);
+    var teardown2 = update_reaction(effect2);
+    effect2.teardown = typeof teardown2 === "function" ? teardown2 : null;
+    effect2.wv = write_version;
+    if (dev_fallback_default && tracing_mode_flag && (effect2.f & DIRTY) !== 0 && effect2.deps !== null) {
+      for (var dep of effect2.deps) {
+        if (dep.set_during_effect) {
+          dep.wv = increment_write_version();
+          dep.set_during_effect = false;
+        }
+      }
+    }
+  } finally {
+    is_updating_effect = was_updating_effect;
+    active_effect = previous_effect;
+    if (dev_fallback_default) {
+      set_dev_current_component_function(previous_component_fn);
+      set_dev_stack(previous_stack);
+    }
+  }
+}
+async function tick() {
+  if (async_mode_flag) {
+    return new Promise((f) => {
+      requestAnimationFrame(() => f());
+      setTimeout(() => f());
+    });
+  }
+  await Promise.resolve();
+  flushSync();
+}
+function get(signal) {
+  var _a5, _b3, _c2;
+  var flags2 = signal.f;
+  var is_derived = (flags2 & DERIVED) !== 0;
+  (_a5 = captured_signals) == null ? void 0 : _a5.add(signal);
+  if (active_reaction !== null && !untracking) {
+    var destroyed = active_effect !== null && (active_effect.f & DESTROYED) !== 0;
+    if (!destroyed && (current_sources === null || !includes.call(current_sources, signal))) {
+      var deps = active_reaction.deps;
+      if ((active_reaction.f & REACTION_IS_UPDATING) !== 0) {
+        if (signal.rv < read_version) {
+          signal.rv = read_version;
+          if (new_deps === null && deps !== null && deps[skipped_deps] === signal) {
+            skipped_deps++;
+          } else if (new_deps === null) {
+            new_deps = [signal];
+          } else {
+            new_deps.push(signal);
+          }
+        }
+      } else {
+        ((_b3 = active_reaction.deps) != null ? _b3 : active_reaction.deps = []).push(signal);
+        var reactions = signal.reactions;
+        if (reactions === null) {
+          signal.reactions = [active_reaction];
+        } else if (!includes.call(reactions, active_reaction)) {
+          reactions.push(active_reaction);
+        }
+      }
+    }
+  }
+  if (dev_fallback_default) {
+    recent_async_deriveds.delete(signal);
+    if (tracing_mode_flag && !untracking && tracing_expressions !== null && active_reaction !== null && tracing_expressions.reaction === active_reaction) {
+      if (signal.trace) {
+        signal.trace();
+      } else {
+        var trace2 = get_error("traced at");
+        if (trace2) {
+          var entry = tracing_expressions.entries.get(signal);
+          if (entry === void 0) {
+            entry = { traces: [] };
+            tracing_expressions.entries.set(signal, entry);
+          }
+          var last = entry.traces[entry.traces.length - 1];
+          if (trace2.stack !== (last == null ? void 0 : last.stack)) {
+            entry.traces.push(trace2);
+          }
+        }
+      }
+    }
+  }
+  if (is_destroying_effect && old_values.has(signal)) {
+    return old_values.get(signal);
+  }
+  if (is_derived) {
+    var derived3 = (
+      /** @type {Derived} */
+      signal
+    );
+    if (is_destroying_effect) {
+      var value = derived3.v;
+      if ((derived3.f & CLEAN) === 0 && derived3.reactions !== null || depends_on_old_values(derived3)) {
+        value = execute_derived(derived3);
+      }
+      old_values.set(derived3, value);
+      return value;
+    }
+    var should_connect = (derived3.f & CONNECTED) === 0 && !untracking && active_reaction !== null && (is_updating_effect || (active_reaction.f & CONNECTED) !== 0);
+    var is_new = (derived3.f & REACTION_RAN) === 0;
+    if (is_dirty(derived3)) {
+      if (should_connect) {
+        derived3.f |= CONNECTED;
+      }
+      update_derived(derived3);
+    }
+    if (should_connect && !is_new) {
+      unfreeze_derived_effects(derived3);
+      reconnect(derived3);
+    }
+  }
+  if ((_c2 = batch_values) == null ? void 0 : _c2.has(signal)) {
+    return batch_values.get(signal);
+  }
+  if ((signal.f & ERROR_VALUE) !== 0) {
+    throw signal.v;
+  }
+  return signal.v;
+}
+function reconnect(derived3) {
+  var _a5;
+  derived3.f |= CONNECTED;
+  if (derived3.deps === null) return;
+  for (const dep of derived3.deps) {
+    ((_a5 = dep.reactions) != null ? _a5 : dep.reactions = []).push(derived3);
+    if ((dep.f & DERIVED) !== 0 && (dep.f & CONNECTED) === 0) {
+      unfreeze_derived_effects(
+        /** @type {Derived} */
+        dep
+      );
+      reconnect(
+        /** @type {Derived} */
+        dep
+      );
+    }
+  }
+}
+function depends_on_old_values(derived3) {
+  if (derived3.v === UNINITIALIZED) return true;
+  if (derived3.deps === null) return false;
+  for (const dep of derived3.deps) {
+    if (old_values.has(dep)) {
+      return true;
+    }
+    if ((dep.f & DERIVED) !== 0 && depends_on_old_values(
+      /** @type {Derived} */
+      dep
+    )) {
+      return true;
+    }
+  }
+  return false;
+}
+function untrack(fn) {
+  var previous_untracking = untracking;
+  try {
+    untracking = true;
+    return fn();
+  } finally {
+    untracking = previous_untracking;
+  }
+}
+function deep_read_state(value) {
+  if (typeof value !== "object" || !value || value instanceof EventTarget) {
+    return;
+  }
+  if (STATE_SYMBOL in value) {
+    deep_read(value);
+  } else if (!Array.isArray(value)) {
+    for (let key2 in value) {
+      const prop2 = value[key2];
+      if (typeof prop2 === "object" && prop2 && STATE_SYMBOL in prop2) {
+        deep_read(prop2);
+      }
+    }
+  }
+}
+function deep_read(value, visited = /* @__PURE__ */ new Set()) {
+  if (typeof value === "object" && value !== null && // We don't want to traverse DOM elements
+  !(value instanceof EventTarget) && !visited.has(value)) {
+    visited.add(value);
+    if (value instanceof Date) {
+      value.getTime();
+    }
+    for (let key2 in value) {
+      try {
+        deep_read(value[key2], visited);
+      } catch (e) {
+      }
+    }
+    const proto = get_prototype_of(value);
+    if (proto !== Object.prototype && proto !== Array.prototype && proto !== Map.prototype && proto !== Set.prototype && proto !== Date.prototype) {
+      const descriptors = get_descriptors(proto);
+      for (let key2 in descriptors) {
+        const get3 = descriptors[key2].get;
+        if (get3) {
+          try {
+            get3.call(value);
+          } catch (e) {
+          }
+        }
+      }
+    }
+  }
+}
+
+// node_modules/svelte/src/internal/client/reactivity/effects.js
+function validate_effect(rune) {
+  if (active_effect === null) {
+    if (active_reaction === null) {
+      effect_orphan(rune);
+    }
+    effect_in_unowned_derived();
+  }
+  if (is_destroying_effect) {
+    effect_in_teardown(rune);
+  }
+}
+function push_effect(effect2, parent_effect) {
+  var parent_last = parent_effect.last;
+  if (parent_last === null) {
+    parent_effect.last = parent_effect.first = effect2;
+  } else {
+    parent_last.next = effect2;
+    effect2.prev = parent_last;
+    parent_effect.last = effect2;
+  }
+}
+function create_effect(type, fn) {
+  var _a5;
+  var parent = active_effect;
+  if (dev_fallback_default) {
+    while (parent !== null && (parent.f & EAGER_EFFECT) !== 0) {
+      parent = parent.parent;
+    }
+  }
+  if (parent !== null && (parent.f & INERT) !== 0) {
+    type |= INERT;
+  }
+  var effect2 = {
+    ctx: component_context,
+    deps: null,
+    nodes: null,
+    f: type | DIRTY | CONNECTED,
+    first: null,
+    fn,
+    last: null,
+    next: null,
+    parent,
+    b: parent && parent.b,
+    prev: null,
+    teardown: null,
+    wv: 0,
+    ac: null
+  };
+  if (dev_fallback_default) {
+    effect2.component_function = dev_current_component_function;
+  }
+  var e = effect2;
+  if ((type & EFFECT) !== 0) {
+    if (collected_effects !== null) {
+      collected_effects.push(effect2);
+    } else {
+      Batch.ensure().schedule(effect2);
+    }
+  } else if (fn !== null) {
+    try {
+      update_effect(effect2);
+    } catch (e2) {
+      destroy_effect(effect2);
+      throw e2;
+    }
+    if (e.deps === null && e.teardown === null && e.nodes === null && e.first === e.last && // either `null`, or a singular child
+    (e.f & EFFECT_PRESERVED) === 0) {
+      e = e.first;
+      if ((type & BLOCK_EFFECT) !== 0 && (type & EFFECT_TRANSPARENT) !== 0 && e !== null) {
+        e.f |= EFFECT_TRANSPARENT;
+      }
+    }
+  }
+  if (e !== null) {
+    e.parent = parent;
+    if (parent !== null) {
+      push_effect(e, parent);
+    }
+    if (active_reaction !== null && (active_reaction.f & DERIVED) !== 0 && (type & ROOT_EFFECT) === 0) {
+      var derived3 = (
+        /** @type {Derived} */
+        active_reaction
+      );
+      ((_a5 = derived3.effects) != null ? _a5 : derived3.effects = []).push(e);
+    }
+  }
+  return effect2;
+}
+function effect_tracking() {
+  return active_reaction !== null && !untracking;
+}
+function teardown(fn) {
+  const effect2 = create_effect(RENDER_EFFECT, null);
+  set_signal_status(effect2, CLEAN);
+  effect2.teardown = fn;
+  return effect2;
+}
+function user_effect(fn) {
+  var _a5;
+  validate_effect("$effect");
+  if (dev_fallback_default) {
+    define_property(fn, "name", {
+      value: "$effect"
+    });
+  }
+  var flags2 = (
+    /** @type {Effect} */
+    active_effect.f
+  );
+  var defer = !active_reaction && (flags2 & BRANCH_EFFECT) !== 0 && (flags2 & REACTION_RAN) === 0;
+  if (defer) {
+    var context = (
+      /** @type {ComponentContext} */
+      component_context
+    );
+    ((_a5 = context.e) != null ? _a5 : context.e = []).push(fn);
+  } else {
+    return create_user_effect(fn);
+  }
+}
+function create_user_effect(fn) {
+  return create_effect(EFFECT | USER_EFFECT, fn);
+}
+function user_pre_effect(fn) {
+  validate_effect("$effect.pre");
+  if (dev_fallback_default) {
+    define_property(fn, "name", {
+      value: "$effect.pre"
+    });
+  }
+  return create_effect(RENDER_EFFECT | USER_EFFECT, fn);
+}
+function effect_root(fn) {
+  Batch.ensure();
+  const effect2 = create_effect(ROOT_EFFECT | EFFECT_PRESERVED, fn);
+  return () => {
+    destroy_effect(effect2);
+  };
+}
+function component_root(fn) {
+  Batch.ensure();
+  const effect2 = create_effect(ROOT_EFFECT | EFFECT_PRESERVED, fn);
+  return (options = {}) => {
+    return new Promise((fulfil) => {
+      if (options.outro) {
+        pause_effect(effect2, () => {
+          destroy_effect(effect2);
+          fulfil(void 0);
+        });
+      } else {
+        destroy_effect(effect2);
+        fulfil(void 0);
+      }
+    });
+  };
+}
+function effect(fn) {
+  return create_effect(EFFECT, fn);
+}
+function legacy_pre_effect(deps, fn) {
+  var context = (
+    /** @type {ComponentContextLegacy} */
+    component_context
+  );
+  var token = { effect: null, ran: false, deps };
+  context.l.$.push(token);
+  token.effect = render_effect(() => {
+    deps();
+    if (token.ran) return;
+    token.ran = true;
+    var effect2 = (
+      /** @type {Effect} */
+      active_effect
+    );
+    try {
+      set_active_effect(effect2.parent);
+      untrack(fn);
+    } finally {
+      set_active_effect(effect2);
+    }
+  });
+}
+function legacy_pre_effect_reset() {
+  var context = (
+    /** @type {ComponentContextLegacy} */
+    component_context
+  );
+  render_effect(() => {
+    for (var token of context.l.$) {
+      token.deps();
+      var effect2 = token.effect;
+      if ((effect2.f & CLEAN) !== 0 && effect2.deps !== null) {
+        set_signal_status(effect2, MAYBE_DIRTY);
+      }
+      if (is_dirty(effect2)) {
+        update_effect(effect2);
+      }
+      token.ran = false;
+    }
+  });
+}
+function async_effect(fn) {
+  return create_effect(ASYNC | EFFECT_PRESERVED, fn);
+}
+function render_effect(fn, flags2 = 0) {
+  return create_effect(RENDER_EFFECT | flags2, fn);
+}
+function template_effect(fn, sync = [], async2 = [], blockers = []) {
+  flatten(blockers, sync, async2, (values) => {
+    create_effect(RENDER_EFFECT, () => fn(...values.map(get)));
+  });
+}
+function block(fn, flags2 = 0) {
+  var effect2 = create_effect(BLOCK_EFFECT | flags2, fn);
+  if (dev_fallback_default) {
+    effect2.dev_stack = dev_stack;
+  }
+  return effect2;
+}
+function managed(fn, flags2 = 0) {
+  var effect2 = create_effect(MANAGED_EFFECT | flags2, fn);
+  if (dev_fallback_default) {
+    effect2.dev_stack = dev_stack;
+  }
+  return effect2;
+}
+function branch(fn) {
+  return create_effect(BRANCH_EFFECT | EFFECT_PRESERVED, fn);
+}
+function execute_effect_teardown(effect2) {
+  var teardown2 = effect2.teardown;
+  if (teardown2 !== null) {
+    const previously_destroying_effect = is_destroying_effect;
+    const previous_reaction = active_reaction;
+    set_is_destroying_effect(true);
+    set_active_reaction(null);
+    try {
+      teardown2.call(null);
+    } finally {
+      set_is_destroying_effect(previously_destroying_effect);
+      set_active_reaction(previous_reaction);
+    }
+  }
+}
+function destroy_effect_children(signal, remove_dom = false) {
+  var effect2 = signal.first;
+  signal.first = signal.last = null;
+  while (effect2 !== null) {
+    const controller = effect2.ac;
+    if (controller !== null) {
+      without_reactive_context(() => {
+        controller.abort(STALE_REACTION);
+      });
+    }
+    var next2 = effect2.next;
+    if ((effect2.f & ROOT_EFFECT) !== 0) {
+      effect2.parent = null;
+    } else {
+      destroy_effect(effect2, remove_dom);
+    }
+    effect2 = next2;
+  }
+}
+function destroy_block_effect_children(signal) {
+  var effect2 = signal.first;
+  while (effect2 !== null) {
+    var next2 = effect2.next;
+    if ((effect2.f & BRANCH_EFFECT) === 0) {
+      destroy_effect(effect2);
+    }
+    effect2 = next2;
+  }
+}
+function destroy_effect(effect2, remove_dom = true) {
+  var removed = false;
+  if ((remove_dom || (effect2.f & HEAD_EFFECT) !== 0) && effect2.nodes !== null && effect2.nodes.end !== null) {
+    remove_effect_dom(
+      effect2.nodes.start,
+      /** @type {TemplateNode} */
+      effect2.nodes.end
+    );
+    removed = true;
+  }
+  set_signal_status(effect2, DESTROYING);
+  destroy_effect_children(effect2, remove_dom && !removed);
+  remove_reactions(effect2, 0);
+  var transitions = effect2.nodes && effect2.nodes.t;
+  if (transitions !== null) {
+    for (const transition2 of transitions) {
+      transition2.stop();
+    }
+  }
+  execute_effect_teardown(effect2);
+  effect2.f ^= DESTROYING;
+  effect2.f |= DESTROYED;
+  var parent = effect2.parent;
+  if (parent !== null && parent.first !== null) {
+    unlink_effect(effect2);
+  }
+  if (dev_fallback_default) {
+    effect2.component_function = null;
+  }
+  effect2.next = effect2.prev = effect2.teardown = effect2.ctx = effect2.deps = effect2.fn = effect2.nodes = effect2.ac = null;
+}
+function remove_effect_dom(node, end) {
+  while (node !== null) {
+    var next2 = node === end ? null : get_next_sibling(node);
+    node.remove();
+    node = next2;
+  }
+}
+function unlink_effect(effect2) {
+  var parent = effect2.parent;
+  var prev = effect2.prev;
+  var next2 = effect2.next;
+  if (prev !== null) prev.next = next2;
+  if (next2 !== null) next2.prev = prev;
+  if (parent !== null) {
+    if (parent.first === effect2) parent.first = next2;
+    if (parent.last === effect2) parent.last = prev;
+  }
+}
+function pause_effect(effect2, callback, destroy = true) {
+  var transitions = [];
+  pause_children(effect2, transitions, true);
+  var fn = () => {
+    if (destroy) destroy_effect(effect2);
+    if (callback) callback();
+  };
+  var remaining = transitions.length;
+  if (remaining > 0) {
+    var check = () => --remaining || fn();
+    for (var transition2 of transitions) {
+      transition2.out(check);
+    }
+  } else {
+    fn();
+  }
+}
+function pause_children(effect2, transitions, local) {
+  if ((effect2.f & INERT) !== 0) return;
+  effect2.f ^= INERT;
+  var t = effect2.nodes && effect2.nodes.t;
+  if (t !== null) {
+    for (const transition2 of t) {
+      if (transition2.is_global || local) {
+        transitions.push(transition2);
+      }
+    }
+  }
+  var child2 = effect2.first;
+  while (child2 !== null) {
+    var sibling2 = child2.next;
+    var transparent = (child2.f & EFFECT_TRANSPARENT) !== 0 || // If this is a branch effect without a block effect parent,
+    // it means the parent block effect was pruned. In that case,
+    // transparency information was transferred to the branch effect.
+    (child2.f & BRANCH_EFFECT) !== 0 && (effect2.f & BLOCK_EFFECT) !== 0;
+    pause_children(child2, transitions, transparent ? local : false);
+    child2 = sibling2;
+  }
+}
+function resume_effect(effect2) {
+  resume_children(effect2, true);
+}
+function resume_children(effect2, local) {
+  if ((effect2.f & INERT) === 0) return;
+  effect2.f ^= INERT;
+  if ((effect2.f & CLEAN) === 0) {
+    set_signal_status(effect2, DIRTY);
+    Batch.ensure().schedule(effect2);
+  }
+  var child2 = effect2.first;
+  while (child2 !== null) {
+    var sibling2 = child2.next;
+    var transparent = (child2.f & EFFECT_TRANSPARENT) !== 0 || (child2.f & BRANCH_EFFECT) !== 0;
+    resume_children(child2, transparent ? local : false);
+    child2 = sibling2;
+  }
+  var t = effect2.nodes && effect2.nodes.t;
+  if (t !== null) {
+    for (const transition2 of t) {
+      if (transition2.is_global || local) {
+        transition2.in();
+      }
+    }
+  }
+}
+function move_effect(effect2, fragment) {
+  if (!effect2.nodes) return;
+  var node = effect2.nodes.start;
+  var end = effect2.nodes.end;
+  while (node !== null) {
+    var next2 = node === end ? null : get_next_sibling(node);
+    fragment.append(node);
+    node = next2;
+  }
+}
+
+// node_modules/svelte/src/internal/client/dom/elements/events.js
+var event_symbol = Symbol("events");
+var all_registered_events = /* @__PURE__ */ new Set();
+var root_event_handles = /* @__PURE__ */ new Set();
+function create_event(event_name, dom, handler, options = {}) {
+  function target_handler(event2) {
+    if (!options.capture) {
+      handle_event_propagation.call(dom, event2);
+    }
+    if (!event2.cancelBubble) {
+      return without_reactive_context(() => {
+        return handler == null ? void 0 : handler.call(this, event2);
+      });
+    }
+  }
+  if (event_name.startsWith("pointer") || event_name.startsWith("touch") || event_name === "wheel") {
+    queue_micro_task(() => {
+      dom.addEventListener(event_name, target_handler, options);
+    });
+  } else {
+    dom.addEventListener(event_name, target_handler, options);
+  }
+  return target_handler;
+}
+function event(event_name, dom, handler, capture2, passive2) {
+  var options = { capture: capture2, passive: passive2 };
+  var target_handler = create_event(event_name, dom, handler, options);
+  if (dom === document.body || // @ts-ignore
+  dom === window || // @ts-ignore
+  dom === document || // Firefox has quirky behavior, it can happen that we still get "canplay" events when the element is already removed
+  dom instanceof HTMLMediaElement) {
+    teardown(() => {
+      dom.removeEventListener(event_name, target_handler, options);
+    });
+  }
+}
+function delegated(event_name, element2, handler) {
+  var _a5;
+  ((_a5 = element2[event_symbol]) != null ? _a5 : element2[event_symbol] = {})[event_name] = handler;
+}
+function delegate(events) {
+  for (var i = 0; i < events.length; i++) {
+    all_registered_events.add(events[i]);
+  }
+  for (var fn of root_event_handles) {
+    fn(events);
+  }
+}
+var last_propagated_event = null;
+function handle_event_propagation(event2) {
+  var _a5, _b3;
+  var handler_element = this;
+  var owner_document = (
+    /** @type {Node} */
+    handler_element.ownerDocument
+  );
+  var event_name = event2.type;
+  var path = ((_a5 = event2.composedPath) == null ? void 0 : _a5.call(event2)) || [];
+  var current_target = (
+    /** @type {null | Element} */
+    path[0] || event2.target
+  );
+  last_propagated_event = event2;
+  var path_idx = 0;
+  var handled_at = last_propagated_event === event2 && event2[event_symbol];
+  if (handled_at) {
+    var at_idx = path.indexOf(handled_at);
+    if (at_idx !== -1 && (handler_element === document || handler_element === /** @type {any} */
+    window)) {
+      event2[event_symbol] = handler_element;
+      return;
+    }
+    var handler_idx = path.indexOf(handler_element);
+    if (handler_idx === -1) {
+      return;
+    }
+    if (at_idx <= handler_idx) {
+      path_idx = at_idx;
+    }
+  }
+  current_target = /** @type {Element} */
+  path[path_idx] || event2.target;
+  if (current_target === handler_element) return;
+  define_property(event2, "currentTarget", {
+    configurable: true,
+    get() {
+      return current_target || owner_document;
+    }
+  });
+  var previous_reaction = active_reaction;
+  var previous_effect = active_effect;
+  set_active_reaction(null);
+  set_active_effect(null);
+  try {
+    var throw_error;
+    var other_errors = [];
+    while (current_target !== null) {
+      var parent_element = current_target.assignedSlot || current_target.parentNode || /** @type {any} */
+      current_target.host || null;
+      try {
+        var delegated2 = (_b3 = current_target[event_symbol]) == null ? void 0 : _b3[event_name];
+        if (delegated2 != null && (!/** @type {any} */
+        current_target.disabled || // DOM could've been updated already by the time this is reached, so we check this as well
+        // -> the target could not have been disabled because it emits the event in the first place
+        event2.target === current_target)) {
+          delegated2.call(current_target, event2);
+        }
+      } catch (error) {
+        if (throw_error) {
+          other_errors.push(error);
+        } else {
+          throw_error = error;
+        }
+      }
+      if (event2.cancelBubble || parent_element === handler_element || parent_element === null) {
+        break;
+      }
+      current_target = parent_element;
+    }
+    if (throw_error) {
+      for (let error of other_errors) {
+        queueMicrotask(() => {
+          throw error;
+        });
+      }
+      throw throw_error;
+    }
+  } finally {
+    event2[event_symbol] = handler_element;
+    delete event2.currentTarget;
+    set_active_reaction(previous_reaction);
+    set_active_effect(previous_effect);
+  }
+}
+
+// node_modules/svelte/src/internal/client/dom/reconciler.js
+var _a3;
+var policy = (
+  // We gotta write it like this because after downleveling the pure comment may end up in the wrong location
+  ((_a3 = globalThis == null ? void 0 : globalThis.window) == null ? void 0 : _a3.trustedTypes) && /* @__PURE__ */ globalThis.window.trustedTypes.createPolicy("svelte-trusted-html", {
+    /** @param {string} html */
+    createHTML: (html2) => {
+      return html2;
+    }
+  })
+);
+function create_trusted_html(html2) {
+  var _a5;
+  return (
+    /** @type {string} */
+    (_a5 = policy == null ? void 0 : policy.createHTML(html2)) != null ? _a5 : html2
+  );
+}
+function create_fragment_from_html(html2) {
+  var elem = create_element("template");
+  elem.innerHTML = create_trusted_html(html2.replaceAll("<!>", "<!---->"));
+  return elem.content;
+}
+
+// node_modules/svelte/src/internal/client/dom/template.js
+function assign_nodes(start, end) {
+  var effect2 = (
+    /** @type {Effect} */
+    active_effect
+  );
+  if (effect2.nodes === null) {
+    effect2.nodes = { start, end, a: null, t: null };
+  }
+}
+// @__NO_SIDE_EFFECTS__
+function from_html(content, flags2) {
+  var is_fragment = (flags2 & TEMPLATE_FRAGMENT) !== 0;
+  var use_import_node = (flags2 & TEMPLATE_USE_IMPORT_NODE) !== 0;
+  var node;
+  var has_start = !content.startsWith("<!>");
+  return () => {
+    if (hydrating) {
+      assign_nodes(hydrate_node, null);
+      return hydrate_node;
+    }
+    if (node === void 0) {
+      node = create_fragment_from_html(has_start ? content : "<!>" + content);
+      if (!is_fragment) node = /** @type {TemplateNode} */
+      get_first_child(node);
+    }
+    var clone = (
+      /** @type {TemplateNode} */
+      use_import_node || is_firefox ? document.importNode(node, true) : node.cloneNode(true)
+    );
+    if (is_fragment) {
+      var start = (
+        /** @type {TemplateNode} */
+        get_first_child(clone)
+      );
+      var end = (
+        /** @type {TemplateNode} */
+        clone.lastChild
+      );
+      assign_nodes(start, end);
+    } else {
+      assign_nodes(clone, clone);
+    }
+    return clone;
+  };
+}
+// @__NO_SIDE_EFFECTS__
+function from_namespace(content, flags2, ns = "svg") {
+  var has_start = !content.startsWith("<!>");
+  var is_fragment = (flags2 & TEMPLATE_FRAGMENT) !== 0;
+  var wrapped = `<${ns}>${has_start ? content : "<!>" + content}</${ns}>`;
+  var node;
+  return () => {
+    if (hydrating) {
+      assign_nodes(hydrate_node, null);
+      return hydrate_node;
+    }
+    if (!node) {
+      var fragment = (
+        /** @type {DocumentFragment} */
+        create_fragment_from_html(wrapped)
+      );
+      var root11 = (
+        /** @type {Element} */
+        get_first_child(fragment)
+      );
+      if (is_fragment) {
+        node = document.createDocumentFragment();
+        while (get_first_child(root11)) {
+          node.appendChild(
+            /** @type {TemplateNode} */
+            get_first_child(root11)
+          );
+        }
+      } else {
+        node = /** @type {Element} */
+        get_first_child(root11);
+      }
+    }
+    var clone = (
+      /** @type {TemplateNode} */
+      node.cloneNode(true)
+    );
+    if (is_fragment) {
+      var start = (
+        /** @type {TemplateNode} */
+        get_first_child(clone)
+      );
+      var end = (
+        /** @type {TemplateNode} */
+        clone.lastChild
+      );
+      assign_nodes(start, end);
+    } else {
+      assign_nodes(clone, clone);
+    }
+    return clone;
+  };
+}
+// @__NO_SIDE_EFFECTS__
+function from_svg(content, flags2) {
+  return /* @__PURE__ */ from_namespace(content, flags2, "svg");
+}
+function text(value = "") {
+  if (!hydrating) {
+    var t = create_text(value + "");
+    assign_nodes(t, t);
+    return t;
+  }
+  var node = hydrate_node;
+  if (node.nodeType !== TEXT_NODE) {
+    node.before(node = create_text());
+    set_hydrate_node(node);
+  } else {
+    merge_text_nodes(
+      /** @type {Text} */
+      node
+    );
+  }
+  assign_nodes(node, node);
+  return node;
+}
+function comment() {
+  if (hydrating) {
+    assign_nodes(hydrate_node, null);
+    return hydrate_node;
+  }
+  var frag = document.createDocumentFragment();
+  var start = document.createComment("");
+  var anchor = create_text();
+  frag.append(start, anchor);
+  assign_nodes(start, anchor);
+  return frag;
+}
+function append(anchor, dom) {
+  if (hydrating) {
+    var effect2 = (
+      /** @type {Effect & { nodes: EffectNodes }} */
+      active_effect
+    );
+    if ((effect2.f & REACTION_RAN) === 0 || effect2.nodes.end === null) {
+      effect2.nodes.end = hydrate_node;
+    }
+    hydrate_next();
+    return;
+  }
+  if (anchor === null) {
+    return;
+  }
+  anchor.before(
+    /** @type {Node} */
+    dom
+  );
+}
+
+// node_modules/svelte/src/utils.js
+function is_capture_event(name) {
+  return name.endsWith("capture") && name !== "gotpointercapture" && name !== "lostpointercapture";
+}
+var DELEGATED_EVENTS = [
+  "beforeinput",
+  "click",
+  "change",
+  "dblclick",
+  "contextmenu",
+  "focusin",
+  "focusout",
+  "input",
+  "keydown",
+  "keyup",
+  "mousedown",
+  "mousemove",
+  "mouseout",
+  "mouseover",
+  "mouseup",
+  "pointerdown",
+  "pointermove",
+  "pointerout",
+  "pointerover",
+  "pointerup",
+  "touchend",
+  "touchmove",
+  "touchstart"
+];
+function can_delegate_event(event_name) {
+  return DELEGATED_EVENTS.includes(event_name);
+}
+var DOM_BOOLEAN_ATTRIBUTES = [
+  "allowfullscreen",
+  "async",
+  "autofocus",
+  "autoplay",
+  "checked",
+  "controls",
+  "default",
+  "disabled",
+  "formnovalidate",
+  "indeterminate",
+  "inert",
+  "ismap",
+  "loop",
+  "multiple",
+  "muted",
+  "nomodule",
+  "novalidate",
+  "open",
+  "playsinline",
+  "readonly",
+  "required",
+  "reversed",
+  "seamless",
+  "selected",
+  "webkitdirectory",
+  "defer",
+  "disablepictureinpicture",
+  "disableremoteplayback"
+];
+var ATTRIBUTE_ALIASES = {
+  // no `class: 'className'` because we handle that separately
+  formnovalidate: "formNoValidate",
+  ismap: "isMap",
+  nomodule: "noModule",
+  playsinline: "playsInline",
+  readonly: "readOnly",
+  defaultvalue: "defaultValue",
+  defaultchecked: "defaultChecked",
+  srcobject: "srcObject",
+  novalidate: "noValidate",
+  allowfullscreen: "allowFullscreen",
+  disablepictureinpicture: "disablePictureInPicture",
+  disableremoteplayback: "disableRemotePlayback"
+};
+function normalize_attribute(name) {
+  var _a5;
+  name = name.toLowerCase();
+  return (_a5 = ATTRIBUTE_ALIASES[name]) != null ? _a5 : name;
+}
+var DOM_PROPERTIES = [
+  ...DOM_BOOLEAN_ATTRIBUTES,
+  "formNoValidate",
+  "isMap",
+  "noModule",
+  "playsInline",
+  "readOnly",
+  "value",
+  "volume",
+  "defaultValue",
+  "defaultChecked",
+  "srcObject",
+  "noValidate",
+  "allowFullscreen",
+  "disablePictureInPicture",
+  "disableRemotePlayback"
+];
+var PASSIVE_EVENTS = ["touchstart", "touchmove"];
+function is_passive_event(name) {
+  return PASSIVE_EVENTS.includes(name);
+}
+var STATE_CREATION_RUNES = (
+  /** @type {const} */
+  [
+    "$state",
+    "$state.raw",
+    "$derived",
+    "$derived.by"
+  ]
+);
+var RUNES = (
+  /** @type {const} */
+  [
+    ...STATE_CREATION_RUNES,
+    "$state.eager",
+    "$state.snapshot",
+    "$props",
+    "$props.id",
+    "$bindable",
+    "$effect",
+    "$effect.pre",
+    "$effect.tracking",
+    "$effect.root",
+    "$effect.pending",
+    "$inspect",
+    "$inspect().with",
+    "$inspect.trace",
+    "$host"
+  ]
+);
+
+// node_modules/svelte/src/internal/client/render.js
+var should_intro = true;
+function set_text(text2, value) {
+  var _a5;
+  var str = value == null ? "" : typeof value === "object" ? `${value}` : value;
+  if (str !== ((_a5 = text2.__t) != null ? _a5 : text2.__t = text2.nodeValue)) {
+    text2.__t = str;
+    text2.nodeValue = `${str}`;
+  }
+}
+function mount(component2, options) {
+  return _mount(component2, options);
+}
+function hydrate(component2, options) {
+  var _a5;
+  init_operations();
+  options.intro = (_a5 = options.intro) != null ? _a5 : false;
+  const target = options.target;
+  const was_hydrating = hydrating;
+  const previous_hydrate_node = hydrate_node;
+  try {
+    var anchor = get_first_child(target);
+    while (anchor && (anchor.nodeType !== COMMENT_NODE || /** @type {Comment} */
+    anchor.data !== HYDRATION_START)) {
+      anchor = get_next_sibling(anchor);
+    }
+    if (!anchor) {
+      throw HYDRATION_ERROR;
+    }
+    set_hydrating(true);
+    set_hydrate_node(
+      /** @type {Comment} */
+      anchor
+    );
+    const instance = _mount(component2, { ...options, anchor });
+    set_hydrating(false);
+    return (
+      /**  @type {Exports} */
+      instance
+    );
+  } catch (error) {
+    if (error instanceof Error && error.message.split("\n").some((line) => line.startsWith("https://svelte.dev/e/"))) {
+      throw error;
+    }
+    if (error !== HYDRATION_ERROR) {
+      console.warn("Failed to hydrate: ", error);
+    }
+    if (options.recover === false) {
+      hydration_failed();
+    }
+    init_operations();
+    clear_text_content(target);
+    set_hydrating(false);
+    return mount(component2, options);
+  } finally {
+    set_hydrating(was_hydrating);
+    set_hydrate_node(previous_hydrate_node);
+  }
+}
+var listeners = /* @__PURE__ */ new Map();
+function _mount(Component2, { target, anchor, props = {}, events, context, intro = true, transformError }) {
+  init_operations();
+  var component2 = void 0;
+  var unmount2 = component_root(() => {
+    var anchor_node = anchor != null ? anchor : target.appendChild(create_text());
+    boundary(
+      /** @type {TemplateNode} */
+      anchor_node,
+      {
+        pending: () => {
+        }
+      },
+      (anchor_node2) => {
+        push({});
+        var ctx = (
+          /** @type {ComponentContext} */
+          component_context
+        );
+        if (context) ctx.c = context;
+        if (events) {
+          props.$$events = events;
+        }
+        if (hydrating) {
+          assign_nodes(
+            /** @type {TemplateNode} */
+            anchor_node2,
+            null
+          );
+        }
+        should_intro = intro;
+        component2 = Component2(anchor_node2, props) || {};
+        should_intro = true;
+        if (hydrating) {
+          active_effect.nodes.end = hydrate_node;
+          if (hydrate_node === null || hydrate_node.nodeType !== COMMENT_NODE || /** @type {Comment} */
+          hydrate_node.data !== HYDRATION_END) {
+            hydration_mismatch();
+            throw HYDRATION_ERROR;
+          }
+        }
+        pop();
+      },
+      transformError
+    );
+    var registered_events = /* @__PURE__ */ new Set();
+    var event_handle = (events2) => {
+      for (var i = 0; i < events2.length; i++) {
+        var event_name = events2[i];
+        if (registered_events.has(event_name)) continue;
+        registered_events.add(event_name);
+        var passive2 = is_passive_event(event_name);
+        for (const node of [target, document]) {
+          var counts = listeners.get(node);
+          if (counts === void 0) {
+            counts = /* @__PURE__ */ new Map();
+            listeners.set(node, counts);
+          }
+          var count = counts.get(event_name);
+          if (count === void 0) {
+            node.addEventListener(event_name, handle_event_propagation, { passive: passive2 });
+            counts.set(event_name, 1);
+          } else {
+            counts.set(event_name, count + 1);
+          }
+        }
+      }
+    };
+    event_handle(array_from(all_registered_events));
+    root_event_handles.add(event_handle);
+    return () => {
+      var _a5;
+      for (var event_name of registered_events) {
+        for (const node of [target, document]) {
+          var counts = (
+            /** @type {Map<string, number>} */
+            listeners.get(node)
+          );
+          var count = (
+            /** @type {number} */
+            counts.get(event_name)
+          );
+          if (--count == 0) {
+            node.removeEventListener(event_name, handle_event_propagation);
+            counts.delete(event_name);
+            if (counts.size === 0) {
+              listeners.delete(node);
+            }
+          } else {
+            counts.set(event_name, count);
+          }
+        }
+      }
+      root_event_handles.delete(event_handle);
+      if (anchor_node !== anchor) {
+        (_a5 = anchor_node.parentNode) == null ? void 0 : _a5.removeChild(anchor_node);
+      }
+    };
+  });
+  mounted_components.set(component2, unmount2);
+  return component2;
+}
+var mounted_components = /* @__PURE__ */ new WeakMap();
+function unmount(component2, options) {
+  const fn = mounted_components.get(component2);
+  if (fn) {
+    mounted_components.delete(component2);
+    return fn(options);
+  }
+  if (dev_fallback_default) {
+    if (STATE_SYMBOL in component2) {
+      state_proxy_unmount();
+    } else {
+      lifecycle_double_unmount();
+    }
+  }
+  return Promise.resolve();
+}
+
+// node_modules/svelte/src/internal/client/dom/legacy/event-modifiers.js
+function stopPropagation(fn) {
+  return function(...args) {
+    var event2 = (
+      /** @type {Event} */
+      args[0]
+    );
+    event2.stopPropagation();
+    return fn == null ? void 0 : fn.apply(this, args);
+  };
+}
+function preventDefault(fn) {
+  return function(...args) {
+    var event2 = (
+      /** @type {Event} */
+      args[0]
+    );
+    event2.preventDefault();
+    return fn == null ? void 0 : fn.apply(this, args);
+  };
+}
+
+// node_modules/svelte/src/legacy/legacy-client.js
+function createClassComponent(options) {
+  return new Svelte4Component(options);
+}
+var _events, _instance;
+var Svelte4Component = class {
+  /**
+   * @param {ComponentConstructorOptions & {
+   *  component: any;
+   * }} options
+   */
+  constructor(options) {
+    /** @type {any} */
+    __privateAdd(this, _events);
+    /** @type {Record<string, any>} */
+    __privateAdd(this, _instance);
+    var _a5, _b3;
+    var sources = /* @__PURE__ */ new Map();
+    var add_source = (key2, value) => {
+      var s = mutable_source(value, false, false);
+      sources.set(key2, s);
+      return s;
+    };
+    const props = new Proxy(
+      { ...options.props || {}, $$events: {} },
+      {
+        get(target, prop2) {
+          var _a6;
+          return get((_a6 = sources.get(prop2)) != null ? _a6 : add_source(prop2, Reflect.get(target, prop2)));
+        },
+        has(target, prop2) {
+          var _a6;
+          if (prop2 === LEGACY_PROPS) return true;
+          get((_a6 = sources.get(prop2)) != null ? _a6 : add_source(prop2, Reflect.get(target, prop2)));
+          return Reflect.has(target, prop2);
+        },
+        set(target, prop2, value) {
+          var _a6;
+          set((_a6 = sources.get(prop2)) != null ? _a6 : add_source(prop2, value), value);
+          return Reflect.set(target, prop2, value);
+        }
+      }
+    );
+    __privateSet(this, _instance, (options.hydrate ? hydrate : mount)(options.component, {
+      target: options.target,
+      anchor: options.anchor,
+      props,
+      context: options.context,
+      intro: (_a5 = options.intro) != null ? _a5 : false,
+      recover: options.recover,
+      transformError: options.transformError
+    }));
+    if (!async_mode_flag && (!((_b3 = options == null ? void 0 : options.props) == null ? void 0 : _b3.$$host) || options.sync === false)) {
+      flushSync();
+    }
+    __privateSet(this, _events, props.$$events);
+    for (const key2 of Object.keys(__privateGet(this, _instance))) {
+      if (key2 === "$set" || key2 === "$destroy" || key2 === "$on") continue;
+      define_property(this, key2, {
+        get() {
+          return __privateGet(this, _instance)[key2];
+        },
+        /** @param {any} value */
+        set(value) {
+          __privateGet(this, _instance)[key2] = value;
+        },
+        enumerable: true
+      });
+    }
+    __privateGet(this, _instance).$set = /** @param {Record<string, any>} next */
+    (next2) => {
+      Object.assign(props, next2);
+    };
+    __privateGet(this, _instance).$destroy = () => {
+      unmount(__privateGet(this, _instance));
+    };
+  }
+  /** @param {Record<string, any>} props */
+  $set(props) {
+    __privateGet(this, _instance).$set(props);
+  }
+  /**
+   * @param {string} event
+   * @param {(...args: any[]) => any} callback
+   * @returns {any}
+   */
+  $on(event2, callback) {
+    __privateGet(this, _events)[event2] = __privateGet(this, _events)[event2] || [];
+    const cb = (...args) => callback.call(this, ...args);
+    __privateGet(this, _events)[event2].push(cb);
+    return () => {
+      __privateGet(this, _events)[event2] = __privateGet(this, _events)[event2].filter(
+        /** @param {any} fn */
+        (fn) => fn !== cb
+      );
+    };
+  }
+  $destroy() {
+    __privateGet(this, _instance).$destroy();
+  }
+};
+_events = new WeakMap();
+_instance = new WeakMap();
+
+// node_modules/svelte/src/version.js
+var PUBLIC_VERSION = "5";
+
+// node_modules/svelte/src/internal/disclose-version.js
+var _a4, _b2, _c;
+if (typeof window !== "undefined") {
+  ((_c = (_b2 = (_a4 = window.__svelte) != null ? _a4 : window.__svelte = {}).v) != null ? _c : _b2.v = /* @__PURE__ */ new Set()).add(PUBLIC_VERSION);
+}
+
+// node_modules/svelte/src/internal/flags/legacy.js
+enable_legacy_mode_flag();
+
+// node_modules/svelte/src/internal/client/dom/blocks/branches.js
+var _batches, _onscreen, _offscreen, _outroing, _transition, _commit, _discard;
+var BranchManager = class {
+  /**
+   * @param {TemplateNode} anchor
+   * @param {boolean} transition
+   */
+  constructor(anchor, transition2 = true) {
+    /** @type {TemplateNode} */
+    __publicField(this, "anchor");
+    /** @type {Map<Batch, Key>} */
+    __privateAdd(this, _batches, /* @__PURE__ */ new Map());
+    /**
+     * Map of keys to effects that are currently rendered in the DOM.
+     * These effects are visible and actively part of the document tree.
+     * Example:
+     * ```
+     * {#if condition}
+     * 	foo
+     * {:else}
+     * 	bar
+     * {/if}
+     * ```
+     * Can result in the entries `true->Effect` and `false->Effect`
+     * @type {Map<Key, Effect>}
+     */
+    __privateAdd(this, _onscreen, /* @__PURE__ */ new Map());
+    /**
+     * Similar to #onscreen with respect to the keys, but contains branches that are not yet
+     * in the DOM, because their insertion is deferred.
+     * @type {Map<Key, Branch>}
+     */
+    __privateAdd(this, _offscreen, /* @__PURE__ */ new Map());
+    /**
+     * Keys of effects that are currently outroing
+     * @type {Set<Key>}
+     */
+    __privateAdd(this, _outroing, /* @__PURE__ */ new Set());
+    /**
+     * Whether to pause (i.e. outro) on change, or destroy immediately.
+     * This is necessary for `<svelte:element>`
+     */
+    __privateAdd(this, _transition, true);
+    /**
+     * @param {Batch} batch
+     */
+    __privateAdd(this, _commit, (batch) => {
+      if (!__privateGet(this, _batches).has(batch)) return;
+      var key2 = (
+        /** @type {Key} */
+        __privateGet(this, _batches).get(batch)
+      );
+      var onscreen = __privateGet(this, _onscreen).get(key2);
+      if (onscreen) {
+        resume_effect(onscreen);
+        __privateGet(this, _outroing).delete(key2);
+      } else {
+        var offscreen = __privateGet(this, _offscreen).get(key2);
+        if (offscreen) {
+          __privateGet(this, _onscreen).set(key2, offscreen.effect);
+          __privateGet(this, _offscreen).delete(key2);
+          offscreen.fragment.lastChild.remove();
+          this.anchor.before(offscreen.fragment);
+          onscreen = offscreen.effect;
+        }
+      }
+      for (const [b, k] of __privateGet(this, _batches)) {
+        __privateGet(this, _batches).delete(b);
+        if (b === batch) {
+          break;
+        }
+        const offscreen2 = __privateGet(this, _offscreen).get(k);
+        if (offscreen2) {
+          destroy_effect(offscreen2.effect);
+          __privateGet(this, _offscreen).delete(k);
+        }
+      }
+      for (const [k, effect2] of __privateGet(this, _onscreen)) {
+        if (k === key2 || __privateGet(this, _outroing).has(k)) continue;
+        const on_destroy = () => {
+          const keys = Array.from(__privateGet(this, _batches).values());
+          if (keys.includes(k)) {
+            var fragment = document.createDocumentFragment();
+            move_effect(effect2, fragment);
+            fragment.append(create_text());
+            __privateGet(this, _offscreen).set(k, { effect: effect2, fragment });
+          } else {
+            destroy_effect(effect2);
+          }
+          __privateGet(this, _outroing).delete(k);
+          __privateGet(this, _onscreen).delete(k);
+        };
+        if (__privateGet(this, _transition) || !onscreen) {
+          __privateGet(this, _outroing).add(k);
+          pause_effect(effect2, on_destroy, false);
+        } else {
+          on_destroy();
+        }
+      }
+    });
+    /**
+     * @param {Batch} batch
+     */
+    __privateAdd(this, _discard, (batch) => {
+      __privateGet(this, _batches).delete(batch);
+      const keys = Array.from(__privateGet(this, _batches).values());
+      for (const [k, branch2] of __privateGet(this, _offscreen)) {
+        if (!keys.includes(k)) {
+          destroy_effect(branch2.effect);
+          __privateGet(this, _offscreen).delete(k);
+        }
+      }
+    });
+    this.anchor = anchor;
+    __privateSet(this, _transition, transition2);
+  }
+  /**
+   *
+   * @param {any} key
+   * @param {null | ((target: TemplateNode) => void)} fn
+   */
+  ensure(key2, fn) {
+    var batch = (
+      /** @type {Batch} */
+      current_batch
+    );
+    var defer = should_defer_append();
+    if (fn && !__privateGet(this, _onscreen).has(key2) && !__privateGet(this, _offscreen).has(key2)) {
+      if (defer) {
+        var fragment = document.createDocumentFragment();
+        var target = create_text();
+        fragment.append(target);
+        __privateGet(this, _offscreen).set(key2, {
+          effect: branch(() => fn(target)),
+          fragment
+        });
+      } else {
+        __privateGet(this, _onscreen).set(
+          key2,
+          branch(() => fn(this.anchor))
+        );
+      }
+    }
+    __privateGet(this, _batches).set(batch, key2);
+    if (defer) {
+      for (const [k, effect2] of __privateGet(this, _onscreen)) {
+        if (k === key2) {
+          batch.unskip_effect(effect2);
+        } else {
+          batch.skip_effect(effect2);
+        }
+      }
+      for (const [k, branch2] of __privateGet(this, _offscreen)) {
+        if (k === key2) {
+          batch.unskip_effect(branch2.effect);
+        } else {
+          batch.skip_effect(branch2.effect);
+        }
+      }
+      batch.oncommit(__privateGet(this, _commit));
+      batch.ondiscard(__privateGet(this, _discard));
+    } else {
+      if (hydrating) {
+        this.anchor = hydrate_node;
+      }
+      __privateGet(this, _commit).call(this, batch);
+    }
+  }
+};
+_batches = new WeakMap();
+_onscreen = new WeakMap();
+_offscreen = new WeakMap();
+_outroing = new WeakMap();
+_transition = new WeakMap();
+_commit = new WeakMap();
+_discard = new WeakMap();
+
+// node_modules/svelte/src/index-client.js
+if (dev_fallback_default) {
+  let throw_rune_error = function(rune) {
+    if (!(rune in globalThis)) {
+      let value;
+      Object.defineProperty(globalThis, rune, {
+        configurable: true,
+        // eslint-disable-next-line getter-return
+        get: () => {
+          if (value !== void 0) {
+            return value;
+          }
+          rune_outside_svelte(rune);
+        },
+        set: (v) => {
+          value = v;
+        }
+      });
+    }
+  };
+  throw_rune_error("$state");
+  throw_rune_error("$effect");
+  throw_rune_error("$derived");
+  throw_rune_error("$inspect");
+  throw_rune_error("$props");
+  throw_rune_error("$bindable");
 }
 function onMount(fn) {
-  get_current_component().$$.on_mount.push(fn);
+  if (component_context === null) {
+    lifecycle_outside_component("onMount");
+  }
+  if (legacy_mode_flag && component_context.l !== null) {
+    init_update_callbacks(component_context).m.push(fn);
+  } else {
+    user_effect(() => {
+      const cleanup = untrack(fn);
+      if (typeof cleanup === "function") return (
+        /** @type {() => void} */
+        cleanup
+      );
+    });
+  }
 }
 function onDestroy(fn) {
-  get_current_component().$$.on_destroy.push(fn);
+  if (component_context === null) {
+    lifecycle_outside_component("onDestroy");
+  }
+  onMount(() => () => untrack(fn));
+}
+function create_custom_event(type, detail, { bubbles = false, cancelable = false } = {}) {
+  return new CustomEvent(type, { detail, bubbles, cancelable });
 }
 function createEventDispatcher() {
-  const component = get_current_component();
-  return (type, detail, { cancelable = false } = {}) => {
-    const callbacks = component.$$.callbacks[type];
-    if (callbacks) {
-      const event = custom_event(
+  const active_component_context = component_context;
+  if (active_component_context === null) {
+    lifecycle_outside_component("createEventDispatcher");
+  }
+  return (type, detail, options) => {
+    var _a5;
+    const events = (
+      /** @type {Record<string, Function | Function[]>} */
+      (_a5 = active_component_context.s.$$events) == null ? void 0 : _a5[
+        /** @type {string} */
+        type
+      ]
+    );
+    if (events) {
+      const callbacks = is_array(events) ? events.slice() : [events];
+      const event2 = create_custom_event(
         /** @type {string} */
         type,
         detail,
-        { cancelable }
+        options
       );
-      callbacks.slice().forEach((fn) => {
-        fn.call(component, event);
-      });
-      return !event.defaultPrevented;
+      for (const fn of callbacks) {
+        fn.call(active_component_context.x, event2);
+      }
+      return !event2.defaultPrevented;
     }
     return true;
   };
 }
-function bubble(component, event) {
-  const callbacks = component.$$.callbacks[event.type];
-  if (callbacks) {
-    callbacks.slice().forEach((fn) => fn.call(this, event));
+function beforeUpdate(fn) {
+  if (component_context === null) {
+    lifecycle_outside_component("beforeUpdate");
   }
+  if (component_context.l === null) {
+    lifecycle_legacy_only("beforeUpdate");
+  }
+  init_update_callbacks(component_context).b.push(fn);
+}
+function init_update_callbacks(context) {
+  var _a5;
+  var l = (
+    /** @type {ComponentContextLegacy} */
+    context.l
+  );
+  return (_a5 = l.u) != null ? _a5 : l.u = { a: [], b: [], m: [] };
 }
 
-// node_modules/svelte/src/runtime/internal/scheduler.js
-var dirty_components = [];
-var binding_callbacks = [];
-var render_callbacks = [];
-var flush_callbacks = [];
-var resolved_promise = /* @__PURE__ */ Promise.resolve();
-var update_scheduled = false;
-function schedule_update() {
-  if (!update_scheduled) {
-    update_scheduled = true;
-    resolved_promise.then(flush);
+// node_modules/svelte/src/internal/client/dev/css.js
+var all_styles = /* @__PURE__ */ new Map();
+function register_style(hash2, style) {
+  var styles = all_styles.get(hash2);
+  if (!styles) {
+    styles = /* @__PURE__ */ new Set();
+    all_styles.set(hash2, styles);
   }
-}
-function tick() {
-  schedule_update();
-  return resolved_promise;
-}
-function add_render_callback(fn) {
-  render_callbacks.push(fn);
-}
-function add_flush_callback(fn) {
-  flush_callbacks.push(fn);
-}
-var seen_callbacks = /* @__PURE__ */ new Set();
-var flushidx = 0;
-function flush() {
-  if (flushidx !== 0) {
-    return;
-  }
-  const saved_component = current_component;
-  do {
-    try {
-      while (flushidx < dirty_components.length) {
-        const component = dirty_components[flushidx];
-        flushidx++;
-        set_current_component(component);
-        update(component.$$);
-      }
-    } catch (e) {
-      dirty_components.length = 0;
-      flushidx = 0;
-      throw e;
-    }
-    set_current_component(null);
-    dirty_components.length = 0;
-    flushidx = 0;
-    while (binding_callbacks.length) binding_callbacks.pop()();
-    for (let i = 0; i < render_callbacks.length; i += 1) {
-      const callback = render_callbacks[i];
-      if (!seen_callbacks.has(callback)) {
-        seen_callbacks.add(callback);
-        callback();
-      }
-    }
-    render_callbacks.length = 0;
-  } while (dirty_components.length);
-  while (flush_callbacks.length) {
-    flush_callbacks.pop()();
-  }
-  update_scheduled = false;
-  seen_callbacks.clear();
-  set_current_component(saved_component);
-}
-function update($$) {
-  if ($$.fragment !== null) {
-    $$.update();
-    run_all($$.before_update);
-    const dirty = $$.dirty;
-    $$.dirty = [-1];
-    $$.fragment && $$.fragment.p($$.ctx, dirty);
-    $$.after_update.forEach(add_render_callback);
-  }
-}
-function flush_render_callbacks(fns) {
-  const filtered = [];
-  const targets = [];
-  render_callbacks.forEach((c) => fns.indexOf(c) === -1 ? filtered.push(c) : targets.push(c));
-  targets.forEach((c) => c());
-  render_callbacks = filtered;
+  styles.add(style);
 }
 
-// node_modules/svelte/src/runtime/internal/transitions.js
-var outroing = /* @__PURE__ */ new Set();
-var outros;
-function group_outros() {
-  outros = {
-    r: 0,
-    c: [],
-    p: outros
-    // parent group
-  };
-}
-function check_outros() {
-  if (!outros.r) {
-    run_all(outros.c);
+// node_modules/svelte/src/internal/client/dom/blocks/if.js
+function if_block(node, fn, elseif = false) {
+  var marker;
+  if (hydrating) {
+    marker = hydrate_node;
+    hydrate_next();
   }
-  outros = outros.p;
-}
-function transition_in(block, local) {
-  if (block && block.i) {
-    outroing.delete(block);
-    block.i(local);
-  }
-}
-function transition_out(block, local, detach2, callback) {
-  if (block && block.o) {
-    if (outroing.has(block)) return;
-    outroing.add(block);
-    outros.c.push(() => {
-      outroing.delete(block);
-      if (callback) {
-        if (detach2) block.d(1);
-        callback();
+  var branches = new BranchManager(node);
+  var flags2 = elseif ? EFFECT_TRANSPARENT : 0;
+  function update_branch(key2, fn2) {
+    if (hydrating) {
+      var data = read_hydration_instruction(
+        /** @type {TemplateNode} */
+        marker
+      );
+      if (key2 !== parseInt(data.substring(1))) {
+        var anchor = skip_nodes();
+        set_hydrate_node(anchor);
+        branches.anchor = anchor;
+        set_hydrating(false);
+        branches.ensure(key2, fn2);
+        set_hydrating(true);
+        return;
       }
+    }
+    branches.ensure(key2, fn2);
+  }
+  block(() => {
+    var has_branch = false;
+    fn((fn2, key2 = 0) => {
+      has_branch = true;
+      update_branch(key2, fn2);
     });
-    block.o(local);
-  } else if (callback) {
-    callback();
+    if (!has_branch) {
+      update_branch(-1, null);
+    }
+  }, flags2);
+}
+
+// node_modules/svelte/src/internal/client/dom/blocks/key.js
+var NAN = Symbol("NaN");
+
+// node_modules/svelte/src/internal/client/dom/blocks/css-props.js
+function css_props(element2, get_styles) {
+  if (hydrating) {
+    set_hydrate_node(get_first_child(element2));
+  }
+  render_effect(() => {
+    var styles = get_styles();
+    for (var key2 in styles) {
+      var value = styles[key2];
+      if (value) {
+        element2.style.setProperty(key2, value);
+      } else {
+        element2.style.removeProperty(key2);
+      }
+    }
+  });
+}
+
+// node_modules/svelte/src/internal/client/dom/blocks/each.js
+function index(_, i) {
+  return i;
+}
+function pause_effects(state2, to_destroy, controlled_anchor) {
+  var _a5;
+  var transitions = [];
+  var length = to_destroy.length;
+  var group;
+  var remaining = to_destroy.length;
+  for (var i = 0; i < length; i++) {
+    let effect2 = to_destroy[i];
+    pause_effect(
+      effect2,
+      () => {
+        if (group) {
+          group.pending.delete(effect2);
+          group.done.add(effect2);
+          if (group.pending.size === 0) {
+            var groups = (
+              /** @type {Set<EachOutroGroup>} */
+              state2.outrogroups
+            );
+            destroy_effects(state2, array_from(group.done));
+            groups.delete(group);
+            if (groups.size === 0) {
+              state2.outrogroups = null;
+            }
+          }
+        } else {
+          remaining -= 1;
+        }
+      },
+      false
+    );
+  }
+  if (remaining === 0) {
+    var fast_path = transitions.length === 0 && controlled_anchor !== null;
+    if (fast_path) {
+      var anchor = (
+        /** @type {Element} */
+        controlled_anchor
+      );
+      var parent_node = (
+        /** @type {Element} */
+        anchor.parentNode
+      );
+      clear_text_content(parent_node);
+      parent_node.append(anchor);
+      state2.items.clear();
+    }
+    destroy_effects(state2, to_destroy, !fast_path);
+  } else {
+    group = {
+      pending: new Set(to_destroy),
+      done: /* @__PURE__ */ new Set()
+    };
+    ((_a5 = state2.outrogroups) != null ? _a5 : state2.outrogroups = /* @__PURE__ */ new Set()).add(group);
   }
 }
-
-// node_modules/svelte/src/runtime/internal/each.js
-function ensure_array_like(array_like_or_iterator) {
-  return (array_like_or_iterator == null ? void 0 : array_like_or_iterator.length) !== void 0 ? array_like_or_iterator : Array.from(array_like_or_iterator);
-}
-
-// node_modules/svelte/src/runtime/internal/spread.js
-function get_spread_update(levels, updates) {
-  const update2 = {};
-  const to_null_out = {};
-  const accounted_for = { $$scope: 1 };
-  let i = levels.length;
-  while (i--) {
-    const o = levels[i];
-    const n = updates[i];
-    if (n) {
-      for (const key in o) {
-        if (!(key in n)) to_null_out[key] = 1;
+function destroy_effects(state2, to_destroy, remove_dom = true) {
+  var preserved_effects;
+  if (state2.pending.size > 0) {
+    preserved_effects = /* @__PURE__ */ new Set();
+    for (const keys of state2.pending.values()) {
+      for (const key2 of keys) {
+        preserved_effects.add(
+          /** @type {EachItem} */
+          state2.items.get(key2).e
+        );
       }
-      for (const key in n) {
-        if (!accounted_for[key]) {
-          update2[key] = n[key];
-          accounted_for[key] = 1;
+    }
+  }
+  for (var i = 0; i < to_destroy.length; i++) {
+    var e = to_destroy[i];
+    if (preserved_effects == null ? void 0 : preserved_effects.has(e)) {
+      e.f |= EFFECT_OFFSCREEN;
+      const fragment = document.createDocumentFragment();
+      move_effect(e, fragment);
+    } else {
+      destroy_effect(to_destroy[i], remove_dom);
+    }
+  }
+}
+var offscreen_anchor;
+function each(node, flags2, get_collection, get_key, render_fn2, fallback_fn = null) {
+  var anchor = node;
+  var items = /* @__PURE__ */ new Map();
+  var is_controlled = (flags2 & EACH_IS_CONTROLLED) !== 0;
+  if (is_controlled) {
+    var parent_node = (
+      /** @type {Element} */
+      node
+    );
+    anchor = hydrating ? set_hydrate_node(get_first_child(parent_node)) : parent_node.appendChild(create_text());
+  }
+  if (hydrating) {
+    hydrate_next();
+  }
+  var fallback2 = null;
+  var each_array = derived_safe_equal(() => {
+    var collection = get_collection();
+    return is_array(collection) ? collection : collection == null ? [] : array_from(collection);
+  });
+  var array;
+  var pending2 = /* @__PURE__ */ new Map();
+  var first_run = true;
+  function commit(batch) {
+    if ((state2.effect.f & DESTROYED) !== 0) {
+      return;
+    }
+    state2.pending.delete(batch);
+    state2.fallback = fallback2;
+    reconcile(state2, array, anchor, flags2, get_key);
+    if (fallback2 !== null) {
+      if (array.length === 0) {
+        if ((fallback2.f & EFFECT_OFFSCREEN) === 0) {
+          resume_effect(fallback2);
+        } else {
+          fallback2.f ^= EFFECT_OFFSCREEN;
+          move(fallback2, null, anchor);
+        }
+      } else {
+        pause_effect(fallback2, () => {
+          fallback2 = null;
+        });
+      }
+    }
+  }
+  function discard(batch) {
+    state2.pending.delete(batch);
+  }
+  var effect2 = block(() => {
+    array = /** @type {V[]} */
+    get(each_array);
+    var length = array.length;
+    let mismatch = false;
+    if (hydrating) {
+      var is_else = read_hydration_instruction(anchor) === HYDRATION_START_ELSE;
+      if (is_else !== (length === 0)) {
+        anchor = skip_nodes();
+        set_hydrate_node(anchor);
+        set_hydrating(false);
+        mismatch = true;
+      }
+    }
+    var keys = /* @__PURE__ */ new Set();
+    var batch = (
+      /** @type {Batch} */
+      current_batch
+    );
+    var defer = should_defer_append();
+    for (var index2 = 0; index2 < length; index2 += 1) {
+      if (hydrating && hydrate_node.nodeType === COMMENT_NODE && /** @type {Comment} */
+      hydrate_node.data === HYDRATION_END) {
+        anchor = /** @type {Comment} */
+        hydrate_node;
+        mismatch = true;
+        set_hydrating(false);
+      }
+      var value = array[index2];
+      var key2 = get_key(value, index2);
+      if (dev_fallback_default) {
+        var key_again = get_key(value, index2);
+        if (key2 !== key_again) {
+          each_key_volatile(String(index2), String(key2), String(key_again));
         }
       }
-      levels[i] = n;
-    } else {
-      for (const key in o) {
-        accounted_for[key] = 1;
+      var item = first_run ? null : items.get(key2);
+      if (item) {
+        if (item.v) internal_set(item.v, value);
+        if (item.i) internal_set(item.i, index2);
+        if (defer) {
+          batch.unskip_effect(item.e);
+        }
+      } else {
+        item = create_item(
+          items,
+          first_run ? anchor : offscreen_anchor != null ? offscreen_anchor : offscreen_anchor = create_text(),
+          value,
+          key2,
+          index2,
+          render_fn2,
+          flags2,
+          get_collection
+        );
+        if (!first_run) {
+          item.e.f |= EFFECT_OFFSCREEN;
+        }
+        items.set(key2, item);
+      }
+      keys.add(key2);
+    }
+    if (length === 0 && fallback_fn && !fallback2) {
+      if (first_run) {
+        fallback2 = branch(() => fallback_fn(anchor));
+      } else {
+        fallback2 = branch(() => fallback_fn(offscreen_anchor != null ? offscreen_anchor : offscreen_anchor = create_text()));
+        fallback2.f |= EFFECT_OFFSCREEN;
+      }
+    }
+    if (length > keys.size) {
+      if (dev_fallback_default) {
+        validate_each_keys(array, get_key);
+      } else {
+        each_key_duplicate("", "", "");
+      }
+    }
+    if (hydrating && length > 0) {
+      set_hydrate_node(skip_nodes());
+    }
+    if (!first_run) {
+      pending2.set(batch, keys);
+      if (defer) {
+        for (const [key3, item2] of items) {
+          if (!keys.has(key3)) {
+            batch.skip_effect(item2.e);
+          }
+        }
+        batch.oncommit(commit);
+        batch.ondiscard(discard);
+      } else {
+        commit(batch);
+      }
+    }
+    if (mismatch) {
+      set_hydrating(true);
+    }
+    get(each_array);
+  });
+  var state2 = { effect: effect2, flags: flags2, items, pending: pending2, outrogroups: null, fallback: fallback2 };
+  first_run = false;
+  if (hydrating) {
+    anchor = hydrate_node;
+  }
+}
+function skip_to_branch(effect2) {
+  while (effect2 !== null && (effect2.f & BRANCH_EFFECT) === 0) {
+    effect2 = effect2.next;
+  }
+  return effect2;
+}
+function reconcile(state2, array, anchor, flags2, get_key) {
+  var _a5, _b3, _c2, _d, _e, _f, _g, _h, _i;
+  var is_animated = (flags2 & EACH_IS_ANIMATED) !== 0;
+  var length = array.length;
+  var items = state2.items;
+  var current = skip_to_branch(state2.effect.first);
+  var seen;
+  var prev = null;
+  var to_animate;
+  var matched = [];
+  var stashed = [];
+  var value;
+  var key2;
+  var effect2;
+  var i;
+  if (is_animated) {
+    for (i = 0; i < length; i += 1) {
+      value = array[i];
+      key2 = get_key(value, i);
+      effect2 = /** @type {EachItem} */
+      items.get(key2).e;
+      if ((effect2.f & EFFECT_OFFSCREEN) === 0) {
+        (_b3 = (_a5 = effect2.nodes) == null ? void 0 : _a5.a) == null ? void 0 : _b3.measure();
+        (to_animate != null ? to_animate : to_animate = /* @__PURE__ */ new Set()).add(effect2);
       }
     }
   }
-  for (const key in to_null_out) {
-    if (!(key in update2)) update2[key] = void 0;
-  }
-  return update2;
-}
-
-// node_modules/svelte/src/shared/boolean_attributes.js
-var _boolean_attributes = (
-  /** @type {const} */
-  [
-    "allowfullscreen",
-    "allowpaymentrequest",
-    "async",
-    "autofocus",
-    "autoplay",
-    "checked",
-    "controls",
-    "default",
-    "defer",
-    "disabled",
-    "formnovalidate",
-    "hidden",
-    "inert",
-    "ismap",
-    "loop",
-    "multiple",
-    "muted",
-    "nomodule",
-    "novalidate",
-    "open",
-    "playsinline",
-    "readonly",
-    "required",
-    "reversed",
-    "selected"
-  ]
-);
-var boolean_attributes = /* @__PURE__ */ new Set([..._boolean_attributes]);
-
-// node_modules/svelte/src/runtime/internal/Component.js
-function bind(component, name, callback) {
-  const index = component.$$.props[name];
-  if (index !== void 0) {
-    component.$$.bound[index] = callback;
-    callback(component.$$.ctx[index]);
-  }
-}
-function create_component(block) {
-  block && block.c();
-}
-function mount_component(component, target, anchor) {
-  const { fragment, after_update } = component.$$;
-  fragment && fragment.m(target, anchor);
-  add_render_callback(() => {
-    const new_on_destroy = component.$$.on_mount.map(run).filter(is_function);
-    if (component.$$.on_destroy) {
-      component.$$.on_destroy.push(...new_on_destroy);
-    } else {
-      run_all(new_on_destroy);
+  for (i = 0; i < length; i += 1) {
+    value = array[i];
+    key2 = get_key(value, i);
+    effect2 = /** @type {EachItem} */
+    items.get(key2).e;
+    if (state2.outrogroups !== null) {
+      for (const group of state2.outrogroups) {
+        group.pending.delete(effect2);
+        group.done.delete(effect2);
+      }
     }
-    component.$$.on_mount = [];
-  });
-  after_update.forEach(add_render_callback);
-}
-function destroy_component(component, detaching) {
-  const $$ = component.$$;
-  if ($$.fragment !== null) {
-    flush_render_callbacks($$.after_update);
-    run_all($$.on_destroy);
-    $$.fragment && $$.fragment.d(detaching);
-    $$.on_destroy = $$.fragment = null;
-    $$.ctx = [];
+    if ((effect2.f & EFFECT_OFFSCREEN) !== 0) {
+      effect2.f ^= EFFECT_OFFSCREEN;
+      if (effect2 === current) {
+        move(effect2, null, anchor);
+      } else {
+        var next2 = prev ? prev.next : current;
+        if (effect2 === state2.effect.last) {
+          state2.effect.last = effect2.prev;
+        }
+        if (effect2.prev) effect2.prev.next = effect2.next;
+        if (effect2.next) effect2.next.prev = effect2.prev;
+        link(state2, prev, effect2);
+        link(state2, effect2, next2);
+        move(effect2, next2, anchor);
+        prev = effect2;
+        matched = [];
+        stashed = [];
+        current = skip_to_branch(prev.next);
+        continue;
+      }
+    }
+    if ((effect2.f & INERT) !== 0) {
+      resume_effect(effect2);
+      if (is_animated) {
+        (_d = (_c2 = effect2.nodes) == null ? void 0 : _c2.a) == null ? void 0 : _d.unfix();
+        (to_animate != null ? to_animate : to_animate = /* @__PURE__ */ new Set()).delete(effect2);
+      }
+    }
+    if (effect2 !== current) {
+      if (seen !== void 0 && seen.has(effect2)) {
+        if (matched.length < stashed.length) {
+          var start = stashed[0];
+          var j;
+          prev = start.prev;
+          var a = matched[0];
+          var b = matched[matched.length - 1];
+          for (j = 0; j < matched.length; j += 1) {
+            move(matched[j], start, anchor);
+          }
+          for (j = 0; j < stashed.length; j += 1) {
+            seen.delete(stashed[j]);
+          }
+          link(state2, a.prev, b.next);
+          link(state2, prev, a);
+          link(state2, b, start);
+          current = start;
+          prev = b;
+          i -= 1;
+          matched = [];
+          stashed = [];
+        } else {
+          seen.delete(effect2);
+          move(effect2, current, anchor);
+          link(state2, effect2.prev, effect2.next);
+          link(state2, effect2, prev === null ? state2.effect.first : prev.next);
+          link(state2, prev, effect2);
+          prev = effect2;
+        }
+        continue;
+      }
+      matched = [];
+      stashed = [];
+      while (current !== null && current !== effect2) {
+        (seen != null ? seen : seen = /* @__PURE__ */ new Set()).add(current);
+        stashed.push(current);
+        current = skip_to_branch(current.next);
+      }
+      if (current === null) {
+        continue;
+      }
+    }
+    if ((effect2.f & EFFECT_OFFSCREEN) === 0) {
+      matched.push(effect2);
+    }
+    prev = effect2;
+    current = skip_to_branch(effect2.next);
+  }
+  if (state2.outrogroups !== null) {
+    for (const group of state2.outrogroups) {
+      if (group.pending.size === 0) {
+        destroy_effects(state2, array_from(group.done));
+        (_e = state2.outrogroups) == null ? void 0 : _e.delete(group);
+      }
+    }
+    if (state2.outrogroups.size === 0) {
+      state2.outrogroups = null;
+    }
+  }
+  if (current !== null || seen !== void 0) {
+    var to_destroy = [];
+    if (seen !== void 0) {
+      for (effect2 of seen) {
+        if ((effect2.f & INERT) === 0) {
+          to_destroy.push(effect2);
+        }
+      }
+    }
+    while (current !== null) {
+      if ((current.f & INERT) === 0 && current !== state2.fallback) {
+        to_destroy.push(current);
+      }
+      current = skip_to_branch(current.next);
+    }
+    var destroy_length = to_destroy.length;
+    if (destroy_length > 0) {
+      var controlled_anchor = (flags2 & EACH_IS_CONTROLLED) !== 0 && length === 0 ? anchor : null;
+      if (is_animated) {
+        for (i = 0; i < destroy_length; i += 1) {
+          (_g = (_f = to_destroy[i].nodes) == null ? void 0 : _f.a) == null ? void 0 : _g.measure();
+        }
+        for (i = 0; i < destroy_length; i += 1) {
+          (_i = (_h = to_destroy[i].nodes) == null ? void 0 : _h.a) == null ? void 0 : _i.fix();
+        }
+      }
+      pause_effects(state2, to_destroy, controlled_anchor);
+    }
+  }
+  if (is_animated) {
+    queue_micro_task(() => {
+      var _a6, _b4;
+      if (to_animate === void 0) return;
+      for (effect2 of to_animate) {
+        (_b4 = (_a6 = effect2.nodes) == null ? void 0 : _a6.a) == null ? void 0 : _b4.apply();
+      }
+    });
   }
 }
-function make_dirty(component, i) {
-  if (component.$$.dirty[0] === -1) {
-    dirty_components.push(component);
-    schedule_update();
-    component.$$.dirty.fill(0);
+function create_item(items, anchor, value, key2, index2, render_fn2, flags2, get_collection) {
+  var v = (flags2 & EACH_ITEM_REACTIVE) !== 0 ? (flags2 & EACH_ITEM_IMMUTABLE) === 0 ? mutable_source(value, false, false) : source(value) : null;
+  var i = (flags2 & EACH_INDEX_REACTIVE) !== 0 ? source(index2) : null;
+  if (dev_fallback_default && v) {
+    v.trace = () => {
+      var _a5;
+      get_collection()[(_a5 = i == null ? void 0 : i.v) != null ? _a5 : index2];
+    };
   }
-  component.$$.dirty[i / 31 | 0] |= 1 << i % 31;
-}
-function init(component, options, instance10, create_fragment13, not_equal, props, append_styles2 = null, dirty = [-1]) {
-  const parent_component = current_component;
-  set_current_component(component);
-  const $$ = component.$$ = {
-    fragment: null,
-    ctx: [],
-    // state
-    props,
-    update: noop,
-    not_equal,
-    bound: blank_object(),
-    // lifecycle
-    on_mount: [],
-    on_destroy: [],
-    on_disconnect: [],
-    before_update: [],
-    after_update: [],
-    context: new Map(options.context || (parent_component ? parent_component.$$.context : [])),
-    // everything else
-    callbacks: blank_object(),
-    dirty,
-    skip_bound: false,
-    root: options.target || parent_component.$$.root
+  return {
+    v,
+    i,
+    e: branch(() => {
+      render_fn2(anchor, v != null ? v : value, i != null ? i : index2, get_collection);
+      return () => {
+        items.delete(key2);
+      };
+    })
   };
-  append_styles2 && append_styles2($$.root);
-  let ready = false;
-  $$.ctx = instance10 ? instance10(component, options.props || {}, (i, ret, ...rest) => {
-    const value = rest.length ? rest[0] : ret;
-    if ($$.ctx && not_equal($$.ctx[i], $$.ctx[i] = value)) {
-      if (!$$.skip_bound && $$.bound[i]) $$.bound[i](value);
-      if (ready) make_dirty(component, i);
-    }
-    return ret;
-  }) : [];
-  $$.update();
-  ready = true;
-  run_all($$.before_update);
-  $$.fragment = create_fragment13 ? create_fragment13($$.ctx) : false;
-  if (options.target) {
-    if (options.hydrate) {
-      start_hydrating();
-      const nodes = children(options.target);
-      $$.fragment && $$.fragment.l(nodes);
-      nodes.forEach(detach);
-    } else {
-      $$.fragment && $$.fragment.c();
-    }
-    if (options.intro) transition_in(component.$$.fragment);
-    mount_component(component, options.target, options.anchor);
-    end_hydrating();
-    flush();
-  }
-  set_current_component(parent_component);
 }
+function move(effect2, next2, anchor) {
+  if (!effect2.nodes) return;
+  var node = effect2.nodes.start;
+  var end = effect2.nodes.end;
+  var dest = next2 && (next2.f & EFFECT_OFFSCREEN) === 0 ? (
+    /** @type {EffectNodes} */
+    next2.nodes.start
+  ) : anchor;
+  while (node !== null) {
+    var next_node = (
+      /** @type {TemplateNode} */
+      get_next_sibling(node)
+    );
+    dest.before(node);
+    if (node === end) {
+      return;
+    }
+    node = next_node;
+  }
+}
+function link(state2, prev, next2) {
+  if (prev === null) {
+    state2.effect.first = next2;
+  } else {
+    prev.next = next2;
+  }
+  if (next2 === null) {
+    state2.effect.last = prev;
+  } else {
+    next2.prev = prev;
+  }
+}
+function validate_each_keys(array, key_fn) {
+  const keys = /* @__PURE__ */ new Map();
+  const length = array.length;
+  for (let i = 0; i < length; i++) {
+    const key2 = key_fn(array[i], i);
+    if (keys.has(key2)) {
+      const a = String(keys.get(key2));
+      const b = String(i);
+      let k = String(key2);
+      if (k.startsWith("[object ")) k = null;
+      each_key_duplicate(a, b, k);
+    }
+    keys.set(key2, i);
+  }
+}
+
+// node_modules/svelte/src/internal/client/dom/blocks/slot.js
+function slot(anchor, $$props, name, slot_props, fallback_fn) {
+  var _a5;
+  if (hydrating) {
+    hydrate_next();
+  }
+  var slot_fn = (_a5 = $$props.$$slots) == null ? void 0 : _a5[name];
+  var is_interop = false;
+  if (slot_fn === true) {
+    slot_fn = $$props[name === "default" ? "children" : name];
+    is_interop = true;
+  }
+  if (slot_fn === void 0) {
+    if (fallback_fn !== null) {
+      fallback_fn(anchor);
+    }
+  } else {
+    slot_fn(anchor, is_interop ? () => slot_props : slot_props);
+  }
+}
+function sanitize_slots(props) {
+  const sanitized = {};
+  if (props.children) sanitized.default = true;
+  for (const key2 in props.$$slots) {
+    sanitized[key2] = true;
+  }
+  return sanitized;
+}
+
+// node_modules/svelte/src/internal/client/dom/css.js
+function append_styles(anchor, css) {
+  effect(() => {
+    var _a5;
+    var root11 = anchor.getRootNode();
+    var target = (
+      /** @type {ShadowRoot} */
+      root11.host ? (
+        /** @type {ShadowRoot} */
+        root11
+      ) : (
+        /** @type {Document} */
+        (_a5 = root11.head) != null ? _a5 : (
+          /** @type {Document} */
+          root11.ownerDocument.head
+        )
+      )
+    );
+    if (!target.querySelector("#" + css.hash)) {
+      const style = create_element("style");
+      style.id = css.hash;
+      style.textContent = css.code;
+      target.appendChild(style);
+      if (dev_fallback_default) {
+        register_style(css.hash, style);
+      }
+    }
+  });
+}
+
+// node_modules/svelte/src/internal/client/dom/elements/actions.js
+function action(dom, action2, get_value) {
+  effect(() => {
+    var payload = untrack(() => action2(dom, get_value == null ? void 0 : get_value()) || {});
+    if (get_value && (payload == null ? void 0 : payload.update)) {
+      var inited = false;
+      var prev = (
+        /** @type {any} */
+        {}
+      );
+      render_effect(() => {
+        var value = get_value();
+        deep_read_state(value);
+        if (inited && safe_not_equal(prev, value)) {
+          prev = value;
+          payload.update(value);
+        }
+      });
+      inited = true;
+    }
+    if (payload == null ? void 0 : payload.destroy) {
+      return () => (
+        /** @type {Function} */
+        payload.destroy()
+      );
+    }
+  });
+}
+
+// node_modules/svelte/src/internal/client/dom/elements/attachments.js
+function attach(node, get_fn) {
+  var fn = void 0;
+  var e;
+  managed(() => {
+    if (fn !== (fn = get_fn())) {
+      if (e) {
+        destroy_effect(e);
+        e = null;
+      }
+      if (fn) {
+        e = branch(() => {
+          effect(() => (
+            /** @type {(node: Element) => void} */
+            fn(node)
+          ));
+        });
+      }
+    }
+  });
+}
+
+// node_modules/clsx/dist/clsx.mjs
+function r(e) {
+  var t, f, n = "";
+  if ("string" == typeof e || "number" == typeof e) n += e;
+  else if ("object" == typeof e) if (Array.isArray(e)) {
+    var o = e.length;
+    for (t = 0; t < o; t++) e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
+  } else for (f in e) e[f] && (n && (n += " "), n += f);
+  return n;
+}
+function clsx() {
+  for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++) (e = arguments[f]) && (t = r(e)) && (n && (n += " "), n += t);
+  return n;
+}
+
+// node_modules/svelte/src/internal/shared/attributes.js
+function clsx2(value) {
+  if (typeof value === "object") {
+    return clsx(value);
+  } else {
+    return value != null ? value : "";
+  }
+}
+var whitespace = [..." 	\n\r\f\xA0\v\uFEFF"];
+function to_class(value, hash2, directives) {
+  var classname = value == null ? "" : "" + value;
+  if (hash2) {
+    classname = classname ? classname + " " + hash2 : hash2;
+  }
+  if (directives) {
+    for (var key2 of Object.keys(directives)) {
+      if (directives[key2]) {
+        classname = classname ? classname + " " + key2 : key2;
+      } else if (classname.length) {
+        var len = key2.length;
+        var a = 0;
+        while ((a = classname.indexOf(key2, a)) >= 0) {
+          var b = a + len;
+          if ((a === 0 || whitespace.includes(classname[a - 1])) && (b === classname.length || whitespace.includes(classname[b]))) {
+            classname = (a === 0 ? "" : classname.substring(0, a)) + classname.substring(b + 1);
+          } else {
+            a = b;
+          }
+        }
+      }
+    }
+  }
+  return classname === "" ? null : classname;
+}
+function append_styles2(styles, important = false) {
+  var separator = important ? " !important;" : ";";
+  var css = "";
+  for (var key2 of Object.keys(styles)) {
+    var value = styles[key2];
+    if (value != null && value !== "") {
+      css += " " + key2 + ": " + value + separator;
+    }
+  }
+  return css;
+}
+function to_css_name(name) {
+  if (name[0] !== "-" || name[1] !== "-") {
+    return name.toLowerCase();
+  }
+  return name;
+}
+function to_style(value, styles) {
+  if (styles) {
+    var new_style = "";
+    var normal_styles;
+    var important_styles;
+    if (Array.isArray(styles)) {
+      normal_styles = styles[0];
+      important_styles = styles[1];
+    } else {
+      normal_styles = styles;
+    }
+    if (value) {
+      value = String(value).replaceAll(/\s*\/\*.*?\*\/\s*/g, "").trim();
+      var in_str = false;
+      var in_apo = 0;
+      var in_comment = false;
+      var reserved_names = [];
+      if (normal_styles) {
+        reserved_names.push(...Object.keys(normal_styles).map(to_css_name));
+      }
+      if (important_styles) {
+        reserved_names.push(...Object.keys(important_styles).map(to_css_name));
+      }
+      var start_index = 0;
+      var name_index = -1;
+      const len = value.length;
+      for (var i = 0; i < len; i++) {
+        var c = value[i];
+        if (in_comment) {
+          if (c === "/" && value[i - 1] === "*") {
+            in_comment = false;
+          }
+        } else if (in_str) {
+          if (in_str === c) {
+            in_str = false;
+          }
+        } else if (c === "/" && value[i + 1] === "*") {
+          in_comment = true;
+        } else if (c === '"' || c === "'") {
+          in_str = c;
+        } else if (c === "(") {
+          in_apo++;
+        } else if (c === ")") {
+          in_apo--;
+        }
+        if (!in_comment && in_str === false && in_apo === 0) {
+          if (c === ":" && name_index === -1) {
+            name_index = i;
+          } else if (c === ";" || i === len - 1) {
+            if (name_index !== -1) {
+              var name = to_css_name(value.substring(start_index, name_index).trim());
+              if (!reserved_names.includes(name)) {
+                if (c !== ";") {
+                  i++;
+                }
+                var property = value.substring(start_index, i).trim();
+                new_style += " " + property + ";";
+              }
+            }
+            start_index = i + 1;
+            name_index = -1;
+          }
+        }
+      }
+    }
+    if (normal_styles) {
+      new_style += append_styles2(normal_styles);
+    }
+    if (important_styles) {
+      new_style += append_styles2(important_styles, true);
+    }
+    new_style = new_style.trim();
+    return new_style === "" ? null : new_style;
+  }
+  return value == null ? null : String(value);
+}
+
+// node_modules/svelte/src/internal/client/dom/elements/class.js
+function set_class(dom, is_html, value, hash2, prev_classes, next_classes) {
+  var prev = dom.__className;
+  if (hydrating || prev !== value || prev === void 0) {
+    var next_class_name = to_class(value, hash2, next_classes);
+    if (!hydrating || next_class_name !== dom.getAttribute("class")) {
+      if (next_class_name == null) {
+        dom.removeAttribute("class");
+      } else if (is_html) {
+        dom.className = next_class_name;
+      } else {
+        dom.setAttribute("class", next_class_name);
+      }
+    }
+    dom.__className = value;
+  } else if (next_classes && prev_classes !== next_classes) {
+    for (var key2 in next_classes) {
+      var is_present = !!next_classes[key2];
+      if (prev_classes == null || is_present !== !!prev_classes[key2]) {
+        dom.classList.toggle(key2, is_present);
+      }
+    }
+  }
+  return next_classes;
+}
+
+// node_modules/svelte/src/internal/client/dom/elements/style.js
+function update_styles(dom, prev = {}, next2, priority) {
+  for (var key2 in next2) {
+    var value = next2[key2];
+    if (prev[key2] !== value) {
+      if (next2[key2] == null) {
+        dom.style.removeProperty(key2);
+      } else {
+        dom.style.setProperty(key2, value, priority);
+      }
+    }
+  }
+}
+function set_style(dom, value, prev_styles, next_styles) {
+  var prev = dom.__style;
+  if (hydrating || prev !== value) {
+    var next_style_attr = to_style(value, next_styles);
+    if (!hydrating || next_style_attr !== dom.getAttribute("style")) {
+      if (next_style_attr == null) {
+        dom.removeAttribute("style");
+      } else {
+        dom.style.cssText = next_style_attr;
+      }
+    }
+    dom.__style = value;
+  } else if (next_styles) {
+    if (Array.isArray(next_styles)) {
+      update_styles(dom, prev_styles == null ? void 0 : prev_styles[0], next_styles[0]);
+      update_styles(dom, prev_styles == null ? void 0 : prev_styles[1], next_styles[1], "important");
+    } else {
+      update_styles(dom, prev_styles, next_styles);
+    }
+  }
+  return next_styles;
+}
+
+// node_modules/svelte/src/internal/client/dom/elements/bindings/select.js
+function select_option(select, value, mounting = false) {
+  if (select.multiple) {
+    if (value == void 0) {
+      return;
+    }
+    if (!is_array(value)) {
+      return select_multiple_invalid_value();
+    }
+    for (var option of select.options) {
+      option.selected = value.includes(get_option_value(option));
+    }
+    return;
+  }
+  for (option of select.options) {
+    var option_value = get_option_value(option);
+    if (is(option_value, value)) {
+      option.selected = true;
+      return;
+    }
+  }
+  if (!mounting || value !== void 0) {
+    select.selectedIndex = -1;
+  }
+}
+function init_select(select) {
+  var observer = new MutationObserver(() => {
+    select_option(select, select.__value);
+  });
+  observer.observe(select, {
+    // Listen to option element changes
+    childList: true,
+    subtree: true,
+    // because of <optgroup>
+    // Listen to option element value attribute changes
+    // (doesn't get notified of select value changes,
+    // because that property is not reflected as an attribute)
+    attributes: true,
+    attributeFilter: ["value"]
+  });
+  teardown(() => {
+    observer.disconnect();
+  });
+}
+function get_option_value(option) {
+  if ("__value" in option) {
+    return option.__value;
+  } else {
+    return option.value;
+  }
+}
+
+// node_modules/svelte/src/internal/client/dom/elements/attributes.js
+var CLASS = Symbol("class");
+var STYLE = Symbol("style");
+var IS_CUSTOM_ELEMENT = Symbol("is custom element");
+var IS_HTML = Symbol("is html");
+var LINK_TAG = IS_XHTML ? "link" : "LINK";
+var INPUT_TAG = IS_XHTML ? "input" : "INPUT";
+var OPTION_TAG = IS_XHTML ? "option" : "OPTION";
+var SELECT_TAG = IS_XHTML ? "select" : "SELECT";
+var PROGRESS_TAG = IS_XHTML ? "progress" : "PROGRESS";
+function remove_input_defaults(input) {
+  if (!hydrating) return;
+  var already_removed = false;
+  var remove_defaults = () => {
+    if (already_removed) return;
+    already_removed = true;
+    if (input.hasAttribute("value")) {
+      var value = input.value;
+      set_attribute2(input, "value", null);
+      input.value = value;
+    }
+    if (input.hasAttribute("checked")) {
+      var checked = input.checked;
+      set_attribute2(input, "checked", null);
+      input.checked = checked;
+    }
+  };
+  input.__on_r = remove_defaults;
+  queue_micro_task(remove_defaults);
+  add_form_reset_listener();
+}
+function set_value(element2, value) {
+  var attributes = get_attributes(element2);
+  if (attributes.value === (attributes.value = // treat null and undefined the same for the initial value
+  value != null ? value : void 0) || // @ts-expect-error
+  // `progress` elements always need their value set when it's `0`
+  element2.value === value && (value !== 0 || element2.nodeName !== PROGRESS_TAG)) {
+    return;
+  }
+  element2.value = value != null ? value : "";
+}
+function set_selected(element2, selected) {
+  if (selected) {
+    if (!element2.hasAttribute("selected")) {
+      element2.setAttribute("selected", "");
+    }
+  } else {
+    element2.removeAttribute("selected");
+  }
+}
+function set_attribute2(element2, attribute, value, skip_warning) {
+  var attributes = get_attributes(element2);
+  if (hydrating) {
+    attributes[attribute] = element2.getAttribute(attribute);
+    if (attribute === "src" || attribute === "srcset" || attribute === "href" && element2.nodeName === LINK_TAG) {
+      if (!skip_warning) {
+        check_src_in_dev_hydration(element2, attribute, value != null ? value : "");
+      }
+      return;
+    }
+  }
+  if (attributes[attribute] === (attributes[attribute] = value)) return;
+  if (attribute === "loading") {
+    element2[LOADING_ATTR_SYMBOL] = value;
+  }
+  if (value == null) {
+    element2.removeAttribute(attribute);
+  } else if (typeof value !== "string" && get_setters(element2).includes(attribute)) {
+    element2[attribute] = value;
+  } else {
+    element2.setAttribute(attribute, value);
+  }
+}
+function set_attributes(element2, prev, next2, css_hash, should_remove_defaults = false, skip_warning = false) {
+  var _a5;
+  if (hydrating && should_remove_defaults && element2.nodeName === INPUT_TAG) {
+    var input = (
+      /** @type {HTMLInputElement} */
+      element2
+    );
+    var attribute = input.type === "checkbox" ? "defaultChecked" : "defaultValue";
+    if (!(attribute in next2)) {
+      remove_input_defaults(input);
+    }
+  }
+  var attributes = get_attributes(element2);
+  var is_custom_element = attributes[IS_CUSTOM_ELEMENT];
+  var preserve_attribute_case = !attributes[IS_HTML];
+  let is_hydrating_custom_element = hydrating && is_custom_element;
+  if (is_hydrating_custom_element) {
+    set_hydrating(false);
+  }
+  var current = prev || {};
+  var is_option_element = element2.nodeName === OPTION_TAG;
+  for (var key2 in prev) {
+    if (!(key2 in next2)) {
+      next2[key2] = null;
+    }
+  }
+  if (next2.class) {
+    next2.class = clsx2(next2.class);
+  } else if (css_hash || next2[CLASS]) {
+    next2.class = null;
+  }
+  if (next2[STYLE]) {
+    (_a5 = next2.style) != null ? _a5 : next2.style = null;
+  }
+  var setters = get_setters(element2);
+  for (const key3 in next2) {
+    let value = next2[key3];
+    if (is_option_element && key3 === "value" && value == null) {
+      element2.value = element2.__value = "";
+      current[key3] = value;
+      continue;
+    }
+    if (key3 === "class") {
+      var is_html = element2.namespaceURI === "http://www.w3.org/1999/xhtml";
+      set_class(element2, is_html, value, css_hash, prev == null ? void 0 : prev[CLASS], next2[CLASS]);
+      current[key3] = value;
+      current[CLASS] = next2[CLASS];
+      continue;
+    }
+    if (key3 === "style") {
+      set_style(element2, value, prev == null ? void 0 : prev[STYLE], next2[STYLE]);
+      current[key3] = value;
+      current[STYLE] = next2[STYLE];
+      continue;
+    }
+    var prev_value = current[key3];
+    if (value === prev_value && !(value === void 0 && element2.hasAttribute(key3))) {
+      continue;
+    }
+    current[key3] = value;
+    var prefix = key3[0] + key3[1];
+    if (prefix === "$$") continue;
+    if (prefix === "on") {
+      const opts = {};
+      const event_handle_key = "$$" + key3;
+      let event_name = key3.slice(2);
+      var is_delegated = can_delegate_event(event_name);
+      if (is_capture_event(event_name)) {
+        event_name = event_name.slice(0, -7);
+        opts.capture = true;
+      }
+      if (!is_delegated && prev_value) {
+        if (value != null) continue;
+        element2.removeEventListener(event_name, current[event_handle_key], opts);
+        current[event_handle_key] = null;
+      }
+      if (is_delegated) {
+        delegated(event_name, element2, value);
+        delegate([event_name]);
+      } else if (value != null) {
+        let handle = function(evt) {
+          current[key3].call(this, evt);
+        };
+        current[event_handle_key] = create_event(event_name, element2, handle, opts);
+      }
+    } else if (key3 === "style") {
+      set_attribute2(element2, key3, value);
+    } else if (key3 === "autofocus") {
+      autofocus(
+        /** @type {HTMLElement} */
+        element2,
+        Boolean(value)
+      );
+    } else if (!is_custom_element && (key3 === "__value" || key3 === "value" && value != null)) {
+      element2.value = element2.__value = value;
+    } else if (key3 === "selected" && is_option_element) {
+      set_selected(
+        /** @type {HTMLOptionElement} */
+        element2,
+        value
+      );
+    } else {
+      var name = key3;
+      if (!preserve_attribute_case) {
+        name = normalize_attribute(name);
+      }
+      var is_default = name === "defaultValue" || name === "defaultChecked";
+      if (value == null && !is_custom_element && !is_default) {
+        attributes[key3] = null;
+        if (name === "value" || name === "checked") {
+          let input2 = (
+            /** @type {HTMLInputElement} */
+            element2
+          );
+          const use_default = prev === void 0;
+          if (name === "value") {
+            let previous = input2.defaultValue;
+            input2.removeAttribute(name);
+            input2.defaultValue = previous;
+            input2.value = input2.__value = use_default ? previous : null;
+          } else {
+            let previous = input2.defaultChecked;
+            input2.removeAttribute(name);
+            input2.defaultChecked = previous;
+            input2.checked = use_default ? previous : false;
+          }
+        } else {
+          element2.removeAttribute(key3);
+        }
+      } else if (is_default || setters.includes(name) && (is_custom_element || typeof value !== "string")) {
+        element2[name] = value;
+        if (name in attributes) attributes[name] = UNINITIALIZED;
+      } else if (typeof value !== "function") {
+        set_attribute2(element2, name, value, skip_warning);
+      }
+    }
+  }
+  if (is_hydrating_custom_element) {
+    set_hydrating(true);
+  }
+  return current;
+}
+function attribute_effect(element2, fn, sync = [], async2 = [], blockers = [], css_hash, should_remove_defaults = false, skip_warning = false) {
+  flatten(blockers, sync, async2, (values) => {
+    var prev = void 0;
+    var effects = {};
+    var is_select = element2.nodeName === SELECT_TAG;
+    var inited = false;
+    managed(() => {
+      var next2 = fn(...values.map(get));
+      var current = set_attributes(
+        element2,
+        prev,
+        next2,
+        css_hash,
+        should_remove_defaults,
+        skip_warning
+      );
+      if (inited && is_select && "value" in next2) {
+        select_option(
+          /** @type {HTMLSelectElement} */
+          element2,
+          next2.value
+        );
+      }
+      for (let symbol of Object.getOwnPropertySymbols(effects)) {
+        if (!next2[symbol]) destroy_effect(effects[symbol]);
+      }
+      for (let symbol of Object.getOwnPropertySymbols(next2)) {
+        var n = next2[symbol];
+        if (symbol.description === ATTACHMENT_KEY && (!prev || n !== prev[symbol])) {
+          if (effects[symbol]) destroy_effect(effects[symbol]);
+          effects[symbol] = branch(() => attach(element2, () => n));
+        }
+        current[symbol] = n;
+      }
+      prev = current;
+    });
+    if (is_select) {
+      var select = (
+        /** @type {HTMLSelectElement} */
+        element2
+      );
+      effect(() => {
+        select_option(
+          select,
+          /** @type {Record<string | symbol, any>} */
+          prev.value,
+          true
+        );
+        init_select(select);
+      });
+    }
+    inited = true;
+  });
+}
+function get_attributes(element2) {
+  var _a5;
+  return (
+    /** @type {Record<string | symbol, unknown>} **/
+    // @ts-expect-error
+    (_a5 = element2.__attributes) != null ? _a5 : element2.__attributes = {
+      [IS_CUSTOM_ELEMENT]: element2.nodeName.includes("-"),
+      [IS_HTML]: element2.namespaceURI === NAMESPACE_HTML
+    }
+  );
+}
+var setters_cache = /* @__PURE__ */ new Map();
+function get_setters(element2) {
+  var cache_key = element2.getAttribute("is") || element2.nodeName;
+  var setters = setters_cache.get(cache_key);
+  if (setters) return setters;
+  setters_cache.set(cache_key, setters = []);
+  var descriptors;
+  var proto = element2;
+  var element_proto = Element.prototype;
+  while (element_proto !== proto) {
+    descriptors = get_descriptors(proto);
+    for (var key2 in descriptors) {
+      if (descriptors[key2].set) {
+        setters.push(key2);
+      }
+    }
+    proto = get_prototype_of(proto);
+  }
+  return setters;
+}
+function check_src_in_dev_hydration(element2, attribute, value) {
+  var _a5;
+  if (!dev_fallback_default) return;
+  if (attribute === "srcset" && srcset_url_equal(element2, value)) return;
+  if (src_url_equal((_a5 = element2.getAttribute(attribute)) != null ? _a5 : "", value)) return;
+  hydration_attribute_changed(
+    attribute,
+    element2.outerHTML.replace(element2.innerHTML, element2.innerHTML && "..."),
+    String(value)
+  );
+}
+function src_url_equal(element_src, url) {
+  if (element_src === url) return true;
+  return new URL(element_src, document.baseURI).href === new URL(url, document.baseURI).href;
+}
+function split_srcset(srcset) {
+  return srcset.split(",").map((src) => src.trim().split(" ").filter(Boolean));
+}
+function srcset_url_equal(element2, srcset) {
+  var element_urls = split_srcset(element2.srcset);
+  var urls = split_srcset(srcset);
+  return urls.length === element_urls.length && urls.every(
+    ([url, width], i) => width === element_urls[i][1] && // We need to test both ways because Vite will create an a full URL with
+    // `new URL(asset, import.meta.url).href` for the client when `base: './'`, and the
+    // relative URLs inside srcset are not automatically resolved to absolute URLs by
+    // browsers (in contrast to img.src). This means both SSR and DOM code could
+    // contain relative or absolute URLs.
+    (src_url_equal(element_urls[i][0], url) || src_url_equal(url, element_urls[i][0]))
+  );
+}
+
+// node_modules/svelte/src/internal/client/dom/elements/bindings/input.js
+function bind_value(input, get3, set2 = get3) {
+  var batches2 = /* @__PURE__ */ new WeakSet();
+  listen_to_event_and_reset_event(input, "input", async (is_reset) => {
+    if (dev_fallback_default && input.type === "checkbox") {
+      bind_invalid_checkbox_value();
+    }
+    var value = is_reset ? input.defaultValue : input.value;
+    value = is_numberlike_input(input) ? to_number(value) : value;
+    set2(value);
+    if (current_batch !== null) {
+      batches2.add(current_batch);
+    }
+    await tick();
+    if (value !== (value = get3())) {
+      var start = input.selectionStart;
+      var end = input.selectionEnd;
+      var length = input.value.length;
+      input.value = value != null ? value : "";
+      if (end !== null) {
+        var new_length = input.value.length;
+        if (start === end && end === length && new_length > length) {
+          input.selectionStart = new_length;
+          input.selectionEnd = new_length;
+        } else {
+          input.selectionStart = start;
+          input.selectionEnd = Math.min(end, new_length);
+        }
+      }
+    }
+  });
+  if (
+    // If we are hydrating and the value has since changed,
+    // then use the updated value from the input instead.
+    hydrating && input.defaultValue !== input.value || // If defaultValue is set, then value == defaultValue
+    // TODO Svelte 6: remove input.value check and set to empty string?
+    untrack(get3) == null && input.value
+  ) {
+    set2(is_numberlike_input(input) ? to_number(input.value) : input.value);
+    if (current_batch !== null) {
+      batches2.add(current_batch);
+    }
+  }
+  render_effect(() => {
+    if (dev_fallback_default && input.type === "checkbox") {
+      bind_invalid_checkbox_value();
+    }
+    var value = get3();
+    if (input === document.activeElement) {
+      var batch = (
+        /** @type {Batch} */
+        async_mode_flag ? previous_batch : current_batch
+      );
+      if (batches2.has(batch)) {
+        return;
+      }
+    }
+    if (is_numberlike_input(input) && value === to_number(input.value)) {
+      return;
+    }
+    if (input.type === "date" && !value && !input.value) {
+      return;
+    }
+    if (value !== input.value) {
+      input.value = value != null ? value : "";
+    }
+  });
+}
+function is_numberlike_input(input) {
+  var type = input.type;
+  return type === "number" || type === "range";
+}
+function to_number(value) {
+  return value === "" ? null : +value;
+}
+
+// node_modules/svelte/src/internal/client/dom/elements/bindings/props.js
+function bind_prop(props, prop2, value) {
+  var desc = get_descriptor(props, prop2);
+  if (desc && desc.set) {
+    props[prop2] = value;
+    teardown(() => {
+      props[prop2] = null;
+    });
+  }
+}
+
+// node_modules/svelte/src/internal/client/dom/elements/bindings/this.js
+function is_bound_this(bound_value, element_or_component) {
+  return bound_value === element_or_component || (bound_value == null ? void 0 : bound_value[STATE_SYMBOL]) === element_or_component;
+}
+function bind_this(element_or_component = {}, update2, get_value, get_parts) {
+  var component_effect = (
+    /** @type {ComponentContext} */
+    component_context.r
+  );
+  var parent = (
+    /** @type {Effect} */
+    active_effect
+  );
+  effect(() => {
+    var old_parts;
+    var parts;
+    render_effect(() => {
+      old_parts = parts;
+      parts = (get_parts == null ? void 0 : get_parts()) || [];
+      untrack(() => {
+        if (element_or_component !== get_value(...parts)) {
+          update2(element_or_component, ...parts);
+          if (old_parts && is_bound_this(get_value(...old_parts), element_or_component)) {
+            update2(null, ...old_parts);
+          }
+        }
+      });
+    });
+    return () => {
+      let p = parent;
+      while (p !== component_effect && p.parent !== null && p.parent.f & DESTROYING) {
+        p = p.parent;
+      }
+      const teardown2 = () => {
+        if (parts && is_bound_this(get_value(...parts), element_or_component)) {
+          update2(null, ...parts);
+        }
+      };
+      const original_teardown = p.teardown;
+      p.teardown = () => {
+        teardown2();
+        original_teardown == null ? void 0 : original_teardown();
+      };
+    };
+  });
+  return element_or_component;
+}
+
+// node_modules/svelte/src/internal/client/dom/legacy/lifecycle.js
+function init(immutable = false) {
+  const context = (
+    /** @type {ComponentContextLegacy} */
+    component_context
+  );
+  const callbacks = context.l.u;
+  if (!callbacks) return;
+  let props = () => deep_read_state(context.s);
+  if (immutable) {
+    let version = 0;
+    let prev = (
+      /** @type {Record<string, any>} */
+      {}
+    );
+    const d = derived2(() => {
+      let changed = false;
+      const props2 = context.s;
+      for (const key2 in props2) {
+        if (props2[key2] !== prev[key2]) {
+          prev[key2] = props2[key2];
+          changed = true;
+        }
+      }
+      if (changed) version++;
+      return version;
+    });
+    props = () => get(d);
+  }
+  if (callbacks.b.length) {
+    user_pre_effect(() => {
+      observe_all(context, props);
+      run_all(callbacks.b);
+    });
+  }
+  user_effect(() => {
+    const fns = untrack(() => callbacks.m.map(run));
+    return () => {
+      for (const fn of fns) {
+        if (typeof fn === "function") {
+          fn();
+        }
+      }
+    };
+  });
+  if (callbacks.a.length) {
+    user_effect(() => {
+      observe_all(context, props);
+      run_all(callbacks.a);
+    });
+  }
+}
+function observe_all(context, props) {
+  if (context.l.s) {
+    for (const signal of context.l.s) get(signal);
+  }
+  props();
+}
+
+// node_modules/svelte/src/internal/client/dom/legacy/misc.js
+function bubble_event($$props, event2) {
+  var _a5;
+  var events = (
+    /** @type {Record<string, Function[] | Function>} */
+    (_a5 = $$props.$$events) == null ? void 0 : _a5[event2.type]
+  );
+  var callbacks = is_array(events) ? events.slice() : events == null ? [] : [events];
+  for (var fn of callbacks) {
+    fn.call(this, event2);
+  }
+}
+function add_legacy_event_listener($$props, event_name, event_callback) {
+  var _a5;
+  $$props.$$events || ($$props.$$events = {});
+  (_a5 = $$props.$$events)[event_name] || (_a5[event_name] = []);
+  $$props.$$events[event_name].push(event_callback);
+}
+function update_legacy_props($$new_props) {
+  for (var key2 in $$new_props) {
+    if (key2 in this) {
+      this[key2] = $$new_props[key2];
+    }
+  }
+}
+
+// node_modules/svelte/src/internal/client/reactivity/props.js
+var legacy_rest_props_handler = {
+  get(target, key2) {
+    if (target.exclude.includes(key2)) return;
+    get(target.version);
+    return key2 in target.special ? target.special[key2]() : target.props[key2];
+  },
+  set(target, key2, value) {
+    if (!(key2 in target.special)) {
+      var previous_effect = active_effect;
+      try {
+        set_active_effect(target.parent_effect);
+        target.special[key2] = prop(
+          {
+            get [key2]() {
+              return target.props[key2];
+            }
+          },
+          /** @type {string} */
+          key2,
+          PROPS_IS_UPDATED
+        );
+      } finally {
+        set_active_effect(previous_effect);
+      }
+    }
+    target.special[key2](value);
+    update(target.version);
+    return true;
+  },
+  getOwnPropertyDescriptor(target, key2) {
+    if (target.exclude.includes(key2)) return;
+    if (key2 in target.props) {
+      return {
+        enumerable: true,
+        configurable: true,
+        value: target.props[key2]
+      };
+    }
+  },
+  deleteProperty(target, key2) {
+    if (target.exclude.includes(key2)) return true;
+    target.exclude.push(key2);
+    update(target.version);
+    return true;
+  },
+  has(target, key2) {
+    if (target.exclude.includes(key2)) return false;
+    return key2 in target.props;
+  },
+  ownKeys(target) {
+    return Reflect.ownKeys(target.props).filter((key2) => !target.exclude.includes(key2));
+  }
+};
+function legacy_rest_props(props, exclude) {
+  return new Proxy(
+    {
+      props,
+      exclude,
+      special: {},
+      version: source(0),
+      // TODO this is only necessary because we need to track component
+      // destruction inside `prop`, because of `bind:this`, but it
+      // seems likely that we can simplify `bind:this` instead
+      parent_effect: (
+        /** @type {Effect} */
+        active_effect
+      )
+    },
+    legacy_rest_props_handler
+  );
+}
+function prop(props, key2, flags2, fallback2) {
+  var _a5, _b3;
+  var runes = !legacy_mode_flag || (flags2 & PROPS_IS_RUNES) !== 0;
+  var bindable = (flags2 & PROPS_IS_BINDABLE) !== 0;
+  var lazy = (flags2 & PROPS_IS_LAZY_INITIAL) !== 0;
+  var fallback_value = (
+    /** @type {V} */
+    fallback2
+  );
+  var fallback_dirty = true;
+  var get_fallback = () => {
+    if (fallback_dirty) {
+      fallback_dirty = false;
+      fallback_value = lazy ? untrack(
+        /** @type {() => V} */
+        fallback2
+      ) : (
+        /** @type {V} */
+        fallback2
+      );
+    }
+    return fallback_value;
+  };
+  let setter;
+  if (bindable) {
+    var is_entry_props = STATE_SYMBOL in props || LEGACY_PROPS in props;
+    setter = (_b3 = (_a5 = get_descriptor(props, key2)) == null ? void 0 : _a5.set) != null ? _b3 : is_entry_props && key2 in props ? (v) => props[key2] = v : void 0;
+  }
+  var initial_value;
+  var is_store_sub = false;
+  if (bindable) {
+    [initial_value, is_store_sub] = capture_store_binding(() => (
+      /** @type {V} */
+      props[key2]
+    ));
+  } else {
+    initial_value = /** @type {V} */
+    props[key2];
+  }
+  if (initial_value === void 0 && fallback2 !== void 0) {
+    initial_value = get_fallback();
+    if (setter) {
+      if (runes) props_invalid_value(key2);
+      setter(initial_value);
+    }
+  }
+  var getter;
+  if (runes) {
+    getter = () => {
+      var value = (
+        /** @type {V} */
+        props[key2]
+      );
+      if (value === void 0) return get_fallback();
+      fallback_dirty = true;
+      return value;
+    };
+  } else {
+    getter = () => {
+      var value = (
+        /** @type {V} */
+        props[key2]
+      );
+      if (value !== void 0) {
+        fallback_value = /** @type {V} */
+        void 0;
+      }
+      return value === void 0 ? fallback_value : value;
+    };
+  }
+  if (runes && (flags2 & PROPS_IS_UPDATED) === 0) {
+    return getter;
+  }
+  if (setter) {
+    var legacy_parent = props.$$legacy;
+    return (
+      /** @type {() => V} */
+      function(value, mutation) {
+        if (arguments.length > 0) {
+          if (!runes || !mutation || legacy_parent || is_store_sub) {
+            setter(mutation ? getter() : value);
+          }
+          return value;
+        }
+        return getter();
+      }
+    );
+  }
+  var overridden = false;
+  var d = ((flags2 & PROPS_IS_IMMUTABLE) !== 0 ? derived2 : derived_safe_equal)(() => {
+    overridden = false;
+    return getter();
+  });
+  if (dev_fallback_default) {
+    d.label = key2;
+  }
+  if (bindable) get(d);
+  var parent_effect = (
+    /** @type {Effect} */
+    active_effect
+  );
+  return (
+    /** @type {() => V} */
+    function(value, mutation) {
+      if (arguments.length > 0) {
+        const new_value = mutation ? get(d) : runes && bindable ? proxy(value) : value;
+        set(d, new_value);
+        overridden = true;
+        if (fallback_value !== void 0) {
+          fallback_value = new_value;
+        }
+        return value;
+      }
+      if (is_destroying_effect && overridden || (parent_effect.f & DESTROYED) !== 0) {
+        return d.v;
+      }
+      return get(d);
+    }
+  );
+}
+
+// node_modules/svelte/src/internal/client/dom/elements/custom-element.js
 var SvelteElement;
 if (typeof HTMLElement === "function") {
   SvelteElement = class extends HTMLElement {
-    constructor($$componentCtor, $$slots, use_shadow_dom) {
+    /**
+     * @param {*} $$componentCtor
+     * @param {*} $$slots
+     * @param {ShadowRootInit | undefined} shadow_root_init
+     */
+    constructor($$componentCtor, $$slots, shadow_root_init) {
       super();
       /** The Svelte component constructor */
       __publicField(this, "$$ctor");
       /** Slots */
       __publicField(this, "$$s");
-      /** The Svelte component instance */
+      /** @type {any} The Svelte component instance */
       __publicField(this, "$$c");
       /** Whether or not the custom element is connected */
       __publicField(this, "$$cn", false);
-      /** Component props data */
+      /** @type {Record<string, any>} Component props data */
       __publicField(this, "$$d", {});
       /** `true` if currently in the process of reflecting component props back to attributes */
       __publicField(this, "$$r", false);
       /** @type {Record<string, CustomElementPropDefinition>} Props definition (name, reflected, type etc) */
       __publicField(this, "$$p_d", {});
-      /** @type {Record<string, Function[]>} Event listeners */
+      /** @type {Record<string, EventListenerOrEventListenerObject[]>} Event listeners */
       __publicField(this, "$$l", {});
-      /** @type {Map<Function, Function>} Event listener unsubscribe functions */
+      /** @type {Map<EventListenerOrEventListenerObject, Function>} Event listener unsubscribe functions */
       __publicField(this, "$$l_u", /* @__PURE__ */ new Map());
+      /** @type {any} The managed render effect for reflecting attributes */
+      __publicField(this, "$$me");
+      /** @type {ShadowRoot | null} The ShadowRoot of the custom element */
+      __publicField(this, "$$shadowRoot", null);
       this.$$ctor = $$componentCtor;
       this.$$s = $$slots;
-      if (use_shadow_dom) {
-        this.attachShadow({ mode: "open" });
+      if (shadow_root_init) {
+        this.$$shadowRoot = this.attachShadow(shadow_root_init);
       }
     }
+    /**
+     * @param {string} type
+     * @param {EventListenerOrEventListenerObject} listener
+     * @param {boolean | AddEventListenerOptions} [options]
+     */
     addEventListener(type, listener, options) {
       this.$$l[type] = this.$$l[type] || [];
       this.$$l[type].push(listener);
@@ -4326,6 +10488,11 @@ if (typeof HTMLElement === "function") {
       }
       super.addEventListener(type, listener, options);
     }
+    /**
+     * @param {string} type
+     * @param {EventListenerOrEventListenerObject} listener
+     * @param {boolean | AddEventListenerOptions} [options]
+     */
     removeEventListener(type, listener, options) {
       super.removeEventListener(type, listener, options);
       if (this.$$c) {
@@ -4335,40 +10502,15 @@ if (typeof HTMLElement === "function") {
           this.$$l_u.delete(listener);
         }
       }
-      if (this.$$l[type]) {
-        const idx = this.$$l[type].indexOf(listener);
-        if (idx >= 0) {
-          this.$$l[type].splice(idx, 1);
-        }
-      }
     }
     async connectedCallback() {
       this.$$cn = true;
       if (!this.$$c) {
-        let create_slot2 = function(name) {
-          return () => {
-            let node;
-            const obj = {
-              c: function create() {
-                node = element("slot");
-                if (name !== "default") {
-                  attr(node, "name", name);
-                }
-              },
-              /**
-               * @param {HTMLElement} target
-               * @param {HTMLElement} [anchor]
-               */
-              m: function mount(target, anchor) {
-                insert(target, node, anchor);
-              },
-              d: function destroy(detaching) {
-                if (detaching) {
-                  detach(node);
-                }
-              }
-            };
-            return obj;
+        let create_slot = function(name) {
+          return (anchor) => {
+            const slot2 = create_element("slot");
+            if (name !== "default") slot2.name = name;
+            append(anchor, slot2);
           };
         };
         await Promise.resolve();
@@ -4379,7 +10521,12 @@ if (typeof HTMLElement === "function") {
         const existing_slots = get_custom_elements_slots(this);
         for (const name of this.$$s) {
           if (name in existing_slots) {
-            $$slots[name] = [create_slot2(name)];
+            if (name === "default" && !this.$$d.children) {
+              this.$$d.children = create_slot(name);
+              $$slots.default = true;
+            } else {
+              $$slots[name] = create_slot(name);
+            }
           }
         }
         for (const attribute of this.attributes) {
@@ -4388,44 +10535,43 @@ if (typeof HTMLElement === "function") {
             this.$$d[name] = get_custom_element_value(name, attribute.value, this.$$p_d, "toProp");
           }
         }
-        for (const key in this.$$p_d) {
-          if (!(key in this.$$d) && this[key] !== void 0) {
-            this.$$d[key] = this[key];
-            delete this[key];
+        for (const key2 in this.$$p_d) {
+          if (!(key2 in this.$$d) && this[key2] !== void 0) {
+            this.$$d[key2] = this[key2];
+            delete this[key2];
           }
         }
-        this.$$c = new this.$$ctor({
-          target: this.shadowRoot || this,
+        this.$$c = createClassComponent({
+          component: this.$$ctor,
+          target: this.$$shadowRoot || this,
           props: {
             ...this.$$d,
             $$slots,
-            $$scope: {
-              ctx: []
-            }
+            $$host: this
           }
         });
-        const reflect_attributes = () => {
-          this.$$r = true;
-          for (const key in this.$$p_d) {
-            this.$$d[key] = this.$$c.$$.ctx[this.$$c.$$.props[key]];
-            if (this.$$p_d[key].reflect) {
+        this.$$me = effect_root(() => {
+          render_effect(() => {
+            var _a5;
+            this.$$r = true;
+            for (const key2 of object_keys(this.$$c)) {
+              if (!((_a5 = this.$$p_d[key2]) == null ? void 0 : _a5.reflect)) continue;
+              this.$$d[key2] = this.$$c[key2];
               const attribute_value = get_custom_element_value(
-                key,
-                this.$$d[key],
+                key2,
+                this.$$d[key2],
                 this.$$p_d,
                 "toAttribute"
               );
               if (attribute_value == null) {
-                this.removeAttribute(this.$$p_d[key].attribute || key);
+                this.removeAttribute(this.$$p_d[key2].attribute || key2);
               } else {
-                this.setAttribute(this.$$p_d[key].attribute || key, attribute_value);
+                this.setAttribute(this.$$p_d[key2].attribute || key2, attribute_value);
               }
             }
-          }
-          this.$$r = false;
-        };
-        this.$$c.$$.after_update.push(reflect_attributes);
-        reflect_attributes();
+            this.$$r = false;
+          });
+        });
         for (const type in this.$$l) {
           for (const listener of this.$$l[type]) {
             const unsub = this.$$c.$on(type, listener);
@@ -4437,34 +10583,43 @@ if (typeof HTMLElement === "function") {
     }
     // We don't need this when working within Svelte code, but for compatibility of people using this outside of Svelte
     // and setting attributes through setAttribute etc, this is helpful
+    /**
+     * @param {string} attr
+     * @param {string} _oldValue
+     * @param {string} newValue
+     */
     attributeChangedCallback(attr2, _oldValue, newValue) {
-      var _a;
+      var _a5;
       if (this.$$r) return;
       attr2 = this.$$g_p(attr2);
       this.$$d[attr2] = get_custom_element_value(attr2, newValue, this.$$p_d, "toProp");
-      (_a = this.$$c) == null ? void 0 : _a.$set({ [attr2]: this.$$d[attr2] });
+      (_a5 = this.$$c) == null ? void 0 : _a5.$set({ [attr2]: this.$$d[attr2] });
     }
     disconnectedCallback() {
       this.$$cn = false;
       Promise.resolve().then(() => {
         if (!this.$$cn && this.$$c) {
           this.$$c.$destroy();
+          this.$$me();
           this.$$c = void 0;
         }
       });
     }
+    /**
+     * @param {string} attribute_name
+     */
     $$g_p(attribute_name) {
-      return Object.keys(this.$$p_d).find(
-        (key) => this.$$p_d[key].attribute === attribute_name || !this.$$p_d[key].attribute && key.toLowerCase() === attribute_name
+      return object_keys(this.$$p_d).find(
+        (key2) => this.$$p_d[key2].attribute === attribute_name || !this.$$p_d[key2].attribute && key2.toLowerCase() === attribute_name
       ) || attribute_name;
     }
   };
 }
-function get_custom_element_value(prop, value, props_definition, transform) {
-  var _a;
-  const type = (_a = props_definition[prop]) == null ? void 0 : _a.type;
+function get_custom_element_value(prop2, value, props_definition, transform) {
+  var _a5;
+  const type = (_a5 = props_definition[prop2]) == null ? void 0 : _a5.type;
   value = type === "Boolean" && typeof value !== "boolean" ? value != null : value;
-  if (!transform || !props_definition[prop]) {
+  if (!transform || !props_definition[prop2]) {
     return value;
   } else if (transform === "toAttribute") {
     switch (type) {
@@ -4493,170 +10648,24 @@ function get_custom_element_value(prop, value, props_definition, transform) {
     }
   }
 }
-var SvelteComponent = class {
-  constructor() {
-    /**
-     * ### PRIVATE API
-     *
-     * Do not use, may change at any time
-     *
-     * @type {any}
-     */
-    __publicField(this, "$$");
-    /**
-     * ### PRIVATE API
-     *
-     * Do not use, may change at any time
-     *
-     * @type {any}
-     */
-    __publicField(this, "$$set");
-  }
-  /** @returns {void} */
-  $destroy() {
-    destroy_component(this, 1);
-    this.$destroy = noop;
-  }
-  /**
-   * @template {Extract<keyof Events, string>} K
-   * @param {K} type
-   * @param {((e: Events[K]) => void) | null | undefined} callback
-   * @returns {() => void}
-   */
-  $on(type, callback) {
-    if (!is_function(callback)) {
-      return noop;
-    }
-    const callbacks = this.$$.callbacks[type] || (this.$$.callbacks[type] = []);
-    callbacks.push(callback);
-    return () => {
-      const index = callbacks.indexOf(callback);
-      if (index !== -1) callbacks.splice(index, 1);
-    };
-  }
-  /**
-   * @param {Partial<Props>} props
-   * @returns {void}
-   */
-  $set(props) {
-    if (this.$$set && !is_empty(props)) {
-      this.$$.skip_bound = true;
-      this.$$set(props);
-      this.$$.skip_bound = false;
-    }
-  }
-};
-
-// node_modules/svelte/src/shared/version.js
-var PUBLIC_VERSION = "4";
-
-// node_modules/svelte/src/runtime/internal/disclose-version/index.js
-if (typeof window !== "undefined")
-  (window.__svelte || (window.__svelte = { v: /* @__PURE__ */ new Set() })).v.add(PUBLIC_VERSION);
+function get_custom_elements_slots(element2) {
+  const result = {};
+  element2.childNodes.forEach((node) => {
+    result[
+      /** @type {Element} node */
+      node.slot || "default"
+    ] = true;
+  });
+  return result;
+}
 
 // src/parsing/kebab/kebab.ts
 function kebab(input) {
-  return input.replaceAll(/\p{Lu}/gu, (match) => `-${match.toLowerCase()}`).replaceAll(/\p{Z}/gu, "-").replaceAll(/[^\p{L}\p{N}-]/gu, "-").replaceAll(/-+/g, "-").replace(/^-/, "").replace(/-$/, "");
-}
-
-// node_modules/svelte/src/runtime/store/index.js
-var subscriber_queue = [];
-function readable(value, start) {
-  return {
-    subscribe: writable(value, start).subscribe
-  };
-}
-function writable(value, start = noop) {
-  let stop;
-  const subscribers = /* @__PURE__ */ new Set();
-  function set(new_value) {
-    if (safe_not_equal(value, new_value)) {
-      value = new_value;
-      if (stop) {
-        const run_queue = !subscriber_queue.length;
-        for (const subscriber of subscribers) {
-          subscriber[1]();
-          subscriber_queue.push(subscriber, value);
-        }
-        if (run_queue) {
-          for (let i = 0; i < subscriber_queue.length; i += 2) {
-            subscriber_queue[i][0](subscriber_queue[i + 1]);
-          }
-          subscriber_queue.length = 0;
-        }
-      }
-    }
-  }
-  function update2(fn) {
-    set(fn(value));
-  }
-  function subscribe2(run2, invalidate = noop) {
-    const subscriber = [run2, invalidate];
-    subscribers.add(subscriber);
-    if (subscribers.size === 1) {
-      stop = start(set, update2) || noop;
-    }
-    run2(value);
-    return () => {
-      subscribers.delete(subscriber);
-      if (subscribers.size === 0 && stop) {
-        stop();
-        stop = null;
-      }
-    };
-  }
-  return { set, update: update2, subscribe: subscribe2 };
-}
-function derived(stores, fn, initial_value) {
-  const single = !Array.isArray(stores);
-  const stores_array = single ? [stores] : stores;
-  if (!stores_array.every(Boolean)) {
-    throw new Error("derived() expects stores as input, got a falsy value");
-  }
-  const auto = fn.length < 2;
-  return readable(initial_value, (set, update2) => {
-    let started = false;
-    const values = [];
-    let pending = 0;
-    let cleanup = noop;
-    const sync = () => {
-      if (pending) {
-        return;
-      }
-      cleanup();
-      const result = fn(single ? values[0] : values, set, update2);
-      if (auto) {
-        set(result);
-      } else {
-        cleanup = is_function(result) ? result : noop;
-      }
-    };
-    const unsubscribers = stores_array.map(
-      (store, i) => subscribe(
-        store,
-        (value) => {
-          values[i] = value;
-          pending &= ~(1 << i);
-          if (started) {
-            sync();
-          }
-        },
-        () => {
-          pending |= 1 << i;
-        }
-      )
-    );
-    started = true;
-    sync();
-    return function stop() {
-      run_all(unsubscribers);
-      cleanup();
-      started = false;
-    };
-  });
+  return input.replaceAll(/\p{Lu}/gu, (match) => `-${match.toLowerCase()}`).replaceAll(/\p{Z}/gu, "-").replaceAll(/[^\p{L}\p{N}\/-]/gu, "-").replaceAll(/-+/g, "-").replace(/^-/, "").replace(/-$/, "");
 }
 
 // src/ui/columns/columns.ts
+var RESERVED_COLUMN_KEYS = /* @__PURE__ */ new Set(["uncategorised", "done"]);
 var parseColumnSpec = (columnSpec) => {
   const hashMatch = columnSpec.match(/^(.+?)\(#([0-9a-fA-F]{6})\)$/);
   const oxMatch = columnSpec.match(/^(.+?)\(0x([0-9a-fA-F]{6})\)$/);
@@ -4675,21 +10684,25 @@ var parseColumnSpec = (columnSpec) => {
 };
 var createColumnStores = (settingsStore) => {
   const columnTagTable = derived([settingsStore], ([settings]) => {
-    var _a;
+    var _a5;
     const output = {};
-    for (const column of (_a = settings.columns) != null ? _a : []) {
+    for (const column of (_a5 = settings.columns) != null ? _a5 : []) {
       const parsed = parseColumnSpec(column);
-      output[kebab(parsed.label)] = parsed.label;
+      const key2 = kebab(parsed.label);
+      if (RESERVED_COLUMN_KEYS.has(key2)) continue;
+      output[key2] = parsed.label;
     }
     return output;
   });
   const columnColourTable = derived([settingsStore], ([settings]) => {
-    var _a;
+    var _a5;
     const output = {};
-    for (const column of (_a = settings.columns) != null ? _a : []) {
+    for (const column of (_a5 = settings.columns) != null ? _a5 : []) {
       const parsed = parseColumnSpec(column);
+      const key2 = kebab(parsed.label);
+      if (RESERVED_COLUMN_KEYS.has(key2)) continue;
       if (parsed.color) {
-        output[kebab(parsed.label)] = parsed.color;
+        output[key2] = parsed.color;
       }
     }
     return output;
@@ -4697,11 +10710,27 @@ var createColumnStores = (settingsStore) => {
   return { columnTagTable, columnColourTable };
 };
 function isColumnTag(input, columnTagTableStore) {
-  return input in get_store_value(columnTagTableStore);
+  return input in get2(columnTagTableStore);
 }
+var DEFAULT_UNCATEGORIZED_LABEL = "Uncategorized";
+var DEFAULT_DONE_LABEL = "Done";
+function resolveDefaultColumnName(column, uncategorizedColumnName, doneColumnName) {
+  switch (column) {
+    case "uncategorised":
+      return uncategorizedColumnName || DEFAULT_UNCATEGORIZED_LABEL;
+    case "done":
+      return doneColumnName || DEFAULT_DONE_LABEL;
+  }
+}
+var createCollapsedColumnsStore = (settingsStore) => {
+  return derived([settingsStore], ([settings]) => {
+    var _a5;
+    return new Set((_a5 = settings.collapsedColumns) != null ? _a5 : []);
+  });
+};
 
 // src/ui/components/column.svelte
-var import_obsidian4 = require("obsidian");
+var import_obsidian5 = require("obsidian");
 
 // src/ui/dnd/store.ts
 var isDraggingStore = writable(null);
@@ -4711,119 +10740,65 @@ var import_obsidian2 = require("obsidian");
 
 // src/ui/components/icon_button.svelte
 var import_obsidian = require("obsidian");
-function add_css(target) {
-  append_styles(target, "svelte-1ww0j6i", "button.svelte-1ww0j6i{width:24px;height:24px;display:flex;justify-content:center;align-items:center;border-radius:var(--radius-s);transition:background linear 100ms;cursor:pointer;background:unset;padding:0}");
-}
-function create_fragment(ctx) {
-  let button;
-  let mounted;
-  let dispose;
-  return {
-    c() {
-      button = element("button");
-      attr(button, "class", "svelte-1ww0j6i");
-    },
-    m(target, anchor) {
-      insert(target, button, anchor);
-      ctx[3](button);
-      if (!mounted) {
-        dispose = listen(
-          button,
-          "click",
-          /*click_handler*/
-          ctx[2]
-        );
-        mounted = true;
-      }
-    },
-    p: noop,
-    i: noop,
-    o: noop,
-    d(detaching) {
-      if (detaching) {
-        detach(button);
-      }
-      ctx[3](null);
-      mounted = false;
-      dispose();
-    }
-  };
-}
-function instance($$self, $$props, $$invalidate) {
-  let { icon } = $$props;
-  let element2;
-  function click_handler(event) {
-    bubble.call(this, $$self, event);
-  }
-  function button_binding($$value) {
-    binding_callbacks[$$value ? "unshift" : "push"](() => {
-      element2 = $$value;
-      $$invalidate(0, element2);
-    });
-  }
-  $$self.$$set = ($$props2) => {
-    if ("icon" in $$props2) $$invalidate(1, icon = $$props2.icon);
-  };
-  $$self.$$.update = () => {
-    if ($$self.$$.dirty & /*element, icon*/
-    3) {
-      $: {
-        if (element2) {
-          (0, import_obsidian.setIcon)(element2, icon);
-        }
-      }
-    }
-  };
-  return [element2, icon, click_handler, button_binding];
-}
-var Icon_button = class extends SvelteComponent {
-  constructor(options) {
-    super();
-    init(this, options, instance, create_fragment, safe_not_equal, { icon: 1 }, add_css);
-  }
+var root = from_html(`<button></button>`);
+var $$css = {
+  hash: "svelte-1igl4u1",
+  code: "button.svelte-1igl4u1 {width:24px;height:24px;display:flex;justify-content:center;align-items:center;border-radius:var(--radius-s);transition:background linear 100ms;cursor:pointer;background:unset;padding:0;}button.svelte-1igl4u1:focus-visible {outline:2px solid var(--background-modifier-border-focus);outline-offset:2px;}"
 };
-var icon_button_default = Icon_button;
+function Icon_button($$anchor, $$props) {
+  if (new.target) return createClassComponent({ component: Icon_button, ...$$anchor });
+  const $$sanitized_props = legacy_rest_props($$props, ["children", "$$slots", "$$events", "$$legacy"]);
+  const $$restProps = legacy_rest_props($$sanitized_props, ["icon"]);
+  push($$props, false);
+  append_styles($$anchor, $$css);
+  let icon = prop($$props, "icon", 12);
+  let element2 = mutable_source();
+  function handleKeydown(e) {
+    var _a5;
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      (_a5 = get(element2)) == null ? void 0 : _a5.click();
+    }
+  }
+  legacy_pre_effect(() => (get(element2), import_obsidian.setIcon, deep_read_state(icon())), () => {
+    if (get(element2)) {
+      (0, import_obsidian.setIcon)(get(element2), icon());
+    }
+  });
+  legacy_pre_effect_reset();
+  var $$exports = {
+    get icon() {
+      return icon();
+    },
+    set icon($$value) {
+      icon($$value);
+      flushSync();
+    },
+    $set: update_legacy_props,
+    $on: ($$event_name, $$event_cb) => add_legacy_event_listener($$props, $$event_name, $$event_cb)
+  };
+  init();
+  var button = root();
+  attribute_effect(button, () => ({ tabindex: "0", ...$$restProps }), void 0, void 0, void 0, "svelte-1igl4u1");
+  bind_this(button, ($$value) => set(element2, $$value), () => get(element2));
+  event("click", button, function($$arg) {
+    bubble_event.call(this, $$props, $$arg);
+  });
+  event("keydown", button, handleKeydown);
+  append($$anchor, button);
+  return pop($$exports);
+}
 
 // src/ui/components/task_menu.svelte
-function create_fragment2(ctx) {
-  let iconbutton;
-  let current;
-  iconbutton = new icon_button_default({ props: { icon: "lucide-more-vertical" } });
-  iconbutton.$on(
-    "click",
-    /*showMenu*/
-    ctx[1]
-  );
-  return {
-    c() {
-      create_component(iconbutton.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(iconbutton, target, anchor);
-      current = true;
-    },
-    p: noop,
-    i(local) {
-      if (current) return;
-      transition_in(iconbutton.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(iconbutton.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(iconbutton, detaching);
-    }
-  };
-}
-function instance2($$self, $$props, $$invalidate) {
-  let $columnTagTableStore, $$unsubscribe_columnTagTableStore = noop, $$subscribe_columnTagTableStore = () => ($$unsubscribe_columnTagTableStore(), $$unsubscribe_columnTagTableStore = subscribe(columnTagTableStore, ($$value) => $$invalidate(4, $columnTagTableStore = $$value)), columnTagTableStore);
-  $$self.$$.on_destroy.push(() => $$unsubscribe_columnTagTableStore());
-  let { task } = $$props;
-  let { taskActions } = $$props;
-  let { columnTagTableStore } = $$props;
-  $$subscribe_columnTagTableStore();
+function Task_menu($$anchor, $$props) {
+  if (new.target) return createClassComponent({ component: Task_menu, ...$$anchor });
+  push($$props, false);
+  const $columnTagTableStore = () => store_get(columnTagTableStore(), "$columnTagTableStore", $$stores);
+  const [$$stores, $$cleanup] = setup_stores();
+  let task = prop($$props, "task", 12);
+  let taskActions = prop($$props, "taskActions", 12);
+  let columnTagTableStore = prop($$props, "columnTagTableStore", 12);
+  let doneColumnName = prop($$props, "doneColumnName", 12, void 0);
   function showMenu(e) {
     const menu = new import_obsidian2.Menu();
     const target = e.target;
@@ -4834,606 +10809,390 @@ function instance2($$self, $$props, $$invalidate) {
     const y = boundingRect.top + boundingRect.height / 2;
     const x = boundingRect.left + boundingRect.width / 2;
     menu.addItem((i) => {
-      i.setTitle(`Go to file`).onClick(() => taskActions.viewFile(task.id));
+      i.setTitle(`Go to file`).onClick(() => taskActions().viewFile(task().id));
     });
     menu.addSeparator();
-    for (const [tag, label] of Object.entries($columnTagTableStore)) {
+    for (const [tag2, label] of Object.entries($columnTagTableStore())) {
       menu.addItem((i) => {
-        i.setTitle(`Move to ${label}`).onClick(() => taskActions.changeColumn(task.id, tag));
-        if (task.column === tag) {
+        i.setTitle(`Move to ${label}`).onClick(() => taskActions().changeColumn(task().id, tag2));
+        if (task().column === tag2) {
           i.setDisabled(true);
         }
       });
     }
     menu.addItem((i) => {
-      i.setTitle(`Move to Done`).onClick(() => taskActions.markDone(task.id));
-      if (task.done) {
+      i.setTitle(`Move to ${resolveDefaultColumnName("done", void 0, doneColumnName())}`).onClick(() => taskActions().markDone(task().id));
+      if (task().done) {
         i.setDisabled(true);
       }
     });
     menu.addSeparator();
     menu.addItem((i) => {
-      i.setTitle(`Archive task`).onClick(() => taskActions.archiveTasks([task.id]));
+      i.setTitle(`Duplicate task`).onClick(() => taskActions().duplicateTask(task().id));
     });
     menu.addItem((i) => {
-      i.setTitle(`Delete task`).onClick(() => taskActions.deleteTask(task.id));
+      if (task().isCancelled) {
+        i.setTitle(`Restore task`).onClick(() => taskActions().restoreTasks([task().id]));
+      } else {
+        i.setTitle(`Cancel task`).onClick(() => taskActions().cancelTasks([task().id]));
+      }
+    });
+    menu.addItem((i) => {
+      i.setTitle(`Archive task`).onClick(() => taskActions().archiveTasks([task().id]));
+    });
+    menu.addItem((i) => {
+      i.setTitle(`Delete task`).onClick(() => taskActions().deleteTask(task().id));
     });
     menu.showAtPosition({ x, y });
   }
-  $$self.$$set = ($$props2) => {
-    if ("task" in $$props2) $$invalidate(2, task = $$props2.task);
-    if ("taskActions" in $$props2) $$invalidate(3, taskActions = $$props2.taskActions);
-    if ("columnTagTableStore" in $$props2) $$subscribe_columnTagTableStore($$invalidate(0, columnTagTableStore = $$props2.columnTagTableStore));
+  var $$exports = {
+    get task() {
+      return task();
+    },
+    set task($$value) {
+      task($$value);
+      flushSync();
+    },
+    get taskActions() {
+      return taskActions();
+    },
+    set taskActions($$value) {
+      taskActions($$value);
+      flushSync();
+    },
+    get columnTagTableStore() {
+      return columnTagTableStore();
+    },
+    set columnTagTableStore($$value) {
+      columnTagTableStore($$value);
+      flushSync();
+    },
+    get doneColumnName() {
+      return doneColumnName();
+    },
+    set doneColumnName($$value) {
+      doneColumnName($$value);
+      flushSync();
+    },
+    $set: update_legacy_props,
+    $on: ($$event_name, $$event_cb) => add_legacy_event_listener($$props, $$event_name, $$event_cb)
   };
-  return [columnTagTableStore, showMenu, task, taskActions];
+  init();
+  Icon_button($$anchor, { icon: "lucide-more-vertical", $$events: { click: showMenu } });
+  var $$pop = pop($$exports);
+  $$cleanup();
+  return $$pop;
 }
-var Task_menu = class extends SvelteComponent {
-  constructor(options) {
-    super();
-    init(this, options, instance2, create_fragment2, safe_not_equal, {
-      task: 2,
-      taskActions: 3,
-      columnTagTableStore: 0
-    });
-  }
-};
-var task_menu_default = Task_menu;
 
-// src/ui/components/task.svelte
+// src/ui/components/icon.svelte
 var import_obsidian3 = require("obsidian");
-function add_css2(target) {
-  append_styles(target, "svelte-7bmxzm", '.task.svelte-7bmxzm.svelte-7bmxzm{background-color:var(--background-secondary-alt);border-radius:var(--radius-m);border:var(--border-width) solid var(--background-modifier-border);cursor:grab}.task.is-dragging.svelte-7bmxzm.svelte-7bmxzm{opacity:0.15}.task.svelte-7bmxzm .task-body.svelte-7bmxzm{padding:var(--size-4-2);display:grid;gap:var(--size-4-2);grid-template-columns:1fr auto}.task.svelte-7bmxzm .task-body p.svelte-7bmxzm{word-break:break-word;margin:0}.task.svelte-7bmxzm .task-body .task-content.svelte-7bmxzm{display:grid}.task.svelte-7bmxzm .task-body .task-content textarea.svelte-7bmxzm{cursor:text;background-color:var(--color-base-25);width:100%}.task.svelte-7bmxzm .task-body .task-content .content-preview.svelte-7bmxzm:focus-within{box-shadow:0 0 0 3px var(--background-modifier-border-focus)}.task.svelte-7bmxzm .task-footer.svelte-7bmxzm{border-top:var(--border-width) solid var(--background-modifier-border);padding:var(--size-4-2);padding-top:0}.task.svelte-7bmxzm .task-footer p.svelte-7bmxzm{margin:0;font-size:var(--font-ui-smaller)}.task.svelte-7bmxzm .task-tags.svelte-7bmxzm{display:flex;flex-wrap:wrap;gap:var(--size-4-1) var(--size-2-1);padding:var(--size-4-2) var(--size-2-2);padding-top:0}.task-content *{word-break:break-word;margin:0}.task-content img{max-width:100%;max-height:160px;object-fit:contain}.task-content code{white-space:pre-wrap}.task-content input[type="checkbox"]{pointer-events:none}');
-}
-function get_each_context(ctx, list, i) {
-  const child_ctx = ctx.slice();
-  child_ctx[23] = list[i];
-  return child_ctx;
-}
-function create_else_block(ctx) {
-  let div;
-  let mounted;
-  let dispose;
-  return {
-    c() {
-      div = element("div");
-      attr(div, "role", "button");
-      attr(div, "class", "content-preview markdown-rendered svelte-7bmxzm");
-      attr(div, "tabindex", "0");
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-      ctx[18](div);
-      if (!mounted) {
-        dispose = [
-          listen(
-            div,
-            "mouseup",
-            /*handleFocus*/
-            ctx[14]
-          ),
-          listen(
-            div,
-            "keypress",
-            /*handleOpenKeypress*/
-            ctx[11]
-          )
-        ];
-        mounted = true;
-      }
-    },
-    p: noop,
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-      ctx[18](null);
-      mounted = false;
-      run_all(dispose);
-    }
-  };
-}
-function create_if_block_2(ctx) {
-  let textarea;
-  let textarea_value_value;
-  let mounted;
-  let dispose;
-  return {
-    c() {
-      textarea = element("textarea");
-      textarea.value = textarea_value_value = /*task*/
-      ctx[0].content.replaceAll("<br />", "\n");
-      attr(textarea, "class", "svelte-7bmxzm");
-      toggle_class(
-        textarea,
-        "editing",
-        /*isEditing*/
-        ctx[4]
-      );
-    },
-    m(target, anchor) {
-      insert(target, textarea, anchor);
-      ctx[17](textarea);
-      if (!mounted) {
-        dispose = [
-          listen(
-            textarea,
-            "keypress",
-            /*handleKeypress*/
-            ctx[10]
-          ),
-          listen(
-            textarea,
-            "blur",
-            /*handleContentBlur*/
-            ctx[9]
-          ),
-          listen(textarea, "input", onInput)
-        ];
-        mounted = true;
-      }
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*task*/
-      1 && textarea_value_value !== (textarea_value_value = /*task*/
-      ctx2[0].content.replaceAll("<br />", "\n"))) {
-        textarea.value = textarea_value_value;
-      }
-      if (dirty & /*isEditing*/
-      16) {
-        toggle_class(
-          textarea,
-          "editing",
-          /*isEditing*/
-          ctx2[4]
-        );
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(textarea);
-      }
-      ctx[17](null);
-      mounted = false;
-      run_all(dispose);
-    }
-  };
-}
-function create_if_block_1(ctx) {
-  let div;
-  let p;
-  let t_value = (
-    /*task*/
-    ctx[0].path + ""
+var root2 = from_html(`<span class="icon svelte-1cj3qcy"></span>`);
+var $$css2 = {
+  hash: "svelte-1cj3qcy",
+  code: ".icon.svelte-1cj3qcy {display:inline-flex;justify-content:center;align-items:center;flex-shrink:0;}.icon.svelte-1cj3qcy svg {width:100%;height:100%;}"
+};
+function Icon($$anchor, $$props) {
+  if (new.target) return createClassComponent({ component: Icon, ...$$anchor });
+  push($$props, false);
+  append_styles($$anchor, $$css2);
+  let name = prop($$props, "name", 12);
+  let size2 = prop(
+    $$props,
+    "size",
+    12,
+    16
+    // Default icon size in pixels
   );
-  let t;
-  return {
-    c() {
-      div = element("div");
-      p = element("p");
-      t = text(t_value);
-      attr(p, "class", "svelte-7bmxzm");
-      attr(div, "class", "task-footer svelte-7bmxzm");
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-      append(div, p);
-      append(p, t);
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*task*/
-      1 && t_value !== (t_value = /*task*/
-      ctx2[0].path + "")) set_data(t, t_value);
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-    }
-  };
-}
-function create_if_block(ctx) {
-  let div;
-  let each_value = ensure_array_like(
-    /*task*/
-    ctx[0].tags
-  );
-  let each_blocks = [];
-  for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
-  }
-  return {
-    c() {
-      div = element("div");
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].c();
-      }
-      attr(div, "class", "task-tags svelte-7bmxzm");
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        if (each_blocks[i]) {
-          each_blocks[i].m(div, null);
-        }
-      }
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*task*/
-      1) {
-        each_value = ensure_array_like(
-          /*task*/
-          ctx2[0].tags
-        );
-        let i;
-        for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context(ctx2, each_value, i);
-          if (each_blocks[i]) {
-            each_blocks[i].p(child_ctx, dirty);
-          } else {
-            each_blocks[i] = create_each_block(child_ctx);
-            each_blocks[i].c();
-            each_blocks[i].m(div, null);
-          }
-        }
-        for (; i < each_blocks.length; i += 1) {
-          each_blocks[i].d(1);
-        }
-        each_blocks.length = each_value.length;
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-      destroy_each(each_blocks, detaching);
-    }
-  };
-}
-function create_each_block(ctx) {
-  let span2;
-  let span0;
-  let span1;
-  let t1_value = (
-    /*tag*/
-    ctx[23] + ""
-  );
-  let t1;
-  let t2;
-  return {
-    c() {
-      span2 = element("span");
-      span0 = element("span");
-      span0.textContent = "#";
-      span1 = element("span");
-      t1 = text(t1_value);
-      t2 = space();
-      attr(span0, "class", "cm-formatting cm-formatting-hashtag cm-hashtag cm-hashtag-begin cm-list-1");
-      attr(span1, "class", "cm-hashtag cm-hashtag-end cm-list-1");
-    },
-    m(target, anchor) {
-      insert(target, span2, anchor);
-      append(span2, span0);
-      append(span2, span1);
-      append(span1, t1);
-      append(span2, t2);
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*task*/
-      1 && t1_value !== (t1_value = /*tag*/
-      ctx2[23] + "")) set_data(t1, t1_value);
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(span2);
-      }
-    }
-  };
-}
-function create_fragment3(ctx) {
-  let div2;
-  let div1;
-  let div0;
-  let t0;
-  let taskmenu;
-  let t1;
-  let t2;
-  let div2_draggable_value;
-  let current;
-  let mounted;
-  let dispose;
-  function select_block_type(ctx2, dirty) {
-    if (
-      /*isEditing*/
-      ctx2[4]
-    ) return create_if_block_2;
-    return create_else_block;
-  }
-  let current_block_type = select_block_type(ctx, -1);
-  let if_block0 = current_block_type(ctx);
-  taskmenu = new task_menu_default({
-    props: {
-      task: (
-        /*task*/
-        ctx[0]
-      ),
-      taskActions: (
-        /*taskActions*/
-        ctx[1]
-      ),
-      columnTagTableStore: (
-        /*columnTagTableStore*/
-        ctx[2]
-      )
+  let opacity = prop($$props, "opacity", 12, 1);
+  let ariaLabel = prop($$props, "ariaLabel", 12, void 0);
+  let element2 = mutable_source();
+  onMount(() => {
+    if (get(element2)) {
+      (0, import_obsidian3.setIcon)(get(element2), name());
     }
   });
-  let if_block1 = (
-    /*showFilepath*/
-    ctx[3] && create_if_block_1(ctx)
-  );
-  let if_block2 = (
-    /*shouldconsolidateTags*/
-    ctx[8] && create_if_block(ctx)
-  );
-  return {
-    c() {
-      div2 = element("div");
-      div1 = element("div");
-      div0 = element("div");
-      if_block0.c();
-      t0 = space();
-      create_component(taskmenu.$$.fragment);
-      t1 = space();
-      if (if_block1) if_block1.c();
-      t2 = space();
-      if (if_block2) if_block2.c();
-      attr(div0, "class", "task-content svelte-7bmxzm");
-      attr(div1, "class", "task-body svelte-7bmxzm");
-      attr(div2, "class", "task svelte-7bmxzm");
-      attr(div2, "role", "group");
-      attr(div2, "draggable", div2_draggable_value = !/*isEditing*/
-      ctx[4]);
-      toggle_class(
-        div2,
-        "is-dragging",
-        /*isDragging*/
-        ctx[7]
-      );
-    },
-    m(target, anchor) {
-      insert(target, div2, anchor);
-      append(div2, div1);
-      append(div1, div0);
-      if_block0.m(div0, null);
-      append(div1, t0);
-      mount_component(taskmenu, div1, null);
-      append(div2, t1);
-      if (if_block1) if_block1.m(div2, null);
-      append(div2, t2);
-      if (if_block2) if_block2.m(div2, null);
-      current = true;
-      if (!mounted) {
-        dispose = [
-          listen(
-            div2,
-            "dragstart",
-            /*handleDragStart*/
-            ctx[12]
-          ),
-          listen(
-            div2,
-            "dragend",
-            /*handleDragEnd*/
-            ctx[13]
-          )
-        ];
-        mounted = true;
-      }
-    },
-    p(ctx2, [dirty]) {
-      if (current_block_type === (current_block_type = select_block_type(ctx2, dirty)) && if_block0) {
-        if_block0.p(ctx2, dirty);
-      } else {
-        if_block0.d(1);
-        if_block0 = current_block_type(ctx2);
-        if (if_block0) {
-          if_block0.c();
-          if_block0.m(div0, null);
-        }
-      }
-      const taskmenu_changes = {};
-      if (dirty & /*task*/
-      1) taskmenu_changes.task = /*task*/
-      ctx2[0];
-      if (dirty & /*taskActions*/
-      2) taskmenu_changes.taskActions = /*taskActions*/
-      ctx2[1];
-      if (dirty & /*columnTagTableStore*/
-      4) taskmenu_changes.columnTagTableStore = /*columnTagTableStore*/
-      ctx2[2];
-      taskmenu.$set(taskmenu_changes);
-      if (
-        /*showFilepath*/
-        ctx2[3]
-      ) {
-        if (if_block1) {
-          if_block1.p(ctx2, dirty);
-        } else {
-          if_block1 = create_if_block_1(ctx2);
-          if_block1.c();
-          if_block1.m(div2, t2);
-        }
-      } else if (if_block1) {
-        if_block1.d(1);
-        if_block1 = null;
-      }
-      if (
-        /*shouldconsolidateTags*/
-        ctx2[8]
-      ) {
-        if (if_block2) {
-          if_block2.p(ctx2, dirty);
-        } else {
-          if_block2 = create_if_block(ctx2);
-          if_block2.c();
-          if_block2.m(div2, null);
-        }
-      } else if (if_block2) {
-        if_block2.d(1);
-        if_block2 = null;
-      }
-      if (!current || dirty & /*isEditing*/
-      16 && div2_draggable_value !== (div2_draggable_value = !/*isEditing*/
-      ctx2[4])) {
-        attr(div2, "draggable", div2_draggable_value);
-      }
-      if (!current || dirty & /*isDragging*/
-      128) {
-        toggle_class(
-          div2,
-          "is-dragging",
-          /*isDragging*/
-          ctx2[7]
-        );
-      }
-    },
-    i(local) {
-      if (current) return;
-      transition_in(taskmenu.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(taskmenu.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div2);
-      }
-      if_block0.d();
-      destroy_component(taskmenu);
-      if (if_block1) if_block1.d();
-      if (if_block2) if_block2.d();
-      mounted = false;
-      run_all(dispose);
+  legacy_pre_effect(() => (get(element2), deep_read_state(name()), import_obsidian3.setIcon), () => {
+    if (get(element2) && name()) {
+      (0, import_obsidian3.setIcon)(get(element2), name());
     }
+  });
+  legacy_pre_effect_reset();
+  var $$exports = {
+    get name() {
+      return name();
+    },
+    set name($$value) {
+      name($$value);
+      flushSync();
+    },
+    get size() {
+      return size2();
+    },
+    set size($$value) {
+      size2($$value);
+      flushSync();
+    },
+    get opacity() {
+      return opacity();
+    },
+    set opacity($$value) {
+      opacity($$value);
+      flushSync();
+    },
+    get ariaLabel() {
+      return ariaLabel();
+    },
+    set ariaLabel($$value) {
+      ariaLabel($$value);
+      flushSync();
+    },
+    $set: update_legacy_props,
+    $on: ($$event_name, $$event_cb) => add_legacy_event_listener($$props, $$event_name, $$event_cb)
   };
+  init();
+  var span = root2();
+  let styles;
+  bind_this(span, ($$value) => set(element2, $$value), () => get(element2));
+  template_effect(() => {
+    var _a5, _b3;
+    set_attribute2(span, "aria-label", ariaLabel());
+    set_attribute2(span, "role", ariaLabel() ? "img" : void 0);
+    styles = set_style(span, "", styles, {
+      width: `${(_a5 = size2()) != null ? _a5 : ""}px`,
+      height: `${(_b3 = size2()) != null ? _b3 : ""}px`,
+      opacity: opacity()
+    });
+  });
+  append($$anchor, span);
+  return pop($$exports);
 }
-function onInput(e) {
-  e.currentTarget.style.height = `0px`;
-  e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`;
-}
-function instance3($$self, $$props, $$invalidate) {
-  let shouldconsolidateTags;
-  let { app } = $$props;
-  let { task } = $$props;
-  let { taskActions } = $$props;
-  let { columnTagTableStore } = $$props;
-  let { showFilepath } = $$props;
-  let { consolidateTags } = $$props;
+
+// src/ui/components/task.svelte
+var import_obsidian4 = require("obsidian");
+var root_1 = from_html(`<button role="checkbox" tabindex="0"><!></button>`);
+var root_2 = from_html(`<textarea></textarea>`);
+var root_3 = from_html(`<div role="button" class="content-preview markdown-rendered svelte-1fvsaoa" tabindex="0"></div>`);
+var root_4 = from_html(`<div class="task-footer svelte-1fvsaoa"><button class="go-to-file-button svelte-1fvsaoa" aria-label="Go to file" title="Go to file" tabindex="0"><!> <span class="file-path svelte-1fvsaoa"> </span></button></div>`);
+var root_6 = from_html(`<span><span class="cm-formatting cm-formatting-hashtag cm-hashtag cm-hashtag-begin cm-list-1">#</span><span class="cm-hashtag cm-hashtag-end cm-list-1"> </span></span>`);
+var root_5 = from_html(`<div class="task-tags svelte-1fvsaoa"></div>`);
+var root3 = from_html(`<div role="group"><div class="task-row svelte-1fvsaoa"><div class="task-row-left svelte-1fvsaoa"><!></div> <div class="task-row-content svelte-1fvsaoa"><!></div> <div class="task-row-right svelte-1fvsaoa"><!></div></div> <!> <!></div>`);
+var $$css3 = {
+  hash: "svelte-1fvsaoa",
+  code: '.task.svelte-1fvsaoa {background-color:var(--background-secondary-alt);border-radius:var(--radius-m);border:var(--border-width) solid var(--background-modifier-border);cursor:grab;}.task.is-dragging.svelte-1fvsaoa {opacity:0.15;}.task.is-selected.svelte-1fvsaoa {border-color:var(--interactive-accent);background-color:color-mix(in srgb, var(--interactive-accent) 8%, var(--background-secondary-alt));}.task.svelte-1fvsaoa .task-row:where(.svelte-1fvsaoa) {padding:var(--size-4-2);padding-inline-start:calc(var(--size-4-2) + 8px);display:flex;gap:var(--size-4-1);align-items:flex-start;}.task.svelte-1fvsaoa .task-row:where(.svelte-1fvsaoa) .task-row-left:where(.svelte-1fvsaoa) {display:flex;align-items:center;flex-shrink:0;}.task.svelte-1fvsaoa .task-row:where(.svelte-1fvsaoa) .task-row-content:where(.svelte-1fvsaoa) {flex:1;min-width:0;}.task.svelte-1fvsaoa .task-row:where(.svelte-1fvsaoa) .task-row-content:where(.svelte-1fvsaoa) textarea:where(.svelte-1fvsaoa) {cursor:text;background-color:var(--color-base-25);width:100%;}.task.svelte-1fvsaoa .task-row:where(.svelte-1fvsaoa) .task-row-content:where(.svelte-1fvsaoa) .content-preview:where(.svelte-1fvsaoa) {min-height:1.5rem;}.task.svelte-1fvsaoa .task-row:where(.svelte-1fvsaoa) .task-row-content:where(.svelte-1fvsaoa) .content-preview:where(.svelte-1fvsaoa):focus-within {box-shadow:0 0 0 3px var(--background-modifier-border-focus);}.task.svelte-1fvsaoa .task-row:where(.svelte-1fvsaoa) .task-row-right:where(.svelte-1fvsaoa) {display:flex;align-items:center;flex-shrink:0;}.task.is-selection-mode.svelte-1fvsaoa .task-row:where(.svelte-1fvsaoa) .task-row-left:where(.svelte-1fvsaoa) {width:0;flex:0 0 0;overflow:visible;z-index:1;}.task.is-selection-mode.svelte-1fvsaoa .select-task:where(.svelte-1fvsaoa) {transform:translateX(calc(var(--size-4-2) * -1));}.task.svelte-1fvsaoa .icon-button:where(.svelte-1fvsaoa) {display:flex;justify-content:center;align-items:center;width:24px;height:24px;padding:0;border:none;background:transparent;cursor:pointer;border-radius:var(--radius-s);transition:opacity 0.2s ease;box-shadow:none;}.task.svelte-1fvsaoa .icon-button:where(.svelte-1fvsaoa):hover, .task.svelte-1fvsaoa .icon-button:where(.svelte-1fvsaoa):active {background:transparent;box-shadow:none;}.task.svelte-1fvsaoa .icon-button:where(.svelte-1fvsaoa):focus-visible {outline:2px solid var(--background-modifier-border-focus);outline-offset:2px;}.task.svelte-1fvsaoa .icon-button.select-task:where(.svelte-1fvsaoa):hover svg {opacity:0.8 !important;color:var(--interactive-accent);}.task.svelte-1fvsaoa .icon-button.select-task.is-selected:where(.svelte-1fvsaoa) svg {color:var(--interactive-accent);}.task.svelte-1fvsaoa .task-footer:where(.svelte-1fvsaoa) {border-top:var(--border-width) solid var(--background-modifier-border);padding:var(--size-4-2);padding-top:var(--size-4-1);}.task.svelte-1fvsaoa .task-footer:where(.svelte-1fvsaoa) .go-to-file-button:where(.svelte-1fvsaoa) {display:flex;align-items:center;justify-content:flex-start;gap:var(--size-2-1);width:100%;padding:0;border:none;background:transparent;cursor:pointer;text-align:left;box-shadow:none;transition:opacity 0.2s ease;border-radius:var(--radius-s);}.task.svelte-1fvsaoa .task-footer:where(.svelte-1fvsaoa) .go-to-file-button:where(.svelte-1fvsaoa):hover {background:transparent;box-shadow:none;}.task.svelte-1fvsaoa .task-footer:where(.svelte-1fvsaoa) .go-to-file-button:where(.svelte-1fvsaoa):hover svg {opacity:1 !important;color:var(--interactive-accent);}.task.svelte-1fvsaoa .task-footer:where(.svelte-1fvsaoa) .go-to-file-button:where(.svelte-1fvsaoa):hover .file-path:where(.svelte-1fvsaoa) {color:var(--interactive-accent);}.task.svelte-1fvsaoa .task-footer:where(.svelte-1fvsaoa) .go-to-file-button:where(.svelte-1fvsaoa):focus-visible {outline:2px solid var(--background-modifier-border-focus);outline-offset:2px;}.task.svelte-1fvsaoa .task-footer:where(.svelte-1fvsaoa) .go-to-file-button:where(.svelte-1fvsaoa) .file-path:where(.svelte-1fvsaoa) {margin:0;font-size:var(--font-ui-smaller);color:var(--text-muted);transition:color 0.2s ease;overflow-wrap:anywhere;white-space:normal;flex:1;min-width:0;line-height:1.3;}.task.svelte-1fvsaoa .task-tags:where(.svelte-1fvsaoa) {display:flex;flex-wrap:wrap;gap:var(--size-4-1) var(--size-2-1);padding:var(--size-4-2) var(--size-2-2);padding-top:0;}.task-row-content img {max-width:100%;max-height:160px;object-fit:contain;}.task-row-content code {white-space:pre-wrap;}.task-row-content .content-preview,\n.task-row-content .content-preview > ul,\n.task-row-content .content-preview > ul > li,\n.task-row-content .content-preview > ul > li > p {margin:0;}.task .task-row-content .content-preview > ul {padding-left:var(--size-4-4, 16px);}.task-row-content .content-preview .task-list-item {min-width:0;word-break:break-word;}.task-row-content input.task-nested-checkbox {pointer-events:none;}.task-row-content .content-preview .task-list-item > input[type="checkbox"] {margin-right:var(--size-2-2);transform:translateY(2px);}.task-row-content .content-preview .task-list-item > *:not(input[type="checkbox"]) {min-width:0;}'
+};
+function Task($$anchor, $$props) {
+  if (new.target) return createClassComponent({ component: Task, ...$$anchor });
+  push($$props, false);
+  append_styles($$anchor, $$css3);
+  const shouldconsolidateTags = mutable_source();
+  let app = prop($$props, "app", 12);
+  let task = prop($$props, "task", 12);
+  let taskActions = prop($$props, "taskActions", 12);
+  let columnTagTableStore = prop($$props, "columnTagTableStore", 12);
+  let showFilepath = prop($$props, "showFilepath", 12);
+  let consolidateTags = prop($$props, "consolidateTags", 12);
+  let displayColumn = prop($$props, "displayColumn", 12);
+  let isSelectionMode = prop($$props, "isSelectionMode", 12, false);
+  let isSelected = prop($$props, "isSelected", 12, false);
+  let onToggleSelection = prop($$props, "onToggleSelection", 12, () => {
+  });
+  let selectedTaskIds = prop($$props, "selectedTaskIds", 28, () => []);
+  let doneColumnName = prop($$props, "doneColumnName", 12, void 0);
   function handleContentBlur() {
-    $$invalidate(4, isEditing = false);
-    const content = textAreaEl == null ? void 0 : textAreaEl.value;
+    var _a5;
+    set(isEditing, false);
+    const content = (_a5 = get(textAreaEl)) == null ? void 0 : _a5.value;
     if (!content) return;
     const updatedContent = content.replaceAll("\n", "<br />");
-    taskActions.updateContent(task.id, updatedContent);
+    taskActions().updateContent(task().id, updatedContent);
   }
   function handleKeypress(e) {
+    var _a5;
     if (e.key === "Enter" && !e.shiftKey || e.key === "Escape") {
-      textAreaEl == null ? void 0 : textAreaEl.blur();
+      (_a5 = get(textAreaEl)) == null ? void 0 : _a5.blur();
     }
   }
   function handleOpenKeypress(e) {
     if (e.key === "Enter" || e.key === " ") {
-      handleFocus();
+      handleFocus(e);
     }
   }
-  let isDragging = false;
-  let isEditing = false;
+  let isEditing = mutable_source(false);
+  let isDragging = mutable_source(false);
   function handleDragStart(e) {
     handleContentBlur();
-    $$invalidate(7, isDragging = true);
-    isDraggingStore.set({ fromColumn: task.column });
+    set(isDragging, true);
+    const taskIds = isSelectionMode() && isSelected() && selectedTaskIds().length > 0 ? selectedTaskIds() : [task().id];
+    isDraggingStore.set({ fromColumn: displayColumn(), draggedTaskIds: taskIds });
     if (e.dataTransfer) {
-      e.dataTransfer.setData("text/plain", task.id);
+      e.dataTransfer.setData("text/plain", task().id);
       e.dataTransfer.dropEffect = "move";
+    }
+    if (taskIds.length > 1 && e.dataTransfer) {
+      const ghost = document.createElement("div");
+      ghost.textContent = `Moving ${taskIds.length} tasks`;
+      ghost.style.cssText = [
+        "position:fixed",
+        "top:-9999px",
+        "left:-9999px",
+        "padding:6px 12px",
+        "background:var(--background-secondary-alt)",
+        "border:1px solid var(--background-modifier-border)",
+        "border-radius:var(--radius-m)",
+        "font-size:var(--font-ui-small)",
+        "color:var(--text-normal)",
+        "box-shadow:var(--shadow-s)",
+        "white-space:nowrap"
+      ].join(";");
+      document.body.appendChild(ghost);
+      e.dataTransfer.setDragImage(ghost, 0, 0);
+      setTimeout(() => document.body.removeChild(ghost), 0);
     }
   }
   function handleDragEnd() {
-    $$invalidate(7, isDragging = false);
+    set(isDragging, false);
     isDraggingStore.set(null);
   }
-  let textAreaEl;
-  let previewContainerEl;
+  let textAreaEl = mutable_source();
+  let previewContainerEl = mutable_source();
   let markdownComponent;
-  function handleFocus(e) {
+  const interactiveTagNames = /* @__PURE__ */ new Set([
+    "a",
+    "button",
+    "input",
+    "select",
+    "textarea",
+    "label",
+    "summary",
+    "details"
+  ]);
+  function eventHasInteractiveTarget(e) {
     const path = (e == null ? void 0 : e.composedPath()) || [];
+    const currentTarget = e == null ? void 0 : e.currentTarget;
     for (const element2 of path) {
-      if (element2 instanceof HTMLElement && element2.tagName.toLowerCase() === "a") {
-        return;
+      if (!(element2 instanceof HTMLElement)) {
+        continue;
+      }
+      if (currentTarget instanceof HTMLElement && element2 === currentTarget) {
+        continue;
+      }
+      if (interactiveTagNames.has(element2.tagName.toLowerCase())) {
+        return true;
+      }
+      if (element2.isContentEditable) {
+        return true;
+      }
+      const role = element2.getAttribute("role");
+      if (role === "button" || role === "checkbox" || role === "link") {
+        return true;
       }
     }
-    $$invalidate(4, isEditing = true);
+    return false;
+  }
+  function handleFocus(e) {
+    if (eventHasInteractiveTarget(e)) {
+      return;
+    }
+    set(isEditing, true);
     setTimeout(
       () => {
-        textAreaEl == null ? void 0 : textAreaEl.focus();
+        var _a5;
+        (_a5 = get(textAreaEl)) == null ? void 0 : _a5.focus();
       },
       100
     );
   }
-  async function renderMarkdown() {
-    if (!previewContainerEl) return;
+  function renderTaskMarkdown() {
+    const contentWithBlockLink = (task().content + (task().blockLink ? ` ^${task().blockLink}` : "")).replaceAll("<br />", "\n");
+    const indentedContinuationLines = contentWithBlockLink.replaceAll("\n", "\n  ");
+    return `- [${task().displayStatus}] ${indentedContinuationLines}`;
+  }
+  async function renderMarkdown(selectionMode) {
+    if (!get(previewContainerEl)) return;
     if (markdownComponent) {
       markdownComponent.unload();
     }
-    previewContainerEl.empty();
-    markdownComponent = new import_obsidian3.Component();
-    const contentToRender = (task.content + (task.blockLink ? ` ^${task.blockLink}` : "")).replaceAll("<br />", "\n");
-    await import_obsidian3.MarkdownRenderer.render(app, contentToRender, previewContainerEl, task.path, markdownComponent);
+    get(previewContainerEl).empty();
+    markdownComponent = new import_obsidian4.Component();
+    const contentToRender = renderTaskMarkdown();
+    await import_obsidian4.MarkdownRenderer.render(app(), contentToRender, get(previewContainerEl), task().path, markdownComponent);
     setupLinkHandlers();
-    postProcessRenderedContent();
+    postProcessRenderedContent(selectionMode);
   }
   function setupLinkHandlers() {
-    if (!previewContainerEl) return;
-    const internalLinks = previewContainerEl.querySelectorAll("a.internal-link");
-    internalLinks.forEach((link) => {
-      const anchorEl = link;
+    if (!get(previewContainerEl)) return;
+    const internalLinks = get(previewContainerEl).querySelectorAll("a.internal-link");
+    internalLinks.forEach((link2) => {
+      const anchorEl = link2;
       anchorEl.addEventListener("click", (e) => {
         e.preventDefault();
         e.stopPropagation();
         const linkTarget = anchorEl.getAttribute("data-href");
-        if (linkTarget && app) {
-          app.workspace.openLinkText(linkTarget, task.path, true);
+        if (linkTarget && app()) {
+          app().workspace.openLinkText(linkTarget, task().path, import_obsidian4.Keymap.isModEvent(e));
         }
       });
       anchorEl.addEventListener("mouseover", (e) => {
         const linkTarget = anchorEl.getAttribute("data-href");
-        if (linkTarget && app && previewContainerEl) {
-          app.workspace.trigger("hover-link", {
+        if (linkTarget && app() && get(previewContainerEl)) {
+          app().workspace.trigger("hover-link", {
             event: e,
             source: "kanban-view",
-            hoverParent: previewContainerEl,
+            hoverParent: get(previewContainerEl),
             targetEl: anchorEl,
             linktext: linkTarget,
-            sourcePath: task.path
+            sourcePath: task().path
           });
         }
       });
     });
   }
-  function postProcessRenderedContent() {
-    if (!previewContainerEl) return;
-    previewContainerEl.querySelectorAll("a:not(.internal-link)").forEach((a) => {
+  function postProcessRenderedContent(selectionMode) {
+    if (!get(previewContainerEl)) return;
+    function stopPropagation2(e) {
+      e.stopPropagation();
+    }
+    function handlePrimaryCheckboxClick(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      void taskActions().toggleDone(task().id);
+    }
+    get(previewContainerEl).querySelectorAll("a:not(.internal-link)").forEach((a) => {
       const anchor = a;
       anchor.target = "_blank";
       anchor.rel = "noopener noreferrer";
-      anchor.addEventListener("click", (e) => e.stopPropagation());
-      anchor.addEventListener("keypress", (e) => e.stopPropagation());
+      anchor.addEventListener("click", stopPropagation2);
+      anchor.addEventListener("keypress", stopPropagation2);
     });
-    previewContainerEl.querySelectorAll('input[type="checkbox"]').forEach((cb) => {
-      const el = cb;
-      el.disabled = true;
+    const checkboxes = Array.from(get(previewContainerEl).querySelectorAll('input[type="checkbox"]'));
+    const [primaryCheckbox, ...nestedCheckboxes] = checkboxes;
+    if (primaryCheckbox) {
+      primaryCheckbox.classList.add("task-primary-checkbox");
+      primaryCheckbox.addEventListener("mousedown", stopPropagation2);
+      primaryCheckbox.addEventListener("mouseup", stopPropagation2);
+      primaryCheckbox.addEventListener("keypress", stopPropagation2);
+      if (selectionMode) {
+        primaryCheckbox.disabled = true;
+        primaryCheckbox.tabIndex = -1;
+        primaryCheckbox.style.visibility = "hidden";
+        primaryCheckbox.setAttribute("aria-hidden", "true");
+        primaryCheckbox.addEventListener("click", stopPropagation2);
+      } else {
+        primaryCheckbox.disabled = false;
+        primaryCheckbox.style.removeProperty("visibility");
+        primaryCheckbox.removeAttribute("aria-hidden");
+        primaryCheckbox.setAttribute("aria-label", task().done ? "Mark as incomplete" : "Mark as complete");
+        primaryCheckbox.addEventListener("click", handlePrimaryCheckboxClick);
+      }
+    }
+    nestedCheckboxes.forEach((checkbox) => {
+      checkbox.classList.add("task-nested-checkbox");
+      checkbox.disabled = true;
+      checkbox.tabIndex = -1;
+      checkbox.addEventListener("click", stopPropagation2);
+      checkbox.addEventListener("keypress", stopPropagation2);
     });
-    previewContainerEl.querySelectorAll("iframe, audio, video").forEach((el) => {
+    get(previewContainerEl).querySelectorAll("iframe, audio, video").forEach((el) => {
       el.remove();
     });
   }
@@ -5442,755 +11201,983 @@ function instance3($$self, $$props, $$invalidate) {
       markdownComponent.unload();
     }
   });
-  function textarea_binding($$value) {
-    binding_callbacks[$$value ? "unshift" : "push"](() => {
-      textAreaEl = $$value;
-      $$invalidate(5, textAreaEl);
-    });
+  function onInput(e) {
+    e.currentTarget.style.height = `0px`;
+    e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`;
   }
-  function div_binding($$value) {
-    binding_callbacks[$$value ? "unshift" : "push"](() => {
-      previewContainerEl = $$value;
-      $$invalidate(6, previewContainerEl);
-    });
-  }
-  $$self.$$set = ($$props2) => {
-    if ("app" in $$props2) $$invalidate(15, app = $$props2.app);
-    if ("task" in $$props2) $$invalidate(0, task = $$props2.task);
-    if ("taskActions" in $$props2) $$invalidate(1, taskActions = $$props2.taskActions);
-    if ("columnTagTableStore" in $$props2) $$invalidate(2, columnTagTableStore = $$props2.columnTagTableStore);
-    if ("showFilepath" in $$props2) $$invalidate(3, showFilepath = $$props2.showFilepath);
-    if ("consolidateTags" in $$props2) $$invalidate(16, consolidateTags = $$props2.consolidateTags);
-  };
-  $$self.$$.update = () => {
-    if ($$self.$$.dirty & /*task, isEditing, previewContainerEl*/
-    81) {
-      $: if (task && !isEditing && previewContainerEl) {
-        renderMarkdown();
+  legacy_pre_effect(
+    () => (deep_read_state(task()), get(isEditing), get(previewContainerEl), deep_read_state(isSelectionMode())),
+    () => {
+      if (task() && !get(isEditing) && get(previewContainerEl)) {
+        void renderMarkdown(isSelectionMode());
       }
     }
-    if ($$self.$$.dirty & /*textAreaEl*/
-    32) {
-      $: {
-        if (textAreaEl) {
-          $$invalidate(5, textAreaEl.style.height = `0px`, textAreaEl);
-          $$invalidate(5, textAreaEl.style.height = `${textAreaEl.scrollHeight}px`, textAreaEl);
-        }
-      }
+  );
+  legacy_pre_effect(() => get(textAreaEl), () => {
+    if (get(textAreaEl)) {
+      mutate(textAreaEl, get(textAreaEl).style.height = `0px`);
+      mutate(textAreaEl, get(textAreaEl).style.height = `${get(textAreaEl).scrollHeight}px`);
     }
-    if ($$self.$$.dirty & /*consolidateTags, task*/
-    65537) {
-      $: $$invalidate(8, shouldconsolidateTags = consolidateTags && task.tags.size > 0);
+  });
+  legacy_pre_effect(
+    () => (deep_read_state(consolidateTags()), deep_read_state(task())),
+    () => {
+      set(shouldconsolidateTags, consolidateTags() && task().tags.size > 0);
     }
+  );
+  legacy_pre_effect_reset();
+  var $$exports = {
+    get app() {
+      return app();
+    },
+    set app($$value) {
+      app($$value);
+      flushSync();
+    },
+    get task() {
+      return task();
+    },
+    set task($$value) {
+      task($$value);
+      flushSync();
+    },
+    get taskActions() {
+      return taskActions();
+    },
+    set taskActions($$value) {
+      taskActions($$value);
+      flushSync();
+    },
+    get columnTagTableStore() {
+      return columnTagTableStore();
+    },
+    set columnTagTableStore($$value) {
+      columnTagTableStore($$value);
+      flushSync();
+    },
+    get showFilepath() {
+      return showFilepath();
+    },
+    set showFilepath($$value) {
+      showFilepath($$value);
+      flushSync();
+    },
+    get consolidateTags() {
+      return consolidateTags();
+    },
+    set consolidateTags($$value) {
+      consolidateTags($$value);
+      flushSync();
+    },
+    get displayColumn() {
+      return displayColumn();
+    },
+    set displayColumn($$value) {
+      displayColumn($$value);
+      flushSync();
+    },
+    get isSelectionMode() {
+      return isSelectionMode();
+    },
+    set isSelectionMode($$value) {
+      isSelectionMode($$value);
+      flushSync();
+    },
+    get isSelected() {
+      return isSelected();
+    },
+    set isSelected($$value) {
+      isSelected($$value);
+      flushSync();
+    },
+    get onToggleSelection() {
+      return onToggleSelection();
+    },
+    set onToggleSelection($$value) {
+      onToggleSelection($$value);
+      flushSync();
+    },
+    get selectedTaskIds() {
+      return selectedTaskIds();
+    },
+    set selectedTaskIds($$value) {
+      selectedTaskIds($$value);
+      flushSync();
+    },
+    get doneColumnName() {
+      return doneColumnName();
+    },
+    set doneColumnName($$value) {
+      doneColumnName($$value);
+      flushSync();
+    },
+    $set: update_legacy_props,
+    $on: ($$event_name, $$event_cb) => add_legacy_event_listener($$props, $$event_name, $$event_cb)
   };
-  return [
-    task,
-    taskActions,
-    columnTagTableStore,
-    showFilepath,
-    isEditing,
-    textAreaEl,
-    previewContainerEl,
-    isDragging,
-    shouldconsolidateTags,
-    handleContentBlur,
-    handleKeypress,
-    handleOpenKeypress,
-    handleDragStart,
-    handleDragEnd,
-    handleFocus,
-    app,
-    consolidateTags,
-    textarea_binding,
-    div_binding
-  ];
-}
-var Task = class extends SvelteComponent {
-  constructor(options) {
-    super();
-    init(
-      this,
-      options,
-      instance3,
-      create_fragment3,
-      safe_not_equal,
+  init();
+  var div = root3();
+  let classes;
+  var div_1 = child(div);
+  var div_2 = child(div_1);
+  var node = child(div_2);
+  {
+    var consequent = ($$anchor2) => {
+      var button = root_1();
+      let classes_1;
+      var node_1 = child(button);
       {
-        app: 15,
-        task: 0,
-        taskActions: 1,
-        columnTagTableStore: 2,
-        showFilepath: 3,
-        consolidateTags: 16
-      },
-      add_css2
-    );
+        let $0 = derived_safe_equal(() => isSelected() ? "lucide-check-square" : "lucide-square");
+        let $1 = derived_safe_equal(() => isSelected() ? 1 : 0.5);
+        Icon(node_1, {
+          get name() {
+            return get($0);
+          },
+          size: 18,
+          get opacity() {
+            return get($1);
+          }
+        });
+      }
+      reset(button);
+      template_effect(() => {
+        classes_1 = set_class(button, 1, "icon-button select-task svelte-1fvsaoa", null, classes_1, { "is-selected": isSelected() });
+        set_attribute2(button, "aria-label", isSelected() ? "Deselect for bulk actions" : "Select for bulk actions");
+        set_attribute2(button, "aria-checked", isSelected());
+        set_attribute2(button, "title", isSelected() ? "Deselect for bulk actions" : "Select for bulk actions");
+      });
+      event("click", button, function(...$$args) {
+        var _a5;
+        (_a5 = onToggleSelection()) == null ? void 0 : _a5.apply(this, $$args);
+      });
+      event("keydown", button, (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onToggleSelection()();
+        }
+      });
+      append($$anchor2, button);
+    };
+    if_block(node, ($$render) => {
+      if (isSelectionMode()) $$render(consequent);
+    });
   }
-};
-var task_default = Task;
+  reset(div_2);
+  var div_3 = sibling(div_2, 2);
+  var node_2 = child(div_3);
+  {
+    var consequent_1 = ($$anchor2) => {
+      var textarea = root_2();
+      remove_textarea_child(textarea);
+      let classes_2;
+      bind_this(textarea, ($$value) => set(textAreaEl, $$value), () => get(textAreaEl));
+      template_effect(
+        ($0) => {
+          set_value(textarea, $0);
+          classes_2 = set_class(textarea, 1, "svelte-1fvsaoa", null, classes_2, { editing: get(isEditing) });
+        },
+        [
+          () => (deep_read_state(task()), untrack(() => task().content.replaceAll("<br />", "\n")))
+        ]
+      );
+      event("keypress", textarea, handleKeypress);
+      event("blur", textarea, handleContentBlur);
+      event("input", textarea, onInput);
+      append($$anchor2, textarea);
+    };
+    var alternate = ($$anchor2) => {
+      var div_4 = root_3();
+      bind_this(div_4, ($$value) => set(previewContainerEl, $$value), () => get(previewContainerEl));
+      event("mouseup", div_4, handleFocus);
+      event("keypress", div_4, handleOpenKeypress);
+      append($$anchor2, div_4);
+    };
+    if_block(node_2, ($$render) => {
+      if (get(isEditing)) $$render(consequent_1);
+      else $$render(alternate, -1);
+    });
+  }
+  reset(div_3);
+  var div_5 = sibling(div_3, 2);
+  var node_3 = child(div_5);
+  Task_menu(node_3, {
+    get task() {
+      return task();
+    },
+    get taskActions() {
+      return taskActions();
+    },
+    get columnTagTableStore() {
+      return columnTagTableStore();
+    },
+    get doneColumnName() {
+      return doneColumnName();
+    }
+  });
+  reset(div_5);
+  reset(div_1);
+  var node_4 = sibling(div_1, 2);
+  {
+    var consequent_2 = ($$anchor2) => {
+      var div_6 = root_4();
+      var button_1 = child(div_6);
+      var node_5 = child(button_1);
+      Icon(node_5, { name: "lucide-arrow-up-right", size: 18, opacity: 0.5 });
+      var span = sibling(node_5, 2);
+      var text2 = child(span, true);
+      reset(span);
+      reset(button_1);
+      reset(div_6);
+      template_effect(() => set_text(text2, (deep_read_state(task()), untrack(() => task().path))));
+      event("click", button_1, (e) => taskActions().viewFile(task().id, e));
+      event("keydown", button_1, (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          taskActions().viewFile(task().id, e);
+        }
+      });
+      append($$anchor2, div_6);
+    };
+    if_block(node_4, ($$render) => {
+      if (showFilepath()) $$render(consequent_2);
+    });
+  }
+  var node_6 = sibling(node_4, 2);
+  {
+    var consequent_3 = ($$anchor2) => {
+      var div_7 = root_5();
+      each(div_7, 5, () => (deep_read_state(task()), untrack(() => task().tags)), index, ($$anchor3, tag2) => {
+        var span_1 = root_6();
+        var span_2 = sibling(child(span_1));
+        var text_1 = child(span_2, true);
+        reset(span_2);
+        reset(span_1);
+        template_effect(() => set_text(text_1, get(tag2)));
+        append($$anchor3, span_1);
+      });
+      reset(div_7);
+      append($$anchor2, div_7);
+    };
+    if_block(node_6, ($$render) => {
+      if (get(shouldconsolidateTags)) $$render(consequent_3);
+    });
+  }
+  reset(div);
+  template_effect(() => {
+    classes = set_class(div, 1, "task svelte-1fvsaoa", null, classes, {
+      "is-dragging": get(isDragging),
+      "is-selected": isSelectionMode() && isSelected(),
+      "is-selection-mode": isSelectionMode()
+    });
+    set_attribute2(div, "draggable", !get(isEditing));
+  });
+  event("dragstart", div, handleDragStart);
+  event("dragend", div, handleDragEnd);
+  append($$anchor, div);
+  return pop($$exports);
+}
+
+// src/ui/selection/task_selection_store.ts
+var taskSelectionStore = writable(/* @__PURE__ */ new Map());
+function toggleTaskSelection(taskId) {
+  taskSelectionStore.update((map) => {
+    const current = map.get(taskId) || false;
+    map.set(taskId, !current);
+    return new Map(map);
+  });
+}
+function isTaskSelected(taskId, selectionMap) {
+  return selectionMap.get(taskId) || false;
+}
+function getSelectedTaskCount(taskIds, selectionMap) {
+  return taskIds.filter((id) => selectionMap.get(id) || false).length;
+}
+function clearColumnSelections(columnTaskIds) {
+  taskSelectionStore.update((map) => {
+    for (const id of columnTaskIds) {
+      map.delete(id);
+    }
+    return new Map(map);
+  });
+}
+
+// src/ui/selection/selection_mode_store.ts
+var selectionModeStore = writable(/* @__PURE__ */ new Map());
+function toggleSelectionMode(column) {
+  selectionModeStore.update((map) => {
+    const current = map.get(column) || false;
+    const newMode = !current;
+    map.set(column, newMode);
+    if (current && !newMode) {
+      taskSelectionStore.set(/* @__PURE__ */ new Map());
+    }
+    return new Map(map);
+  });
+}
+function isInSelectionMode(column, modeMap) {
+  return modeMap.get(column) || false;
+}
 
 // src/ui/components/column.svelte
-function add_css3(target) {
-  append_styles(target, "svelte-1k2d6h5", ".column.svelte-1k2d6h5.svelte-1k2d6h5{display:flex;flex-direction:column;align-self:flex-start;width:300px;flex-shrink:0;padding:var(--size-4-3);border-radius:var(--radius-m);border:var(--border-width) solid var(--background-modifier-border);background-color:var(--background-secondary)}.column.drop-active.svelte-1k2d6h5 .tasks-wrapper .tasks.svelte-1k2d6h5{opacity:0.4}.column.drop-active.drop-hover.svelte-1k2d6h5 .tasks-wrapper.svelte-1k2d6h5{border-color:var(--color-base-70)}.column.svelte-1k2d6h5 .header.svelte-1k2d6h5{display:flex;justify-content:space-between;align-items:center;height:24px;flex-shrink:0}.column.svelte-1k2d6h5 .header h2.svelte-1k2d6h5{font-size:var(--font-ui-larger);font-weight:var(--font-bold);margin:0}.column.svelte-1k2d6h5 .divide.svelte-1k2d6h5{width:calc(100% + 2 * var(--size-4-3));border-bottom:var(--border-width) solid var(--column-color, var(--background-modifier-border));margin:var(--size-4-3) calc(-1 * var(--size-4-3))}.column.svelte-1k2d6h5 .tasks-wrapper.svelte-1k2d6h5{height:100%;min-height:50px;border:var(--border-width) dashed transparent;border-radius:var(--radius-m)}.column.svelte-1k2d6h5 .tasks-wrapper .tasks.svelte-1k2d6h5{display:flex;flex-direction:column;gap:var(--size-4-2)}.column.svelte-1k2d6h5 .tasks-wrapper .tasks button.svelte-1k2d6h5{display:flex;align-items:center;cursor:pointer}.column.svelte-1k2d6h5 .tasks-wrapper .tasks button span.svelte-1k2d6h5{height:18px}");
-}
-function get_each_context2(ctx, list, i) {
-  const child_ctx = ctx.slice();
-  child_ctx[25] = list[i];
-  return child_ctx;
-}
-function create_if_block2(ctx) {
-  let div4;
-  let div0;
-  let h2;
-  let t0;
-  let t1;
-  let t2;
-  let div1;
-  let t3;
-  let div3;
-  let div2;
-  let t4;
-  let show_if = isColumnTag(
-    /*column*/
-    ctx[1],
-    /*columnTagTableStore*/
-    ctx[5]
-  );
-  let div4_style_value;
-  let current;
-  let mounted;
-  let dispose;
-  let if_block0 = (
-    /*column*/
-    ctx[1] === "done" && create_if_block_22(ctx)
-  );
-  let each_value = ensure_array_like(
-    /*sortedTasks*/
-    ctx[12]
-  );
-  let each_blocks = [];
-  for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block2(get_each_context2(ctx, each_value, i));
+var root_32 = from_html(`<div class="selection-info svelte-ncpvit" aria-live="polite"> </div>`);
+var root_42 = from_html(`<div class="divide svelte-ncpvit"></div>`);
+var root_62 = from_html(`<div class="new-task-input svelte-ncpvit"><textarea placeholder="Task name..." class="svelte-ncpvit"></textarea></div>`);
+var root_9 = from_html(`<span class="file-indicator-label svelte-ncpvit">(default)</span>`);
+var root_10 = from_html(`<span class="file-indicator-change svelte-ncpvit" role="button" tabindex="0">(change)</span>`);
+var root_8 = from_html(`<div class="file-indicator svelte-ncpvit"><span class="file-indicator-arrow svelte-ncpvit">\u2192</span> <span class="file-indicator-name svelte-ncpvit"> </span> <!></div>`);
+var root_7 = from_html(`<button class="add-new-btn svelte-ncpvit"><span class="svelte-ncpvit"></span> Add new</button> <!>`, 1);
+var root_12 = from_html(`<div role="group"><div><div class="header svelte-ncpvit"><button class="collapse-btn svelte-ncpvit"> </button> <h2 class="svelte-ncpvit"> </h2> <span class="task-count svelte-ncpvit" aria-live="polite"> </span> <div class="header-menu svelte-ncpvit"><div class="mode-toggle svelte-ncpvit" role="toolbar" aria-label="Column interaction mode"><button aria-label="Done mode: click tasks to mark complete">Done</button> <button aria-label="Select mode: click tasks to select for bulk actions">Select</button></div> <!></div></div> <!></div> <!> <div class="tasks-wrapper svelte-ncpvit"><div class="tasks svelte-ncpvit"></div> <!> <!></div></div>`);
+var $$css4 = {
+  hash: "svelte-ncpvit",
+  code: ".column.svelte-ncpvit {display:flex;flex-direction:column;align-self:flex-start;width:var(--column-width, 300px);flex-shrink:0;padding:var(--size-4-3);border-radius:var(--radius-m);border:var(--border-width) solid var(--background-modifier-border);background-color:var(--background-secondary);transition:width 250ms ease;overflow:hidden;}.column.collapsed.svelte-ncpvit {width:48px;cursor:pointer;}.column.collapsed.drop-hover.svelte-ncpvit {border-color:var(--color-base-70);}.column.collapsed.svelte-ncpvit .divide:where(.svelte-ncpvit),\n.column.collapsed.svelte-ncpvit .tasks-wrapper:where(.svelte-ncpvit) {display:none;}.column.collapsed.svelte-ncpvit .column-header:where(.svelte-ncpvit) .header:where(.svelte-ncpvit) {flex-direction:column;align-items:center;min-height:unset;gap:var(--size-4-2);}.column.collapsed.svelte-ncpvit .column-header:where(.svelte-ncpvit) .header:where(.svelte-ncpvit) h2:where(.svelte-ncpvit) {writing-mode:vertical-rl;text-orientation:mixed;white-space:nowrap;overflow:visible;text-overflow:unset;order:2;flex:0 0 auto;}.column.collapsed.svelte-ncpvit .column-header:where(.svelte-ncpvit) .header:where(.svelte-ncpvit) .task-count:where(.svelte-ncpvit) {order:3;writing-mode:horizontal-tb;}.column.collapsed.svelte-ncpvit .column-header:where(.svelte-ncpvit) .header:where(.svelte-ncpvit) .header-menu:where(.svelte-ncpvit) {display:none;}.column.collapsed.svelte-ncpvit .column-header:where(.svelte-ncpvit) .header:where(.svelte-ncpvit) .collapse-btn:where(.svelte-ncpvit) {order:1;}.column.vertical-flow.vertical-collapsed.drop-hover.svelte-ncpvit {border-color:var(--color-base-70);}.column.vertical-flow.vertical-collapsed.svelte-ncpvit .divide:where(.svelte-ncpvit),\n.column.vertical-flow.vertical-collapsed.svelte-ncpvit .tasks-wrapper:where(.svelte-ncpvit) {display:none;}.column.vertical-flow.vertical-collapsed.svelte-ncpvit .column-header.row-header:where(.svelte-ncpvit) {margin-bottom:0;}.column.vertical-flow.vertical-collapsed.svelte-ncpvit .column-header.row-header:where(.svelte-ncpvit) .header-menu:where(.svelte-ncpvit) {display:none;}.column.vertical-flow.svelte-ncpvit {width:100%;}.column.vertical-flow.svelte-ncpvit .tasks-wrapper:where(.svelte-ncpvit) {width:100%;display:flex;flex-direction:column;gap:var(--size-4-2);}.column.vertical-flow.svelte-ncpvit .tasks-wrapper:where(.svelte-ncpvit) .tasks:where(.svelte-ncpvit) {flex-direction:row;flex-wrap:wrap;align-items:flex-start;}.column.vertical-flow.svelte-ncpvit .tasks-wrapper:where(.svelte-ncpvit) .tasks:where(.svelte-ncpvit) .task {width:min(var(--column-width, 300px), 100%);flex-shrink:0;}.column.svelte-ncpvit .column-header.row-header:where(.svelte-ncpvit) {display:flex;align-items:center;gap:var(--size-4-2);margin-bottom:var(--size-4-2);}.column.svelte-ncpvit .column-header.row-header:where(.svelte-ncpvit) .header:where(.svelte-ncpvit) {margin-right:0;}.column.drop-active.svelte-ncpvit .tasks-wrapper:where(.svelte-ncpvit) .tasks:where(.svelte-ncpvit) {opacity:0.4;}.column.drop-active.drop-hover.svelte-ncpvit .tasks-wrapper:where(.svelte-ncpvit) {border-color:var(--color-base-70);}.column.svelte-ncpvit .header:where(.svelte-ncpvit) {display:flex;align-items:center;min-height:24px;flex-shrink:0;gap:var(--size-2-2);}.column.svelte-ncpvit .header:where(.svelte-ncpvit) h2:where(.svelte-ncpvit) {font-size:var(--font-ui-larger);font-weight:var(--font-bold);margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}.column.svelte-ncpvit .header:where(.svelte-ncpvit) .task-count:where(.svelte-ncpvit) {font-size:var(--font-ui-smaller);color:var(--text-muted);white-space:nowrap;}.column.svelte-ncpvit .header:where(.svelte-ncpvit) .header-menu:where(.svelte-ncpvit) {margin-left:auto;flex-shrink:0;display:flex;align-items:center;gap:var(--size-2-1);}.column.svelte-ncpvit .header:where(.svelte-ncpvit) .collapse-btn:where(.svelte-ncpvit) {background:transparent;border:none;cursor:pointer;color:var(--text-muted);padding:0;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-s);font-size:var(--font-ui-smaller);line-height:1;flex-shrink:0;transition:color 0.15s ease, background 0.15s ease;}.column.svelte-ncpvit .header:where(.svelte-ncpvit) .collapse-btn:where(.svelte-ncpvit):hover {color:var(--text-normal);background:var(--background-modifier-hover);}.column.svelte-ncpvit .header:where(.svelte-ncpvit) .collapse-btn:where(.svelte-ncpvit):focus-visible {outline:2px solid var(--background-modifier-border-focus);outline-offset:2px;}.column.svelte-ncpvit .mode-toggle:where(.svelte-ncpvit) {display:flex;align-items:center;background:color-mix(in srgb, var(--column-color, var(--background-modifier-border)) 20%, var(--background-secondary));border-radius:var(--radius-s);padding:2px;gap:0;}.column.svelte-ncpvit .mode-toggle:where(.svelte-ncpvit) .mode-btn:where(.svelte-ncpvit) {font-size:var(--font-ui-smaller);padding:2px 7px;border:none;background:transparent;color:var(--text-muted);border-radius:calc(var(--radius-s) - 2px);cursor:pointer;transition:background 0.15s ease, color 0.15s ease;white-space:nowrap;box-shadow:none;line-height:1.4;}.column.svelte-ncpvit .mode-toggle:where(.svelte-ncpvit) .mode-btn:where(.svelte-ncpvit):hover {background:transparent;color:var(--text-normal);box-shadow:none;}.column.svelte-ncpvit .mode-toggle:where(.svelte-ncpvit) .mode-btn.active:where(.svelte-ncpvit) {background:color-mix(in srgb, var(--column-color, var(--background-modifier-border)) 60%, var(--background-secondary));color:var(--text-normal);font-weight:var(--font-medium);}.column.svelte-ncpvit .mode-toggle:where(.svelte-ncpvit) .mode-btn:where(.svelte-ncpvit):focus-visible {outline:2px solid var(--background-modifier-border-focus);outline-offset:1px;}.column.svelte-ncpvit .selection-info:where(.svelte-ncpvit) {font-size:var(--font-ui-smaller);color:var(--text-muted);margin-top:var(--size-2-1);}.column.svelte-ncpvit .divide:where(.svelte-ncpvit) {width:calc(100% + 2 * var(--size-4-3));border-bottom:var(--border-width) solid var(--column-color, var(--background-modifier-border));margin:var(--size-4-3) calc(-1 * var(--size-4-3));}.column.svelte-ncpvit .tasks-wrapper:where(.svelte-ncpvit) {min-height:50px;border:var(--border-width) dashed transparent;border-radius:var(--radius-m);}.column.svelte-ncpvit .tasks-wrapper:where(.svelte-ncpvit) .tasks:where(.svelte-ncpvit) {display:flex;flex-direction:column;gap:var(--size-4-2);}.column.svelte-ncpvit .tasks-wrapper:where(.svelte-ncpvit) .new-task-input:where(.svelte-ncpvit) {margin-top:var(--size-4-2);background-color:var(--background-secondary-alt);border-radius:var(--radius-m);border:var(--border-width) solid var(--background-modifier-border);padding:var(--size-4-2);}.column.svelte-ncpvit .tasks-wrapper:where(.svelte-ncpvit) .new-task-input:where(.svelte-ncpvit) textarea:where(.svelte-ncpvit) {cursor:text;background-color:var(--color-base-25);width:100%;}.column.svelte-ncpvit .tasks-wrapper:where(.svelte-ncpvit) .add-new-btn:where(.svelte-ncpvit) {display:flex;align-items:center;align-self:flex-start;cursor:pointer;margin-top:var(--size-4-2);}.column.svelte-ncpvit .tasks-wrapper:where(.svelte-ncpvit) .add-new-btn:where(.svelte-ncpvit) span:where(.svelte-ncpvit) {height:18px;}.column.svelte-ncpvit .tasks-wrapper:where(.svelte-ncpvit) .file-indicator:where(.svelte-ncpvit) {display:flex;align-items:center;gap:var(--size-2-1);font-size:var(--font-ui-smaller);color:var(--text-muted);margin-top:var(--size-2-1);}.column.svelte-ncpvit .tasks-wrapper:where(.svelte-ncpvit) .file-indicator:where(.svelte-ncpvit) .file-indicator-arrow:where(.svelte-ncpvit) {flex-shrink:0;}.column.svelte-ncpvit .tasks-wrapper:where(.svelte-ncpvit) .file-indicator:where(.svelte-ncpvit) .file-indicator-name:where(.svelte-ncpvit) {overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}.column.svelte-ncpvit .tasks-wrapper:where(.svelte-ncpvit) .file-indicator:where(.svelte-ncpvit) .file-indicator-label:where(.svelte-ncpvit) {white-space:nowrap;}.column.svelte-ncpvit .tasks-wrapper:where(.svelte-ncpvit) .file-indicator:where(.svelte-ncpvit) .file-indicator-change:where(.svelte-ncpvit) {color:var(--text-accent);cursor:pointer;white-space:nowrap;}.column.svelte-ncpvit .tasks-wrapper:where(.svelte-ncpvit) .file-indicator:where(.svelte-ncpvit) .file-indicator-change:where(.svelte-ncpvit):hover {text-decoration:underline;}"
+};
+function Column($$anchor, $$props) {
+  if (new.target) return createClassComponent({ component: Column, ...$$anchor });
+  push($$props, false);
+  append_styles($$anchor, $$css4);
+  const $columnTagTableStore = () => store_get(columnTagTableStore(), "$columnTagTableStore", $$stores);
+  const $columnColourTableStore = () => store_get(columnColourTableStore(), "$columnColourTableStore", $$stores);
+  const $selectionModeStore = () => store_get(selectionModeStore, "$selectionModeStore", $$stores);
+  const $taskSelectionStore = () => store_get(taskSelectionStore, "$taskSelectionStore", $$stores);
+  const $isDraggingStore = () => store_get(isDraggingStore, "$isDraggingStore", $$stores);
+  const [$$stores, $$cleanup] = setup_stores();
+  const columnTitle = mutable_source();
+  const columnColor = mutable_source();
+  const taskCountLabel = mutable_source();
+  const collapseIcon = mutable_source();
+  const isHorizontalCollapsed = mutable_source();
+  const isVerticalCollapsed = mutable_source();
+  const displayTaskCount = mutable_source();
+  const sortedTasks = mutable_source();
+  const isSelectMode = mutable_source();
+  const columnTaskIds = mutable_source();
+  const selectedCount = mutable_source();
+  const selectedIds = mutable_source();
+  const draggingData = mutable_source();
+  const canDrop = mutable_source();
+  const showContextMenu = mutable_source();
+  let app = prop($$props, "app", 12);
+  let column = prop($$props, "column", 12);
+  let hideOnEmpty = prop($$props, "hideOnEmpty", 12, false);
+  let tasks = prop($$props, "tasks", 12);
+  let taskActions = prop($$props, "taskActions", 12);
+  let columnTagTableStore = prop($$props, "columnTagTableStore", 12);
+  let columnColourTableStore = prop($$props, "columnColourTableStore", 12);
+  let showFilepath = prop($$props, "showFilepath", 12);
+  let consolidateTags = prop($$props, "consolidateTags", 12);
+  let isVerticalFlow = prop($$props, "isVerticalFlow", 12, false);
+  let targetTaskFile = prop($$props, "targetTaskFile", 12, null);
+  let targetFileIsDefault = prop($$props, "targetFileIsDefault", 12, false);
+  let isCollapsed = prop($$props, "isCollapsed", 12, false);
+  let onToggleCollapse = prop($$props, "onToggleCollapse", 12);
+  let uncategorizedColumnName = prop($$props, "uncategorizedColumnName", 12, void 0);
+  let doneColumnName = prop($$props, "doneColumnName", 12, void 0);
+  function getColumnTitle(column2, columnTagTable) {
+    switch (column2) {
+      case "done":
+      case "uncategorised":
+        return resolveDefaultColumnName(column2, uncategorizedColumnName(), doneColumnName());
+      default:
+        return columnTagTable[column2];
+    }
   }
-  const out = (i) => transition_out(each_blocks[i], 1, 1, () => {
-    each_blocks[i] = null;
-  });
-  let if_block1 = show_if && create_if_block_12(ctx);
-  return {
-    c() {
-      div4 = element("div");
-      div0 = element("div");
-      h2 = element("h2");
-      t0 = text(
-        /*columnTitle*/
-        ctx[14]
-      );
-      t1 = space();
-      if (if_block0) if_block0.c();
-      t2 = space();
-      div1 = element("div");
-      t3 = space();
-      div3 = element("div");
-      div2 = element("div");
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].c();
-      }
-      t4 = space();
-      if (if_block1) if_block1.c();
-      attr(h2, "class", "svelte-1k2d6h5");
-      attr(div0, "class", "header svelte-1k2d6h5");
-      attr(div1, "class", "divide svelte-1k2d6h5");
-      attr(div2, "class", "tasks svelte-1k2d6h5");
-      attr(div3, "class", "tasks-wrapper svelte-1k2d6h5");
-      attr(div4, "role", "group");
-      attr(div4, "class", "column svelte-1k2d6h5");
-      attr(div4, "style", div4_style_value = /*columnColor*/
-      ctx[13] ? `background-color: ${/*columnColor*/
-      ctx[13]};` : "");
-      toggle_class(div4, "drop-active", !!/*draggingData*/
-      ctx[10]);
-      toggle_class(
-        div4,
-        "drop-hover",
-        /*isDraggedOver*/
-        ctx[11]
-      );
-      set_style(
-        div4,
-        "--column-color",
-        /*columnColor*/
-        ctx[13]
-      );
-    },
-    m(target, anchor) {
-      insert(target, div4, anchor);
-      append(div4, div0);
-      append(div0, h2);
-      append(h2, t0);
-      append(div0, t1);
-      if (if_block0) if_block0.m(div0, null);
-      append(div4, t2);
-      append(div4, div1);
-      append(div4, t3);
-      append(div4, div3);
-      append(div3, div2);
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        if (each_blocks[i]) {
-          each_blocks[i].m(div2, null);
-        }
-      }
-      append(div2, t4);
-      if (if_block1) if_block1.m(div2, null);
-      current = true;
-      if (!mounted) {
-        dispose = [
-          listen(
-            div4,
-            "dragover",
-            /*handleDragOver*/
-            ctx[16]
-          ),
-          listen(
-            div4,
-            "dragleave",
-            /*handleDragLeave*/
-            ctx[17]
-          ),
-          listen(
-            div4,
-            "drop",
-            /*handleDrop*/
-            ctx[18]
-          )
-        ];
-        mounted = true;
-      }
-    },
-    p(ctx2, dirty) {
-      if (!current || dirty & /*columnTitle*/
-      16384) set_data(
-        t0,
-        /*columnTitle*/
-        ctx2[14]
-      );
-      if (
-        /*column*/
-        ctx2[1] === "done"
-      ) {
-        if (if_block0) {
-          if_block0.p(ctx2, dirty);
-          if (dirty & /*column*/
-          2) {
-            transition_in(if_block0, 1);
-          }
-        } else {
-          if_block0 = create_if_block_22(ctx2);
-          if_block0.c();
-          transition_in(if_block0, 1);
-          if_block0.m(div0, null);
-        }
-      } else if (if_block0) {
-        group_outros();
-        transition_out(if_block0, 1, 1, () => {
-          if_block0 = null;
-        });
-        check_outros();
-      }
-      if (dirty & /*app, sortedTasks, taskActions, columnTagTableStore, showFilepath, consolidateTags*/
-      4529) {
-        each_value = ensure_array_like(
-          /*sortedTasks*/
-          ctx2[12]
-        );
-        let i;
-        for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context2(ctx2, each_value, i);
-          if (each_blocks[i]) {
-            each_blocks[i].p(child_ctx, dirty);
-            transition_in(each_blocks[i], 1);
-          } else {
-            each_blocks[i] = create_each_block2(child_ctx);
-            each_blocks[i].c();
-            transition_in(each_blocks[i], 1);
-            each_blocks[i].m(div2, t4);
-          }
-        }
-        group_outros();
-        for (i = each_value.length; i < each_blocks.length; i += 1) {
-          out(i);
-        }
-        check_outros();
-      }
-      if (dirty & /*column, columnTagTableStore*/
-      34) show_if = isColumnTag(
-        /*column*/
-        ctx2[1],
-        /*columnTagTableStore*/
-        ctx2[5]
-      );
-      if (show_if) {
-        if (if_block1) {
-          if_block1.p(ctx2, dirty);
-        } else {
-          if_block1 = create_if_block_12(ctx2);
-          if_block1.c();
-          if_block1.m(div2, null);
-        }
-      } else if (if_block1) {
-        if_block1.d(1);
-        if_block1 = null;
-      }
-      if (!current || dirty & /*columnColor*/
-      8192 && div4_style_value !== (div4_style_value = /*columnColor*/
-      ctx2[13] ? `background-color: ${/*columnColor*/
-      ctx2[13]};` : "")) {
-        attr(div4, "style", div4_style_value);
-      }
-      if (!current || dirty & /*draggingData*/
-      1024) {
-        toggle_class(div4, "drop-active", !!/*draggingData*/
-        ctx2[10]);
-      }
-      if (!current || dirty & /*isDraggedOver*/
-      2048) {
-        toggle_class(
-          div4,
-          "drop-hover",
-          /*isDraggedOver*/
-          ctx2[11]
-        );
-      }
-      const style_changed = dirty & /*columnColor*/
-      8192;
-      if (dirty & /*columnColor*/
-      8192 || style_changed) {
-        set_style(
-          div4,
-          "--column-color",
-          /*columnColor*/
-          ctx2[13]
-        );
-      }
-    },
-    i(local) {
-      if (current) return;
-      transition_in(if_block0);
-      for (let i = 0; i < each_value.length; i += 1) {
-        transition_in(each_blocks[i]);
-      }
-      current = true;
-    },
-    o(local) {
-      transition_out(if_block0);
-      each_blocks = each_blocks.filter(Boolean);
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        transition_out(each_blocks[i]);
-      }
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div4);
-      }
-      if (if_block0) if_block0.d();
-      destroy_each(each_blocks, detaching);
-      if (if_block1) if_block1.d();
-      mounted = false;
-      run_all(dispose);
-    }
-  };
-}
-function create_if_block_22(ctx) {
-  let iconbutton;
-  let current;
-  iconbutton = new icon_button_default({ props: { icon: "lucide-more-vertical" } });
-  iconbutton.$on(
-    "click",
-    /*showMenu*/
-    ctx[15]
-  );
-  return {
-    c() {
-      create_component(iconbutton.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(iconbutton, target, anchor);
-      current = true;
-    },
-    p: noop,
-    i(local) {
-      if (current) return;
-      transition_in(iconbutton.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(iconbutton.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(iconbutton, detaching);
-    }
-  };
-}
-function create_each_block2(ctx) {
-  let taskcomponent;
-  let current;
-  taskcomponent = new task_default({
-    props: {
-      app: (
-        /*app*/
-        ctx[0]
-      ),
-      task: (
-        /*task*/
-        ctx[25]
-      ),
-      taskActions: (
-        /*taskActions*/
-        ctx[4]
-      ),
-      columnTagTableStore: (
-        /*columnTagTableStore*/
-        ctx[5]
-      ),
-      showFilepath: (
-        /*showFilepath*/
-        ctx[7]
-      ),
-      consolidateTags: (
-        /*consolidateTags*/
-        ctx[8]
-      )
-    }
-  });
-  return {
-    c() {
-      create_component(taskcomponent.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(taskcomponent, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      const taskcomponent_changes = {};
-      if (dirty & /*app*/
-      1) taskcomponent_changes.app = /*app*/
-      ctx2[0];
-      if (dirty & /*sortedTasks*/
-      4096) taskcomponent_changes.task = /*task*/
-      ctx2[25];
-      if (dirty & /*taskActions*/
-      16) taskcomponent_changes.taskActions = /*taskActions*/
-      ctx2[4];
-      if (dirty & /*columnTagTableStore*/
-      32) taskcomponent_changes.columnTagTableStore = /*columnTagTableStore*/
-      ctx2[5];
-      if (dirty & /*showFilepath*/
-      128) taskcomponent_changes.showFilepath = /*showFilepath*/
-      ctx2[7];
-      if (dirty & /*consolidateTags*/
-      256) taskcomponent_changes.consolidateTags = /*consolidateTags*/
-      ctx2[8];
-      taskcomponent.$set(taskcomponent_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(taskcomponent.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(taskcomponent.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(taskcomponent, detaching);
-    }
-  };
-}
-function create_if_block_12(ctx) {
-  let button;
-  let span;
-  let t;
-  let mounted;
-  let dispose;
-  return {
-    c() {
-      button = element("button");
-      span = element("span");
-      t = text("\n						Add new");
-      attr(span, "class", "svelte-1k2d6h5");
-      attr(button, "class", "svelte-1k2d6h5");
-    },
-    m(target, anchor) {
-      insert(target, button, anchor);
-      append(button, span);
-      ctx[22](span);
-      append(button, t);
-      if (!mounted) {
-        dispose = listen(
-          button,
-          "click",
-          /*click_handler*/
-          ctx[23]
-        );
-        mounted = true;
-      }
-    },
-    p: noop,
-    d(detaching) {
-      if (detaching) {
-        detach(button);
-      }
-      ctx[22](null);
-      mounted = false;
-      dispose();
-    }
-  };
-}
-function create_fragment4(ctx) {
-  let if_block_anchor;
-  let current;
-  let if_block = (!/*hideOnEmpty*/
-  ctx[2] || /*tasks*/
-  ctx[3].length) && create_if_block2(ctx);
-  return {
-    c() {
-      if (if_block) if_block.c();
-      if_block_anchor = empty();
-    },
-    m(target, anchor) {
-      if (if_block) if_block.m(target, anchor);
-      insert(target, if_block_anchor, anchor);
-      current = true;
-    },
-    p(ctx2, [dirty]) {
-      if (!/*hideOnEmpty*/
-      ctx2[2] || /*tasks*/
-      ctx2[3].length) {
-        if (if_block) {
-          if_block.p(ctx2, dirty);
-          if (dirty & /*hideOnEmpty, tasks*/
-          12) {
-            transition_in(if_block, 1);
-          }
-        } else {
-          if_block = create_if_block2(ctx2);
-          if_block.c();
-          transition_in(if_block, 1);
-          if_block.m(if_block_anchor.parentNode, if_block_anchor);
-        }
-      } else if (if_block) {
-        group_outros();
-        transition_out(if_block, 1, 1, () => {
-          if_block = null;
-        });
-        check_outros();
-      }
-    },
-    i(local) {
-      if (current) return;
-      transition_in(if_block);
-      current = true;
-    },
-    o(local) {
-      transition_out(if_block);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(if_block_anchor);
-      }
-      if (if_block) if_block.d(detaching);
-    }
-  };
-}
-function getColumnTitle(column, columnTagTable) {
-  switch (column) {
-    case "done":
-      return "Done";
-    case "uncategorised":
-      return "Uncategorised";
-    default:
-      return columnTagTable[column];
-  }
-}
-function instance4($$self, $$props, $$invalidate) {
-  let columnTitle;
-  let columnColor;
-  let sortedTasks;
-  let draggingData;
-  let canDrop;
-  let $isDraggingStore;
-  let $columnColourTableStore, $$unsubscribe_columnColourTableStore = noop, $$subscribe_columnColourTableStore = () => ($$unsubscribe_columnColourTableStore(), $$unsubscribe_columnColourTableStore = subscribe(columnColourTableStore, ($$value) => $$invalidate(20, $columnColourTableStore = $$value)), columnColourTableStore);
-  let $columnTagTableStore, $$unsubscribe_columnTagTableStore = noop, $$subscribe_columnTagTableStore = () => ($$unsubscribe_columnTagTableStore(), $$unsubscribe_columnTagTableStore = subscribe(columnTagTableStore, ($$value) => $$invalidate(21, $columnTagTableStore = $$value)), columnTagTableStore);
-  component_subscribe($$self, isDraggingStore, ($$value) => $$invalidate(19, $isDraggingStore = $$value));
-  $$self.$$.on_destroy.push(() => $$unsubscribe_columnColourTableStore());
-  $$self.$$.on_destroy.push(() => $$unsubscribe_columnTagTableStore());
-  let { app } = $$props;
-  let { column } = $$props;
-  let { hideOnEmpty = false } = $$props;
-  let { tasks } = $$props;
-  let { taskActions } = $$props;
-  let { columnTagTableStore } = $$props;
-  $$subscribe_columnTagTableStore();
-  let { columnColourTableStore } = $$props;
-  $$subscribe_columnColourTableStore();
-  let { showFilepath } = $$props;
-  let { consolidateTags } = $$props;
   function showMenu(e) {
-    const menu = new import_obsidian4.Menu();
-    menu.addItem((i) => {
-      i.setTitle(`Archive all`).onClick(() => taskActions.archiveTasks(tasks.map(({ id }) => id)));
-    });
+    const menu = new import_obsidian5.Menu();
+    if (get(isSelectMode) && get(selectedCount) > 0) {
+      if (column() !== "done") {
+        menu.addItem((i) => {
+          i.setTitle(`Move ${get(selectedCount)} selected to ${resolveDefaultColumnName("done", uncategorizedColumnName(), doneColumnName())}`).onClick(async () => {
+            for (const id of get(selectedIds)) {
+              await taskActions().markDone(id);
+            }
+            clearColumnSelections(get(columnTaskIds));
+          });
+        });
+      }
+      for (const [tag2, label] of Object.entries($columnTagTableStore())) {
+        const tagAsColumn = tag2;
+        if (tagAsColumn === column()) continue;
+        menu.addItem((i) => {
+          i.setTitle(`Move ${get(selectedCount)} selected to ${label}`).onClick(async () => {
+            for (const id of get(selectedIds)) {
+              await taskActions().changeColumn(id, tagAsColumn);
+            }
+            clearColumnSelections(get(columnTaskIds));
+          });
+        });
+      }
+      menu.addSeparator();
+      const selectedTasks = get(selectedIds).map((id) => get(sortedTasks).find((t) => t.id === id)).filter(Boolean);
+      const allCancelled = selectedTasks.length > 0 && selectedTasks.every((t) => t.isCancelled);
+      if (allCancelled) {
+        menu.addItem((i) => {
+          i.setTitle(`Restore ${get(selectedCount)} selected`).onClick(async () => {
+            await taskActions().restoreTasks(get(selectedIds));
+            clearColumnSelections(get(columnTaskIds));
+          });
+        });
+      } else {
+        menu.addItem((i) => {
+          i.setTitle(`Cancel ${get(selectedCount)} selected`).onClick(async () => {
+            await taskActions().cancelTasks(get(selectedIds));
+            clearColumnSelections(get(columnTaskIds));
+          });
+        });
+      }
+      menu.addSeparator();
+      menu.addItem((i) => {
+        i.setTitle(`Archive ${get(selectedCount)} selected`).onClick(async () => {
+          await taskActions().archiveTasks(get(selectedIds));
+          clearColumnSelections(get(columnTaskIds));
+        });
+      });
+    }
+    if (column() === "done") {
+      menu.addItem((i) => {
+        i.setTitle(`Archive all`).onClick(() => taskActions().archiveTasks(tasks().map(({ id }) => id)));
+      });
+    }
     menu.showAtMouseEvent(e);
   }
-  let isDraggedOver = false;
+  let isDraggedOver = mutable_source(false);
   function handleDragOver(e) {
     e.preventDefault();
-    if (!canDrop) {
+    if (!get(canDrop)) {
       if (e.dataTransfer) {
         e.dataTransfer.dropEffect = "none";
       }
       return;
     }
-    $$invalidate(11, isDraggedOver = true);
+    set(isDraggedOver, true);
     if (e.dataTransfer) {
       e.dataTransfer.dropEffect = "move";
     }
   }
   function handleDragLeave(e) {
-    $$invalidate(11, isDraggedOver = false);
+    set(isDraggedOver, false);
   }
-  function handleDrop(e) {
-    var _a;
+  async function handleDrop(e) {
     e.preventDefault();
-    if (!canDrop) {
+    set(isDraggedOver, false);
+    if (!get(canDrop) || !get(draggingData)) {
       return;
     }
-    const droppedId = (_a = e.dataTransfer) == null ? void 0 : _a.getData("text/plain");
-    if (droppedId) {
-      switch (column) {
+    const droppedIds = get(draggingData).draggedTaskIds.length > 0 ? get(draggingData).draggedTaskIds : (() => {
+      var _a5;
+      const id = (_a5 = e.dataTransfer) == null ? void 0 : _a5.getData("text/plain");
+      return id ? [id] : [];
+    })();
+    if (droppedIds.length === 0) return;
+    for (const id of droppedIds) {
+      switch (column()) {
         case "uncategorised":
           break;
         case "done":
-          taskActions.markDone(droppedId);
+          await taskActions().markDone(id);
           break;
         default:
-          taskActions.changeColumn(droppedId, column);
+          await taskActions().changeColumn(id, column());
           break;
       }
     }
+    clearColumnSelections(droppedIds);
   }
-  let buttonEl;
-  function span_binding($$value) {
-    binding_callbacks[$$value ? "unshift" : "push"](() => {
-      buttonEl = $$value;
-      $$invalidate(9, buttonEl);
+  let buttonEl = mutable_source();
+  let pendingNewTask = mutable_source(null);
+  let pendingCancelled = false;
+  let newTaskTextAreaEl = mutable_source();
+  async function handleNewTaskSave() {
+    var _a5, _b3;
+    if (pendingCancelled) {
+      pendingCancelled = false;
+      set(pendingNewTask, null);
+      return;
+    }
+    const content = (_b3 = (_a5 = get(newTaskTextAreaEl)) == null ? void 0 : _a5.value) == null ? void 0 : _b3.trim();
+    const file = get(pendingNewTask);
+    set(pendingNewTask, null);
+    if (!content || !file || !isColumnTag(column(), columnTagTableStore())) {
+      return;
+    }
+    await taskActions().createTask(file, content, column());
+  }
+  function handleNewTaskKeydown(e) {
+    var _a5, _b3;
+    if (e.key === "Escape") {
+      e.preventDefault();
+      pendingCancelled = true;
+      (_a5 = get(newTaskTextAreaEl)) == null ? void 0 : _a5.blur();
+    } else if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      (_b3 = get(newTaskTextAreaEl)) == null ? void 0 : _b3.blur();
+    }
+  }
+  legacy_pre_effect(
+    () => (deep_read_state(uncategorizedColumnName()), deep_read_state(doneColumnName()), deep_read_state(column()), $columnTagTableStore()),
+    () => {
+      set(columnTitle, (() => {
+        void uncategorizedColumnName();
+        void doneColumnName();
+        return getColumnTitle(column(), $columnTagTableStore());
+      })());
+    }
+  );
+  legacy_pre_effect(
+    () => (isColumnTag, deep_read_state(column()), deep_read_state(columnTagTableStore()), $columnColourTableStore()),
+    () => {
+      set(columnColor, isColumnTag(column(), columnTagTableStore()) ? $columnColourTableStore()[column()] : void 0);
+    }
+  );
+  legacy_pre_effect(() => deep_read_state(tasks()), () => {
+    set(taskCountLabel, tasks().length === 1 ? "1 task" : `${tasks().length} tasks`);
+  });
+  legacy_pre_effect(() => deep_read_state(isCollapsed()), () => {
+    set(collapseIcon, isCollapsed() ? "\u25B6" : "\u25BC");
+  });
+  legacy_pre_effect(
+    () => (deep_read_state(isCollapsed()), deep_read_state(isVerticalFlow())),
+    () => {
+      set(isHorizontalCollapsed, isCollapsed() && !isVerticalFlow());
+    }
+  );
+  legacy_pre_effect(
+    () => (deep_read_state(isCollapsed()), deep_read_state(isVerticalFlow())),
+    () => {
+      set(isVerticalCollapsed, isCollapsed() && isVerticalFlow());
+    }
+  );
+  legacy_pre_effect(
+    () => (deep_read_state(isCollapsed()), deep_read_state(tasks()), get(taskCountLabel)),
+    () => {
+      set(displayTaskCount, isCollapsed() ? `${tasks().length}` : get(taskCountLabel));
+    }
+  );
+  legacy_pre_effect(() => deep_read_state(tasks()), () => {
+    set(sortedTasks, [...tasks()].sort((a, b) => {
+      if (a.path === b.path) {
+        return a.rowIndex - b.rowIndex;
+      } else {
+        return a.path.localeCompare(b.path);
+      }
+    }));
+  });
+  legacy_pre_effect(
+    () => (isInSelectionMode, deep_read_state(column()), $selectionModeStore()),
+    () => {
+      set(isSelectMode, isInSelectionMode(column(), $selectionModeStore()));
+    }
+  );
+  legacy_pre_effect(() => get(sortedTasks), () => {
+    set(columnTaskIds, get(sortedTasks).map((t) => t.id));
+  });
+  legacy_pre_effect(
+    () => (getSelectedTaskCount, get(columnTaskIds), $taskSelectionStore()),
+    () => {
+      set(selectedCount, getSelectedTaskCount(get(columnTaskIds), $taskSelectionStore()));
+    }
+  );
+  legacy_pre_effect(() => (get(columnTaskIds), isTaskSelected, $taskSelectionStore()), () => {
+    set(selectedIds, get(columnTaskIds).filter((id) => isTaskSelected(id, $taskSelectionStore())));
+  });
+  legacy_pre_effect(() => $isDraggingStore(), () => {
+    set(draggingData, $isDraggingStore());
+  });
+  legacy_pre_effect(() => (get(draggingData), deep_read_state(column())), () => {
+    set(canDrop, !!get(draggingData) && get(draggingData).fromColumn !== column());
+  });
+  legacy_pre_effect(() => (get(buttonEl), import_obsidian5.setIcon), () => {
+    if (get(buttonEl)) {
+      (0, import_obsidian5.setIcon)(get(buttonEl), "lucide-plus");
+    }
+  });
+  legacy_pre_effect(
+    () => (deep_read_state(column()), get(isSelectMode), get(selectedCount)),
+    () => {
+      set(showContextMenu, column() === "done" || get(isSelectMode) && get(selectedCount) > 0);
+    }
+  );
+  legacy_pre_effect(() => (get(pendingNewTask), get(newTaskTextAreaEl)), () => {
+    if (get(pendingNewTask) && get(newTaskTextAreaEl)) {
+      get(newTaskTextAreaEl).focus();
+    }
+  });
+  legacy_pre_effect_reset();
+  var $$exports = {
+    get app() {
+      return app();
+    },
+    set app($$value) {
+      app($$value);
+      flushSync();
+    },
+    get column() {
+      return column();
+    },
+    set column($$value) {
+      column($$value);
+      flushSync();
+    },
+    get hideOnEmpty() {
+      return hideOnEmpty();
+    },
+    set hideOnEmpty($$value) {
+      hideOnEmpty($$value);
+      flushSync();
+    },
+    get tasks() {
+      return tasks();
+    },
+    set tasks($$value) {
+      tasks($$value);
+      flushSync();
+    },
+    get taskActions() {
+      return taskActions();
+    },
+    set taskActions($$value) {
+      taskActions($$value);
+      flushSync();
+    },
+    get columnTagTableStore() {
+      return columnTagTableStore();
+    },
+    set columnTagTableStore($$value) {
+      columnTagTableStore($$value);
+      flushSync();
+    },
+    get columnColourTableStore() {
+      return columnColourTableStore();
+    },
+    set columnColourTableStore($$value) {
+      columnColourTableStore($$value);
+      flushSync();
+    },
+    get showFilepath() {
+      return showFilepath();
+    },
+    set showFilepath($$value) {
+      showFilepath($$value);
+      flushSync();
+    },
+    get consolidateTags() {
+      return consolidateTags();
+    },
+    set consolidateTags($$value) {
+      consolidateTags($$value);
+      flushSync();
+    },
+    get isVerticalFlow() {
+      return isVerticalFlow();
+    },
+    set isVerticalFlow($$value) {
+      isVerticalFlow($$value);
+      flushSync();
+    },
+    get targetTaskFile() {
+      return targetTaskFile();
+    },
+    set targetTaskFile($$value) {
+      targetTaskFile($$value);
+      flushSync();
+    },
+    get targetFileIsDefault() {
+      return targetFileIsDefault();
+    },
+    set targetFileIsDefault($$value) {
+      targetFileIsDefault($$value);
+      flushSync();
+    },
+    get isCollapsed() {
+      return isCollapsed();
+    },
+    set isCollapsed($$value) {
+      isCollapsed($$value);
+      flushSync();
+    },
+    get onToggleCollapse() {
+      return onToggleCollapse();
+    },
+    set onToggleCollapse($$value) {
+      onToggleCollapse($$value);
+      flushSync();
+    },
+    get uncategorizedColumnName() {
+      return uncategorizedColumnName();
+    },
+    set uncategorizedColumnName($$value) {
+      uncategorizedColumnName($$value);
+      flushSync();
+    },
+    get doneColumnName() {
+      return doneColumnName();
+    },
+    set doneColumnName($$value) {
+      doneColumnName($$value);
+      flushSync();
+    },
+    $set: update_legacy_props,
+    $on: ($$event_name, $$event_cb) => add_legacy_event_listener($$props, $$event_name, $$event_cb)
+  };
+  init();
+  var fragment = comment();
+  var node = first_child(fragment);
+  {
+    var consequent_7 = ($$anchor2) => {
+      var div = root_12();
+      let classes;
+      let styles;
+      var div_1 = child(div);
+      let classes_1;
+      var div_2 = child(div_1);
+      var button = child(div_2);
+      var text2 = child(button, true);
+      reset(button);
+      var h2 = sibling(button, 2);
+      var text_1 = child(h2, true);
+      reset(h2);
+      var span = sibling(h2, 2);
+      var text_2 = child(span, true);
+      reset(span);
+      var div_3 = sibling(span, 2);
+      var div_4 = child(div_3);
+      var button_1 = child(div_4);
+      let classes_2;
+      var button_2 = sibling(button_1, 2);
+      let classes_3;
+      reset(div_4);
+      var node_1 = sibling(div_4, 2);
+      {
+        var consequent = ($$anchor3) => {
+          Icon_button($$anchor3, {
+            icon: "lucide-more-vertical",
+            get "aria-label"() {
+              var _a5;
+              return `Column options for ${(_a5 = get(columnTitle)) != null ? _a5 : ""}`;
+            },
+            $$events: { click: showMenu }
+          });
+        };
+        if_block(node_1, ($$render) => {
+          if (get(showContextMenu)) $$render(consequent);
+        });
+      }
+      reset(div_3);
+      reset(div_2);
+      var node_2 = sibling(div_2, 2);
+      {
+        var consequent_1 = ($$anchor3) => {
+          var div_5 = root_32();
+          var text_3 = child(div_5);
+          reset(div_5);
+          template_effect(() => {
+            var _a5;
+            return set_text(text_3, `${(_a5 = get(selectedCount)) != null ? _a5 : ""} selected`);
+          });
+          append($$anchor3, div_5);
+        };
+        if_block(node_2, ($$render) => {
+          if (get(isSelectMode) && get(selectedCount) > 0) $$render(consequent_1);
+        });
+      }
+      reset(div_1);
+      var node_3 = sibling(div_1, 2);
+      {
+        var consequent_2 = ($$anchor3) => {
+          var div_6 = root_42();
+          append($$anchor3, div_6);
+        };
+        if_block(node_3, ($$render) => {
+          if (!isVerticalFlow()) $$render(consequent_2);
+        });
+      }
+      var div_7 = sibling(node_3, 2);
+      var div_8 = child(div_7);
+      each(div_8, 5, () => get(sortedTasks), index, ($$anchor3, task) => {
+        {
+          let $0 = derived_safe_equal(() => (deep_read_state(isTaskSelected), get(task), $taskSelectionStore(), untrack(() => isTaskSelected(get(task).id, $taskSelectionStore()))));
+          Task($$anchor3, {
+            get app() {
+              return app();
+            },
+            get task() {
+              return get(task);
+            },
+            get taskActions() {
+              return taskActions();
+            },
+            get columnTagTableStore() {
+              return columnTagTableStore();
+            },
+            get showFilepath() {
+              return showFilepath();
+            },
+            get consolidateTags() {
+              return consolidateTags();
+            },
+            get displayColumn() {
+              return column();
+            },
+            get isSelectionMode() {
+              return get(isSelectMode);
+            },
+            get isSelected() {
+              return get($0);
+            },
+            onToggleSelection: () => toggleTaskSelection(get(task).id),
+            get selectedTaskIds() {
+              return get(selectedIds);
+            },
+            get doneColumnName() {
+              return doneColumnName();
+            }
+          });
+        }
+      });
+      reset(div_8);
+      var node_4 = sibling(div_8, 2);
+      {
+        var consequent_3 = ($$anchor3) => {
+          var div_9 = root_62();
+          var textarea = child(div_9);
+          bind_this(textarea, ($$value) => set(newTaskTextAreaEl, $$value), () => get(newTaskTextAreaEl));
+          reset(div_9);
+          event("blur", textarea, handleNewTaskSave);
+          event("keydown", textarea, handleNewTaskKeydown);
+          append($$anchor3, div_9);
+        };
+        if_block(node_4, ($$render) => {
+          if (get(pendingNewTask)) $$render(consequent_3);
+        });
+      }
+      var node_5 = sibling(node_4, 2);
+      {
+        var consequent_6 = ($$anchor3) => {
+          var fragment_3 = root_7();
+          var button_3 = first_child(fragment_3);
+          var span_1 = child(button_3);
+          bind_this(span_1, ($$value) => set(buttonEl, $$value), () => get(buttonEl));
+          next();
+          reset(button_3);
+          var node_6 = sibling(button_3, 2);
+          {
+            var consequent_5 = ($$anchor4) => {
+              var div_10 = root_8();
+              var span_2 = sibling(child(div_10), 2);
+              var text_4 = child(span_2, true);
+              reset(span_2);
+              var node_7 = sibling(span_2, 2);
+              {
+                var consequent_4 = ($$anchor5) => {
+                  var span_3 = root_9();
+                  append($$anchor5, span_3);
+                };
+                var alternate = ($$anchor5) => {
+                  var span_4 = root_10();
+                  event("click", span_4, (e) => {
+                    if (isColumnTag(column(), columnTagTableStore())) {
+                      taskActions().pickFileForNewTask(
+                        column(),
+                        e,
+                        (file) => {
+                          set(pendingNewTask, file);
+                        },
+                        true
+                      );
+                    }
+                  });
+                  event("keydown", span_4, (e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      e.currentTarget.click();
+                    }
+                  });
+                  append($$anchor5, span_4);
+                };
+                if_block(node_7, ($$render) => {
+                  if (targetFileIsDefault()) $$render(consequent_4);
+                  else $$render(alternate, -1);
+                });
+              }
+              reset(div_10);
+              template_effect(() => {
+                set_attribute2(span_2, "title", (deep_read_state(targetTaskFile()), untrack(() => targetTaskFile().path)));
+                set_text(text_4, (deep_read_state(targetTaskFile()), untrack(() => targetTaskFile().name)));
+              });
+              append($$anchor4, div_10);
+            };
+            if_block(node_6, ($$render) => {
+              if (targetTaskFile()) $$render(consequent_5);
+            });
+          }
+          template_effect(() => {
+            var _a5;
+            set_attribute2(button_3, "aria-label", `Add new task to ${(_a5 = get(columnTitle)) != null ? _a5 : ""}`);
+            button_3.disabled = !!get(pendingNewTask);
+          });
+          event("click", button_3, (e) => {
+            if (isColumnTag(column(), columnTagTableStore())) {
+              taskActions().pickFileForNewTask(column(), e, (file) => {
+                set(pendingNewTask, file);
+              });
+            }
+          });
+          append($$anchor3, fragment_3);
+        };
+        var d = user_derived(() => (deep_read_state(isColumnTag), deep_read_state(column()), deep_read_state(columnTagTableStore()), untrack(() => isColumnTag(column(), columnTagTableStore()))));
+        if_block(node_5, ($$render) => {
+          if (get(d)) $$render(consequent_6);
+        });
+      }
+      reset(div_7);
+      reset(div);
+      template_effect(() => {
+        var _a5, _b3, _c2;
+        set_attribute2(div, "aria-labelledby", `column-title-${(_a5 = column()) != null ? _a5 : ""}`);
+        set_attribute2(div, "aria-label", (deep_read_state(isCollapsed()), get(columnTitle), deep_read_state(tasks()), untrack(() => isCollapsed() ? `${get(columnTitle)} column, collapsed, ${tasks().length} ${tasks().length === 1 ? "task" : "tasks"}` : void 0)));
+        classes = set_class(div, 1, "column svelte-ncpvit", null, classes, {
+          "drop-active": !!get(draggingData),
+          "drop-hover": get(isDraggedOver),
+          "vertical-flow": isVerticalFlow(),
+          collapsed: get(isHorizontalCollapsed),
+          "vertical-collapsed": get(isVerticalCollapsed)
+        });
+        styles = set_style(div, get(columnColor) ? `background-color: ${get(columnColor)};` : "", styles, { "--column-color": get(columnColor) });
+        classes_1 = set_class(div_1, 1, "column-header svelte-ncpvit", null, classes_1, { "row-header": isVerticalFlow() });
+        set_attribute2(button, "aria-expanded", !isCollapsed());
+        set_attribute2(button, "aria-label", `${isCollapsed() ? "Expand" : "Collapse"} ${(_b3 = get(columnTitle)) != null ? _b3 : ""} column`);
+        set_text(text2, get(collapseIcon));
+        set_attribute2(h2, "id", `column-title-${(_c2 = column()) != null ? _c2 : ""}`);
+        set_text(text_1, get(columnTitle));
+        set_attribute2(span, "aria-label", get(taskCountLabel));
+        set_text(text_2, get(displayTaskCount));
+        classes_2 = set_class(button_1, 1, "mode-btn svelte-ncpvit", null, classes_2, { active: !get(isSelectMode) });
+        set_attribute2(button_1, "aria-pressed", !get(isSelectMode));
+        classes_3 = set_class(button_2, 1, "mode-btn svelte-ncpvit", null, classes_3, { active: get(isSelectMode) });
+        set_attribute2(button_2, "aria-pressed", get(isSelectMode));
+      });
+      event("click", button, function(...$$args) {
+        var _a5;
+        (_a5 = onToggleCollapse()) == null ? void 0 : _a5.apply(this, $$args);
+      });
+      event("click", button_1, () => {
+        if (get(isSelectMode)) toggleSelectionMode(column());
+      });
+      event("click", button_2, () => {
+        if (!get(isSelectMode)) toggleSelectionMode(column());
+      });
+      event("dragover", div, handleDragOver);
+      event("dragleave", div, handleDragLeave);
+      event("drop", div, handleDrop);
+      append($$anchor2, div);
+    };
+    if_block(node, ($$render) => {
+      if (deep_read_state(hideOnEmpty()), deep_read_state(tasks()), untrack(() => !hideOnEmpty() || tasks().length)) $$render(consequent_7);
     });
   }
-  const click_handler = async (e) => {
-    if (isColumnTag(column, columnTagTableStore)) {
-      await taskActions.addNew(column, e);
-    }
-  };
-  $$self.$$set = ($$props2) => {
-    if ("app" in $$props2) $$invalidate(0, app = $$props2.app);
-    if ("column" in $$props2) $$invalidate(1, column = $$props2.column);
-    if ("hideOnEmpty" in $$props2) $$invalidate(2, hideOnEmpty = $$props2.hideOnEmpty);
-    if ("tasks" in $$props2) $$invalidate(3, tasks = $$props2.tasks);
-    if ("taskActions" in $$props2) $$invalidate(4, taskActions = $$props2.taskActions);
-    if ("columnTagTableStore" in $$props2) $$subscribe_columnTagTableStore($$invalidate(5, columnTagTableStore = $$props2.columnTagTableStore));
-    if ("columnColourTableStore" in $$props2) $$subscribe_columnColourTableStore($$invalidate(6, columnColourTableStore = $$props2.columnColourTableStore));
-    if ("showFilepath" in $$props2) $$invalidate(7, showFilepath = $$props2.showFilepath);
-    if ("consolidateTags" in $$props2) $$invalidate(8, consolidateTags = $$props2.consolidateTags);
-  };
-  $$self.$$.update = () => {
-    if ($$self.$$.dirty & /*column, $columnTagTableStore*/
-    2097154) {
-      $: $$invalidate(14, columnTitle = getColumnTitle(column, $columnTagTableStore));
-    }
-    if ($$self.$$.dirty & /*column, columnTagTableStore, $columnColourTableStore*/
-    1048610) {
-      $: $$invalidate(13, columnColor = isColumnTag(column, columnTagTableStore) ? $columnColourTableStore[column] : void 0);
-    }
-    if ($$self.$$.dirty & /*tasks*/
-    8) {
-      $: $$invalidate(12, sortedTasks = tasks.sort((a, b) => {
-        if (a.path === b.path) {
-          return a.rowIndex - b.rowIndex;
-        } else {
-          return a.path.localeCompare(b.path);
-        }
-      }));
-    }
-    if ($$self.$$.dirty & /*$isDraggingStore*/
-    524288) {
-      $: $$invalidate(10, draggingData = $isDraggingStore);
-    }
-    if ($$self.$$.dirty & /*draggingData, column*/
-    1026) {
-      $: canDrop = draggingData && draggingData.fromColumn !== column;
-    }
-    if ($$self.$$.dirty & /*buttonEl*/
-    512) {
-      $: {
-        if (buttonEl) {
-          (0, import_obsidian4.setIcon)(buttonEl, "lucide-plus");
-        }
-      }
-    }
-  };
-  return [
-    app,
-    column,
-    hideOnEmpty,
-    tasks,
-    taskActions,
-    columnTagTableStore,
-    columnColourTableStore,
-    showFilepath,
-    consolidateTags,
-    buttonEl,
-    draggingData,
-    isDraggedOver,
-    sortedTasks,
-    columnColor,
-    columnTitle,
-    showMenu,
-    handleDragOver,
-    handleDragLeave,
-    handleDrop,
-    $isDraggingStore,
-    $columnColourTableStore,
-    $columnTagTableStore,
-    span_binding,
-    click_handler
-  ];
+  append($$anchor, fragment);
+  var $$pop = pop($$exports);
+  $$cleanup();
+  return $$pop;
 }
-var Column = class extends SvelteComponent {
-  constructor(options) {
-    super();
-    init(
-      this,
-      options,
-      instance4,
-      create_fragment4,
-      safe_not_equal,
-      {
-        app: 0,
-        column: 1,
-        hideOnEmpty: 2,
-        tasks: 3,
-        taskActions: 4,
-        columnTagTableStore: 5,
-        columnColourTableStore: 6,
-        showFilepath: 7,
-        consolidateTags: 8
-      },
-      add_css3
-    );
-  }
-};
-var column_default = Column;
 
 // node_modules/@floating-ui/utils/dist/floating-ui.utils.mjs
 var min = Math.min;
@@ -6399,7 +12386,7 @@ var computePosition = async (reference, floating, config) => {
       x: nextX,
       y: nextY,
       data,
-      reset
+      reset: reset2
     } = await fn({
       x,
       y,
@@ -6423,18 +12410,18 @@ var computePosition = async (reference, floating, config) => {
         ...data
       }
     };
-    if (reset && resetCount <= 50) {
+    if (reset2 && resetCount <= 50) {
       resetCount++;
-      if (typeof reset === "object") {
-        if (reset.placement) {
-          statefulPlacement = reset.placement;
+      if (typeof reset2 === "object") {
+        if (reset2.placement) {
+          statefulPlacement = reset2.placement;
         }
-        if (reset.rects) {
-          rects = reset.rects === true ? await platform2.getElementRects({
+        if (reset2.rects) {
+          rects = reset2.rects === true ? await platform2.getElementRects({
             reference,
             floating,
             strategy
-          }) : reset.rects;
+          }) : reset2.rects;
         }
         ({
           x,
@@ -6452,7 +12439,7 @@ var computePosition = async (reference, floating, config) => {
     middlewareData
   };
 };
-async function detectOverflow(state, options) {
+async function detectOverflow(state2, options) {
   var _await$platform$isEle;
   if (options === void 0) {
     options = {};
@@ -6464,20 +12451,20 @@ async function detectOverflow(state, options) {
     rects,
     elements,
     strategy
-  } = state;
+  } = state2;
   const {
-    boundary = "clippingAncestors",
+    boundary: boundary2 = "clippingAncestors",
     rootBoundary = "viewport",
     elementContext = "floating",
     altBoundary = false,
     padding = 0
-  } = evaluate(options, state);
+  } = evaluate(options, state2);
   const paddingObject = getPaddingObject(padding);
   const altContext = elementContext === "floating" ? "reference" : "floating";
   const element2 = elements[altBoundary ? altContext : elementContext];
   const clippingClientRect = rectToClientRect(await platform2.getClippingRect({
     element: ((_await$platform$isEle = await (platform2.isElement == null ? void 0 : platform2.isElement(element2))) != null ? _await$platform$isEle : true) ? element2 : element2.contextElement || await (platform2.getDocumentElement == null ? void 0 : platform2.getDocumentElement(elements.floating)),
-    boundary,
+    boundary: boundary2,
     rootBoundary,
     strategy
   }));
@@ -6514,7 +12501,7 @@ var flip = function(options) {
   return {
     name: "flip",
     options,
-    async fn(state) {
+    async fn(state2) {
       var _middlewareData$arrow, _middlewareData$flip;
       const {
         placement,
@@ -6523,7 +12510,7 @@ var flip = function(options) {
         initialPlacement,
         platform: platform2,
         elements
-      } = state;
+      } = state2;
       const {
         mainAxis: checkMainAxis = true,
         crossAxis: checkCrossAxis = true,
@@ -6532,7 +12519,7 @@ var flip = function(options) {
         fallbackAxisSideDirection = "none",
         flipAlignment = true,
         ...detectOverflowOptions
-      } = evaluate(options, state);
+      } = evaluate(options, state2);
       if ((_middlewareData$arrow = middlewareData.arrow) != null && _middlewareData$arrow.alignmentOffset) {
         return {};
       }
@@ -6544,7 +12531,7 @@ var flip = function(options) {
         fallbackPlacements.push(...getOppositeAxisPlacements(initialPlacement, flipAlignment, fallbackAxisSideDirection, rtl));
       }
       const placements2 = [initialPlacement, ...fallbackPlacements];
-      const overflow = await detectOverflow(state, detectOverflowOptions);
+      const overflow = await detectOverflow(state2, detectOverflowOptions);
       const overflows = [];
       let overflowsData = ((_middlewareData$flip = middlewareData.flip) == null ? void 0 : _middlewareData$flip.overflows) || [];
       if (checkMainAxis) {
@@ -6601,19 +12588,19 @@ var flip = function(options) {
     }
   };
 };
-async function convertValueToCoords(state, options) {
+async function convertValueToCoords(state2, options) {
   const {
     placement,
     platform: platform2,
     elements
-  } = state;
+  } = state2;
   const rtl = await (platform2.isRTL == null ? void 0 : platform2.isRTL(elements.floating));
   const side = getSide(placement);
   const alignment = getAlignment(placement);
   const isVertical = getSideAxis(placement) === "y";
   const mainAxisMulti = ["left", "top"].includes(side) ? -1 : 1;
   const crossAxisMulti = rtl && isVertical ? -1 : 1;
-  const rawValue = evaluate(options, state);
+  const rawValue = evaluate(options, state2);
   let {
     mainAxis,
     crossAxis,
@@ -6646,15 +12633,15 @@ var offset = function(options) {
   return {
     name: "offset",
     options,
-    async fn(state) {
+    async fn(state2) {
       var _middlewareData$offse, _middlewareData$arrow;
       const {
         x,
         y,
         placement,
         middlewareData
-      } = state;
-      const diffCoords = await convertValueToCoords(state, options);
+      } = state2;
+      const diffCoords = await convertValueToCoords(state2, options);
       if (placement === ((_middlewareData$offse = middlewareData.offset) == null ? void 0 : _middlewareData$offse.placement) && (_middlewareData$arrow = middlewareData.arrow) != null && _middlewareData$arrow.alignmentOffset) {
         return {};
       }
@@ -6676,12 +12663,12 @@ var shift = function(options) {
   return {
     name: "shift",
     options,
-    async fn(state) {
+    async fn(state2) {
       const {
         x,
         y,
         placement
-      } = state;
+      } = state2;
       const {
         mainAxis: checkMainAxis = true,
         crossAxis: checkCrossAxis = false,
@@ -6698,12 +12685,12 @@ var shift = function(options) {
           }
         },
         ...detectOverflowOptions
-      } = evaluate(options, state);
+      } = evaluate(options, state2);
       const coords = {
         x,
         y
       };
-      const overflow = await detectOverflow(state, detectOverflowOptions);
+      const overflow = await detectOverflow(state2, detectOverflowOptions);
       const crossAxis = getSideAxis(getSide(placement));
       const mainAxis = getOppositeAxis(crossAxis);
       let mainAxisCoord = coords[mainAxis];
@@ -6723,7 +12710,7 @@ var shift = function(options) {
         crossAxisCoord = clamp(min2, crossAxisCoord, max2);
       }
       const limitedCoords = limiter.fn({
-        ...state,
+        ...state2,
         [mainAxis]: mainAxisCoord,
         [crossAxis]: crossAxisCoord
       });
@@ -7031,15 +13018,15 @@ function getWindowScrollBarX(element2) {
   return getBoundingClientRect(getDocumentElement(element2)).left + getNodeScroll(element2).scrollLeft;
 }
 function getDocumentRect(element2) {
-  const html = getDocumentElement(element2);
+  const html2 = getDocumentElement(element2);
   const scroll = getNodeScroll(element2);
   const body = element2.ownerDocument.body;
-  const width = max(html.scrollWidth, html.clientWidth, body.scrollWidth, body.clientWidth);
-  const height = max(html.scrollHeight, html.clientHeight, body.scrollHeight, body.clientHeight);
+  const width = max(html2.scrollWidth, html2.clientWidth, body.scrollWidth, body.clientWidth);
+  const height = max(html2.scrollHeight, html2.clientHeight, body.scrollHeight, body.clientHeight);
   let x = -scroll.scrollLeft + getWindowScrollBarX(element2);
   const y = -scroll.scrollTop;
   if (getComputedStyle2(body).direction === "rtl") {
-    x += max(html.clientWidth, body.clientWidth) - width;
+    x += max(html2.clientWidth, body.clientWidth) - width;
   }
   return {
     width,
@@ -7050,10 +13037,10 @@ function getDocumentRect(element2) {
 }
 function getViewportRect(element2, strategy) {
   const win = getWindow(element2);
-  const html = getDocumentElement(element2);
+  const html2 = getDocumentElement(element2);
   const visualViewport = win.visualViewport;
-  let width = html.clientWidth;
-  let height = html.clientHeight;
+  let width = html2.clientWidth;
+  let height = html2.clientHeight;
   let x = 0;
   let y = 0;
   if (visualViewport) {
@@ -7142,11 +13129,11 @@ function getClippingElementAncestors(element2, cache) {
 function getClippingRect(_ref) {
   let {
     element: element2,
-    boundary,
+    boundary: boundary2,
     rootBoundary,
     strategy
   } = _ref;
-  const elementClippingAncestors = boundary === "clippingAncestors" ? isTopLayer(element2) ? [] : getClippingElementAncestors(element2, this._c) : [].concat(boundary);
+  const elementClippingAncestors = boundary2 === "clippingAncestors" ? isTopLayer(element2) ? [] : getClippingElementAncestors(element2, this._c) : [].concat(boundary2);
   const clippingAncestors = [...elementClippingAncestors, rootBoundary];
   const firstClippingAncestor = clippingAncestors[0];
   const clippingRect = clippingAncestors.reduce((accRect, clippingAncestor) => {
@@ -7273,7 +13260,7 @@ var platform = {
 function observeMove(element2, onMove) {
   let io = null;
   let timeoutId;
-  const root = getDocumentElement(element2);
+  const root11 = getDocumentElement(element2);
   function cleanup() {
     var _io;
     clearTimeout(timeoutId);
@@ -7301,8 +13288,8 @@ function observeMove(element2, onMove) {
       return;
     }
     const insetTop = floor(top);
-    const insetRight = floor(root.clientWidth - (left + width));
-    const insetBottom = floor(root.clientHeight - (top + height));
+    const insetRight = floor(root11.clientWidth - (left + width));
+    const insetBottom = floor(root11.clientHeight - (top + height));
     const insetLeft = floor(left);
     const rootMargin = -insetTop + "px " + -insetRight + "px " + -insetBottom + "px " + -insetLeft + "px";
     const options = {
@@ -7330,7 +13317,7 @@ function observeMove(element2, onMove) {
       io = new IntersectionObserver(handleObserve, {
         ...options,
         // Handle <iframe>s
-        root: root.ownerDocument
+        root: root11.ownerDocument
       });
     } catch (e) {
       io = new IntersectionObserver(handleObserve, options);
@@ -7522,14 +13509,14 @@ function filter({
   groupBy,
   filterSelectedItems,
   itemFilter,
-  convertStringItemsToObjects: convertStringItemsToObjects2,
+  convertStringItemsToObjects,
   filterGroupedItems,
   label
 }) {
   if (items && loadOptions) return items;
   if (!items) return [];
   if (items && items.length > 0 && typeof items[0] !== "object") {
-    items = convertStringItemsToObjects2(items);
+    items = convertStringItemsToObjects(items);
   }
   let filterResults = items.filter((item) => {
     let matchesFilter = itemFilter(item[label], filterText, item);
@@ -7547,7 +13534,7 @@ function filter({
 }
 
 // node_modules/svelte-select/get-items.js
-async function getItems({ dispatch, loadOptions, convertStringItemsToObjects: convertStringItemsToObjects2, filterText }) {
+async function getItems({ dispatch, loadOptions, convertStringItemsToObjects, filterText }) {
   let res = await loadOptions(filterText).catch((err) => {
     console.warn("svelte-select loadOptions error :>> ", err);
     dispatch("error", { type: "loadOptions", details: err });
@@ -7555,7 +13542,7 @@ async function getItems({ dispatch, loadOptions, convertStringItemsToObjects: co
   if (res && !res.cancelled) {
     if (res) {
       if (res && res.length > 0 && typeof res[0] !== "object") {
-        res = convertStringItemsToObjects2(res);
+        res = convertStringItemsToObjects(res);
       }
       dispatch("loaded", { items: res });
     } else {
@@ -7571,2886 +13558,175 @@ async function getItems({ dispatch, loadOptions, convertStringItemsToObjects: co
 }
 
 // node_modules/svelte-select/ChevronIcon.svelte
-function add_css4(target) {
-  append_styles(target, "svelte-qbd276", "svg.svelte-qbd276{width:var(--chevron-icon-width, 20px);height:var(--chevron-icon-width, 20px);color:var(--chevron-icon-colour, currentColor)}");
-}
-function create_fragment5(ctx) {
-  let svg;
-  let path;
-  return {
-    c() {
-      svg = svg_element("svg");
-      path = svg_element("path");
-      attr(path, "fill", "currentColor");
-      attr(path, "d", "M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747\n          3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0\n          1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502\n          0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0\n          0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z");
-      attr(svg, "width", "100%");
-      attr(svg, "height", "100%");
-      attr(svg, "viewBox", "0 0 20 20");
-      attr(svg, "focusable", "false");
-      attr(svg, "aria-hidden", "true");
-      attr(svg, "class", "svelte-qbd276");
-    },
-    m(target, anchor) {
-      insert(target, svg, anchor);
-      append(svg, path);
-    },
-    p: noop,
-    i: noop,
-    o: noop,
-    d(detaching) {
-      if (detaching) {
-        detach(svg);
-      }
-    }
-  };
-}
-var ChevronIcon = class extends SvelteComponent {
-  constructor(options) {
-    super();
-    init(this, options, null, create_fragment5, safe_not_equal, {}, add_css4);
-  }
+var root4 = from_svg(`<svg width="100%" height="100%" viewBox="0 0 20 20" focusable="false" aria-hidden="true" class="svelte-1kxu7be"><path fill="currentColor" d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747
+          3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0
+          1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502
+          0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0
+          0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"></path></svg>`);
+var $$css5 = {
+  hash: "svelte-1kxu7be",
+  code: "svg.svelte-1kxu7be {width:var(--chevron-icon-width, 20px);height:var(--chevron-icon-width, 20px);color:var(--chevron-icon-colour, currentColor);}"
 };
-var ChevronIcon_default = ChevronIcon;
+function ChevronIcon($$anchor, $$props) {
+  if (new.target) return createClassComponent({ component: ChevronIcon, ...$$anchor });
+  push($$props, false);
+  append_styles($$anchor, $$css5);
+  var $$exports = {
+    $set: update_legacy_props,
+    $on: ($$event_name, $$event_cb) => add_legacy_event_listener($$props, $$event_name, $$event_cb)
+  };
+  var svg = root4();
+  append($$anchor, svg);
+  return pop($$exports);
+}
 
 // node_modules/svelte-select/ClearIcon.svelte
-function add_css5(target) {
-  append_styles(target, "svelte-whdbu1", "svg.svelte-whdbu1{width:var(--clear-icon-width, 20px);height:var(--clear-icon-width, 20px);color:var(--clear-icon-color, currentColor)}");
-}
-function create_fragment6(ctx) {
-  let svg;
-  let path;
-  return {
-    c() {
-      svg = svg_element("svg");
-      path = svg_element("path");
-      attr(path, "fill", "currentColor");
-      attr(path, "d", "M34.923,37.251L24,26.328L13.077,37.251L9.436,33.61l10.923-10.923L9.436,11.765l3.641-3.641L24,19.047L34.923,8.124\n    l3.641,3.641L27.641,22.688L38.564,33.61L34.923,37.251z");
-      attr(svg, "width", "100%");
-      attr(svg, "height", "100%");
-      attr(svg, "viewBox", "-2 -2 50 50");
-      attr(svg, "focusable", "false");
-      attr(svg, "aria-hidden", "true");
-      attr(svg, "role", "presentation");
-      attr(svg, "class", "svelte-whdbu1");
-    },
-    m(target, anchor) {
-      insert(target, svg, anchor);
-      append(svg, path);
-    },
-    p: noop,
-    i: noop,
-    o: noop,
-    d(detaching) {
-      if (detaching) {
-        detach(svg);
-      }
-    }
-  };
-}
-var ClearIcon = class extends SvelteComponent {
-  constructor(options) {
-    super();
-    init(this, options, null, create_fragment6, safe_not_equal, {}, add_css5);
-  }
+var root5 = from_svg(`<svg width="100%" height="100%" viewBox="-2 -2 50 50" focusable="false" aria-hidden="true" role="presentation" class="svelte-1hraxrc"><path fill="currentColor" d="M34.923,37.251L24,26.328L13.077,37.251L9.436,33.61l10.923-10.923L9.436,11.765l3.641-3.641L24,19.047L34.923,8.124
+    l3.641,3.641L27.641,22.688L38.564,33.61L34.923,37.251z"></path></svg>`);
+var $$css6 = {
+  hash: "svelte-1hraxrc",
+  code: "svg.svelte-1hraxrc {width:var(--clear-icon-width, 20px);height:var(--clear-icon-width, 20px);color:var(--clear-icon-color, currentColor);}"
 };
-var ClearIcon_default = ClearIcon;
+function ClearIcon($$anchor, $$props) {
+  if (new.target) return createClassComponent({ component: ClearIcon, ...$$anchor });
+  push($$props, false);
+  append_styles($$anchor, $$css6);
+  var $$exports = {
+    $set: update_legacy_props,
+    $on: ($$event_name, $$event_cb) => add_legacy_event_listener($$props, $$event_name, $$event_cb)
+  };
+  var svg = root5();
+  append($$anchor, svg);
+  return pop($$exports);
+}
 
 // node_modules/svelte-select/LoadingIcon.svelte
-function add_css6(target) {
-  append_styles(target, "svelte-1p3nqvd", ".loading.svelte-1p3nqvd{width:var(--spinner-width, 20px);height:var(--spinner-height, 20px);color:var(--spinner-color, var(--icons-color));animation:svelte-1p3nqvd-rotate 0.75s linear infinite;transform-origin:center center;transform:none}.circle_path.svelte-1p3nqvd{stroke-dasharray:90;stroke-linecap:round}@keyframes svelte-1p3nqvd-rotate{100%{transform:rotate(360deg)}}");
-}
-function create_fragment7(ctx) {
-  let svg;
-  let circle;
-  return {
-    c() {
-      svg = svg_element("svg");
-      circle = svg_element("circle");
-      attr(circle, "class", "circle_path svelte-1p3nqvd");
-      attr(circle, "cx", "50");
-      attr(circle, "cy", "50");
-      attr(circle, "r", "20");
-      attr(circle, "fill", "none");
-      attr(circle, "stroke", "currentColor");
-      attr(circle, "stroke-width", "5");
-      attr(circle, "stroke-miterlimit", "10");
-      attr(svg, "class", "loading svelte-1p3nqvd");
-      attr(svg, "viewBox", "25 25 50 50");
-    },
-    m(target, anchor) {
-      insert(target, svg, anchor);
-      append(svg, circle);
-    },
-    p: noop,
-    i: noop,
-    o: noop,
-    d(detaching) {
-      if (detaching) {
-        detach(svg);
-      }
-    }
-  };
-}
-var LoadingIcon = class extends SvelteComponent {
-  constructor(options) {
-    super();
-    init(this, options, null, create_fragment7, safe_not_equal, {}, add_css6);
-  }
+var root6 = from_svg(`<svg class="loading svelte-y9fi5p" viewBox="25 25 50 50"><circle class="circle_path svelte-y9fi5p" cx="50" cy="50" r="20" fill="none" stroke="currentColor" stroke-width="5" stroke-miterlimit="10"></circle></svg>`);
+var $$css7 = {
+  hash: "svelte-y9fi5p",
+  code: ".loading.svelte-y9fi5p {width:var(--spinner-width, 20px);height:var(--spinner-height, 20px);color:var(--spinner-color, var(--icons-color));\n        animation: svelte-y9fi5p-rotate 0.75s linear infinite;transform-origin:center center;transform:none;}.circle_path.svelte-y9fi5p {stroke-dasharray:90;stroke-linecap:round;}\n\n    @keyframes svelte-y9fi5p-rotate {\n        100% {\n            transform: rotate(360deg);\n        }\n    }"
 };
-var LoadingIcon_default = LoadingIcon;
+function LoadingIcon($$anchor, $$props) {
+  if (new.target) return createClassComponent({ component: LoadingIcon, ...$$anchor });
+  push($$props, false);
+  append_styles($$anchor, $$css7);
+  var $$exports = {
+    $set: update_legacy_props,
+    $on: ($$event_name, $$event_cb) => add_legacy_event_listener($$props, $$event_name, $$event_cb)
+  };
+  var svg = root6();
+  append($$anchor, svg);
+  return pop($$exports);
+}
 
 // node_modules/svelte-select/Select.svelte
-function add_css7(target) {
-  append_styles(target, "svelte-82qwg8", ".svelte-select.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{--borderRadius:var(--border-radius);--clearSelectColor:var(--clear-select-color);--clearSelectWidth:var(--clear-select-width);--disabledBackground:var(--disabled-background);--disabledBorderColor:var(--disabled-border-color);--disabledColor:var(--disabled-color);--disabledPlaceholderColor:var(--disabled-placeholder-color);--disabledPlaceholderOpacity:var(--disabled-placeholder-opacity);--errorBackground:var(--error-background);--errorBorder:var(--error-border);--groupItemPaddingLeft:var(--group-item-padding-left);--groupTitleColor:var(--group-title-color);--groupTitleFontSize:var(--group-title-font-size);--groupTitleFontWeight:var(--group-title-font-weight);--groupTitlePadding:var(--group-title-padding);--groupTitleTextTransform:var(--group-title-text-transform);--groupTitleBorderColor:var(--group-title-border-color);--groupTitleBorderWidth:var(--group-title-border-width);--groupTitleBorderStyle:var(--group-title-border-style);--indicatorColor:var(--chevron-color);--indicatorHeight:var(--chevron-height);--indicatorWidth:var(--chevron-width);--inputColor:var(--input-color);--inputLeft:var(--input-left);--inputLetterSpacing:var(--input-letter-spacing);--inputMargin:var(--input-margin);--inputPadding:var(--input-padding);--itemActiveBackground:var(--item-active-background);--itemColor:var(--item-color);--itemFirstBorderRadius:var(--item-first-border-radius);--itemHoverBG:var(--item-hover-bg);--itemHoverColor:var(--item-hover-color);--itemIsActiveBG:var(--item-is-active-bg);--itemIsActiveColor:var(--item-is-active-color);--itemIsNotSelectableColor:var(--item-is-not-selectable-color);--itemPadding:var(--item-padding);--listBackground:var(--list-background);--listBorder:var(--list-border);--listBorderRadius:var(--list-border-radius);--listEmptyColor:var(--list-empty-color);--listEmptyPadding:var(--list-empty-padding);--listEmptyTextAlign:var(--list-empty-text-align);--listMaxHeight:var(--list-max-height);--listPosition:var(--list-position);--listShadow:var(--list-shadow);--listZIndex:var(--list-z-index);--multiItemBG:var(--multi-item-bg);--multiItemBorderRadius:var(--multi-item-border-radius);--multiItemDisabledHoverBg:var(--multi-item-disabled-hover-bg);--multiItemDisabledHoverColor:var(--multi-item-disabled-hover-color);--multiItemHeight:var(--multi-item-height);--multiItemMargin:var(--multi-item-margin);--multiItemPadding:var(--multi-item-padding);--multiSelectInputMargin:var(--multi-select-input-margin);--multiSelectInputPadding:var(--multi-select-input-padding);--multiSelectPadding:var(--multi-select-padding);--placeholderColor:var(--placeholder-color);--placeholderOpacity:var(--placeholder-opacity);--selectedItemPadding:var(--selected-item-padding);--spinnerColor:var(--spinner-color);--spinnerHeight:var(--spinner-height);--spinnerWidth:var(--spinner-width);--internal-padding:0 0 0 16px;border:var(--border, 1px solid #d8dbdf);border-radius:var(--border-radius, 6px);min-height:var(--height, 42px);position:relative;display:flex;align-items:stretch;padding:var(--padding, var(--internal-padding));background:var(--background, #fff);margin:var(--margin, 0);width:var(--width, 100%);font-size:var(--font-size, 16px);max-height:var(--max-height)}.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{box-sizing:var(--box-sizing, border-box)}.svelte-select.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8:hover{border:var(--border-hover, 1px solid #b2b8bf)}.value-container.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{display:flex;flex:1 1 0%;flex-wrap:wrap;align-items:center;gap:5px 10px;padding:var(--value-container-padding, 5px 0);position:relative;overflow:var(--value-container-overflow, hidden);align-self:stretch}.prepend.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8,.indicators.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{display:flex;flex-shrink:0;align-items:center}.indicators.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{position:var(--indicators-position);top:var(--indicators-top);right:var(--indicators-right);bottom:var(--indicators-bottom)}input.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{position:absolute;cursor:default;border:none;color:var(--input-color, var(--item-color));padding:var(--input-padding, 0);letter-spacing:var(--input-letter-spacing, inherit);margin:var(--input-margin, 0);min-width:10px;top:0;right:0;bottom:0;left:0;background:transparent;font-size:var(--font-size, 16px)}.svelte-82qwg8:not(.multi)>.value-container.svelte-82qwg8>input.svelte-82qwg8{width:100%;height:100%}input.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8::placeholder{color:var(--placeholder-color, #78848f);opacity:var(--placeholder-opacity, 1)}input.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8:focus{outline:none}.svelte-select.focused.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{border:var(--border-focused, 1px solid #006fe8);border-radius:var(--border-radius-focused, var(--border-radius, 6px))}.disabled.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{background:var(--disabled-background, #ebedef);border-color:var(--disabled-border-color, #ebedef);color:var(--disabled-color, #c1c6cc)}.disabled.svelte-82qwg8 input.svelte-82qwg8.svelte-82qwg8::placeholder{color:var(--disabled-placeholder-color, #c1c6cc);opacity:var(--disabled-placeholder-opacity, 1)}.selected-item.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{position:relative;overflow:var(--selected-item-overflow, hidden);padding:var(--selected-item-padding, 0 20px 0 0);text-overflow:ellipsis;white-space:nowrap;color:var(--selected-item-color, inherit);font-size:var(--font-size, 16px)}.multi.svelte-82qwg8 .selected-item.svelte-82qwg8.svelte-82qwg8{position:absolute;line-height:var(--height, 42px);height:var(--height, 42px)}.selected-item.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8:focus{outline:none}.hide-selected-item.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{opacity:0}.icon.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{display:flex;align-items:center;justify-content:center}.clear-select.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{all:unset;display:flex;align-items:center;justify-content:center;width:var(--clear-select-width, 40px);height:var(--clear-select-height, 100%);color:var(--clear-select-color, var(--icons-color));margin:var(--clear-select-margin, 0);pointer-events:all;flex-shrink:0}.clear-select.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8:focus{outline:var(--clear-select-focus-outline, 1px solid #006fe8)}.loading.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{width:var(--loading-width, 40px);height:var(--loading-height);color:var(--loading-color, var(--icons-color));margin:var(--loading--margin, 0);flex-shrink:0}.chevron.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{width:var(--chevron-width, 40px);height:var(--chevron-height, 40px);background:var(--chevron-background, transparent);pointer-events:var(--chevron-pointer-events, none);color:var(--chevron-color, var(--icons-color));border:var(--chevron-border, 0 0 0 1px solid #d8dbdf);flex-shrink:0}.multi.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{padding:var(--multi-select-padding, var(--internal-padding))}.multi.svelte-82qwg8 input.svelte-82qwg8.svelte-82qwg8{padding:var(--multi-select-input-padding, 0);position:relative;margin:var(--multi-select-input-margin, 5px 0);flex:1 1 40px}.svelte-select.error.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{border:var(--error-border, 1px solid #ff2d55);background:var(--error-background, #fff)}.a11y-text.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{z-index:9999;border:0px;clip:rect(1px, 1px, 1px, 1px);height:1px;width:1px;position:absolute;overflow:hidden;padding:0px;white-space:nowrap}.multi-item.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{background:var(--multi-item-bg, #ebedef);margin:var(--multi-item-margin, 0);outline:var(--multi-item-outline, 1px solid #ddd);border-radius:var(--multi-item-border-radius, 4px);height:var(--multi-item-height, 25px);line-height:var(--multi-item-height, 25px);display:flex;cursor:default;padding:var(--multi-item-padding, 0 5px);overflow:hidden;gap:var(--multi-item-gap, 4px);outline-offset:-1px;max-width:var(--multi-max-width, none);color:var(--multi-item-color, var(--item-color))}.multi-item.disabled.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8:hover{background:var(--multi-item-disabled-hover-bg, #ebedef);color:var(--multi-item-disabled-hover-color, #c1c6cc)}.multi-item-text.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.multi-item-clear.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{display:flex;align-items:center;justify-content:center;--clear-icon-color:var(--multi-item-clear-icon-color, #000)}.multi-item.active.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{outline:var(--multi-item-active-outline, 1px solid #006fe8)}.svelte-select-list.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{box-shadow:var(--list-shadow, 0 2px 3px 0 rgba(44, 62, 80, 0.24));border-radius:var(--list-border-radius, 4px);max-height:var(--list-max-height, 252px);overflow-y:auto;background:var(--list-background, #fff);position:var(--list-position, absolute);z-index:var(--list-z-index, 2);border:var(--list-border)}.prefloat.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{opacity:0;pointer-events:none}.list-group-title.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{color:var(--group-title-color, #8f8f8f);cursor:default;font-size:var(--group-title-font-size, 16px);font-weight:var(--group-title-font-weight, 600);height:var(--height, 42px);line-height:var(--height, 42px);padding:var(--group-title-padding, 0 20px);text-overflow:ellipsis;overflow-x:hidden;white-space:nowrap;text-transform:var(--group-title-text-transform, uppercase);border-width:var(--group-title-border-width, medium);border-style:var(--group-title-border-style, none);border-color:var(--group-title-border-color, color)}.empty.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{text-align:var(--list-empty-text-align, center);padding:var(--list-empty-padding, 20px 0);color:var(--list-empty-color, #78848f)}.item.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{cursor:default;height:var(--item-height, var(--height, 42px));line-height:var(--item-line-height, var(--height, 42px));padding:var(--item-padding, 0 20px);color:var(--item-color, inherit);text-overflow:ellipsis;overflow:hidden;white-space:nowrap;transition:var(--item-transition, all 0.2s);align-items:center;width:100%}.item.group-item.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{padding-left:var(--group-item-padding-left, 40px)}.item.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8:active{background:var(--item-active-background, #b9daff)}.item.active.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{background:var(--item-is-active-bg, #007aff);color:var(--item-is-active-color, #fff)}.item.first.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{border-radius:var(--item-first-border-radius, 4px 4px 0 0)}.item.hover.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8:not(.active){background:var(--item-hover-bg, #e7f2ff);color:var(--item-hover-color, inherit)}.item.not-selectable.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8,.item.hover.item.not-selectable.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8,.item.active.item.not-selectable.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8,.item.not-selectable.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8:active{color:var(--item-is-not-selectable-color, #999);background:transparent}.required.svelte-82qwg8.svelte-82qwg8.svelte-82qwg8{opacity:0;z-index:-1;position:absolute;top:0;left:0;bottom:0;right:0}");
-}
-var get_required_slot_changes = (dirty) => ({ value: dirty[0] & /*value*/
-8 });
-var get_required_slot_context = (ctx) => ({ value: (
-  /*value*/
-  ctx[3]
-) });
-var get_input_hidden_slot_changes = (dirty) => ({ value: dirty[0] & /*value*/
-8 });
-var get_input_hidden_slot_context = (ctx) => ({ value: (
-  /*value*/
-  ctx[3]
-) });
-var get_chevron_icon_slot_changes = (dirty) => ({ listOpen: dirty[0] & /*listOpen*/
-64 });
-var get_chevron_icon_slot_context = (ctx) => ({ listOpen: (
-  /*listOpen*/
-  ctx[6]
-) });
-var get_clear_icon_slot_changes = (dirty) => ({});
-var get_clear_icon_slot_context = (ctx) => ({});
-var get_loading_icon_slot_changes = (dirty) => ({});
-var get_loading_icon_slot_context = (ctx) => ({});
-var get_selection_slot_changes_1 = (dirty) => ({ selection: dirty[0] & /*value*/
-8 });
-var get_selection_slot_context_1 = (ctx) => ({ selection: (
-  /*value*/
-  ctx[3]
-) });
-function get_each_context3(ctx, list, i) {
-  const child_ctx = ctx.slice();
-  child_ctx[126] = list[i];
-  child_ctx[128] = i;
-  return child_ctx;
-}
-var get_multi_clear_icon_slot_changes = (dirty) => ({});
-var get_multi_clear_icon_slot_context = (ctx) => ({});
-var get_selection_slot_changes = (dirty) => ({ selection: dirty[0] & /*value*/
-8 });
-var get_selection_slot_context = (ctx) => ({
-  selection: (
-    /*item*/
-    ctx[126]
-  ),
-  index: (
-    /*i*/
-    ctx[128]
-  )
-});
-var get_prepend_slot_changes = (dirty) => ({});
-var get_prepend_slot_context = (ctx) => ({});
-var get_list_append_slot_changes = (dirty) => ({});
-var get_list_append_slot_context = (ctx) => ({});
-var get_empty_slot_changes = (dirty) => ({});
-var get_empty_slot_context = (ctx) => ({});
-function get_each_context_1(ctx, list, i) {
-  const child_ctx = ctx.slice();
-  child_ctx[126] = list[i];
-  child_ctx[128] = i;
-  return child_ctx;
-}
-var get_item_slot_changes = (dirty) => ({
-  item: dirty[0] & /*filteredItems*/
-  16777216
-});
-var get_item_slot_context = (ctx) => ({
-  item: (
-    /*item*/
-    ctx[126]
-  ),
-  index: (
-    /*i*/
-    ctx[128]
-  )
-});
-var get_list_slot_changes = (dirty) => ({
-  filteredItems: dirty[0] & /*filteredItems*/
-  16777216
-});
-var get_list_slot_context = (ctx) => ({ filteredItems: (
-  /*filteredItems*/
-  ctx[24]
-) });
-var get_list_prepend_slot_changes = (dirty) => ({});
-var get_list_prepend_slot_context = (ctx) => ({});
-function create_if_block_8(ctx) {
-  let div;
-  let t0;
-  let current_block_type_index;
-  let if_block1;
-  let t1;
-  let floatingContent_action;
-  let current;
-  let mounted;
-  let dispose;
-  let if_block0 = (
-    /*$$slots*/
-    ctx[50]["list-prepend"] && create_if_block_13(ctx)
-  );
-  const if_block_creators = [create_if_block_10, create_if_block_11, create_if_block_122];
-  const if_blocks = [];
-  function select_block_type(ctx2, dirty) {
-    if (
-      /*$$slots*/
-      ctx2[50].list
-    ) return 0;
-    if (
-      /*filteredItems*/
-      ctx2[24].length > 0
-    ) return 1;
-    if (!/*hideEmptyState*/
-    ctx2[19]) return 2;
-    return -1;
-  }
-  if (~(current_block_type_index = select_block_type(ctx, [-1, -1, -1, -1, -1]))) {
-    if_block1 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
-  }
-  let if_block2 = (
-    /*$$slots*/
-    ctx[50]["list-append"] && create_if_block_9(ctx)
-  );
-  return {
-    c() {
-      div = element("div");
-      if (if_block0) if_block0.c();
-      t0 = space();
-      if (if_block1) if_block1.c();
-      t1 = space();
-      if (if_block2) if_block2.c();
-      attr(div, "class", "svelte-select-list svelte-82qwg8");
-      attr(div, "role", "none");
-      toggle_class(
-        div,
-        "prefloat",
-        /*prefloat*/
-        ctx[28]
-      );
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-      if (if_block0) if_block0.m(div, null);
-      append(div, t0);
-      if (~current_block_type_index) {
-        if_blocks[current_block_type_index].m(div, null);
-      }
-      append(div, t1);
-      if (if_block2) if_block2.m(div, null);
-      ctx[91](div);
-      current = true;
-      if (!mounted) {
-        dispose = [
-          action_destroyer(floatingContent_action = /*floatingContent*/
-          ctx[49].call(null, div)),
-          listen(
-            div,
-            "scroll",
-            /*handleListScroll*/
-            ctx[41]
-          ),
-          listen(div, "pointerup", stop_propagation(prevent_default(
-            /*pointerup_handler*/
-            ctx[85]
-          ))),
-          listen(div, "mousedown", stop_propagation(prevent_default(
-            /*mousedown_handler*/
-            ctx[86]
-          )))
-        ];
-        mounted = true;
-      }
-    },
-    p(ctx2, dirty) {
-      if (
-        /*$$slots*/
-        ctx2[50]["list-prepend"]
-      ) {
-        if (if_block0) {
-          if_block0.p(ctx2, dirty);
-          if (dirty[1] & /*$$slots*/
-          524288) {
-            transition_in(if_block0, 1);
-          }
-        } else {
-          if_block0 = create_if_block_13(ctx2);
-          if_block0.c();
-          transition_in(if_block0, 1);
-          if_block0.m(div, t0);
-        }
-      } else if (if_block0) {
-        group_outros();
-        transition_out(if_block0, 1, 1, () => {
-          if_block0 = null;
-        });
-        check_outros();
-      }
-      let previous_block_index = current_block_type_index;
-      current_block_type_index = select_block_type(ctx2, dirty);
-      if (current_block_type_index === previous_block_index) {
-        if (~current_block_type_index) {
-          if_blocks[current_block_type_index].p(ctx2, dirty);
-        }
-      } else {
-        if (if_block1) {
-          group_outros();
-          transition_out(if_blocks[previous_block_index], 1, 1, () => {
-            if_blocks[previous_block_index] = null;
-          });
-          check_outros();
-        }
-        if (~current_block_type_index) {
-          if_block1 = if_blocks[current_block_type_index];
-          if (!if_block1) {
-            if_block1 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
-            if_block1.c();
-          } else {
-            if_block1.p(ctx2, dirty);
-          }
-          transition_in(if_block1, 1);
-          if_block1.m(div, t1);
-        } else {
-          if_block1 = null;
-        }
-      }
-      if (
-        /*$$slots*/
-        ctx2[50]["list-append"]
-      ) {
-        if (if_block2) {
-          if_block2.p(ctx2, dirty);
-          if (dirty[1] & /*$$slots*/
-          524288) {
-            transition_in(if_block2, 1);
-          }
-        } else {
-          if_block2 = create_if_block_9(ctx2);
-          if_block2.c();
-          transition_in(if_block2, 1);
-          if_block2.m(div, null);
-        }
-      } else if (if_block2) {
-        group_outros();
-        transition_out(if_block2, 1, 1, () => {
-          if_block2 = null;
-        });
-        check_outros();
-      }
-      if (!current || dirty[0] & /*prefloat*/
-      268435456) {
-        toggle_class(
-          div,
-          "prefloat",
-          /*prefloat*/
-          ctx2[28]
-        );
-      }
-    },
-    i(local) {
-      if (current) return;
-      transition_in(if_block0);
-      transition_in(if_block1);
-      transition_in(if_block2);
-      current = true;
-    },
-    o(local) {
-      transition_out(if_block0);
-      transition_out(if_block1);
-      transition_out(if_block2);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-      if (if_block0) if_block0.d();
-      if (~current_block_type_index) {
-        if_blocks[current_block_type_index].d();
-      }
-      if (if_block2) if_block2.d();
-      ctx[91](null);
-      mounted = false;
-      run_all(dispose);
-    }
-  };
-}
-function create_if_block_13(ctx) {
-  let current;
-  const list_prepend_slot_template = (
-    /*#slots*/
-    ctx[83]["list-prepend"]
-  );
-  const list_prepend_slot = create_slot(
-    list_prepend_slot_template,
-    ctx,
-    /*$$scope*/
-    ctx[82],
-    get_list_prepend_slot_context
-  );
-  return {
-    c() {
-      if (list_prepend_slot) list_prepend_slot.c();
-    },
-    m(target, anchor) {
-      if (list_prepend_slot) {
-        list_prepend_slot.m(target, anchor);
-      }
-      current = true;
-    },
-    p(ctx2, dirty) {
-      if (list_prepend_slot) {
-        if (list_prepend_slot.p && (!current || dirty[2] & /*$$scope*/
-        1048576)) {
-          update_slot_base(
-            list_prepend_slot,
-            list_prepend_slot_template,
-            ctx2,
-            /*$$scope*/
-            ctx2[82],
-            !current ? get_all_dirty_from_scope(
-              /*$$scope*/
-              ctx2[82]
-            ) : get_slot_changes(
-              list_prepend_slot_template,
-              /*$$scope*/
-              ctx2[82],
-              dirty,
-              get_list_prepend_slot_changes
-            ),
-            get_list_prepend_slot_context
-          );
-        }
-      }
-    },
-    i(local) {
-      if (current) return;
-      transition_in(list_prepend_slot, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(list_prepend_slot, local);
-      current = false;
-    },
-    d(detaching) {
-      if (list_prepend_slot) list_prepend_slot.d(detaching);
-    }
-  };
-}
-function create_if_block_122(ctx) {
-  let current;
-  const empty_slot_template = (
-    /*#slots*/
-    ctx[83].empty
-  );
-  const empty_slot = create_slot(
-    empty_slot_template,
-    ctx,
-    /*$$scope*/
-    ctx[82],
-    get_empty_slot_context
-  );
-  const empty_slot_or_fallback = empty_slot || fallback_block_9(ctx);
-  return {
-    c() {
-      if (empty_slot_or_fallback) empty_slot_or_fallback.c();
-    },
-    m(target, anchor) {
-      if (empty_slot_or_fallback) {
-        empty_slot_or_fallback.m(target, anchor);
-      }
-      current = true;
-    },
-    p(ctx2, dirty) {
-      if (empty_slot) {
-        if (empty_slot.p && (!current || dirty[2] & /*$$scope*/
-        1048576)) {
-          update_slot_base(
-            empty_slot,
-            empty_slot_template,
-            ctx2,
-            /*$$scope*/
-            ctx2[82],
-            !current ? get_all_dirty_from_scope(
-              /*$$scope*/
-              ctx2[82]
-            ) : get_slot_changes(
-              empty_slot_template,
-              /*$$scope*/
-              ctx2[82],
-              dirty,
-              get_empty_slot_changes
-            ),
-            get_empty_slot_context
-          );
-        }
-      }
-    },
-    i(local) {
-      if (current) return;
-      transition_in(empty_slot_or_fallback, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(empty_slot_or_fallback, local);
-      current = false;
-    },
-    d(detaching) {
-      if (empty_slot_or_fallback) empty_slot_or_fallback.d(detaching);
-    }
-  };
-}
-function create_if_block_11(ctx) {
-  let each_1_anchor;
-  let current;
-  let each_value_1 = ensure_array_like(
-    /*filteredItems*/
-    ctx[24]
-  );
-  let each_blocks = [];
-  for (let i = 0; i < each_value_1.length; i += 1) {
-    each_blocks[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
-  }
-  const out = (i) => transition_out(each_blocks[i], 1, 1, () => {
-    each_blocks[i] = null;
-  });
-  return {
-    c() {
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].c();
-      }
-      each_1_anchor = empty();
-    },
-    m(target, anchor) {
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        if (each_blocks[i]) {
-          each_blocks[i].m(target, anchor);
-        }
-      }
-      insert(target, each_1_anchor, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      if (dirty[0] & /*filteredItems, value, itemId, listDom, scrollToHoverItem, hoverItemIndex, label*/
-      1627402376 | dirty[1] & /*handleHover, handleItemClick, isItemActive*/
-      28672 | dirty[2] & /*$$scope*/
-      1048576) {
-        each_value_1 = ensure_array_like(
-          /*filteredItems*/
-          ctx2[24]
-        );
-        let i;
-        for (i = 0; i < each_value_1.length; i += 1) {
-          const child_ctx = get_each_context_1(ctx2, each_value_1, i);
-          if (each_blocks[i]) {
-            each_blocks[i].p(child_ctx, dirty);
-            transition_in(each_blocks[i], 1);
-          } else {
-            each_blocks[i] = create_each_block_1(child_ctx);
-            each_blocks[i].c();
-            transition_in(each_blocks[i], 1);
-            each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
-          }
-        }
-        group_outros();
-        for (i = each_value_1.length; i < each_blocks.length; i += 1) {
-          out(i);
-        }
-        check_outros();
-      }
-    },
-    i(local) {
-      if (current) return;
-      for (let i = 0; i < each_value_1.length; i += 1) {
-        transition_in(each_blocks[i]);
-      }
-      current = true;
-    },
-    o(local) {
-      each_blocks = each_blocks.filter(Boolean);
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        transition_out(each_blocks[i]);
-      }
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(each_1_anchor);
-      }
-      destroy_each(each_blocks, detaching);
-    }
-  };
-}
-function create_if_block_10(ctx) {
-  let current;
-  const list_slot_template = (
-    /*#slots*/
-    ctx[83].list
-  );
-  const list_slot = create_slot(
-    list_slot_template,
-    ctx,
-    /*$$scope*/
-    ctx[82],
-    get_list_slot_context
-  );
-  return {
-    c() {
-      if (list_slot) list_slot.c();
-    },
-    m(target, anchor) {
-      if (list_slot) {
-        list_slot.m(target, anchor);
-      }
-      current = true;
-    },
-    p(ctx2, dirty) {
-      if (list_slot) {
-        if (list_slot.p && (!current || dirty[0] & /*filteredItems*/
-        16777216 | dirty[2] & /*$$scope*/
-        1048576)) {
-          update_slot_base(
-            list_slot,
-            list_slot_template,
-            ctx2,
-            /*$$scope*/
-            ctx2[82],
-            !current ? get_all_dirty_from_scope(
-              /*$$scope*/
-              ctx2[82]
-            ) : get_slot_changes(
-              list_slot_template,
-              /*$$scope*/
-              ctx2[82],
-              dirty,
-              get_list_slot_changes
-            ),
-            get_list_slot_context
-          );
-        }
-      }
-    },
-    i(local) {
-      if (current) return;
-      transition_in(list_slot, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(list_slot, local);
-      current = false;
-    },
-    d(detaching) {
-      if (list_slot) list_slot.d(detaching);
-    }
-  };
-}
-function fallback_block_9(ctx) {
-  let div;
-  return {
-    c() {
-      div = element("div");
-      div.textContent = "No options";
-      attr(div, "class", "empty svelte-82qwg8");
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-    },
-    p: noop,
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-    }
-  };
-}
-function fallback_block_8(ctx) {
-  var _a;
-  let t_value = (
-    /*item*/
-    ((_a = ctx[126]) == null ? void 0 : _a[
-      /*label*/
-      ctx[12]
-    ]) + ""
-  );
-  let t;
-  return {
-    c() {
-      t = text(t_value);
-    },
-    m(target, anchor) {
-      insert(target, t, anchor);
-    },
-    p(ctx2, dirty) {
-      var _a2;
-      if (dirty[0] & /*filteredItems, label*/
-      16781312 && t_value !== (t_value = /*item*/
-      ((_a2 = ctx2[126]) == null ? void 0 : _a2[
-        /*label*/
-        ctx2[12]
-      ]) + "")) set_data(t, t_value);
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t);
-      }
-    }
-  };
-}
-function create_each_block_1(ctx) {
-  let div1;
-  let div0;
-  let activeScroll_action;
-  let hoverScroll_action;
-  let t;
-  let current;
-  let mounted;
-  let dispose;
-  const item_slot_template = (
-    /*#slots*/
-    ctx[83].item
-  );
-  const item_slot = create_slot(
-    item_slot_template,
-    ctx,
-    /*$$scope*/
-    ctx[82],
-    get_item_slot_context
-  );
-  const item_slot_or_fallback = item_slot || fallback_block_8(ctx);
-  function mouseover_handler() {
-    return (
-      /*mouseover_handler*/
-      ctx[88](
-        /*i*/
-        ctx[128]
-      )
-    );
-  }
-  function focus_handler() {
-    return (
-      /*focus_handler*/
-      ctx[89](
-        /*i*/
-        ctx[128]
-      )
-    );
-  }
-  function click_handler() {
-    return (
-      /*click_handler*/
-      ctx[90](
-        /*item*/
-        ctx[126],
-        /*i*/
-        ctx[128]
-      )
-    );
-  }
-  return {
-    c() {
-      var _a;
-      div1 = element("div");
-      div0 = element("div");
-      if (item_slot_or_fallback) item_slot_or_fallback.c();
-      t = space();
-      attr(div0, "class", "item svelte-82qwg8");
-      toggle_class(
-        div0,
-        "list-group-title",
-        /*item*/
-        ctx[126].groupHeader
-      );
-      toggle_class(
-        div0,
-        "active",
-        /*isItemActive*/
-        ctx[45](
-          /*item*/
-          ctx[126],
-          /*value*/
-          ctx[3],
-          /*itemId*/
-          ctx[13]
-        )
-      );
-      toggle_class(div0, "first", isItemFirst(
-        /*i*/
-        ctx[128]
-      ));
-      toggle_class(
-        div0,
-        "hover",
-        /*hoverItemIndex*/
-        ctx[7] === /*i*/
-        ctx[128]
-      );
-      toggle_class(
-        div0,
-        "group-item",
-        /*item*/
-        ctx[126].groupItem
-      );
-      toggle_class(
-        div0,
-        "not-selectable",
-        /*item*/
-        ((_a = ctx[126]) == null ? void 0 : _a.selectable) === false
-      );
-      attr(div1, "class", "list-item svelte-82qwg8");
-      attr(div1, "tabindex", "-1");
-      attr(div1, "role", "none");
-    },
-    m(target, anchor) {
-      insert(target, div1, anchor);
-      append(div1, div0);
-      if (item_slot_or_fallback) {
-        item_slot_or_fallback.m(div0, null);
-      }
-      append(div1, t);
-      current = true;
-      if (!mounted) {
-        dispose = [
-          action_destroyer(activeScroll_action = /*activeScroll*/
-          ctx[46].call(null, div0, {
-            scroll: (
-              /*isItemActive*/
-              ctx[45](
-                /*item*/
-                ctx[126],
-                /*value*/
-                ctx[3],
-                /*itemId*/
-                ctx[13]
-              )
-            ),
-            listDom: (
-              /*listDom*/
-              ctx[30]
-            )
-          })),
-          action_destroyer(hoverScroll_action = /*hoverScroll*/
-          ctx[47].call(null, div0, {
-            scroll: (
-              /*scrollToHoverItem*/
-              ctx[29] === /*i*/
-              ctx[128]
-            ),
-            listDom: (
-              /*listDom*/
-              ctx[30]
-            )
-          })),
-          listen(div1, "mouseover", mouseover_handler),
-          listen(div1, "focus", focus_handler),
-          listen(div1, "click", stop_propagation(click_handler)),
-          listen(div1, "keydown", stop_propagation(prevent_default(
-            /*keydown_handler*/
-            ctx[87]
-          )))
-        ];
-        mounted = true;
-      }
-    },
-    p(new_ctx, dirty) {
-      var _a;
-      ctx = new_ctx;
-      if (item_slot) {
-        if (item_slot.p && (!current || dirty[0] & /*filteredItems*/
-        16777216 | dirty[2] & /*$$scope*/
-        1048576)) {
-          update_slot_base(
-            item_slot,
-            item_slot_template,
-            ctx,
-            /*$$scope*/
-            ctx[82],
-            !current ? get_all_dirty_from_scope(
-              /*$$scope*/
-              ctx[82]
-            ) : get_slot_changes(
-              item_slot_template,
-              /*$$scope*/
-              ctx[82],
-              dirty,
-              get_item_slot_changes
-            ),
-            get_item_slot_context
-          );
-        }
-      } else {
-        if (item_slot_or_fallback && item_slot_or_fallback.p && (!current || dirty[0] & /*filteredItems, label*/
-        16781312)) {
-          item_slot_or_fallback.p(ctx, !current ? [-1, -1, -1, -1, -1] : dirty);
-        }
-      }
-      if (activeScroll_action && is_function(activeScroll_action.update) && dirty[0] & /*filteredItems, value, itemId, listDom*/
-      1090527240) activeScroll_action.update.call(null, {
-        scroll: (
-          /*isItemActive*/
-          ctx[45](
-            /*item*/
-            ctx[126],
-            /*value*/
-            ctx[3],
-            /*itemId*/
-            ctx[13]
-          )
-        ),
-        listDom: (
-          /*listDom*/
-          ctx[30]
-        )
-      });
-      if (hoverScroll_action && is_function(hoverScroll_action.update) && dirty[0] & /*scrollToHoverItem, listDom*/
-      1610612736) hoverScroll_action.update.call(null, {
-        scroll: (
-          /*scrollToHoverItem*/
-          ctx[29] === /*i*/
-          ctx[128]
-        ),
-        listDom: (
-          /*listDom*/
-          ctx[30]
-        )
-      });
-      if (!current || dirty[0] & /*filteredItems*/
-      16777216) {
-        toggle_class(
-          div0,
-          "list-group-title",
-          /*item*/
-          ctx[126].groupHeader
-        );
-      }
-      if (!current || dirty[0] & /*filteredItems, value, itemId*/
-      16785416 | dirty[1] & /*isItemActive*/
-      16384) {
-        toggle_class(
-          div0,
-          "active",
-          /*isItemActive*/
-          ctx[45](
-            /*item*/
-            ctx[126],
-            /*value*/
-            ctx[3],
-            /*itemId*/
-            ctx[13]
-          )
-        );
-      }
-      if (!current || dirty[0] & /*hoverItemIndex*/
-      128) {
-        toggle_class(
-          div0,
-          "hover",
-          /*hoverItemIndex*/
-          ctx[7] === /*i*/
-          ctx[128]
-        );
-      }
-      if (!current || dirty[0] & /*filteredItems*/
-      16777216) {
-        toggle_class(
-          div0,
-          "group-item",
-          /*item*/
-          ctx[126].groupItem
-        );
-      }
-      if (!current || dirty[0] & /*filteredItems*/
-      16777216) {
-        toggle_class(
-          div0,
-          "not-selectable",
-          /*item*/
-          ((_a = ctx[126]) == null ? void 0 : _a.selectable) === false
-        );
-      }
-    },
-    i(local) {
-      if (current) return;
-      transition_in(item_slot_or_fallback, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(item_slot_or_fallback, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div1);
-      }
-      if (item_slot_or_fallback) item_slot_or_fallback.d(detaching);
-      mounted = false;
-      run_all(dispose);
-    }
-  };
-}
-function create_if_block_9(ctx) {
-  let current;
-  const list_append_slot_template = (
-    /*#slots*/
-    ctx[83]["list-append"]
-  );
-  const list_append_slot = create_slot(
-    list_append_slot_template,
-    ctx,
-    /*$$scope*/
-    ctx[82],
-    get_list_append_slot_context
-  );
-  return {
-    c() {
-      if (list_append_slot) list_append_slot.c();
-    },
-    m(target, anchor) {
-      if (list_append_slot) {
-        list_append_slot.m(target, anchor);
-      }
-      current = true;
-    },
-    p(ctx2, dirty) {
-      if (list_append_slot) {
-        if (list_append_slot.p && (!current || dirty[2] & /*$$scope*/
-        1048576)) {
-          update_slot_base(
-            list_append_slot,
-            list_append_slot_template,
-            ctx2,
-            /*$$scope*/
-            ctx2[82],
-            !current ? get_all_dirty_from_scope(
-              /*$$scope*/
-              ctx2[82]
-            ) : get_slot_changes(
-              list_append_slot_template,
-              /*$$scope*/
-              ctx2[82],
-              dirty,
-              get_list_append_slot_changes
-            ),
-            get_list_append_slot_context
-          );
-        }
-      }
-    },
-    i(local) {
-      if (current) return;
-      transition_in(list_append_slot, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(list_append_slot, local);
-      current = false;
-    },
-    d(detaching) {
-      if (list_append_slot) list_append_slot.d(detaching);
-    }
-  };
-}
-function create_if_block_7(ctx) {
-  let span0;
-  let t0;
-  let t1;
-  let span1;
-  let t2;
-  return {
-    c() {
-      span0 = element("span");
-      t0 = text(
-        /*ariaSelection*/
-        ctx[32]
-      );
-      t1 = space();
-      span1 = element("span");
-      t2 = text(
-        /*ariaContext*/
-        ctx[31]
-      );
-      attr(span0, "id", "aria-selection");
-      attr(span0, "class", "svelte-82qwg8");
-      attr(span1, "id", "aria-context");
-      attr(span1, "class", "svelte-82qwg8");
-    },
-    m(target, anchor) {
-      insert(target, span0, anchor);
-      append(span0, t0);
-      insert(target, t1, anchor);
-      insert(target, span1, anchor);
-      append(span1, t2);
-    },
-    p(ctx2, dirty) {
-      if (dirty[1] & /*ariaSelection*/
-      2) set_data(
-        t0,
-        /*ariaSelection*/
-        ctx2[32]
-      );
-      if (dirty[1] & /*ariaContext*/
-      1) set_data(
-        t2,
-        /*ariaContext*/
-        ctx2[31]
-      );
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(span0);
-        detach(t1);
-        detach(span1);
-      }
-    }
-  };
-}
-function create_if_block_4(ctx) {
-  let current_block_type_index;
-  let if_block;
-  let if_block_anchor;
-  let current;
-  const if_block_creators = [create_if_block_5, create_else_block2];
-  const if_blocks = [];
-  function select_block_type_1(ctx2, dirty) {
-    if (
-      /*multiple*/
-      ctx2[9]
-    ) return 0;
-    return 1;
-  }
-  current_block_type_index = select_block_type_1(ctx, [-1, -1, -1, -1, -1]);
-  if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
-  return {
-    c() {
-      if_block.c();
-      if_block_anchor = empty();
-    },
-    m(target, anchor) {
-      if_blocks[current_block_type_index].m(target, anchor);
-      insert(target, if_block_anchor, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      let previous_block_index = current_block_type_index;
-      current_block_type_index = select_block_type_1(ctx2, dirty);
-      if (current_block_type_index === previous_block_index) {
-        if_blocks[current_block_type_index].p(ctx2, dirty);
-      } else {
-        group_outros();
-        transition_out(if_blocks[previous_block_index], 1, 1, () => {
-          if_blocks[previous_block_index] = null;
-        });
-        check_outros();
-        if_block = if_blocks[current_block_type_index];
-        if (!if_block) {
-          if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
-          if_block.c();
-        } else {
-          if_block.p(ctx2, dirty);
-        }
-        transition_in(if_block, 1);
-        if_block.m(if_block_anchor.parentNode, if_block_anchor);
-      }
-    },
-    i(local) {
-      if (current) return;
-      transition_in(if_block);
-      current = true;
-    },
-    o(local) {
-      transition_out(if_block);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(if_block_anchor);
-      }
-      if_blocks[current_block_type_index].d(detaching);
-    }
-  };
-}
-function create_else_block2(ctx) {
-  let div;
-  let current;
-  const selection_slot_template = (
-    /*#slots*/
-    ctx[83].selection
-  );
-  const selection_slot = create_slot(
-    selection_slot_template,
-    ctx,
-    /*$$scope*/
-    ctx[82],
-    get_selection_slot_context_1
-  );
-  const selection_slot_or_fallback = selection_slot || fallback_block_7(ctx);
-  return {
-    c() {
-      div = element("div");
-      if (selection_slot_or_fallback) selection_slot_or_fallback.c();
-      attr(div, "class", "selected-item svelte-82qwg8");
-      toggle_class(
-        div,
-        "hide-selected-item",
-        /*hideSelectedItem*/
-        ctx[35]
-      );
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-      if (selection_slot_or_fallback) {
-        selection_slot_or_fallback.m(div, null);
-      }
-      current = true;
-    },
-    p(ctx2, dirty) {
-      if (selection_slot) {
-        if (selection_slot.p && (!current || dirty[0] & /*value*/
-        8 | dirty[2] & /*$$scope*/
-        1048576)) {
-          update_slot_base(
-            selection_slot,
-            selection_slot_template,
-            ctx2,
-            /*$$scope*/
-            ctx2[82],
-            !current ? get_all_dirty_from_scope(
-              /*$$scope*/
-              ctx2[82]
-            ) : get_slot_changes(
-              selection_slot_template,
-              /*$$scope*/
-              ctx2[82],
-              dirty,
-              get_selection_slot_changes_1
-            ),
-            get_selection_slot_context_1
-          );
-        }
-      } else {
-        if (selection_slot_or_fallback && selection_slot_or_fallback.p && (!current || dirty[0] & /*value, label*/
-        4104)) {
-          selection_slot_or_fallback.p(ctx2, !current ? [-1, -1, -1, -1, -1] : dirty);
-        }
-      }
-      if (!current || dirty[1] & /*hideSelectedItem*/
-      16) {
-        toggle_class(
-          div,
-          "hide-selected-item",
-          /*hideSelectedItem*/
-          ctx2[35]
-        );
-      }
-    },
-    i(local) {
-      if (current) return;
-      transition_in(selection_slot_or_fallback, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(selection_slot_or_fallback, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-      if (selection_slot_or_fallback) selection_slot_or_fallback.d(detaching);
-    }
-  };
-}
-function create_if_block_5(ctx) {
-  let each_1_anchor;
-  let current;
-  let each_value = ensure_array_like(
-    /*value*/
-    ctx[3]
-  );
-  let each_blocks = [];
-  for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block3(get_each_context3(ctx, each_value, i));
-  }
-  const out = (i) => transition_out(each_blocks[i], 1, 1, () => {
-    each_blocks[i] = null;
-  });
-  return {
-    c() {
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].c();
-      }
-      each_1_anchor = empty();
-    },
-    m(target, anchor) {
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        if (each_blocks[i]) {
-          each_blocks[i].m(target, anchor);
-        }
-      }
-      insert(target, each_1_anchor, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      if (dirty[0] & /*activeValue, disabled, multiFullItemClearable, value, label*/
-      67116040 | dirty[1] & /*handleMultiItemClear*/
-      32 | dirty[2] & /*$$scope*/
-      1048576) {
-        each_value = ensure_array_like(
-          /*value*/
-          ctx2[3]
-        );
-        let i;
-        for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context3(ctx2, each_value, i);
-          if (each_blocks[i]) {
-            each_blocks[i].p(child_ctx, dirty);
-            transition_in(each_blocks[i], 1);
-          } else {
-            each_blocks[i] = create_each_block3(child_ctx);
-            each_blocks[i].c();
-            transition_in(each_blocks[i], 1);
-            each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
-          }
-        }
-        group_outros();
-        for (i = each_value.length; i < each_blocks.length; i += 1) {
-          out(i);
-        }
-        check_outros();
-      }
-    },
-    i(local) {
-      if (current) return;
-      for (let i = 0; i < each_value.length; i += 1) {
-        transition_in(each_blocks[i]);
-      }
-      current = true;
-    },
-    o(local) {
-      each_blocks = each_blocks.filter(Boolean);
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        transition_out(each_blocks[i]);
-      }
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(each_1_anchor);
-      }
-      destroy_each(each_blocks, detaching);
-    }
-  };
-}
-function fallback_block_7(ctx) {
-  let t_value = (
-    /*value*/
-    ctx[3][
-      /*label*/
-      ctx[12]
-    ] + ""
-  );
-  let t;
-  return {
-    c() {
-      t = text(t_value);
-    },
-    m(target, anchor) {
-      insert(target, t, anchor);
-    },
-    p(ctx2, dirty) {
-      if (dirty[0] & /*value, label*/
-      4104 && t_value !== (t_value = /*value*/
-      ctx2[3][
-        /*label*/
-        ctx2[12]
-      ] + "")) set_data(t, t_value);
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t);
-      }
-    }
-  };
-}
-function fallback_block_6(ctx) {
-  let t_value = (
-    /*item*/
-    ctx[126][
-      /*label*/
-      ctx[12]
-    ] + ""
-  );
-  let t;
-  return {
-    c() {
-      t = text(t_value);
-    },
-    m(target, anchor) {
-      insert(target, t, anchor);
-    },
-    p(ctx2, dirty) {
-      if (dirty[0] & /*value, label*/
-      4104 && t_value !== (t_value = /*item*/
-      ctx2[126][
-        /*label*/
-        ctx2[12]
-      ] + "")) set_data(t, t_value);
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t);
-      }
-    }
-  };
-}
-function create_if_block_6(ctx) {
-  let div;
-  let current;
-  let mounted;
-  let dispose;
-  const multi_clear_icon_slot_template = (
-    /*#slots*/
-    ctx[83]["multi-clear-icon"]
-  );
-  const multi_clear_icon_slot = create_slot(
-    multi_clear_icon_slot_template,
-    ctx,
-    /*$$scope*/
-    ctx[82],
-    get_multi_clear_icon_slot_context
-  );
-  const multi_clear_icon_slot_or_fallback = multi_clear_icon_slot || fallback_block_5(ctx);
-  function pointerup_handler_1() {
-    return (
-      /*pointerup_handler_1*/
-      ctx[92](
-        /*i*/
-        ctx[128]
-      )
-    );
-  }
-  return {
-    c() {
-      div = element("div");
-      if (multi_clear_icon_slot_or_fallback) multi_clear_icon_slot_or_fallback.c();
-      attr(div, "class", "multi-item-clear svelte-82qwg8");
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-      if (multi_clear_icon_slot_or_fallback) {
-        multi_clear_icon_slot_or_fallback.m(div, null);
-      }
-      current = true;
-      if (!mounted) {
-        dispose = listen(div, "pointerup", stop_propagation(prevent_default(pointerup_handler_1)));
-        mounted = true;
-      }
-    },
-    p(new_ctx, dirty) {
-      ctx = new_ctx;
-      if (multi_clear_icon_slot) {
-        if (multi_clear_icon_slot.p && (!current || dirty[2] & /*$$scope*/
-        1048576)) {
-          update_slot_base(
-            multi_clear_icon_slot,
-            multi_clear_icon_slot_template,
-            ctx,
-            /*$$scope*/
-            ctx[82],
-            !current ? get_all_dirty_from_scope(
-              /*$$scope*/
-              ctx[82]
-            ) : get_slot_changes(
-              multi_clear_icon_slot_template,
-              /*$$scope*/
-              ctx[82],
-              dirty,
-              get_multi_clear_icon_slot_changes
-            ),
-            get_multi_clear_icon_slot_context
-          );
-        }
-      }
-    },
-    i(local) {
-      if (current) return;
-      transition_in(multi_clear_icon_slot_or_fallback, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(multi_clear_icon_slot_or_fallback, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-      if (multi_clear_icon_slot_or_fallback) multi_clear_icon_slot_or_fallback.d(detaching);
-      mounted = false;
-      dispose();
-    }
-  };
-}
-function fallback_block_5(ctx) {
-  let clearicon;
-  let current;
-  clearicon = new ClearIcon_default({});
-  return {
-    c() {
-      create_component(clearicon.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(clearicon, target, anchor);
-      current = true;
-    },
-    i(local) {
-      if (current) return;
-      transition_in(clearicon.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(clearicon.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(clearicon, detaching);
-    }
-  };
-}
-function create_each_block3(ctx) {
-  let div;
-  let span;
-  let t0;
-  let t1;
-  let current;
-  let mounted;
-  let dispose;
-  const selection_slot_template = (
-    /*#slots*/
-    ctx[83].selection
-  );
-  const selection_slot = create_slot(
-    selection_slot_template,
-    ctx,
-    /*$$scope*/
-    ctx[82],
-    get_selection_slot_context
-  );
-  const selection_slot_or_fallback = selection_slot || fallback_block_6(ctx);
-  let if_block = !/*disabled*/
-  ctx[11] && !/*multiFullItemClearable*/
-  ctx[10] && ClearIcon_default && create_if_block_6(ctx);
-  function click_handler_1() {
-    return (
-      /*click_handler_1*/
-      ctx[93](
-        /*i*/
-        ctx[128]
-      )
-    );
-  }
-  return {
-    c() {
-      div = element("div");
-      span = element("span");
-      if (selection_slot_or_fallback) selection_slot_or_fallback.c();
-      t0 = space();
-      if (if_block) if_block.c();
-      t1 = space();
-      attr(span, "class", "multi-item-text svelte-82qwg8");
-      attr(div, "class", "multi-item svelte-82qwg8");
-      attr(div, "role", "none");
-      toggle_class(
-        div,
-        "active",
-        /*activeValue*/
-        ctx[26] === /*i*/
-        ctx[128]
-      );
-      toggle_class(
-        div,
-        "disabled",
-        /*disabled*/
-        ctx[11]
-      );
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-      append(div, span);
-      if (selection_slot_or_fallback) {
-        selection_slot_or_fallback.m(span, null);
-      }
-      append(div, t0);
-      if (if_block) if_block.m(div, null);
-      append(div, t1);
-      current = true;
-      if (!mounted) {
-        dispose = [
-          listen(div, "click", prevent_default(click_handler_1)),
-          listen(div, "keydown", stop_propagation(prevent_default(
-            /*keydown_handler_1*/
-            ctx[84]
-          )))
-        ];
-        mounted = true;
-      }
-    },
-    p(new_ctx, dirty) {
-      ctx = new_ctx;
-      if (selection_slot) {
-        if (selection_slot.p && (!current || dirty[0] & /*value*/
-        8 | dirty[2] & /*$$scope*/
-        1048576)) {
-          update_slot_base(
-            selection_slot,
-            selection_slot_template,
-            ctx,
-            /*$$scope*/
-            ctx[82],
-            !current ? get_all_dirty_from_scope(
-              /*$$scope*/
-              ctx[82]
-            ) : get_slot_changes(
-              selection_slot_template,
-              /*$$scope*/
-              ctx[82],
-              dirty,
-              get_selection_slot_changes
-            ),
-            get_selection_slot_context
-          );
-        }
-      } else {
-        if (selection_slot_or_fallback && selection_slot_or_fallback.p && (!current || dirty[0] & /*value, label*/
-        4104)) {
-          selection_slot_or_fallback.p(ctx, !current ? [-1, -1, -1, -1, -1] : dirty);
-        }
-      }
-      if (!/*disabled*/
-      ctx[11] && !/*multiFullItemClearable*/
-      ctx[10] && ClearIcon_default) {
-        if (if_block) {
-          if_block.p(ctx, dirty);
-          if (dirty[0] & /*disabled, multiFullItemClearable*/
-          3072) {
-            transition_in(if_block, 1);
-          }
-        } else {
-          if_block = create_if_block_6(ctx);
-          if_block.c();
-          transition_in(if_block, 1);
-          if_block.m(div, t1);
-        }
-      } else if (if_block) {
-        group_outros();
-        transition_out(if_block, 1, 1, () => {
-          if_block = null;
-        });
-        check_outros();
-      }
-      if (!current || dirty[0] & /*activeValue*/
-      67108864) {
-        toggle_class(
-          div,
-          "active",
-          /*activeValue*/
-          ctx[26] === /*i*/
-          ctx[128]
-        );
-      }
-      if (!current || dirty[0] & /*disabled*/
-      2048) {
-        toggle_class(
-          div,
-          "disabled",
-          /*disabled*/
-          ctx[11]
-        );
-      }
-    },
-    i(local) {
-      if (current) return;
-      transition_in(selection_slot_or_fallback, local);
-      transition_in(if_block);
-      current = true;
-    },
-    o(local) {
-      transition_out(selection_slot_or_fallback, local);
-      transition_out(if_block);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-      if (selection_slot_or_fallback) selection_slot_or_fallback.d(detaching);
-      if (if_block) if_block.d();
-      mounted = false;
-      run_all(dispose);
-    }
-  };
-}
-function create_if_block_3(ctx) {
-  let div;
-  let current;
-  const loading_icon_slot_template = (
-    /*#slots*/
-    ctx[83]["loading-icon"]
-  );
-  const loading_icon_slot = create_slot(
-    loading_icon_slot_template,
-    ctx,
-    /*$$scope*/
-    ctx[82],
-    get_loading_icon_slot_context
-  );
-  const loading_icon_slot_or_fallback = loading_icon_slot || fallback_block_4(ctx);
-  return {
-    c() {
-      div = element("div");
-      if (loading_icon_slot_or_fallback) loading_icon_slot_or_fallback.c();
-      attr(div, "class", "icon loading svelte-82qwg8");
-      attr(div, "aria-hidden", "true");
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-      if (loading_icon_slot_or_fallback) {
-        loading_icon_slot_or_fallback.m(div, null);
-      }
-      current = true;
-    },
-    p(ctx2, dirty) {
-      if (loading_icon_slot) {
-        if (loading_icon_slot.p && (!current || dirty[2] & /*$$scope*/
-        1048576)) {
-          update_slot_base(
-            loading_icon_slot,
-            loading_icon_slot_template,
-            ctx2,
-            /*$$scope*/
-            ctx2[82],
-            !current ? get_all_dirty_from_scope(
-              /*$$scope*/
-              ctx2[82]
-            ) : get_slot_changes(
-              loading_icon_slot_template,
-              /*$$scope*/
-              ctx2[82],
-              dirty,
-              get_loading_icon_slot_changes
-            ),
-            get_loading_icon_slot_context
-          );
-        }
-      }
-    },
-    i(local) {
-      if (current) return;
-      transition_in(loading_icon_slot_or_fallback, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(loading_icon_slot_or_fallback, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-      if (loading_icon_slot_or_fallback) loading_icon_slot_or_fallback.d(detaching);
-    }
-  };
-}
-function fallback_block_4(ctx) {
-  let loadingicon;
-  let current;
-  loadingicon = new LoadingIcon_default({});
-  return {
-    c() {
-      create_component(loadingicon.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(loadingicon, target, anchor);
-      current = true;
-    },
-    i(local) {
-      if (current) return;
-      transition_in(loadingicon.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(loadingicon.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(loadingicon, detaching);
-    }
-  };
-}
-function create_if_block_23(ctx) {
-  let button;
-  let current;
-  let mounted;
-  let dispose;
-  const clear_icon_slot_template = (
-    /*#slots*/
-    ctx[83]["clear-icon"]
-  );
-  const clear_icon_slot = create_slot(
-    clear_icon_slot_template,
-    ctx,
-    /*$$scope*/
-    ctx[82],
-    get_clear_icon_slot_context
-  );
-  const clear_icon_slot_or_fallback = clear_icon_slot || fallback_block_3(ctx);
-  return {
-    c() {
-      button = element("button");
-      if (clear_icon_slot_or_fallback) clear_icon_slot_or_fallback.c();
-      attr(button, "type", "button");
-      attr(button, "class", "icon clear-select svelte-82qwg8");
-    },
-    m(target, anchor) {
-      insert(target, button, anchor);
-      if (clear_icon_slot_or_fallback) {
-        clear_icon_slot_or_fallback.m(button, null);
-      }
-      current = true;
-      if (!mounted) {
-        dispose = listen(
-          button,
-          "click",
-          /*handleClear*/
-          ctx[22]
-        );
-        mounted = true;
-      }
-    },
-    p(ctx2, dirty) {
-      if (clear_icon_slot) {
-        if (clear_icon_slot.p && (!current || dirty[2] & /*$$scope*/
-        1048576)) {
-          update_slot_base(
-            clear_icon_slot,
-            clear_icon_slot_template,
-            ctx2,
-            /*$$scope*/
-            ctx2[82],
-            !current ? get_all_dirty_from_scope(
-              /*$$scope*/
-              ctx2[82]
-            ) : get_slot_changes(
-              clear_icon_slot_template,
-              /*$$scope*/
-              ctx2[82],
-              dirty,
-              get_clear_icon_slot_changes
-            ),
-            get_clear_icon_slot_context
-          );
-        }
-      }
-    },
-    i(local) {
-      if (current) return;
-      transition_in(clear_icon_slot_or_fallback, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(clear_icon_slot_or_fallback, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(button);
-      }
-      if (clear_icon_slot_or_fallback) clear_icon_slot_or_fallback.d(detaching);
-      mounted = false;
-      dispose();
-    }
-  };
-}
-function fallback_block_3(ctx) {
-  let clearicon;
-  let current;
-  clearicon = new ClearIcon_default({});
-  return {
-    c() {
-      create_component(clearicon.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(clearicon, target, anchor);
-      current = true;
-    },
-    i(local) {
-      if (current) return;
-      transition_in(clearicon.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(clearicon.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(clearicon, detaching);
-    }
-  };
-}
-function create_if_block_14(ctx) {
-  let div;
-  let current;
-  const chevron_icon_slot_template = (
-    /*#slots*/
-    ctx[83]["chevron-icon"]
-  );
-  const chevron_icon_slot = create_slot(
-    chevron_icon_slot_template,
-    ctx,
-    /*$$scope*/
-    ctx[82],
-    get_chevron_icon_slot_context
-  );
-  const chevron_icon_slot_or_fallback = chevron_icon_slot || fallback_block_2(ctx);
-  return {
-    c() {
-      div = element("div");
-      if (chevron_icon_slot_or_fallback) chevron_icon_slot_or_fallback.c();
-      attr(div, "class", "icon chevron svelte-82qwg8");
-      attr(div, "aria-hidden", "true");
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-      if (chevron_icon_slot_or_fallback) {
-        chevron_icon_slot_or_fallback.m(div, null);
-      }
-      current = true;
-    },
-    p(ctx2, dirty) {
-      if (chevron_icon_slot) {
-        if (chevron_icon_slot.p && (!current || dirty[0] & /*listOpen*/
-        64 | dirty[2] & /*$$scope*/
-        1048576)) {
-          update_slot_base(
-            chevron_icon_slot,
-            chevron_icon_slot_template,
-            ctx2,
-            /*$$scope*/
-            ctx2[82],
-            !current ? get_all_dirty_from_scope(
-              /*$$scope*/
-              ctx2[82]
-            ) : get_slot_changes(
-              chevron_icon_slot_template,
-              /*$$scope*/
-              ctx2[82],
-              dirty,
-              get_chevron_icon_slot_changes
-            ),
-            get_chevron_icon_slot_context
-          );
-        }
-      }
-    },
-    i(local) {
-      if (current) return;
-      transition_in(chevron_icon_slot_or_fallback, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(chevron_icon_slot_or_fallback, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-      if (chevron_icon_slot_or_fallback) chevron_icon_slot_or_fallback.d(detaching);
-    }
-  };
-}
-function fallback_block_2(ctx) {
-  let chevronicon;
-  let current;
-  chevronicon = new ChevronIcon_default({});
-  return {
-    c() {
-      create_component(chevronicon.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(chevronicon, target, anchor);
-      current = true;
-    },
-    i(local) {
-      if (current) return;
-      transition_in(chevronicon.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(chevronicon.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(chevronicon, detaching);
-    }
-  };
-}
-function fallback_block_1(ctx) {
-  let input_1;
-  let input_1_value_value;
-  return {
-    c() {
-      input_1 = element("input");
-      attr(
-        input_1,
-        "name",
-        /*name*/
-        ctx[8]
-      );
-      attr(input_1, "type", "hidden");
-      input_1.value = input_1_value_value = /*value*/
-      ctx[3] ? JSON.stringify(
-        /*value*/
-        ctx[3]
-      ) : null;
-      attr(input_1, "class", "svelte-82qwg8");
-    },
-    m(target, anchor) {
-      insert(target, input_1, anchor);
-    },
-    p(ctx2, dirty) {
-      if (dirty[0] & /*name*/
-      256) {
-        attr(
-          input_1,
-          "name",
-          /*name*/
-          ctx2[8]
-        );
-      }
-      if (dirty[0] & /*value*/
-      8 && input_1_value_value !== (input_1_value_value = /*value*/
-      ctx2[3] ? JSON.stringify(
-        /*value*/
-        ctx2[3]
-      ) : null)) {
-        input_1.value = input_1_value_value;
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(input_1);
-      }
-    }
-  };
-}
-function create_if_block3(ctx) {
-  let current;
-  const required_slot_template = (
-    /*#slots*/
-    ctx[83].required
-  );
-  const required_slot = create_slot(
-    required_slot_template,
-    ctx,
-    /*$$scope*/
-    ctx[82],
-    get_required_slot_context
-  );
-  const required_slot_or_fallback = required_slot || fallback_block(ctx);
-  return {
-    c() {
-      if (required_slot_or_fallback) required_slot_or_fallback.c();
-    },
-    m(target, anchor) {
-      if (required_slot_or_fallback) {
-        required_slot_or_fallback.m(target, anchor);
-      }
-      current = true;
-    },
-    p(ctx2, dirty) {
-      if (required_slot) {
-        if (required_slot.p && (!current || dirty[0] & /*value*/
-        8 | dirty[2] & /*$$scope*/
-        1048576)) {
-          update_slot_base(
-            required_slot,
-            required_slot_template,
-            ctx2,
-            /*$$scope*/
-            ctx2[82],
-            !current ? get_all_dirty_from_scope(
-              /*$$scope*/
-              ctx2[82]
-            ) : get_slot_changes(
-              required_slot_template,
-              /*$$scope*/
-              ctx2[82],
-              dirty,
-              get_required_slot_changes
-            ),
-            get_required_slot_context
-          );
-        }
-      }
-    },
-    i(local) {
-      if (current) return;
-      transition_in(required_slot_or_fallback, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(required_slot_or_fallback, local);
-      current = false;
-    },
-    d(detaching) {
-      if (required_slot_or_fallback) required_slot_or_fallback.d(detaching);
-    }
-  };
-}
-function fallback_block(ctx) {
-  let select;
-  return {
-    c() {
-      select = element("select");
-      attr(select, "class", "required svelte-82qwg8");
-      select.required = true;
-      attr(select, "tabindex", "-1");
-      attr(select, "aria-hidden", "true");
-    },
-    m(target, anchor) {
-      insert(target, select, anchor);
-    },
-    p: noop,
-    d(detaching) {
-      if (detaching) {
-        detach(select);
-      }
-    }
-  };
-}
-function create_fragment8(ctx) {
-  let div3;
-  let t0;
-  let span;
-  let t1;
-  let div0;
-  let t2;
-  let div1;
-  let t3;
-  let input_1;
-  let input_1_readonly_value;
-  let t4;
-  let div2;
-  let t5;
-  let t6;
-  let t7;
-  let t8;
-  let div3_class_value;
-  let floatingRef_action;
-  let current;
-  let mounted;
-  let dispose;
-  let if_block0 = (
-    /*listOpen*/
-    ctx[6] && create_if_block_8(ctx)
-  );
-  let if_block1 = (
-    /*focused*/
-    ctx[2] && create_if_block_7(ctx)
-  );
-  const prepend_slot_template = (
-    /*#slots*/
-    ctx[83].prepend
-  );
-  const prepend_slot = create_slot(
-    prepend_slot_template,
-    ctx,
-    /*$$scope*/
-    ctx[82],
-    get_prepend_slot_context
-  );
-  let if_block2 = (
-    /*hasValue*/
-    ctx[25] && create_if_block_4(ctx)
-  );
-  let input_1_levels = [
-    {
-      readOnly: input_1_readonly_value = !/*searchable*/
-      ctx[17]
-    },
-    /*_inputAttributes*/
-    ctx[27],
-    { placeholder: (
-      /*placeholderText*/
-      ctx[33]
-    ) },
-    { style: (
-      /*inputStyles*/
-      ctx[18]
-    ) },
-    { disabled: (
-      /*disabled*/
-      ctx[11]
-    ) }
-  ];
-  let input_data = {};
-  for (let i = 0; i < input_1_levels.length; i += 1) {
-    input_data = assign(input_data, input_1_levels[i]);
-  }
-  let if_block3 = (
-    /*loading*/
-    ctx[5] && create_if_block_3(ctx)
-  );
-  let if_block4 = (
-    /*showClear*/
-    ctx[34] && create_if_block_23(ctx)
-  );
-  let if_block5 = (
-    /*showChevron*/
-    ctx[20] && create_if_block_14(ctx)
-  );
-  const input_hidden_slot_template = (
-    /*#slots*/
-    ctx[83]["input-hidden"]
-  );
-  const input_hidden_slot = create_slot(
-    input_hidden_slot_template,
-    ctx,
-    /*$$scope*/
-    ctx[82],
-    get_input_hidden_slot_context
-  );
-  const input_hidden_slot_or_fallback = input_hidden_slot || fallback_block_1(ctx);
-  let if_block6 = (
-    /*required*/
-    ctx[16] && (!/*value*/
-    ctx[3] || /*value*/
-    ctx[3].length === 0) && create_if_block3(ctx)
-  );
-  return {
-    c() {
-      div3 = element("div");
-      if (if_block0) if_block0.c();
-      t0 = space();
-      span = element("span");
-      if (if_block1) if_block1.c();
-      t1 = space();
-      div0 = element("div");
-      if (prepend_slot) prepend_slot.c();
-      t2 = space();
-      div1 = element("div");
-      if (if_block2) if_block2.c();
-      t3 = space();
-      input_1 = element("input");
-      t4 = space();
-      div2 = element("div");
-      if (if_block3) if_block3.c();
-      t5 = space();
-      if (if_block4) if_block4.c();
-      t6 = space();
-      if (if_block5) if_block5.c();
-      t7 = space();
-      if (input_hidden_slot_or_fallback) input_hidden_slot_or_fallback.c();
-      t8 = space();
-      if (if_block6) if_block6.c();
-      attr(span, "aria-live", "polite");
-      attr(span, "aria-atomic", "false");
-      attr(span, "aria-relevant", "additions text");
-      attr(span, "class", "a11y-text svelte-82qwg8");
-      attr(div0, "class", "prepend svelte-82qwg8");
-      set_attributes(input_1, input_data);
-      toggle_class(input_1, "svelte-82qwg8", true);
-      attr(div1, "class", "value-container svelte-82qwg8");
-      attr(div2, "class", "indicators svelte-82qwg8");
-      attr(div3, "class", div3_class_value = "svelte-select " + /*containerClasses*/
-      ctx[21] + " svelte-82qwg8");
-      attr(
-        div3,
-        "style",
-        /*containerStyles*/
-        ctx[14]
-      );
-      attr(div3, "role", "none");
-      toggle_class(
-        div3,
-        "multi",
-        /*multiple*/
-        ctx[9]
-      );
-      toggle_class(
-        div3,
-        "disabled",
-        /*disabled*/
-        ctx[11]
-      );
-      toggle_class(
-        div3,
-        "focused",
-        /*focused*/
-        ctx[2]
-      );
-      toggle_class(
-        div3,
-        "list-open",
-        /*listOpen*/
-        ctx[6]
-      );
-      toggle_class(
-        div3,
-        "show-chevron",
-        /*showChevron*/
-        ctx[20]
-      );
-      toggle_class(
-        div3,
-        "error",
-        /*hasError*/
-        ctx[15]
-      );
-    },
-    m(target, anchor) {
-      insert(target, div3, anchor);
-      if (if_block0) if_block0.m(div3, null);
-      append(div3, t0);
-      append(div3, span);
-      if (if_block1) if_block1.m(span, null);
-      append(div3, t1);
-      append(div3, div0);
-      if (prepend_slot) {
-        prepend_slot.m(div0, null);
-      }
-      append(div3, t2);
-      append(div3, div1);
-      if (if_block2) if_block2.m(div1, null);
-      append(div1, t3);
-      append(div1, input_1);
-      if (input_1.autofocus) input_1.focus();
-      ctx[94](input_1);
-      set_input_value(
-        input_1,
-        /*filterText*/
-        ctx[4]
-      );
-      append(div3, t4);
-      append(div3, div2);
-      if (if_block3) if_block3.m(div2, null);
-      append(div2, t5);
-      if (if_block4) if_block4.m(div2, null);
-      append(div2, t6);
-      if (if_block5) if_block5.m(div2, null);
-      append(div3, t7);
-      if (input_hidden_slot_or_fallback) {
-        input_hidden_slot_or_fallback.m(div3, null);
-      }
-      append(div3, t8);
-      if (if_block6) if_block6.m(div3, null);
-      ctx[96](div3);
-      current = true;
-      if (!mounted) {
-        dispose = [
-          listen(
-            window,
-            "click",
-            /*handleClickOutside*/
-            ctx[42]
-          ),
-          listen(
-            window,
-            "keydown",
-            /*handleKeyDown*/
-            ctx[37]
-          ),
-          listen(
-            input_1,
-            "keydown",
-            /*handleKeyDown*/
-            ctx[37]
-          ),
-          listen(
-            input_1,
-            "blur",
-            /*handleBlur*/
-            ctx[39]
-          ),
-          listen(
-            input_1,
-            "focus",
-            /*handleFocus*/
-            ctx[38]
-          ),
-          listen(
-            input_1,
-            "input",
-            /*input_1_input_handler*/
-            ctx[95]
-          ),
-          listen(div3, "pointerup", prevent_default(
-            /*handleClick*/
-            ctx[40]
-          )),
-          action_destroyer(floatingRef_action = /*floatingRef*/
-          ctx[48].call(null, div3))
-        ];
-        mounted = true;
-      }
-    },
-    p(ctx2, dirty) {
-      if (
-        /*listOpen*/
-        ctx2[6]
-      ) {
-        if (if_block0) {
-          if_block0.p(ctx2, dirty);
-          if (dirty[0] & /*listOpen*/
-          64) {
-            transition_in(if_block0, 1);
-          }
-        } else {
-          if_block0 = create_if_block_8(ctx2);
-          if_block0.c();
-          transition_in(if_block0, 1);
-          if_block0.m(div3, t0);
-        }
-      } else if (if_block0) {
-        group_outros();
-        transition_out(if_block0, 1, 1, () => {
-          if_block0 = null;
-        });
-        check_outros();
-      }
-      if (
-        /*focused*/
-        ctx2[2]
-      ) {
-        if (if_block1) {
-          if_block1.p(ctx2, dirty);
-        } else {
-          if_block1 = create_if_block_7(ctx2);
-          if_block1.c();
-          if_block1.m(span, null);
-        }
-      } else if (if_block1) {
-        if_block1.d(1);
-        if_block1 = null;
-      }
-      if (prepend_slot) {
-        if (prepend_slot.p && (!current || dirty[2] & /*$$scope*/
-        1048576)) {
-          update_slot_base(
-            prepend_slot,
-            prepend_slot_template,
-            ctx2,
-            /*$$scope*/
-            ctx2[82],
-            !current ? get_all_dirty_from_scope(
-              /*$$scope*/
-              ctx2[82]
-            ) : get_slot_changes(
-              prepend_slot_template,
-              /*$$scope*/
-              ctx2[82],
-              dirty,
-              get_prepend_slot_changes
-            ),
-            get_prepend_slot_context
-          );
-        }
-      }
-      if (
-        /*hasValue*/
-        ctx2[25]
-      ) {
-        if (if_block2) {
-          if_block2.p(ctx2, dirty);
-          if (dirty[0] & /*hasValue*/
-          33554432) {
-            transition_in(if_block2, 1);
-          }
-        } else {
-          if_block2 = create_if_block_4(ctx2);
-          if_block2.c();
-          transition_in(if_block2, 1);
-          if_block2.m(div1, t3);
-        }
-      } else if (if_block2) {
-        group_outros();
-        transition_out(if_block2, 1, 1, () => {
-          if_block2 = null;
-        });
-        check_outros();
-      }
-      set_attributes(input_1, input_data = get_spread_update(input_1_levels, [
-        (!current || dirty[0] & /*searchable*/
-        131072 && input_1_readonly_value !== (input_1_readonly_value = !/*searchable*/
-        ctx2[17])) && { readOnly: input_1_readonly_value },
-        dirty[0] & /*_inputAttributes*/
-        134217728 && /*_inputAttributes*/
-        ctx2[27],
-        (!current || dirty[1] & /*placeholderText*/
-        4) && { placeholder: (
-          /*placeholderText*/
-          ctx2[33]
-        ) },
-        (!current || dirty[0] & /*inputStyles*/
-        262144) && { style: (
-          /*inputStyles*/
-          ctx2[18]
-        ) },
-        (!current || dirty[0] & /*disabled*/
-        2048) && { disabled: (
-          /*disabled*/
-          ctx2[11]
-        ) }
-      ]));
-      if (dirty[0] & /*filterText*/
-      16 && input_1.value !== /*filterText*/
-      ctx2[4]) {
-        set_input_value(
-          input_1,
-          /*filterText*/
-          ctx2[4]
-        );
-      }
-      toggle_class(input_1, "svelte-82qwg8", true);
-      if (
-        /*loading*/
-        ctx2[5]
-      ) {
-        if (if_block3) {
-          if_block3.p(ctx2, dirty);
-          if (dirty[0] & /*loading*/
-          32) {
-            transition_in(if_block3, 1);
-          }
-        } else {
-          if_block3 = create_if_block_3(ctx2);
-          if_block3.c();
-          transition_in(if_block3, 1);
-          if_block3.m(div2, t5);
-        }
-      } else if (if_block3) {
-        group_outros();
-        transition_out(if_block3, 1, 1, () => {
-          if_block3 = null;
-        });
-        check_outros();
-      }
-      if (
-        /*showClear*/
-        ctx2[34]
-      ) {
-        if (if_block4) {
-          if_block4.p(ctx2, dirty);
-          if (dirty[1] & /*showClear*/
-          8) {
-            transition_in(if_block4, 1);
-          }
-        } else {
-          if_block4 = create_if_block_23(ctx2);
-          if_block4.c();
-          transition_in(if_block4, 1);
-          if_block4.m(div2, t6);
-        }
-      } else if (if_block4) {
-        group_outros();
-        transition_out(if_block4, 1, 1, () => {
-          if_block4 = null;
-        });
-        check_outros();
-      }
-      if (
-        /*showChevron*/
-        ctx2[20]
-      ) {
-        if (if_block5) {
-          if_block5.p(ctx2, dirty);
-          if (dirty[0] & /*showChevron*/
-          1048576) {
-            transition_in(if_block5, 1);
-          }
-        } else {
-          if_block5 = create_if_block_14(ctx2);
-          if_block5.c();
-          transition_in(if_block5, 1);
-          if_block5.m(div2, null);
-        }
-      } else if (if_block5) {
-        group_outros();
-        transition_out(if_block5, 1, 1, () => {
-          if_block5 = null;
-        });
-        check_outros();
-      }
-      if (input_hidden_slot) {
-        if (input_hidden_slot.p && (!current || dirty[0] & /*value*/
-        8 | dirty[2] & /*$$scope*/
-        1048576)) {
-          update_slot_base(
-            input_hidden_slot,
-            input_hidden_slot_template,
-            ctx2,
-            /*$$scope*/
-            ctx2[82],
-            !current ? get_all_dirty_from_scope(
-              /*$$scope*/
-              ctx2[82]
-            ) : get_slot_changes(
-              input_hidden_slot_template,
-              /*$$scope*/
-              ctx2[82],
-              dirty,
-              get_input_hidden_slot_changes
-            ),
-            get_input_hidden_slot_context
-          );
-        }
-      } else {
-        if (input_hidden_slot_or_fallback && input_hidden_slot_or_fallback.p && (!current || dirty[0] & /*name, value*/
-        264)) {
-          input_hidden_slot_or_fallback.p(ctx2, !current ? [-1, -1, -1, -1, -1] : dirty);
-        }
-      }
-      if (
-        /*required*/
-        ctx2[16] && (!/*value*/
-        ctx2[3] || /*value*/
-        ctx2[3].length === 0)
-      ) {
-        if (if_block6) {
-          if_block6.p(ctx2, dirty);
-          if (dirty[0] & /*required, value*/
-          65544) {
-            transition_in(if_block6, 1);
-          }
-        } else {
-          if_block6 = create_if_block3(ctx2);
-          if_block6.c();
-          transition_in(if_block6, 1);
-          if_block6.m(div3, null);
-        }
-      } else if (if_block6) {
-        group_outros();
-        transition_out(if_block6, 1, 1, () => {
-          if_block6 = null;
-        });
-        check_outros();
-      }
-      if (!current || dirty[0] & /*containerClasses*/
-      2097152 && div3_class_value !== (div3_class_value = "svelte-select " + /*containerClasses*/
-      ctx2[21] + " svelte-82qwg8")) {
-        attr(div3, "class", div3_class_value);
-      }
-      if (!current || dirty[0] & /*containerStyles*/
-      16384) {
-        attr(
-          div3,
-          "style",
-          /*containerStyles*/
-          ctx2[14]
-        );
-      }
-      if (!current || dirty[0] & /*containerClasses, multiple*/
-      2097664) {
-        toggle_class(
-          div3,
-          "multi",
-          /*multiple*/
-          ctx2[9]
-        );
-      }
-      if (!current || dirty[0] & /*containerClasses, disabled*/
-      2099200) {
-        toggle_class(
-          div3,
-          "disabled",
-          /*disabled*/
-          ctx2[11]
-        );
-      }
-      if (!current || dirty[0] & /*containerClasses, focused*/
-      2097156) {
-        toggle_class(
-          div3,
-          "focused",
-          /*focused*/
-          ctx2[2]
-        );
-      }
-      if (!current || dirty[0] & /*containerClasses, listOpen*/
-      2097216) {
-        toggle_class(
-          div3,
-          "list-open",
-          /*listOpen*/
-          ctx2[6]
-        );
-      }
-      if (!current || dirty[0] & /*containerClasses, showChevron*/
-      3145728) {
-        toggle_class(
-          div3,
-          "show-chevron",
-          /*showChevron*/
-          ctx2[20]
-        );
-      }
-      if (!current || dirty[0] & /*containerClasses, hasError*/
-      2129920) {
-        toggle_class(
-          div3,
-          "error",
-          /*hasError*/
-          ctx2[15]
-        );
-      }
-    },
-    i(local) {
-      if (current) return;
-      transition_in(if_block0);
-      transition_in(prepend_slot, local);
-      transition_in(if_block2);
-      transition_in(if_block3);
-      transition_in(if_block4);
-      transition_in(if_block5);
-      transition_in(input_hidden_slot_or_fallback, local);
-      transition_in(if_block6);
-      current = true;
-    },
-    o(local) {
-      transition_out(if_block0);
-      transition_out(prepend_slot, local);
-      transition_out(if_block2);
-      transition_out(if_block3);
-      transition_out(if_block4);
-      transition_out(if_block5);
-      transition_out(input_hidden_slot_or_fallback, local);
-      transition_out(if_block6);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div3);
-      }
-      if (if_block0) if_block0.d();
-      if (if_block1) if_block1.d();
-      if (prepend_slot) prepend_slot.d(detaching);
-      if (if_block2) if_block2.d();
-      ctx[94](null);
-      if (if_block3) if_block3.d();
-      if (if_block4) if_block4.d();
-      if (if_block5) if_block5.d();
-      if (input_hidden_slot_or_fallback) input_hidden_slot_or_fallback.d(detaching);
-      if (if_block6) if_block6.d();
-      ctx[96](null);
-      mounted = false;
-      run_all(dispose);
-    }
-  };
-}
-function convertStringItemsToObjects(_items) {
-  return _items.map((item, index) => {
-    return { index, value: item, label: `${item}` };
-  });
-}
-function isItemFirst(itemIndex) {
-  return itemIndex === 0;
-}
-function isItemSelectable(item) {
-  return item.groupHeader && item.selectable || item.selectable || !item.hasOwnProperty("selectable");
-}
-function instance5($$self, $$props, $$invalidate) {
-  let hasValue;
-  let hideSelectedItem;
-  let showClear;
-  let placeholderText;
-  let ariaSelection;
-  let ariaContext;
-  let filteredItems;
-  let listDom;
-  let scrollToHoverItem;
-  let { $$slots: slots = {}, $$scope } = $$props;
-  const $$slots = compute_slots(slots);
+var root_52 = from_html(`<div class="list-item svelte-1ul7oo4" tabindex="-1" role="none"><div><!></div></div>`);
+var root_82 = from_html(`<div class="empty svelte-1ul7oo4">No options</div>`);
+var root_13 = from_html(`<div role="none"><!> <!> <!></div>`);
+var root_102 = from_html(`<span id="aria-selection" class="svelte-1ul7oo4"> </span> <span id="aria-context" class="svelte-1ul7oo4"> </span>`, 1);
+var root_15 = from_html(`<div class="multi-item-clear svelte-1ul7oo4"><!></div>`);
+var root_132 = from_html(`<div role="none"><span class="multi-item-text svelte-1ul7oo4"><!></span> <!></div>`);
+var root_17 = from_html(`<div><!></div>`);
+var root_19 = from_html(`<div class="icon loading svelte-1ul7oo4" aria-hidden="true"><!></div>`);
+var root_21 = from_html(`<button type="button" class="icon clear-select svelte-1ul7oo4"><!></button>`);
+var root_23 = from_html(`<div class="icon chevron svelte-1ul7oo4" aria-hidden="true"><!></div>`);
+var root_25 = from_html(`<input type="hidden" class="svelte-1ul7oo4"/>`);
+var root_27 = from_html(`<select class="required svelte-1ul7oo4" required="" tabindex="-1" aria-hidden="true"></select>`);
+var root7 = from_html(`<div role="none"><!> <span aria-live="polite" aria-atomic="false" aria-relevant="additions text" class="a11y-text svelte-1ul7oo4"><!></span> <div class="prepend svelte-1ul7oo4"><!></div> <div class="value-container svelte-1ul7oo4"><!> <input/></div> <div class="indicators svelte-1ul7oo4"><!> <!> <!></div> <!> <!></div>`);
+var $$css8 = {
+  hash: "svelte-1ul7oo4",
+  code: ".svelte-select.svelte-1ul7oo4 {\n        /* deprecating camelCase custom props in favour of kebab-case for v5 */--borderRadius: var(--border-radius);--clearSelectColor: var(--clear-select-color);--clearSelectWidth: var(--clear-select-width);--disabledBackground: var(--disabled-background);--disabledBorderColor: var(--disabled-border-color);--disabledColor: var(--disabled-color);--disabledPlaceholderColor: var(--disabled-placeholder-color);--disabledPlaceholderOpacity: var(--disabled-placeholder-opacity);--errorBackground: var(--error-background);--errorBorder: var(--error-border);--groupItemPaddingLeft: var(--group-item-padding-left);--groupTitleColor: var(--group-title-color);--groupTitleFontSize: var(--group-title-font-size);--groupTitleFontWeight: var(--group-title-font-weight);--groupTitlePadding: var(--group-title-padding);--groupTitleTextTransform: var(--group-title-text-transform);--groupTitleBorderColor: var(--group-title-border-color);--groupTitleBorderWidth: var(--group-title-border-width);--groupTitleBorderStyle: var(--group-title-border-style);--indicatorColor: var(--chevron-color);--indicatorHeight: var(--chevron-height);--indicatorWidth: var(--chevron-width);--inputColor: var(--input-color);--inputLeft: var(--input-left);--inputLetterSpacing: var(--input-letter-spacing);--inputMargin: var(--input-margin);--inputPadding: var(--input-padding);--itemActiveBackground: var(--item-active-background);--itemColor: var(--item-color);--itemFirstBorderRadius: var(--item-first-border-radius);--itemHoverBG: var(--item-hover-bg);--itemHoverColor: var(--item-hover-color);--itemIsActiveBG: var(--item-is-active-bg);--itemIsActiveColor: var(--item-is-active-color);--itemIsNotSelectableColor: var(--item-is-not-selectable-color);--itemPadding: var(--item-padding);--listBackground: var(--list-background);--listBorder: var(--list-border);--listBorderRadius: var(--list-border-radius);--listEmptyColor: var(--list-empty-color);--listEmptyPadding: var(--list-empty-padding);--listEmptyTextAlign: var(--list-empty-text-align);--listMaxHeight: var(--list-max-height);--listPosition: var(--list-position);--listShadow: var(--list-shadow);--listZIndex: var(--list-z-index);--multiItemBG: var(--multi-item-bg);--multiItemBorderRadius: var(--multi-item-border-radius);--multiItemDisabledHoverBg: var(--multi-item-disabled-hover-bg);--multiItemDisabledHoverColor: var(--multi-item-disabled-hover-color);--multiItemHeight: var(--multi-item-height);--multiItemMargin: var(--multi-item-margin);--multiItemPadding: var(--multi-item-padding);--multiSelectInputMargin: var(--multi-select-input-margin);--multiSelectInputPadding: var(--multi-select-input-padding);--multiSelectPadding: var(--multi-select-padding);--placeholderColor: var(--placeholder-color);--placeholderOpacity: var(--placeholder-opacity);--selectedItemPadding: var(--selected-item-padding);--spinnerColor: var(--spinner-color);--spinnerHeight: var(--spinner-height);--spinnerWidth: var(--spinner-width);--internal-padding: 0 0 0 16px;border:var(--border, 1px solid #d8dbdf);border-radius:var(--border-radius, 6px);min-height:var(--height, 42px);position:relative;display:flex;align-items:stretch;padding:var(--padding, var(--internal-padding));background:var(--background, #fff);margin:var(--margin, 0);width:var(--width, 100%);font-size:var(--font-size, 16px);max-height:var(--max-height);}.svelte-1ul7oo4 {box-sizing:var(--box-sizing, border-box);}.svelte-select.svelte-1ul7oo4:hover {border:var(--border-hover, 1px solid #b2b8bf);}.value-container.svelte-1ul7oo4 {display:flex;flex:1 1 0%;flex-wrap:wrap;align-items:center;gap:5px 10px;padding:var(--value-container-padding, 5px 0);position:relative;overflow:var(--value-container-overflow, hidden);align-self:stretch;}.prepend.svelte-1ul7oo4,\n    .indicators.svelte-1ul7oo4 {display:flex;flex-shrink:0;align-items:center;}.indicators.svelte-1ul7oo4 {position:var(--indicators-position);top:var(--indicators-top);right:var(--indicators-right);bottom:var(--indicators-bottom);}input.svelte-1ul7oo4 {position:absolute;cursor:default;border:none;color:var(--input-color, var(--item-color));padding:var(--input-padding, 0);letter-spacing:var(--input-letter-spacing, inherit);margin:var(--input-margin, 0);min-width:10px;top:0;right:0;bottom:0;left:0;background:transparent;font-size:var(--font-size, 16px);}.svelte-1ul7oo4:not(.multi) > .value-container:where(.svelte-1ul7oo4) > input:where(.svelte-1ul7oo4) {width:100%;height:100%;}input.svelte-1ul7oo4::placeholder {color:var(--placeholder-color, #78848f);opacity:var(--placeholder-opacity, 1);}input.svelte-1ul7oo4:focus {outline:none;}.svelte-select.focused.svelte-1ul7oo4 {border:var(--border-focused, 1px solid #006fe8);border-radius:var(--border-radius-focused, var(--border-radius, 6px));}.disabled.svelte-1ul7oo4 {background:var(--disabled-background, #ebedef);border-color:var(--disabled-border-color, #ebedef);color:var(--disabled-color, #c1c6cc);}.disabled.svelte-1ul7oo4 input:where(.svelte-1ul7oo4)::placeholder {color:var(--disabled-placeholder-color, #c1c6cc);opacity:var(--disabled-placeholder-opacity, 1);}.selected-item.svelte-1ul7oo4 {position:relative;overflow:var(--selected-item-overflow, hidden);padding:var(--selected-item-padding, 0 20px 0 0);text-overflow:ellipsis;white-space:nowrap;color:var(--selected-item-color, inherit);font-size:var(--font-size, 16px);}.multi.svelte-1ul7oo4 .selected-item:where(.svelte-1ul7oo4) {position:absolute;line-height:var(--height, 42px);height:var(--height, 42px);}.selected-item.svelte-1ul7oo4:focus {outline:none;}.hide-selected-item.svelte-1ul7oo4 {opacity:0;}.icon.svelte-1ul7oo4 {display:flex;align-items:center;justify-content:center;}.clear-select.svelte-1ul7oo4 {all:unset;display:flex;align-items:center;justify-content:center;width:var(--clear-select-width, 40px);height:var(--clear-select-height, 100%);color:var(--clear-select-color, var(--icons-color));margin:var(--clear-select-margin, 0);pointer-events:all;flex-shrink:0;}.clear-select.svelte-1ul7oo4:focus {outline:var(--clear-select-focus-outline, 1px solid #006fe8);}.loading.svelte-1ul7oo4 {width:var(--loading-width, 40px);height:var(--loading-height);color:var(--loading-color, var(--icons-color));margin:var(--loading--margin, 0);flex-shrink:0;}.chevron.svelte-1ul7oo4 {width:var(--chevron-width, 40px);height:var(--chevron-height, 40px);background:var(--chevron-background, transparent);pointer-events:var(--chevron-pointer-events, none);color:var(--chevron-color, var(--icons-color));border:var(--chevron-border, 0 0 0 1px solid #d8dbdf);flex-shrink:0;}.multi.svelte-1ul7oo4 {padding:var(--multi-select-padding, var(--internal-padding));}.multi.svelte-1ul7oo4 input:where(.svelte-1ul7oo4) {padding:var(--multi-select-input-padding, 0);position:relative;margin:var(--multi-select-input-margin, 5px 0);flex:1 1 40px;}.svelte-select.error.svelte-1ul7oo4 {border:var(--error-border, 1px solid #ff2d55);background:var(--error-background, #fff);}.a11y-text.svelte-1ul7oo4 {z-index:9999;border:0px;clip:rect(1px, 1px, 1px, 1px);height:1px;width:1px;position:absolute;overflow:hidden;padding:0px;white-space:nowrap;}.multi-item.svelte-1ul7oo4 {background:var(--multi-item-bg, #ebedef);margin:var(--multi-item-margin, 0);outline:var(--multi-item-outline, 1px solid #ddd);border-radius:var(--multi-item-border-radius, 4px);height:var(--multi-item-height, 25px);line-height:var(--multi-item-height, 25px);display:flex;cursor:default;padding:var(--multi-item-padding, 0 5px);overflow:hidden;gap:var(--multi-item-gap, 4px);outline-offset:-1px;max-width:var(--multi-max-width, none);color:var(--multi-item-color, var(--item-color));}.multi-item.disabled.svelte-1ul7oo4:hover {background:var(--multi-item-disabled-hover-bg, #ebedef);color:var(--multi-item-disabled-hover-color, #c1c6cc);}.multi-item-text.svelte-1ul7oo4 {overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}.multi-item-clear.svelte-1ul7oo4 {display:flex;align-items:center;justify-content:center;--clear-icon-color: var(--multi-item-clear-icon-color, #000);}.multi-item.active.svelte-1ul7oo4 {outline:var(--multi-item-active-outline, 1px solid #006fe8);}.svelte-select-list.svelte-1ul7oo4 {box-shadow:var(--list-shadow, 0 2px 3px 0 rgba(44, 62, 80, 0.24));border-radius:var(--list-border-radius, 4px);max-height:var(--list-max-height, 252px);overflow-y:auto;background:var(--list-background, #fff);position:var(--list-position, absolute);z-index:var(--list-z-index, 2);border:var(--list-border);}.prefloat.svelte-1ul7oo4 {opacity:0;pointer-events:none;}.list-group-title.svelte-1ul7oo4 {color:var(--group-title-color, #8f8f8f);cursor:default;font-size:var(--group-title-font-size, 16px);font-weight:var(--group-title-font-weight, 600);height:var(--height, 42px);line-height:var(--height, 42px);padding:var(--group-title-padding, 0 20px);text-overflow:ellipsis;overflow-x:hidden;white-space:nowrap;text-transform:var(--group-title-text-transform, uppercase);border-width:var(--group-title-border-width, medium);border-style:var(--group-title-border-style, none);border-color:var(--group-title-border-color, color);}.empty.svelte-1ul7oo4 {text-align:var(--list-empty-text-align, center);padding:var(--list-empty-padding, 20px 0);color:var(--list-empty-color, #78848f);}.item.svelte-1ul7oo4 {cursor:default;height:var(--item-height, var(--height, 42px));line-height:var(--item-line-height, var(--height, 42px));padding:var(--item-padding, 0 20px);color:var(--item-color, inherit);text-overflow:ellipsis;overflow:hidden;white-space:nowrap;transition:var(--item-transition, all 0.2s);align-items:center;width:100%;}.item.group-item.svelte-1ul7oo4 {padding-left:var(--group-item-padding-left, 40px);}.item.svelte-1ul7oo4:active {background:var(--item-active-background, #b9daff);}.item.active.svelte-1ul7oo4 {background:var(--item-is-active-bg, #007aff);color:var(--item-is-active-color, #fff);}.item.first.svelte-1ul7oo4 {border-radius:var(--item-first-border-radius, 4px 4px 0 0);}.item.hover.svelte-1ul7oo4:not(.active) {background:var(--item-hover-bg, #e7f2ff);color:var(--item-hover-color, inherit);}.item.not-selectable.svelte-1ul7oo4,\n    .item.hover.item.not-selectable.svelte-1ul7oo4,\n    .item.active.item.not-selectable.svelte-1ul7oo4,\n    .item.not-selectable.svelte-1ul7oo4:active {color:var(--item-is-not-selectable-color, #999);background:transparent;}.required.svelte-1ul7oo4 {opacity:0;z-index:-1;position:absolute;top:0;left:0;bottom:0;right:0;}"
+};
+function Select($$anchor, $$props) {
+  if (new.target) return createClassComponent({ component: Select, ...$$anchor });
+  const $$slots = sanitize_slots($$props);
+  push($$props, false);
+  append_styles($$anchor, $$css8);
+  const hasValue = mutable_source();
+  const hideSelectedItem = mutable_source();
+  const showClear = mutable_source();
+  const placeholderText = mutable_source();
+  const ariaSelection = mutable_source();
+  const ariaContext = mutable_source();
+  const filteredItems = mutable_source();
+  const listDom = mutable_source();
+  const scrollToHoverItem = mutable_source();
   const dispatch = createEventDispatcher();
-  let { justValue = null } = $$props;
-  let { filter: filter2 = filter } = $$props;
-  let { getItems: getItems2 = getItems } = $$props;
-  let { id = null } = $$props;
-  let { name = null } = $$props;
-  let { container = void 0 } = $$props;
-  let { input = void 0 } = $$props;
-  let { multiple = false } = $$props;
-  let { multiFullItemClearable = false } = $$props;
-  let { disabled = false } = $$props;
-  let { focused = false } = $$props;
-  let { value = null } = $$props;
-  let { filterText = "" } = $$props;
-  let { placeholder = "Please select" } = $$props;
-  let { placeholderAlwaysShow = false } = $$props;
-  let { items = null } = $$props;
-  let { label = "label" } = $$props;
-  let { itemFilter = (label2, filterText2, option) => `${label2}`.toLowerCase().includes(filterText2.toLowerCase()) } = $$props;
-  let { groupBy = void 0 } = $$props;
-  let { groupFilter = (groups) => groups } = $$props;
-  let { groupHeaderSelectable = false } = $$props;
-  let { itemId = "value" } = $$props;
-  let { loadOptions = void 0 } = $$props;
-  let { containerStyles = "" } = $$props;
-  let { hasError = false } = $$props;
-  let { filterSelectedItems = true } = $$props;
-  let { required = false } = $$props;
-  let { closeListOnChange = true } = $$props;
-  let { clearFilterTextOnBlur = true } = $$props;
-  let { createGroupHeaderItem = (groupValue, item) => {
-    return { value: groupValue, [label]: groupValue };
-  } } = $$props;
+  let justValue = prop(
+    $$props,
+    "justValue",
+    12,
+    null
+    // read-only
+  );
+  let filter2 = prop($$props, "filter", 12, filter);
+  let getItems2 = prop($$props, "getItems", 12, getItems);
+  let id = prop($$props, "id", 12, null);
+  let name = prop($$props, "name", 12, null);
+  let container = prop($$props, "container", 12, void 0);
+  let input = prop($$props, "input", 12, void 0);
+  let multiple = prop($$props, "multiple", 12, false);
+  let multiFullItemClearable = prop($$props, "multiFullItemClearable", 12, false);
+  let disabled = prop($$props, "disabled", 12, false);
+  let focused = prop($$props, "focused", 12, false);
+  let value = prop($$props, "value", 12, null);
+  let filterText = prop($$props, "filterText", 12, "");
+  let placeholder = prop($$props, "placeholder", 12, "Please select");
+  let placeholderAlwaysShow = prop($$props, "placeholderAlwaysShow", 12, false);
+  let items = prop($$props, "items", 12, null);
+  let label = prop($$props, "label", 12, "label");
+  let itemFilter = prop($$props, "itemFilter", 12, (label2, filterText2, option) => `${label2}`.toLowerCase().includes(filterText2.toLowerCase()));
+  let groupBy = prop($$props, "groupBy", 12, void 0);
+  let groupFilter = prop($$props, "groupFilter", 12, (groups) => groups);
+  let groupHeaderSelectable = prop($$props, "groupHeaderSelectable", 12, false);
+  let itemId = prop($$props, "itemId", 12, "value");
+  let loadOptions = prop($$props, "loadOptions", 12, void 0);
+  let containerStyles = prop($$props, "containerStyles", 12, "");
+  let hasError = prop($$props, "hasError", 12, false);
+  let filterSelectedItems = prop($$props, "filterSelectedItems", 12, true);
+  let required = prop($$props, "required", 12, false);
+  let closeListOnChange = prop($$props, "closeListOnChange", 12, true);
+  let clearFilterTextOnBlur = prop($$props, "clearFilterTextOnBlur", 12, true);
+  let createGroupHeaderItem = prop($$props, "createGroupHeaderItem", 12, (groupValue, item) => {
+    return { value: groupValue, [label()]: groupValue };
+  });
   const getFilteredItems = () => {
-    return filteredItems;
+    return get(filteredItems);
   };
-  let { searchable = true } = $$props;
-  let { inputStyles = "" } = $$props;
-  let { clearable = true } = $$props;
-  let { loading = false } = $$props;
-  let { listOpen = false } = $$props;
+  let searchable = prop($$props, "searchable", 12, true);
+  let inputStyles = prop($$props, "inputStyles", 12, "");
+  let clearable = prop($$props, "clearable", 12, true);
+  let loading = prop($$props, "loading", 12, false);
+  let listOpen = prop($$props, "listOpen", 12, false);
   let timeout;
-  let { debounce = (fn, wait = 1) => {
+  let debounce = prop($$props, "debounce", 12, (fn, wait2 = 1) => {
     clearTimeout(timeout);
-    timeout = setTimeout(fn, wait);
-  } } = $$props;
-  let { debounceWait = 300 } = $$props;
-  let { hideEmptyState = false } = $$props;
-  let { inputAttributes = {} } = $$props;
-  let { listAutoWidth = true } = $$props;
-  let { showChevron = false } = $$props;
-  let { listOffset = 5 } = $$props;
-  let { hoverItemIndex = 0 } = $$props;
-  let { floatingConfig = {} } = $$props;
-  let { class: containerClasses = "" } = $$props;
-  let activeValue;
-  let prev_value;
-  let prev_filterText;
-  let prev_multiple;
+    timeout = setTimeout(fn, wait2);
+  });
+  let debounceWait = prop($$props, "debounceWait", 12, 300);
+  let hideEmptyState = prop($$props, "hideEmptyState", 12, false);
+  let inputAttributes = prop($$props, "inputAttributes", 28, () => ({}));
+  let listAutoWidth = prop($$props, "listAutoWidth", 12, true);
+  let showChevron = prop($$props, "showChevron", 12, false);
+  let listOffset = prop($$props, "listOffset", 12, 5);
+  let hoverItemIndex = prop($$props, "hoverItemIndex", 12, 0);
+  let floatingConfig = prop($$props, "floatingConfig", 28, () => ({}));
+  let containerClasses = prop($$props, "class", 12, "");
+  let activeValue = mutable_source();
+  let prev_value = mutable_source();
+  let prev_filterText = mutable_source();
+  let prev_multiple = mutable_source();
   function setValue() {
-    if (typeof value === "string") {
-      let item = (items || []).find((item2) => item2[itemId] === value);
-      $$invalidate(3, value = item || { [itemId]: value, label: value });
-    } else if (multiple && Array.isArray(value) && value.length > 0) {
-      $$invalidate(3, value = value.map((item) => typeof item === "string" ? { value: item, label: item } : item));
+    if (typeof value() === "string") {
+      let item = (items() || []).find((item2) => item2[itemId()] === value());
+      value(item || { [itemId()]: value(), label: value() });
+    } else if (multiple() && Array.isArray(value()) && value().length > 0) {
+      value(value().map((item) => typeof item === "string" ? { value: item, label: item } : item));
     }
   }
-  let _inputAttributes;
+  let _inputAttributes = mutable_source();
   function assignInputAttributes() {
-    $$invalidate(27, _inputAttributes = Object.assign(
+    set(_inputAttributes, Object.assign(
       {
         autocapitalize: "none",
         autocomplete: "off",
@@ -10460,67 +13736,72 @@ function instance5($$self, $$props, $$invalidate) {
         type: "text",
         "aria-autocomplete": "list"
       },
-      inputAttributes
+      inputAttributes()
     ));
-    if (id) {
-      $$invalidate(27, _inputAttributes["id"] = id, _inputAttributes);
+    if (id()) {
+      mutate(_inputAttributes, get(_inputAttributes)["id"] = id());
     }
-    if (!searchable) {
-      $$invalidate(27, _inputAttributes["readonly"] = true, _inputAttributes);
+    if (!searchable()) {
+      mutate(_inputAttributes, get(_inputAttributes)["readonly"] = true);
     }
+  }
+  function convertStringItemsToObjects(_items) {
+    return _items.map((item, index2) => {
+      return { index: index2, value: item, label: `${item}` };
+    });
   }
   function filterGroupedItems(_items) {
     const groupValues = [];
     const groups = {};
     _items.forEach((item) => {
-      const groupValue = groupBy(item);
+      const groupValue = groupBy()(item);
       if (!groupValues.includes(groupValue)) {
         groupValues.push(groupValue);
         groups[groupValue] = [];
         if (groupValue) {
-          groups[groupValue].push(Object.assign(createGroupHeaderItem(groupValue, item), {
+          groups[groupValue].push(Object.assign(createGroupHeaderItem()(groupValue, item), {
             id: groupValue,
             groupHeader: true,
-            selectable: groupHeaderSelectable
+            selectable: groupHeaderSelectable()
           }));
         }
       }
       groups[groupValue].push(Object.assign({ groupItem: !!groupValue }, item));
     });
     const sortedGroupedItems = [];
-    groupFilter(groupValues).forEach((groupValue) => {
+    groupFilter()(groupValues).forEach((groupValue) => {
       if (groups[groupValue]) sortedGroupedItems.push(...groups[groupValue]);
     });
     return sortedGroupedItems;
   }
   function dispatchSelectedItem() {
-    if (multiple) {
-      if (JSON.stringify(value) !== JSON.stringify(prev_value)) {
+    if (multiple()) {
+      if (JSON.stringify(value()) !== JSON.stringify(get(prev_value))) {
         if (checkValueForDuplicates()) {
-          dispatch("input", value);
+          dispatch("input", value());
         }
       }
       return;
     }
-    if (!prev_value || JSON.stringify(value[itemId]) !== JSON.stringify(prev_value[itemId])) {
-      dispatch("input", value);
+    if (!get(prev_value) || JSON.stringify(value()[itemId()]) !== JSON.stringify(get(prev_value)[itemId()])) {
+      dispatch("input", value());
     }
   }
   function setupMulti() {
-    if (value) {
-      if (Array.isArray(value)) {
-        $$invalidate(3, value = [...value]);
+    if (value()) {
+      if (Array.isArray(value())) {
+        value([...value()]);
       } else {
-        $$invalidate(3, value = [value]);
+        value([value()]);
       }
     }
   }
   function setupSingle() {
-    if (value) $$invalidate(3, value = null);
+    if (value()) value(null);
   }
   function setValueIndexAsHoverIndex() {
-    const valueIndex = filteredItems.findIndex((i) => {
-      return i[itemId] === value[itemId];
+    const valueIndex = get(filteredItems).findIndex((i) => {
+      return i[itemId()] === value()[itemId()];
     });
     checkHoverSelectable(valueIndex, true);
   }
@@ -10528,98 +13809,98 @@ function instance5($$self, $$props, $$invalidate) {
     dispatch("hoverItem", i);
   }
   function checkHoverSelectable(startingIndex = 0, ignoreGroup) {
-    $$invalidate(7, hoverItemIndex = startingIndex < 0 ? 0 : startingIndex);
-    if (!ignoreGroup && groupBy && filteredItems[hoverItemIndex] && !filteredItems[hoverItemIndex].selectable) {
+    hoverItemIndex(startingIndex < 0 ? 0 : startingIndex);
+    if (!ignoreGroup && groupBy() && get(filteredItems)[hoverItemIndex()] && !get(filteredItems)[hoverItemIndex()].selectable) {
       setHoverIndex(1);
     }
   }
   function setupFilterText() {
-    if (!loadOptions && filterText.length === 0) return;
-    if (loadOptions) {
-      debounce(
+    if (!loadOptions() && filterText().length === 0) return;
+    if (loadOptions()) {
+      debounce()(
         async function() {
-          $$invalidate(5, loading = true);
-          let res = await getItems2({
+          loading(true);
+          let res = await getItems2()({
             dispatch,
-            loadOptions,
+            loadOptions: loadOptions(),
             convertStringItemsToObjects,
-            filterText
+            filterText: filterText()
           });
           if (res) {
-            $$invalidate(5, loading = res.loading);
-            $$invalidate(6, listOpen = listOpen ? res.listOpen : filterText.length > 0 ? true : false);
-            $$invalidate(2, focused = listOpen && res.focused);
-            $$invalidate(51, items = groupBy ? filterGroupedItems(res.filteredItems) : res.filteredItems);
+            loading(res.loading);
+            listOpen(listOpen() ? res.listOpen : filterText().length > 0 ? true : false);
+            focused(listOpen() && res.focused);
+            items(groupBy() ? filterGroupedItems(res.filteredItems) : res.filteredItems);
           } else {
-            $$invalidate(5, loading = false);
-            $$invalidate(2, focused = true);
-            $$invalidate(6, listOpen = true);
+            loading(false);
+            focused(true);
+            listOpen(true);
           }
         },
-        debounceWait
+        debounceWait()
       );
     } else {
-      $$invalidate(6, listOpen = true);
-      if (multiple) {
-        $$invalidate(26, activeValue = void 0);
+      listOpen(true);
+      if (multiple()) {
+        set(activeValue, void 0);
       }
     }
   }
   function handleFilterEvent(items2) {
-    if (listOpen) dispatch("filter", items2);
+    if (listOpen()) dispatch("filter", items2);
   }
   beforeUpdate(async () => {
-    $$invalidate(78, prev_value = value);
-    $$invalidate(79, prev_filterText = filterText);
-    $$invalidate(80, prev_multiple = multiple);
+    set(prev_value, value());
+    set(prev_filterText, filterText());
+    set(prev_multiple, multiple());
   });
   function computeJustValue() {
-    if (multiple) return value ? value.map((item) => item[itemId]) : null;
-    return value ? value[itemId] : value;
+    if (multiple()) return value() ? value().map((item) => item[itemId()]) : null;
+    return value() ? value()[itemId()] : value();
   }
   function checkValueForDuplicates() {
     let noDuplicates = true;
-    if (value) {
+    if (value()) {
       const ids = [];
       const uniqueValues = [];
-      value.forEach((val) => {
-        if (!ids.includes(val[itemId])) {
-          ids.push(val[itemId]);
+      value().forEach((val) => {
+        if (!ids.includes(val[itemId()])) {
+          ids.push(val[itemId()]);
           uniqueValues.push(val);
         } else {
           noDuplicates = false;
         }
       });
-      if (!noDuplicates) $$invalidate(3, value = uniqueValues);
+      if (!noDuplicates) value(uniqueValues);
     }
     return noDuplicates;
   }
   function findItem(selection) {
-    let matchTo = selection ? selection[itemId] : value[itemId];
-    return items.find((item) => item[itemId] === matchTo);
+    let matchTo = selection ? selection[itemId()] : value()[itemId()];
+    return items().find((item) => item[itemId()] === matchTo);
   }
   function updateValueDisplay(items2) {
     if (!items2 || items2.length === 0 || items2.some((item) => typeof item !== "object")) return;
-    if (!value || (multiple ? value.some((selection) => !selection || !selection[itemId]) : !value[itemId])) return;
-    if (Array.isArray(value)) {
-      $$invalidate(3, value = value.map((selection) => findItem(selection) || selection));
+    if (!value() || (multiple() ? value().some((selection) => !selection || !selection[itemId()]) : !value()[itemId()])) return;
+    if (Array.isArray(value())) {
+      value(value().map((selection) => findItem(selection) || selection));
     } else {
-      $$invalidate(3, value = findItem() || value);
+      value(findItem() || value());
     }
   }
   async function handleMultiItemClear(i) {
-    const itemToRemove = value[i];
-    if (value.length === 1) {
-      $$invalidate(3, value = void 0);
+    const itemToRemove = value()[i];
+    if (value().length === 1) {
+      value(void 0);
     } else {
-      $$invalidate(3, value = value.filter((item) => {
+      value(value().filter((item) => {
         return item !== itemToRemove;
       }));
     }
     dispatch("clear", itemToRemove);
   }
   function handleKeyDown(e) {
-    if (!focused) return;
+    if (!focused()) return;
     e.stopPropagation();
     switch (e.key) {
       case "Escape":
@@ -10628,149 +13909,151 @@ function instance5($$self, $$props, $$invalidate) {
         break;
       case "Enter":
         e.preventDefault();
-        if (listOpen) {
-          if (filteredItems.length === 0) break;
-          const hoverItem = filteredItems[hoverItemIndex];
-          if (value && !multiple && value[itemId] === hoverItem[itemId]) {
+        if (listOpen()) {
+          if (get(filteredItems).length === 0) break;
+          const hoverItem = get(filteredItems)[hoverItemIndex()];
+          if (value() && !multiple() && value()[itemId()] === hoverItem[itemId()]) {
             closeList();
             break;
           } else {
-            handleSelect(filteredItems[hoverItemIndex]);
+            handleSelect(get(filteredItems)[hoverItemIndex()]);
           }
         }
         break;
       case "ArrowDown":
         e.preventDefault();
-        if (listOpen) {
+        if (listOpen()) {
           setHoverIndex(1);
         } else {
-          $$invalidate(6, listOpen = true);
-          $$invalidate(26, activeValue = void 0);
+          listOpen(true);
+          set(activeValue, void 0);
         }
         break;
       case "ArrowUp":
         e.preventDefault();
-        if (listOpen) {
+        if (listOpen()) {
           setHoverIndex(-1);
         } else {
-          $$invalidate(6, listOpen = true);
-          $$invalidate(26, activeValue = void 0);
+          listOpen(true);
+          set(activeValue, void 0);
         }
         break;
       case "Tab":
-        if (listOpen && focused) {
-          if (filteredItems.length === 0 || value && value[itemId] === filteredItems[hoverItemIndex][itemId]) return closeList();
+        if (listOpen() && focused()) {
+          if (get(filteredItems).length === 0 || value() && value()[itemId()] === get(filteredItems)[hoverItemIndex()][itemId()]) return closeList();
           e.preventDefault();
-          handleSelect(filteredItems[hoverItemIndex]);
+          handleSelect(get(filteredItems)[hoverItemIndex()]);
           closeList();
         }
         break;
       case "Backspace":
-        if (!multiple || filterText.length > 0) return;
-        if (multiple && value && value.length > 0) {
-          handleMultiItemClear(activeValue !== void 0 ? activeValue : value.length - 1);
-          if (activeValue === 0 || activeValue === void 0) break;
-          $$invalidate(26, activeValue = value.length > activeValue ? activeValue - 1 : void 0);
+        if (!multiple() || filterText().length > 0) return;
+        if (multiple() && value() && value().length > 0) {
+          handleMultiItemClear(get(activeValue) !== void 0 ? get(activeValue) : value().length - 1);
+          if (get(activeValue) === 0 || get(activeValue) === void 0) break;
+          set(activeValue, value().length > get(activeValue) ? get(activeValue) - 1 : void 0);
         }
         break;
       case "ArrowLeft":
-        if (!value || !multiple || filterText.length > 0) return;
-        if (activeValue === void 0) {
-          $$invalidate(26, activeValue = value.length - 1);
-        } else if (value.length > activeValue && activeValue !== 0) {
-          $$invalidate(26, activeValue -= 1);
+        if (!value() || !multiple() || filterText().length > 0) return;
+        if (get(activeValue) === void 0) {
+          set(activeValue, value().length - 1);
+        } else if (value().length > get(activeValue) && get(activeValue) !== 0) {
+          set(activeValue, get(activeValue) - 1);
         }
         break;
       case "ArrowRight":
-        if (!value || !multiple || filterText.length > 0 || activeValue === void 0) return;
-        if (activeValue === value.length - 1) {
-          $$invalidate(26, activeValue = void 0);
-        } else if (activeValue < value.length - 1) {
-          $$invalidate(26, activeValue += 1);
+        if (!value() || !multiple() || filterText().length > 0 || get(activeValue) === void 0) return;
+        if (get(activeValue) === value().length - 1) {
+          set(activeValue, void 0);
+        } else if (get(activeValue) < value().length - 1) {
+          set(activeValue, get(activeValue) + 1);
         }
         break;
     }
   }
   function handleFocus(e) {
-    if (focused && input === (document == null ? void 0 : document.activeElement)) return;
+    var _a5;
+    if (focused() && input() === (document == null ? void 0 : document.activeElement)) return;
     if (e) dispatch("focus", e);
-    input == null ? void 0 : input.focus();
-    $$invalidate(2, focused = true);
+    (_a5 = input()) == null ? void 0 : _a5.focus();
+    focused(true);
   }
   async function handleBlur(e) {
+    var _a5;
     if (isScrolling) return;
-    if (listOpen || focused) {
+    if (listOpen() || focused()) {
       dispatch("blur", e);
       closeList();
-      $$invalidate(2, focused = false);
-      $$invalidate(26, activeValue = void 0);
-      input == null ? void 0 : input.blur();
+      focused(false);
+      set(activeValue, void 0);
+      (_a5 = input()) == null ? void 0 : _a5.blur();
     }
   }
   function handleClick() {
-    if (disabled) return;
-    if (filterText.length > 0) return $$invalidate(6, listOpen = true);
-    $$invalidate(6, listOpen = !listOpen);
+    if (disabled()) return;
+    if (filterText().length > 0) return listOpen(true);
+    listOpen(!listOpen());
   }
   function handleClear() {
-    dispatch("clear", value);
-    $$invalidate(3, value = void 0);
+    dispatch("clear", value());
+    value(void 0);
     closeList();
     handleFocus();
   }
   onMount(() => {
-    if (listOpen) $$invalidate(2, focused = true);
-    if (focused && input) input.focus();
+    if (listOpen()) focused(true);
+    if (focused() && input()) input().focus();
   });
   function itemSelected(selection) {
     if (selection) {
-      $$invalidate(4, filterText = "");
+      filterText("");
       const item = Object.assign({}, selection);
       if (item.groupHeader && !item.selectable) return;
-      $$invalidate(3, value = multiple ? value ? value.concat([item]) : [item] : $$invalidate(3, value = item));
+      value(multiple() ? value() ? value().concat([item]) : [item] : value(item));
       setTimeout(() => {
-        if (closeListOnChange) closeList();
-        $$invalidate(26, activeValue = void 0);
-        dispatch("change", value);
+        if (closeListOnChange()) closeList();
+        set(activeValue, void 0);
+        dispatch("change", value());
         dispatch("select", selection);
       });
     }
   }
   function closeList() {
-    if (clearFilterTextOnBlur) {
-      $$invalidate(4, filterText = "");
+    if (clearFilterTextOnBlur()) {
+      filterText("");
     }
-    $$invalidate(6, listOpen = false);
+    listOpen(false);
   }
-  let { ariaValues = (values) => {
+  let ariaValues = prop($$props, "ariaValues", 12, (values) => {
     return `Option ${values}, selected.`;
-  } } = $$props;
-  let { ariaListOpen = (label2, count) => {
+  });
+  let ariaListOpen = prop($$props, "ariaListOpen", 12, (label2, count) => {
     return `You are currently focused on option ${label2}. There are ${count} results available.`;
-  } } = $$props;
-  let { ariaFocused = () => {
+  });
+  let ariaFocused = prop($$props, "ariaFocused", 12, () => {
     return `Select is focused, type to refine list, press down to open the menu.`;
-  } } = $$props;
+  });
   function handleAriaSelection(_multiple) {
     let selected = void 0;
-    if (_multiple && value.length > 0) {
-      selected = value.map((v) => v[label]).join(", ");
+    if (_multiple && value().length > 0) {
+      selected = value().map((v) => v[label()]).join(", ");
     } else {
-      selected = value[label];
+      selected = value()[label()];
     }
-    return ariaValues(selected);
+    return ariaValues()(selected);
   }
   function handleAriaContent() {
-    if (!filteredItems || filteredItems.length === 0) return "";
-    let _item = filteredItems[hoverItemIndex];
-    if (listOpen && _item) {
-      let count = filteredItems ? filteredItems.length : 0;
-      return ariaListOpen(_item[label], count);
+    if (!get(filteredItems) || get(filteredItems).length === 0) return "";
+    let _item = get(filteredItems)[hoverItemIndex()];
+    if (listOpen() && _item) {
+      let count = get(filteredItems) ? get(filteredItems).length : 0;
+      return ariaListOpen()(_item[label()], count);
     } else {
-      return ariaFocused();
+      return ariaFocused()();
     }
   }
-  let list = null;
+  let list = mutable_source(null);
   let isScrollingTimer;
   function handleListScroll() {
     clearTimeout(isScrollingTimer);
@@ -10781,13 +14064,15 @@ function instance5($$self, $$props, $$invalidate) {
       100
     );
   }
-  function handleClickOutside(event) {
-    if (!listOpen && !focused && container && !container.contains(event.target) && !(list == null ? void 0 : list.contains(event.target))) {
+  function handleClickOutside(event2) {
+    var _a5;
+    if (!listOpen() && !focused() && container() && !container().contains(event2.target) && !((_a5 = get(list)) == null ? void 0 : _a5.contains(event2.target))) {
       handleBlur();
     }
   }
   onDestroy(() => {
-    list == null ? void 0 : list.remove();
+    var _a5;
+    (_a5 = get(list)) == null ? void 0 : _a5.remove();
   });
   let isScrolling = false;
   function handleSelect(item) {
@@ -10796,38 +14081,44 @@ function instance5($$self, $$props, $$invalidate) {
   }
   function handleHover(i) {
     if (isScrolling) return;
-    $$invalidate(7, hoverItemIndex = i);
+    hoverItemIndex(i);
   }
   function handleItemClick(args) {
     const { item, i } = args;
     if ((item == null ? void 0 : item.selectable) === false) return;
-    if (value && !multiple && value[itemId] === item[itemId]) return closeList();
+    if (value() && !multiple() && value()[itemId()] === item[itemId()]) return closeList();
     if (isItemSelectable(item)) {
-      $$invalidate(7, hoverItemIndex = i);
+      hoverItemIndex(i);
       handleSelect(item);
     }
   }
-  function setHoverIndex(increment) {
-    let selectableFilteredItems = filteredItems.filter((item) => !Object.hasOwn(item, "selectable") || item.selectable === true);
+  function setHoverIndex(increment2) {
+    let selectableFilteredItems = get(filteredItems).filter((item) => !Object.hasOwn(item, "selectable") || item.selectable === true);
     if (selectableFilteredItems.length === 0) {
-      return $$invalidate(7, hoverItemIndex = 0);
+      return hoverItemIndex(0);
     }
-    if (increment > 0 && hoverItemIndex === filteredItems.length - 1) {
-      $$invalidate(7, hoverItemIndex = 0);
-    } else if (increment < 0 && hoverItemIndex === 0) {
-      $$invalidate(7, hoverItemIndex = filteredItems.length - 1);
+    if (increment2 > 0 && hoverItemIndex() === get(filteredItems).length - 1) {
+      hoverItemIndex(0);
+    } else if (increment2 < 0 && hoverItemIndex() === 0) {
+      hoverItemIndex(get(filteredItems).length - 1);
     } else {
-      $$invalidate(7, hoverItemIndex = hoverItemIndex + increment);
+      hoverItemIndex(hoverItemIndex() + increment2);
     }
-    const hover = filteredItems[hoverItemIndex];
+    const hover = get(filteredItems)[hoverItemIndex()];
     if (hover && hover.selectable === false) {
-      if (increment === 1 || increment === -1) setHoverIndex(increment);
+      if (increment2 === 1 || increment2 === -1) setHoverIndex(increment2);
       return;
     }
   }
   function isItemActive(item, value2, itemId2) {
-    if (multiple) return;
+    if (multiple()) return;
     return value2 && value2[itemId2] === item[itemId2];
+  }
+  function isItemFirst(itemIndex) {
+    return itemIndex === 0;
+  }
+  function isItemSelectable(item) {
+    return item.groupHeader && item.selectable || item.selectable || !item.hasOwnProperty("selectable");
   }
   const activeScroll = scrollAction;
   const hoverScroll = scrollAction;
@@ -10842,1328 +14133,1395 @@ function instance5($$self, $$props, $$invalidate) {
     };
   }
   function setListWidth() {
-    const { width } = container.getBoundingClientRect();
-    $$invalidate(23, list.style.width = listAutoWidth ? width + "px" : "auto", list);
+    const { width } = container().getBoundingClientRect();
+    mutate(list, get(list).style.width = listAutoWidth() ? width + "px" : "auto");
   }
-  let _floatingConfig = {
+  let _floatingConfig = mutable_source({
     strategy: "absolute",
     placement: "bottom-start",
-    middleware: [offset2(listOffset), flip2(), shift2()],
+    middleware: [offset2(listOffset()), flip2(), shift2()],
     autoUpdate: false
-  };
-  const [floatingRef, floatingContent, floatingUpdate] = createFloatingActions(_floatingConfig);
-  let prefloat = true;
+  });
+  const [floatingRef, floatingContent, floatingUpdate] = createFloatingActions(get(_floatingConfig));
+  let prefloat = mutable_source(true);
   function listMounted(list2, listOpen2) {
-    if (!list2 || !listOpen2) return $$invalidate(28, prefloat = true);
+    if (!list2 || !listOpen2) return set(prefloat, true);
     setTimeout(
       () => {
-        $$invalidate(28, prefloat = false);
+        set(prefloat, false);
       },
       0
     );
   }
-  function keydown_handler_1(event) {
-    bubble.call(this, $$self, event);
-  }
-  function pointerup_handler(event) {
-    bubble.call(this, $$self, event);
-  }
-  function mousedown_handler(event) {
-    bubble.call(this, $$self, event);
-  }
-  function keydown_handler(event) {
-    bubble.call(this, $$self, event);
-  }
-  const mouseover_handler = (i) => handleHover(i);
-  const focus_handler = (i) => handleHover(i);
-  const click_handler = (item, i) => handleItemClick({ item, i });
-  function div_binding($$value) {
-    binding_callbacks[$$value ? "unshift" : "push"](() => {
-      list = $$value;
-      $$invalidate(23, list);
-    });
-  }
-  const pointerup_handler_1 = (i) => handleMultiItemClear(i);
-  const click_handler_1 = (i) => multiFullItemClearable ? handleMultiItemClear(i) : {};
-  function input_1_binding($$value) {
-    binding_callbacks[$$value ? "unshift" : "push"](() => {
-      input = $$value;
-      $$invalidate(1, input);
-    });
-  }
-  function input_1_input_handler() {
-    filterText = this.value;
-    $$invalidate(4, filterText);
-  }
-  function div3_binding($$value) {
-    binding_callbacks[$$value ? "unshift" : "push"](() => {
-      container = $$value;
-      $$invalidate(0, container);
-    });
-  }
-  $$self.$$set = ($$props2) => {
-    if ("justValue" in $$props2) $$invalidate(52, justValue = $$props2.justValue);
-    if ("filter" in $$props2) $$invalidate(53, filter2 = $$props2.filter);
-    if ("getItems" in $$props2) $$invalidate(54, getItems2 = $$props2.getItems);
-    if ("id" in $$props2) $$invalidate(55, id = $$props2.id);
-    if ("name" in $$props2) $$invalidate(8, name = $$props2.name);
-    if ("container" in $$props2) $$invalidate(0, container = $$props2.container);
-    if ("input" in $$props2) $$invalidate(1, input = $$props2.input);
-    if ("multiple" in $$props2) $$invalidate(9, multiple = $$props2.multiple);
-    if ("multiFullItemClearable" in $$props2) $$invalidate(10, multiFullItemClearable = $$props2.multiFullItemClearable);
-    if ("disabled" in $$props2) $$invalidate(11, disabled = $$props2.disabled);
-    if ("focused" in $$props2) $$invalidate(2, focused = $$props2.focused);
-    if ("value" in $$props2) $$invalidate(3, value = $$props2.value);
-    if ("filterText" in $$props2) $$invalidate(4, filterText = $$props2.filterText);
-    if ("placeholder" in $$props2) $$invalidate(56, placeholder = $$props2.placeholder);
-    if ("placeholderAlwaysShow" in $$props2) $$invalidate(57, placeholderAlwaysShow = $$props2.placeholderAlwaysShow);
-    if ("items" in $$props2) $$invalidate(51, items = $$props2.items);
-    if ("label" in $$props2) $$invalidate(12, label = $$props2.label);
-    if ("itemFilter" in $$props2) $$invalidate(58, itemFilter = $$props2.itemFilter);
-    if ("groupBy" in $$props2) $$invalidate(59, groupBy = $$props2.groupBy);
-    if ("groupFilter" in $$props2) $$invalidate(60, groupFilter = $$props2.groupFilter);
-    if ("groupHeaderSelectable" in $$props2) $$invalidate(61, groupHeaderSelectable = $$props2.groupHeaderSelectable);
-    if ("itemId" in $$props2) $$invalidate(13, itemId = $$props2.itemId);
-    if ("loadOptions" in $$props2) $$invalidate(62, loadOptions = $$props2.loadOptions);
-    if ("containerStyles" in $$props2) $$invalidate(14, containerStyles = $$props2.containerStyles);
-    if ("hasError" in $$props2) $$invalidate(15, hasError = $$props2.hasError);
-    if ("filterSelectedItems" in $$props2) $$invalidate(63, filterSelectedItems = $$props2.filterSelectedItems);
-    if ("required" in $$props2) $$invalidate(16, required = $$props2.required);
-    if ("closeListOnChange" in $$props2) $$invalidate(64, closeListOnChange = $$props2.closeListOnChange);
-    if ("clearFilterTextOnBlur" in $$props2) $$invalidate(65, clearFilterTextOnBlur = $$props2.clearFilterTextOnBlur);
-    if ("createGroupHeaderItem" in $$props2) $$invalidate(66, createGroupHeaderItem = $$props2.createGroupHeaderItem);
-    if ("searchable" in $$props2) $$invalidate(17, searchable = $$props2.searchable);
-    if ("inputStyles" in $$props2) $$invalidate(18, inputStyles = $$props2.inputStyles);
-    if ("clearable" in $$props2) $$invalidate(68, clearable = $$props2.clearable);
-    if ("loading" in $$props2) $$invalidate(5, loading = $$props2.loading);
-    if ("listOpen" in $$props2) $$invalidate(6, listOpen = $$props2.listOpen);
-    if ("debounce" in $$props2) $$invalidate(69, debounce = $$props2.debounce);
-    if ("debounceWait" in $$props2) $$invalidate(70, debounceWait = $$props2.debounceWait);
-    if ("hideEmptyState" in $$props2) $$invalidate(19, hideEmptyState = $$props2.hideEmptyState);
-    if ("inputAttributes" in $$props2) $$invalidate(71, inputAttributes = $$props2.inputAttributes);
-    if ("listAutoWidth" in $$props2) $$invalidate(72, listAutoWidth = $$props2.listAutoWidth);
-    if ("showChevron" in $$props2) $$invalidate(20, showChevron = $$props2.showChevron);
-    if ("listOffset" in $$props2) $$invalidate(73, listOffset = $$props2.listOffset);
-    if ("hoverItemIndex" in $$props2) $$invalidate(7, hoverItemIndex = $$props2.hoverItemIndex);
-    if ("floatingConfig" in $$props2) $$invalidate(74, floatingConfig = $$props2.floatingConfig);
-    if ("class" in $$props2) $$invalidate(21, containerClasses = $$props2.class);
-    if ("ariaValues" in $$props2) $$invalidate(75, ariaValues = $$props2.ariaValues);
-    if ("ariaListOpen" in $$props2) $$invalidate(76, ariaListOpen = $$props2.ariaListOpen);
-    if ("ariaFocused" in $$props2) $$invalidate(77, ariaFocused = $$props2.ariaFocused);
-    if ("$$scope" in $$props2) $$invalidate(82, $$scope = $$props2.$$scope);
-  };
-  $$self.$$.update = () => {
-    if ($$self.$$.dirty[0] & /*value*/
-    8 | $$self.$$.dirty[1] & /*items*/
-    1048576) {
-      $: if (items, value) setValue();
+  legacy_pre_effect(() => (deep_read_state(items()), deep_read_state(value())), () => {
+    if (items(), value()) setValue();
+  });
+  legacy_pre_effect(
+    () => (deep_read_state(inputAttributes()), deep_read_state(searchable())),
+    () => {
+      if (inputAttributes() || !searchable()) assignInputAttributes();
     }
-    if ($$self.$$.dirty[0] & /*searchable*/
-    131072 | $$self.$$.dirty[2] & /*inputAttributes*/
-    512) {
-      $: if (inputAttributes || !searchable) assignInputAttributes();
+  );
+  legacy_pre_effect(() => deep_read_state(multiple()), () => {
+    if (multiple()) setupMulti();
+  });
+  legacy_pre_effect(() => (get(prev_multiple), deep_read_state(multiple())), () => {
+    if (get(prev_multiple) && !multiple()) setupSingle();
+  });
+  legacy_pre_effect(() => (deep_read_state(multiple()), deep_read_state(value())), () => {
+    if (multiple() && value() && value().length > 1) checkValueForDuplicates();
+  });
+  legacy_pre_effect(() => deep_read_state(value()), () => {
+    if (value()) dispatchSelectedItem();
+  });
+  legacy_pre_effect(
+    () => (deep_read_state(value()), deep_read_state(multiple()), get(prev_value)),
+    () => {
+      if (!value() && multiple() && get(prev_value)) dispatch("input", value());
     }
-    if ($$self.$$.dirty[0] & /*multiple*/
-    512) {
-      $: if (multiple) setupMulti();
-    }
-    if ($$self.$$.dirty[0] & /*multiple*/
-    512 | $$self.$$.dirty[2] & /*prev_multiple*/
-    262144) {
-      $: if (prev_multiple && !multiple) setupSingle();
-    }
-    if ($$self.$$.dirty[0] & /*multiple, value*/
-    520) {
-      $: if (multiple && value && value.length > 1) checkValueForDuplicates();
-    }
-    if ($$self.$$.dirty[0] & /*value*/
-    8) {
-      $: if (value) dispatchSelectedItem();
-    }
-    if ($$self.$$.dirty[0] & /*value, multiple*/
-    520 | $$self.$$.dirty[2] & /*prev_value*/
-    65536) {
-      $: if (!value && multiple && prev_value) dispatch("input", value);
-    }
-    if ($$self.$$.dirty[0] & /*focused, input*/
-    6) {
-      $: if (!focused && input) closeList();
-    }
-    if ($$self.$$.dirty[0] & /*filterText*/
-    16 | $$self.$$.dirty[2] & /*prev_filterText*/
-    131072) {
-      $: if (filterText !== prev_filterText) setupFilterText();
-    }
-    if ($$self.$$.dirty[0] & /*filterText, multiple, value, itemId, label*/
-    12824 | $$self.$$.dirty[1] & /*filter, items, groupBy, itemFilter*/
-    407896064 | $$self.$$.dirty[2] & /*loadOptions, filterSelectedItems*/
-    3) {
-      $: $$invalidate(24, filteredItems = filter2({
-        loadOptions,
-        filterText,
-        items,
-        multiple,
-        value,
-        itemId,
-        groupBy,
-        label,
-        filterSelectedItems,
-        itemFilter,
+  );
+  legacy_pre_effect(() => (deep_read_state(focused()), deep_read_state(input())), () => {
+    if (!focused() && input()) closeList();
+  });
+  legacy_pre_effect(() => (deep_read_state(filterText()), get(prev_filterText)), () => {
+    if (filterText() !== get(prev_filterText)) setupFilterText();
+  });
+  legacy_pre_effect(
+    () => (deep_read_state(filter2()), deep_read_state(loadOptions()), deep_read_state(filterText()), deep_read_state(items()), deep_read_state(multiple()), deep_read_state(value()), deep_read_state(itemId()), deep_read_state(groupBy()), deep_read_state(label()), deep_read_state(filterSelectedItems()), deep_read_state(itemFilter())),
+    () => {
+      set(filteredItems, filter2()({
+        loadOptions: loadOptions(),
+        filterText: filterText(),
+        items: items(),
+        multiple: multiple(),
+        value: value(),
+        itemId: itemId(),
+        groupBy: groupBy(),
+        label: label(),
+        filterSelectedItems: filterSelectedItems(),
+        itemFilter: itemFilter(),
         convertStringItemsToObjects,
         filterGroupedItems
       }));
     }
-    if ($$self.$$.dirty[0] & /*multiple, listOpen, value, filteredItems*/
-    16777800) {
-      $: if (!multiple && listOpen && value && filteredItems) setValueIndexAsHoverIndex();
+  );
+  legacy_pre_effect(
+    () => (deep_read_state(multiple()), deep_read_state(listOpen()), deep_read_state(value()), get(filteredItems)),
+    () => {
+      if (!multiple() && listOpen() && value() && get(filteredItems)) setValueIndexAsHoverIndex();
     }
-    if ($$self.$$.dirty[0] & /*listOpen, multiple*/
-    576) {
-      $: if (listOpen && multiple) $$invalidate(7, hoverItemIndex = 0);
+  );
+  legacy_pre_effect(() => (deep_read_state(listOpen()), deep_read_state(multiple())), () => {
+    if (listOpen() && multiple()) hoverItemIndex(0);
+  });
+  legacy_pre_effect(() => deep_read_state(filterText()), () => {
+    if (filterText()) hoverItemIndex(0);
+  });
+  legacy_pre_effect(() => deep_read_state(hoverItemIndex()), () => {
+    dispatchHover(hoverItemIndex());
+  });
+  legacy_pre_effect(() => (deep_read_state(multiple()), deep_read_state(value())), () => {
+    set(hasValue, multiple() ? value() && value().length > 0 : value());
+  });
+  legacy_pre_effect(() => (get(hasValue), deep_read_state(filterText())), () => {
+    set(hideSelectedItem, get(hasValue) && filterText().length > 0);
+  });
+  legacy_pre_effect(
+    () => (get(hasValue), deep_read_state(clearable()), deep_read_state(disabled()), deep_read_state(loading())),
+    () => {
+      set(showClear, get(hasValue) && clearable() && !disabled() && !loading());
     }
-    if ($$self.$$.dirty[0] & /*filterText*/
-    16) {
-      $: if (filterText) $$invalidate(7, hoverItemIndex = 0);
+  );
+  legacy_pre_effect(
+    () => (deep_read_state(placeholderAlwaysShow()), deep_read_state(multiple()), deep_read_state(placeholder()), deep_read_state(value())),
+    () => {
+      var _a5;
+      set(placeholderText, placeholderAlwaysShow() && multiple() ? placeholder() : multiple() && ((_a5 = value()) == null ? void 0 : _a5.length) === 0 ? placeholder() : value() ? "" : placeholder());
     }
-    if ($$self.$$.dirty[0] & /*hoverItemIndex*/
-    128) {
-      $: dispatchHover(hoverItemIndex);
-    }
-    if ($$self.$$.dirty[0] & /*multiple, value*/
-    520) {
-      $: $$invalidate(25, hasValue = multiple ? value && value.length > 0 : value);
-    }
-    if ($$self.$$.dirty[0] & /*hasValue, filterText*/
-    33554448) {
-      $: $$invalidate(35, hideSelectedItem = hasValue && filterText.length > 0);
-    }
-    if ($$self.$$.dirty[0] & /*hasValue, disabled, loading*/
-    33556512 | $$self.$$.dirty[2] & /*clearable*/
-    64) {
-      $: $$invalidate(34, showClear = hasValue && clearable && !disabled && !loading);
-    }
-    if ($$self.$$.dirty[0] & /*multiple, value*/
-    520 | $$self.$$.dirty[1] & /*placeholderAlwaysShow, placeholder*/
-    100663296) {
-      $: $$invalidate(33, placeholderText = placeholderAlwaysShow && multiple ? placeholder : multiple && (value == null ? void 0 : value.length) === 0 ? placeholder : value ? "" : placeholder);
-    }
-    if ($$self.$$.dirty[0] & /*value, multiple*/
-    520) {
-      $: $$invalidate(32, ariaSelection = value ? handleAriaSelection(multiple) : "");
-    }
-    if ($$self.$$.dirty[0] & /*filteredItems, hoverItemIndex, focused, listOpen*/
-    16777412) {
-      $: $$invalidate(31, ariaContext = handleAriaContent({
-        filteredItems,
-        hoverItemIndex,
-        focused,
-        listOpen
+  );
+  legacy_pre_effect(() => (deep_read_state(value()), deep_read_state(multiple())), () => {
+    set(ariaSelection, value() ? handleAriaSelection(multiple()) : "");
+  });
+  legacy_pre_effect(
+    () => (get(filteredItems), deep_read_state(hoverItemIndex()), deep_read_state(focused()), deep_read_state(listOpen())),
+    () => {
+      set(ariaContext, handleAriaContent({
+        filteredItems: get(filteredItems),
+        hoverItemIndex: hoverItemIndex(),
+        focused: focused(),
+        listOpen: listOpen()
       }));
     }
-    if ($$self.$$.dirty[1] & /*items*/
-    1048576) {
-      $: updateValueDisplay(items);
+  );
+  legacy_pre_effect(() => deep_read_state(items()), () => {
+    updateValueDisplay(items());
+  });
+  legacy_pre_effect(
+    () => (deep_read_state(multiple()), deep_read_state(value()), deep_read_state(itemId())),
+    () => {
+      justValue(computeJustValue(multiple(), value(), itemId()));
     }
-    if ($$self.$$.dirty[0] & /*multiple, value, itemId*/
-    8712) {
-      $: $$invalidate(52, justValue = computeJustValue(multiple, value, itemId));
+  );
+  legacy_pre_effect(
+    () => (deep_read_state(multiple()), get(prev_value), deep_read_state(value())),
+    () => {
+      if (!multiple() && get(prev_value) && !value()) dispatch("input", value());
     }
-    if ($$self.$$.dirty[0] & /*multiple, value*/
-    520 | $$self.$$.dirty[2] & /*prev_value*/
-    65536) {
-      $: if (!multiple && prev_value && !value) dispatch("input", value);
+  );
+  legacy_pre_effect(
+    () => (deep_read_state(listOpen()), get(filteredItems), deep_read_state(multiple()), deep_read_state(value())),
+    () => {
+      if (listOpen() && get(filteredItems) && !multiple() && !value()) checkHoverSelectable();
     }
-    if ($$self.$$.dirty[0] & /*listOpen, filteredItems, multiple, value*/
-    16777800) {
-      $: if (listOpen && filteredItems && !multiple && !value) checkHoverSelectable();
+  );
+  legacy_pre_effect(() => get(filteredItems), () => {
+    handleFilterEvent(get(filteredItems));
+  });
+  legacy_pre_effect(
+    () => (deep_read_state(container()), deep_read_state(floatingConfig()), get(_floatingConfig)),
+    () => {
+      if (container() && floatingConfig()) floatingUpdate(Object.assign(get(_floatingConfig), floatingConfig()));
     }
-    if ($$self.$$.dirty[0] & /*filteredItems*/
-    16777216) {
-      $: handleFilterEvent(filteredItems);
+  );
+  legacy_pre_effect(() => get(list), () => {
+    set(listDom, !!get(list));
+  });
+  legacy_pre_effect(() => (get(list), deep_read_state(listOpen())), () => {
+    listMounted(get(list), listOpen());
+  });
+  legacy_pre_effect(
+    () => (deep_read_state(listOpen()), deep_read_state(container()), get(list)),
+    () => {
+      if (listOpen() && container() && get(list)) setListWidth();
     }
-    if ($$self.$$.dirty[0] & /*container*/
-    1 | $$self.$$.dirty[2] & /*floatingConfig*/
-    4096) {
-      $: if (container && (floatingConfig == null ? void 0 : floatingConfig.autoUpdate) === void 0) {
-        $$invalidate(81, _floatingConfig.autoUpdate = true, _floatingConfig);
+  );
+  legacy_pre_effect(() => deep_read_state(hoverItemIndex()), () => {
+    set(scrollToHoverItem, hoverItemIndex());
+  });
+  legacy_pre_effect(
+    () => (deep_read_state(input()), deep_read_state(listOpen()), deep_read_state(focused())),
+    () => {
+      if (input() && listOpen() && !focused()) handleFocus();
+    }
+  );
+  legacy_pre_effect(
+    () => (deep_read_state(container()), deep_read_state(floatingConfig())),
+    () => {
+      var _a5;
+      if (container() && ((_a5 = floatingConfig()) == null ? void 0 : _a5.autoUpdate) === void 0) {
+        mutate(_floatingConfig, get(_floatingConfig).autoUpdate = true);
       }
     }
-    if ($$self.$$.dirty[0] & /*container*/
-    1 | $$self.$$.dirty[2] & /*floatingConfig, _floatingConfig*/
-    528384) {
-      $: if (container && floatingConfig) floatingUpdate(Object.assign(_floatingConfig, floatingConfig));
-    }
-    if ($$self.$$.dirty[0] & /*list*/
-    8388608) {
-      $: $$invalidate(30, listDom = !!list);
-    }
-    if ($$self.$$.dirty[0] & /*list, listOpen*/
-    8388672) {
-      $: listMounted(list, listOpen);
-    }
-    if ($$self.$$.dirty[0] & /*listOpen, container, list*/
-    8388673) {
-      $: if (listOpen && container && list) setListWidth();
-    }
-    if ($$self.$$.dirty[0] & /*hoverItemIndex*/
-    128) {
-      $: $$invalidate(29, scrollToHoverItem = hoverItemIndex);
-    }
-    if ($$self.$$.dirty[0] & /*input, listOpen, focused*/
-    70) {
-      $: if (input && listOpen && !focused) handleFocus();
-    }
-  };
-  return [
-    container,
-    input,
-    focused,
-    value,
-    filterText,
-    loading,
-    listOpen,
-    hoverItemIndex,
-    name,
-    multiple,
-    multiFullItemClearable,
-    disabled,
-    label,
-    itemId,
-    containerStyles,
-    hasError,
-    required,
-    searchable,
-    inputStyles,
-    hideEmptyState,
-    showChevron,
-    containerClasses,
-    handleClear,
-    list,
-    filteredItems,
-    hasValue,
-    activeValue,
-    _inputAttributes,
-    prefloat,
-    scrollToHoverItem,
-    listDom,
-    ariaContext,
-    ariaSelection,
-    placeholderText,
-    showClear,
-    hideSelectedItem,
-    handleMultiItemClear,
-    handleKeyDown,
-    handleFocus,
-    handleBlur,
-    handleClick,
-    handleListScroll,
-    handleClickOutside,
-    handleHover,
-    handleItemClick,
-    isItemActive,
-    activeScroll,
-    hoverScroll,
-    floatingRef,
-    floatingContent,
-    $$slots,
-    items,
-    justValue,
-    filter2,
-    getItems2,
-    id,
-    placeholder,
-    placeholderAlwaysShow,
-    itemFilter,
-    groupBy,
-    groupFilter,
-    groupHeaderSelectable,
-    loadOptions,
-    filterSelectedItems,
-    closeListOnChange,
-    clearFilterTextOnBlur,
-    createGroupHeaderItem,
+  );
+  legacy_pre_effect_reset();
+  var $$exports = {
     getFilteredItems,
-    clearable,
-    debounce,
-    debounceWait,
-    inputAttributes,
-    listAutoWidth,
-    listOffset,
-    floatingConfig,
-    ariaValues,
-    ariaListOpen,
-    ariaFocused,
-    prev_value,
-    prev_filterText,
-    prev_multiple,
-    _floatingConfig,
-    $$scope,
-    slots,
-    keydown_handler_1,
-    pointerup_handler,
-    mousedown_handler,
-    keydown_handler,
-    mouseover_handler,
-    focus_handler,
-    click_handler,
-    div_binding,
-    pointerup_handler_1,
-    click_handler_1,
-    input_1_binding,
-    input_1_input_handler,
-    div3_binding
-  ];
-}
-var Select = class extends SvelteComponent {
-  constructor(options) {
-    super();
-    init(
-      this,
-      options,
-      instance5,
-      create_fragment8,
-      safe_not_equal,
+    handleClear,
+    get justValue() {
+      return justValue();
+    },
+    set justValue($$value) {
+      justValue($$value);
+      flushSync();
+    },
+    get filter() {
+      return filter2();
+    },
+    set filter($$value) {
+      filter2($$value);
+      flushSync();
+    },
+    get getItems() {
+      return getItems2();
+    },
+    set getItems($$value) {
+      getItems2($$value);
+      flushSync();
+    },
+    get id() {
+      return id();
+    },
+    set id($$value) {
+      id($$value);
+      flushSync();
+    },
+    get name() {
+      return name();
+    },
+    set name($$value) {
+      name($$value);
+      flushSync();
+    },
+    get container() {
+      return container();
+    },
+    set container($$value) {
+      container($$value);
+      flushSync();
+    },
+    get input() {
+      return input();
+    },
+    set input($$value) {
+      input($$value);
+      flushSync();
+    },
+    get multiple() {
+      return multiple();
+    },
+    set multiple($$value) {
+      multiple($$value);
+      flushSync();
+    },
+    get multiFullItemClearable() {
+      return multiFullItemClearable();
+    },
+    set multiFullItemClearable($$value) {
+      multiFullItemClearable($$value);
+      flushSync();
+    },
+    get disabled() {
+      return disabled();
+    },
+    set disabled($$value) {
+      disabled($$value);
+      flushSync();
+    },
+    get focused() {
+      return focused();
+    },
+    set focused($$value) {
+      focused($$value);
+      flushSync();
+    },
+    get value() {
+      return value();
+    },
+    set value($$value) {
+      value($$value);
+      flushSync();
+    },
+    get filterText() {
+      return filterText();
+    },
+    set filterText($$value) {
+      filterText($$value);
+      flushSync();
+    },
+    get placeholder() {
+      return placeholder();
+    },
+    set placeholder($$value) {
+      placeholder($$value);
+      flushSync();
+    },
+    get placeholderAlwaysShow() {
+      return placeholderAlwaysShow();
+    },
+    set placeholderAlwaysShow($$value) {
+      placeholderAlwaysShow($$value);
+      flushSync();
+    },
+    get items() {
+      return items();
+    },
+    set items($$value) {
+      items($$value);
+      flushSync();
+    },
+    get label() {
+      return label();
+    },
+    set label($$value) {
+      label($$value);
+      flushSync();
+    },
+    get itemFilter() {
+      return itemFilter();
+    },
+    set itemFilter($$value) {
+      itemFilter($$value);
+      flushSync();
+    },
+    get groupBy() {
+      return groupBy();
+    },
+    set groupBy($$value) {
+      groupBy($$value);
+      flushSync();
+    },
+    get groupFilter() {
+      return groupFilter();
+    },
+    set groupFilter($$value) {
+      groupFilter($$value);
+      flushSync();
+    },
+    get groupHeaderSelectable() {
+      return groupHeaderSelectable();
+    },
+    set groupHeaderSelectable($$value) {
+      groupHeaderSelectable($$value);
+      flushSync();
+    },
+    get itemId() {
+      return itemId();
+    },
+    set itemId($$value) {
+      itemId($$value);
+      flushSync();
+    },
+    get loadOptions() {
+      return loadOptions();
+    },
+    set loadOptions($$value) {
+      loadOptions($$value);
+      flushSync();
+    },
+    get containerStyles() {
+      return containerStyles();
+    },
+    set containerStyles($$value) {
+      containerStyles($$value);
+      flushSync();
+    },
+    get hasError() {
+      return hasError();
+    },
+    set hasError($$value) {
+      hasError($$value);
+      flushSync();
+    },
+    get filterSelectedItems() {
+      return filterSelectedItems();
+    },
+    set filterSelectedItems($$value) {
+      filterSelectedItems($$value);
+      flushSync();
+    },
+    get required() {
+      return required();
+    },
+    set required($$value) {
+      required($$value);
+      flushSync();
+    },
+    get closeListOnChange() {
+      return closeListOnChange();
+    },
+    set closeListOnChange($$value) {
+      closeListOnChange($$value);
+      flushSync();
+    },
+    get clearFilterTextOnBlur() {
+      return clearFilterTextOnBlur();
+    },
+    set clearFilterTextOnBlur($$value) {
+      clearFilterTextOnBlur($$value);
+      flushSync();
+    },
+    get createGroupHeaderItem() {
+      return createGroupHeaderItem();
+    },
+    set createGroupHeaderItem($$value) {
+      createGroupHeaderItem($$value);
+      flushSync();
+    },
+    get searchable() {
+      return searchable();
+    },
+    set searchable($$value) {
+      searchable($$value);
+      flushSync();
+    },
+    get inputStyles() {
+      return inputStyles();
+    },
+    set inputStyles($$value) {
+      inputStyles($$value);
+      flushSync();
+    },
+    get clearable() {
+      return clearable();
+    },
+    set clearable($$value) {
+      clearable($$value);
+      flushSync();
+    },
+    get loading() {
+      return loading();
+    },
+    set loading($$value) {
+      loading($$value);
+      flushSync();
+    },
+    get listOpen() {
+      return listOpen();
+    },
+    set listOpen($$value) {
+      listOpen($$value);
+      flushSync();
+    },
+    get debounce() {
+      return debounce();
+    },
+    set debounce($$value) {
+      debounce($$value);
+      flushSync();
+    },
+    get debounceWait() {
+      return debounceWait();
+    },
+    set debounceWait($$value) {
+      debounceWait($$value);
+      flushSync();
+    },
+    get hideEmptyState() {
+      return hideEmptyState();
+    },
+    set hideEmptyState($$value) {
+      hideEmptyState($$value);
+      flushSync();
+    },
+    get inputAttributes() {
+      return inputAttributes();
+    },
+    set inputAttributes($$value) {
+      inputAttributes($$value);
+      flushSync();
+    },
+    get listAutoWidth() {
+      return listAutoWidth();
+    },
+    set listAutoWidth($$value) {
+      listAutoWidth($$value);
+      flushSync();
+    },
+    get showChevron() {
+      return showChevron();
+    },
+    set showChevron($$value) {
+      showChevron($$value);
+      flushSync();
+    },
+    get listOffset() {
+      return listOffset();
+    },
+    set listOffset($$value) {
+      listOffset($$value);
+      flushSync();
+    },
+    get hoverItemIndex() {
+      return hoverItemIndex();
+    },
+    set hoverItemIndex($$value) {
+      hoverItemIndex($$value);
+      flushSync();
+    },
+    get floatingConfig() {
+      return floatingConfig();
+    },
+    set floatingConfig($$value) {
+      floatingConfig($$value);
+      flushSync();
+    },
+    get class() {
+      return containerClasses();
+    },
+    set class($$value) {
+      containerClasses($$value);
+      flushSync();
+    },
+    get ariaValues() {
+      return ariaValues();
+    },
+    set ariaValues($$value) {
+      ariaValues($$value);
+      flushSync();
+    },
+    get ariaListOpen() {
+      return ariaListOpen();
+    },
+    set ariaListOpen($$value) {
+      ariaListOpen($$value);
+      flushSync();
+    },
+    get ariaFocused() {
+      return ariaFocused();
+    },
+    set ariaFocused($$value) {
+      ariaFocused($$value);
+      flushSync();
+    },
+    $set: update_legacy_props,
+    $on: ($$event_name, $$event_cb) => add_legacy_event_listener($$props, $$event_name, $$event_cb)
+  };
+  init();
+  var div = root7();
+  event("click", $window, handleClickOutside);
+  event("keydown", $window, handleKeyDown);
+  let classes;
+  var node_1 = child(div);
+  {
+    var consequent_5 = ($$anchor2) => {
+      var div_1 = root_13();
+      let classes_1;
+      var node_2 = child(div_1);
       {
-        justValue: 52,
-        filter: 53,
-        getItems: 54,
-        id: 55,
-        name: 8,
-        container: 0,
-        input: 1,
-        multiple: 9,
-        multiFullItemClearable: 10,
-        disabled: 11,
-        focused: 2,
-        value: 3,
-        filterText: 4,
-        placeholder: 56,
-        placeholderAlwaysShow: 57,
-        items: 51,
-        label: 12,
-        itemFilter: 58,
-        groupBy: 59,
-        groupFilter: 60,
-        groupHeaderSelectable: 61,
-        itemId: 13,
-        loadOptions: 62,
-        containerStyles: 14,
-        hasError: 15,
-        filterSelectedItems: 63,
-        required: 16,
-        closeListOnChange: 64,
-        clearFilterTextOnBlur: 65,
-        createGroupHeaderItem: 66,
-        getFilteredItems: 67,
-        searchable: 17,
-        inputStyles: 18,
-        clearable: 68,
-        loading: 5,
-        listOpen: 6,
-        debounce: 69,
-        debounceWait: 70,
-        hideEmptyState: 19,
-        inputAttributes: 71,
-        listAutoWidth: 72,
-        showChevron: 20,
-        listOffset: 73,
-        hoverItemIndex: 7,
-        floatingConfig: 74,
-        class: 21,
-        handleClear: 22,
-        ariaValues: 75,
-        ariaListOpen: 76,
-        ariaFocused: 77
-      },
-      add_css7,
-      [-1, -1, -1, -1, -1]
-    );
+        var consequent = ($$anchor3) => {
+          var fragment = comment();
+          var node_3 = first_child(fragment);
+          slot(node_3, $$props, "list-prepend", {}, null);
+          append($$anchor3, fragment);
+        };
+        if_block(node_2, ($$render) => {
+          if (untrack(() => $$slots["list-prepend"])) $$render(consequent);
+        });
+      }
+      var node_4 = sibling(node_2, 2);
+      {
+        var consequent_1 = ($$anchor3) => {
+          var fragment_1 = comment();
+          var node_5 = first_child(fragment_1);
+          slot(
+            node_5,
+            $$props,
+            "list",
+            {
+              get filteredItems() {
+                return get(filteredItems);
+              }
+            },
+            null
+          );
+          append($$anchor3, fragment_1);
+        };
+        var consequent_2 = ($$anchor3) => {
+          var fragment_2 = comment();
+          var node_6 = first_child(fragment_2);
+          each(node_6, 1, () => get(filteredItems), index, ($$anchor4, item, i) => {
+            var div_2 = root_52();
+            var div_3 = child(div_2);
+            let classes_2;
+            var node_7 = child(div_3);
+            slot(
+              node_7,
+              $$props,
+              "item",
+              {
+                get item() {
+                  return get(item);
+                },
+                index: i
+              },
+              ($$anchor5) => {
+                var text2 = text();
+                template_effect(() => set_text(text2, (get(item), deep_read_state(label()), untrack(() => {
+                  var _a5;
+                  return (_a5 = get(item)) == null ? void 0 : _a5[label()];
+                }))));
+                append($$anchor5, text2);
+              }
+            );
+            reset(div_3);
+            action(div_3, ($$node, $$action_arg) => activeScroll == null ? void 0 : activeScroll($$node, $$action_arg), () => ({
+              scroll: isItemActive(get(item), value(), itemId()),
+              listDom: get(listDom)
+            }));
+            action(div_3, ($$node, $$action_arg) => hoverScroll == null ? void 0 : hoverScroll($$node, $$action_arg), () => ({
+              scroll: get(scrollToHoverItem) === i,
+              listDom: get(listDom)
+            }));
+            reset(div_2);
+            template_effect(($0) => classes_2 = set_class(div_3, 1, "item svelte-1ul7oo4", null, classes_2, $0), [
+              () => {
+                var _a5;
+                return {
+                  "list-group-title": get(item).groupHeader,
+                  active: isItemActive(get(item), value(), itemId()),
+                  first: isItemFirst(i),
+                  hover: hoverItemIndex() === i,
+                  "group-item": get(item).groupItem,
+                  "not-selectable": ((_a5 = get(item)) == null ? void 0 : _a5.selectable) === false
+                };
+              }
+            ]);
+            event("mouseover", div_2, () => handleHover(i));
+            event("focus", div_2, () => handleHover(i));
+            event("click", div_2, stopPropagation(() => handleItemClick({ item: get(item), i })));
+            event("keydown", div_2, preventDefault(stopPropagation(function($$arg) {
+              bubble_event.call(this, $$props, $$arg);
+            })));
+            append($$anchor4, div_2);
+          });
+          append($$anchor3, fragment_2);
+        };
+        var consequent_3 = ($$anchor3) => {
+          var fragment_4 = comment();
+          var node_8 = first_child(fragment_4);
+          slot(node_8, $$props, "empty", {}, ($$anchor4) => {
+            var div_4 = root_82();
+            append($$anchor4, div_4);
+          });
+          append($$anchor3, fragment_4);
+        };
+        if_block(node_4, ($$render) => {
+          if (untrack(() => $$slots.list)) $$render(consequent_1);
+          else if (get(filteredItems), untrack(() => get(filteredItems).length > 0)) $$render(consequent_2, 1);
+          else if (!hideEmptyState()) $$render(consequent_3, 2);
+        });
+      }
+      var node_9 = sibling(node_4, 2);
+      {
+        var consequent_4 = ($$anchor3) => {
+          var fragment_5 = comment();
+          var node_10 = first_child(fragment_5);
+          slot(node_10, $$props, "list-append", {}, null);
+          append($$anchor3, fragment_5);
+        };
+        if_block(node_9, ($$render) => {
+          if (untrack(() => $$slots["list-append"])) $$render(consequent_4);
+        });
+      }
+      reset(div_1);
+      action(div_1, ($$node) => floatingContent == null ? void 0 : floatingContent($$node));
+      bind_this(div_1, ($$value) => set(list, $$value), () => get(list));
+      effect(() => event("scroll", div_1, handleListScroll));
+      effect(() => event("pointerup", div_1, preventDefault(stopPropagation(function($$arg) {
+        bubble_event.call(this, $$props, $$arg);
+      }))));
+      effect(() => event("mousedown", div_1, preventDefault(stopPropagation(function($$arg) {
+        bubble_event.call(this, $$props, $$arg);
+      }))));
+      template_effect(() => classes_1 = set_class(div_1, 1, "svelte-select-list svelte-1ul7oo4", null, classes_1, { prefloat: get(prefloat) }));
+      append($$anchor2, div_1);
+    };
+    if_block(node_1, ($$render) => {
+      if (listOpen()) $$render(consequent_5);
+    });
   }
-  get getFilteredItems() {
-    return this.$$.ctx[67];
+  var span = sibling(node_1, 2);
+  var node_11 = child(span);
+  {
+    var consequent_6 = ($$anchor2) => {
+      var fragment_6 = root_102();
+      var span_1 = first_child(fragment_6);
+      var text_1 = child(span_1, true);
+      reset(span_1);
+      var span_2 = sibling(span_1, 2);
+      var text_2 = child(span_2, true);
+      reset(span_2);
+      template_effect(() => {
+        set_text(text_1, get(ariaSelection));
+        set_text(text_2, get(ariaContext));
+      });
+      append($$anchor2, fragment_6);
+    };
+    if_block(node_11, ($$render) => {
+      if (focused()) $$render(consequent_6);
+    });
   }
-  get handleClear() {
-    return this.$$.ctx[22];
+  reset(span);
+  var div_5 = sibling(span, 2);
+  var node_12 = child(div_5);
+  slot(node_12, $$props, "prepend", {}, null);
+  reset(div_5);
+  var div_6 = sibling(div_5, 2);
+  var node_13 = child(div_6);
+  {
+    var consequent_9 = ($$anchor2) => {
+      var fragment_7 = comment();
+      var node_14 = first_child(fragment_7);
+      {
+        var consequent_8 = ($$anchor3) => {
+          var fragment_8 = comment();
+          var node_15 = first_child(fragment_8);
+          each(node_15, 1, value, index, ($$anchor4, item, i) => {
+            var div_7 = root_132();
+            let classes_3;
+            var span_3 = child(div_7);
+            var node_16 = child(span_3);
+            slot(
+              node_16,
+              $$props,
+              "selection",
+              {
+                get selection() {
+                  return get(item);
+                },
+                index: i
+              },
+              ($$anchor5) => {
+                var text_3 = text();
+                template_effect(() => set_text(text_3, (get(item), deep_read_state(label()), untrack(() => get(item)[label()]))));
+                append($$anchor5, text_3);
+              }
+            );
+            reset(span_3);
+            var node_17 = sibling(span_3, 2);
+            {
+              var consequent_7 = ($$anchor5) => {
+                var div_8 = root_15();
+                var node_18 = child(div_8);
+                slot(node_18, $$props, "multi-clear-icon", {}, ($$anchor6) => {
+                  ClearIcon($$anchor6, {});
+                });
+                reset(div_8);
+                event("pointerup", div_8, preventDefault(stopPropagation(() => handleMultiItemClear(i))));
+                append($$anchor5, div_8);
+              };
+              if_block(node_17, ($$render) => {
+                if (!disabled() && !multiFullItemClearable() && ClearIcon) $$render(consequent_7);
+              });
+            }
+            reset(div_7);
+            template_effect(() => classes_3 = set_class(div_7, 1, "multi-item svelte-1ul7oo4", null, classes_3, { active: get(activeValue) === i, disabled: disabled() }));
+            event("click", div_7, preventDefault(() => multiFullItemClearable() ? handleMultiItemClear(i) : {}));
+            event("keydown", div_7, preventDefault(stopPropagation(function($$arg) {
+              bubble_event.call(this, $$props, $$arg);
+            })));
+            append($$anchor4, div_7);
+          });
+          append($$anchor3, fragment_8);
+        };
+        var alternate = ($$anchor3) => {
+          var div_9 = root_17();
+          let classes_4;
+          var node_19 = child(div_9);
+          slot(
+            node_19,
+            $$props,
+            "selection",
+            {
+              get selection() {
+                return value();
+              }
+            },
+            ($$anchor4) => {
+              var text_4 = text();
+              template_effect(() => set_text(text_4, (deep_read_state(value()), deep_read_state(label()), untrack(() => value()[label()]))));
+              append($$anchor4, text_4);
+            }
+          );
+          reset(div_9);
+          template_effect(() => classes_4 = set_class(div_9, 1, "selected-item svelte-1ul7oo4", null, classes_4, { "hide-selected-item": get(hideSelectedItem) }));
+          append($$anchor3, div_9);
+        };
+        if_block(node_14, ($$render) => {
+          if (multiple()) $$render(consequent_8);
+          else $$render(alternate, -1);
+        });
+      }
+      append($$anchor2, fragment_7);
+    };
+    if_block(node_13, ($$render) => {
+      if (get(hasValue)) $$render(consequent_9);
+    });
   }
-};
-var Select_default = Select;
+  var input_1 = sibling(node_13, 2);
+  attribute_effect(
+    input_1,
+    () => ({
+      readOnly: !searchable(),
+      ...get(_inputAttributes),
+      placeholder: get(placeholderText),
+      style: inputStyles(),
+      disabled: disabled()
+    }),
+    void 0,
+    void 0,
+    void 0,
+    "svelte-1ul7oo4",
+    true
+  );
+  bind_this(input_1, ($$value) => input($$value), () => input());
+  reset(div_6);
+  var div_10 = sibling(div_6, 2);
+  var node_20 = child(div_10);
+  {
+    var consequent_10 = ($$anchor2) => {
+      var div_11 = root_19();
+      var node_21 = child(div_11);
+      slot(node_21, $$props, "loading-icon", {}, ($$anchor3) => {
+        LoadingIcon($$anchor3, {});
+      });
+      reset(div_11);
+      append($$anchor2, div_11);
+    };
+    if_block(node_20, ($$render) => {
+      if (loading()) $$render(consequent_10);
+    });
+  }
+  var node_22 = sibling(node_20, 2);
+  {
+    var consequent_11 = ($$anchor2) => {
+      var button = root_21();
+      var node_23 = child(button);
+      slot(node_23, $$props, "clear-icon", {}, ($$anchor3) => {
+        ClearIcon($$anchor3, {});
+      });
+      reset(button);
+      event("click", button, handleClear);
+      append($$anchor2, button);
+    };
+    if_block(node_22, ($$render) => {
+      if (get(showClear)) $$render(consequent_11);
+    });
+  }
+  var node_24 = sibling(node_22, 2);
+  {
+    var consequent_12 = ($$anchor2) => {
+      var div_12 = root_23();
+      var node_25 = child(div_12);
+      slot(
+        node_25,
+        $$props,
+        "chevron-icon",
+        {
+          get listOpen() {
+            return listOpen();
+          }
+        },
+        ($$anchor3) => {
+          ChevronIcon($$anchor3, {});
+        }
+      );
+      reset(div_12);
+      append($$anchor2, div_12);
+    };
+    if_block(node_24, ($$render) => {
+      if (showChevron()) $$render(consequent_12);
+    });
+  }
+  reset(div_10);
+  var node_26 = sibling(div_10, 2);
+  slot(
+    node_26,
+    $$props,
+    "input-hidden",
+    {
+      get value() {
+        return value();
+      }
+    },
+    ($$anchor2) => {
+      var input_2 = root_25();
+      remove_input_defaults(input_2);
+      template_effect(
+        ($0) => {
+          set_attribute2(input_2, "name", name());
+          set_value(input_2, $0);
+        },
+        [
+          () => (deep_read_state(value()), untrack(() => value() ? JSON.stringify(value()) : null))
+        ]
+      );
+      append($$anchor2, input_2);
+    }
+  );
+  var node_27 = sibling(node_26, 2);
+  {
+    var consequent_13 = ($$anchor2) => {
+      var fragment_15 = comment();
+      var node_28 = first_child(fragment_15);
+      slot(
+        node_28,
+        $$props,
+        "required",
+        {
+          get value() {
+            return value();
+          }
+        },
+        ($$anchor3) => {
+          var select = root_27();
+          append($$anchor3, select);
+        }
+      );
+      append($$anchor2, fragment_15);
+    };
+    if_block(node_27, ($$render) => {
+      if (deep_read_state(required()), deep_read_state(value()), untrack(() => required() && (!value() || value().length === 0))) $$render(consequent_13);
+    });
+  }
+  reset(div);
+  effect(() => event("pointerup", div, preventDefault(handleClick)));
+  bind_this(div, ($$value) => container($$value), () => container());
+  action(div, ($$node) => floatingRef == null ? void 0 : floatingRef($$node));
+  template_effect(() => {
+    var _a5;
+    classes = set_class(div, 1, `svelte-select ${(_a5 = containerClasses()) != null ? _a5 : ""}`, "svelte-1ul7oo4", classes, {
+      multi: multiple(),
+      disabled: disabled(),
+      focused: focused(),
+      "list-open": listOpen(),
+      "show-chevron": showChevron(),
+      error: hasError()
+    });
+    set_style(div, containerStyles());
+  });
+  event("keydown", input_1, handleKeyDown);
+  event("blur", input_1, handleBlur);
+  event("focus", input_1, handleFocus);
+  bind_value(input_1, filterText);
+  append($$anchor, div);
+  bind_prop($$props, "getFilteredItems", getFilteredItems);
+  bind_prop($$props, "handleClear", handleClear);
+  return pop($$exports);
+}
+
+// src/ui/components/select/selection.ts
+function toValidSelectedOptions(selected, availableValues) {
+  if (!Array.isArray(selected)) {
+    return [];
+  }
+  const validSelections = [];
+  for (const entry of selected) {
+    if (typeof entry === "object" && entry !== null && "label" in entry && "value" in entry) {
+      const label = entry.label;
+      const value = entry.value;
+      if (typeof label === "string" && typeof value === "string" && availableValues.has(value)) {
+        validSelections.push(entry);
+      }
+    }
+  }
+  return validSelections;
+}
 
 // src/ui/components/select/base_select.svelte
-function add_css8(target) {
-  append_styles(target, "svelte-1kbmpno", "label.svelte-1kbmpno.svelte-1kbmpno{display:inline-block;margin-bottom:var(--size-4-1);font-weight:600}.saved-filters.svelte-1kbmpno.svelte-1kbmpno{margin-top:var(--size-4-1);font-size:var(--font-ui-small);align-self:flex-start}.saved-filters.svelte-1kbmpno details summary.svelte-1kbmpno{cursor:pointer;color:var(--text-muted);padding:var(--size-2-1) 0;user-select:none;transition:color 0.15s ease}.saved-filters.svelte-1kbmpno details summary.svelte-1kbmpno:hover{color:var(--text-normal)}.saved-filters.svelte-1kbmpno details ul.svelte-1kbmpno{margin:0;padding:0;list-style:none}.saved-filters.svelte-1kbmpno details ul li.svelte-1kbmpno{margin:0;display:flex;align-items:center;gap:var(--size-2-1)}.saved-filters.svelte-1kbmpno details ul li button.svelte-1kbmpno{text-align:left;padding:var(--size-2-1) var(--size-2-2);background:transparent;border:none;cursor:pointer;color:var(--text-normal);border-radius:var(--radius-s);white-space:nowrap;transition:background 0.15s ease, color 0.15s ease}.saved-filters.svelte-1kbmpno details ul li button.svelte-1kbmpno:hover{background:var(--background-modifier-hover)}.saved-filters.svelte-1kbmpno details ul li button.active.svelte-1kbmpno{font-weight:700;color:var(--interactive-accent)}.saved-filters.svelte-1kbmpno details ul li button.delete-btn.svelte-1kbmpno{padding:0;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:18px;line-height:1;color:var(--text-muted)}.saved-filters.svelte-1kbmpno details ul li button.delete-btn.svelte-1kbmpno:hover{color:var(--color-red);background:var(--background-modifier-error-hover)}.filter-actions.svelte-1kbmpno.svelte-1kbmpno{display:flex;gap:var(--size-4-2);margin-top:var(--size-4-2)}.filter-action-btn.svelte-1kbmpno.svelte-1kbmpno{padding:var(--size-2-2) var(--size-4-3);border-radius:var(--radius-s);cursor:pointer;font-size:var(--font-ui-small);transition:background 150ms ease, opacity 150ms ease}.filter-action-btn.save-btn.svelte-1kbmpno.svelte-1kbmpno{background:var(--interactive-accent);color:var(--text-on-accent);border:none}.filter-action-btn.save-btn.svelte-1kbmpno.svelte-1kbmpno:hover:not(:disabled){background:var(--interactive-accent-hover)}.filter-action-btn.clear-btn.svelte-1kbmpno.svelte-1kbmpno{background:transparent;color:var(--text-muted);border:1px solid var(--background-modifier-border)}.filter-action-btn.clear-btn.svelte-1kbmpno.svelte-1kbmpno:hover:not(:disabled){background:var(--background-modifier-hover)}.filter-action-btn.svelte-1kbmpno.svelte-1kbmpno:disabled{opacity:0.5;cursor:not-allowed}.svelte-select button > svg,.svelte-select .multi-item-clear > svg{cursor:pointer}.svelte-select .multi-item{border:var(--border-width) solid var(--pill-border-color) !important;outline:none !important}.svelte-select .svelte-select-list{z-index:5}.svelte-select .clear-select{display:none !important}.svelte-select.focused{transition:box-shadow 150ms ease}.svelte-select input:focus-visible{outline:none}");
-}
-function get_each_context4(ctx, list, i) {
-  const child_ctx = ctx.slice();
-  child_ctx[19] = list[i];
-  return child_ctx;
-}
-function create_if_block4(ctx) {
-  let button;
-  let t;
-  let button_aria_label_value;
-  let mounted;
-  let dispose;
-  function click_handler() {
-    return (
-      /*click_handler*/
-      ctx[16](
-        /*option*/
-        ctx[19]
-      )
-    );
-  }
-  return {
-    c() {
-      button = element("button");
-      t = text("\xD7");
-      attr(button, "class", "delete-btn svelte-1kbmpno");
-      attr(button, "aria-label", button_aria_label_value = "Delete filter: " + /*option*/
-      ctx[19].displayText);
-    },
-    m(target, anchor) {
-      insert(target, button, anchor);
-      append(button, t);
-      if (!mounted) {
-        dispose = listen(button, "click", click_handler);
-        mounted = true;
-      }
-    },
-    p(new_ctx, dirty) {
-      ctx = new_ctx;
-      if (dirty & /*savedFilterOptions*/
-      512 && button_aria_label_value !== (button_aria_label_value = "Delete filter: " + /*option*/
-      ctx[19].displayText)) {
-        attr(button, "aria-label", button_aria_label_value);
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(button);
-      }
-      mounted = false;
-      dispose();
-    }
-  };
-}
-function create_each_block4(ctx) {
-  let li;
-  let t0;
-  let button;
-  let t1_value = (
-    /*option*/
-    ctx[19].displayText + ""
-  );
-  let t1;
-  let button_aria_label_value;
-  let button_aria_pressed_value;
-  let t2;
-  let mounted;
-  let dispose;
-  let if_block = (
-    /*onDeleteClick*/
-    ctx[7] && create_if_block4(ctx)
-  );
-  function click_handler_1() {
-    return (
-      /*click_handler_1*/
-      ctx[17](
-        /*option*/
-        ctx[19]
-      )
-    );
-  }
-  return {
-    c() {
-      li = element("li");
-      if (if_block) if_block.c();
-      t0 = space();
-      button = element("button");
-      t1 = text(t1_value);
-      t2 = space();
-      attr(button, "aria-label", button_aria_label_value = "Load saved filter: " + /*option*/
-      ctx[19].displayText);
-      attr(button, "aria-pressed", button_aria_pressed_value = /*option*/
-      ctx[19].filter.id === /*activeFilterId*/
-      ctx[6]);
-      attr(button, "class", "svelte-1kbmpno");
-      toggle_class(
-        button,
-        "active",
-        /*option*/
-        ctx[19].filter.id === /*activeFilterId*/
-        ctx[6]
-      );
-      attr(li, "class", "svelte-1kbmpno");
-    },
-    m(target, anchor) {
-      insert(target, li, anchor);
-      if (if_block) if_block.m(li, null);
-      append(li, t0);
-      append(li, button);
-      append(button, t1);
-      append(li, t2);
-      if (!mounted) {
-        dispose = listen(button, "click", click_handler_1);
-        mounted = true;
-      }
-    },
-    p(new_ctx, dirty) {
-      ctx = new_ctx;
-      if (
-        /*onDeleteClick*/
-        ctx[7]
-      ) {
-        if (if_block) {
-          if_block.p(ctx, dirty);
-        } else {
-          if_block = create_if_block4(ctx);
-          if_block.c();
-          if_block.m(li, t0);
-        }
-      } else if (if_block) {
-        if_block.d(1);
-        if_block = null;
-      }
-      if (dirty & /*savedFilterOptions*/
-      512 && t1_value !== (t1_value = /*option*/
-      ctx[19].displayText + "")) set_data(t1, t1_value);
-      if (dirty & /*savedFilterOptions*/
-      512 && button_aria_label_value !== (button_aria_label_value = "Load saved filter: " + /*option*/
-      ctx[19].displayText)) {
-        attr(button, "aria-label", button_aria_label_value);
-      }
-      if (dirty & /*savedFilterOptions, activeFilterId*/
-      576 && button_aria_pressed_value !== (button_aria_pressed_value = /*option*/
-      ctx[19].filter.id === /*activeFilterId*/
-      ctx[6])) {
-        attr(button, "aria-pressed", button_aria_pressed_value);
-      }
-      if (dirty & /*savedFilterOptions, activeFilterId*/
-      576) {
-        toggle_class(
-          button,
-          "active",
-          /*option*/
-          ctx[19].filter.id === /*activeFilterId*/
-          ctx[6]
-        );
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(li);
-      }
-      if (if_block) if_block.d();
-      mounted = false;
-      dispose();
-    }
-  };
-}
-function create_fragment9(ctx) {
-  let div3;
-  let label_1;
-  let t0;
-  let t1;
-  let t2;
-  let div0;
-  let details;
-  let summary;
-  let t4;
-  let ul;
-  let t5;
-  let div1;
-  let select;
-  let div;
-  let updating_value;
-  let t6;
-  let div2;
-  let button0;
-  let t7;
-  let t8;
-  let button1;
-  let t9;
-  let current;
-  let mounted;
-  let dispose;
-  let each_value = ensure_array_like(
-    /*savedFilterOptions*/
-    ctx[9]
-  );
-  let each_blocks = [];
-  for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block4(get_each_context4(ctx, each_value, i));
-  }
-  function select_value_binding(value) {
-    ctx[18](value);
-  }
-  let select_props = {
-    name: (
-      /*fieldName*/
-      ctx[10]
-    ),
-    multiple: true,
-    closeListOnChange: false,
-    listAutoWidth: true,
-    placeholder: "",
-    items: (
-      /*items*/
-      ctx[1]
-    )
-  };
-  if (
-    /*selectedItems*/
-    ctx[8] !== void 0
-  ) {
-    select_props.value = /*selectedItems*/
-    ctx[8];
-  }
-  select = new Select_default({ props: select_props });
-  binding_callbacks.push(() => bind(select, "value", select_value_binding));
-  return {
-    c() {
-      div3 = element("div");
-      label_1 = element("label");
-      t0 = text(
-        /*label*/
-        ctx[0]
-      );
-      t1 = text(":");
-      t2 = space();
-      div0 = element("div");
-      details = element("details");
-      summary = element("summary");
-      summary.textContent = "Saved filters";
-      t4 = space();
-      ul = element("ul");
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].c();
-      }
-      t5 = space();
-      div1 = element("div");
-      div = element("div");
-      create_component(select.$$.fragment);
-      t6 = space();
-      div2 = element("div");
-      button0 = element("button");
-      t7 = text("Save");
-      t8 = space();
-      button1 = element("button");
-      t9 = text("Clear");
-      attr(
-        label_1,
-        "for",
-        /*fieldName*/
-        ctx[10]
-      );
-      attr(label_1, "class", "svelte-1kbmpno");
-      attr(summary, "class", "svelte-1kbmpno");
-      attr(ul, "role", "list");
-      attr(ul, "class", "svelte-1kbmpno");
-      attr(div0, "class", "saved-filters svelte-1kbmpno");
-      set_style(div, "display", "contents");
-      set_style(div, "--background", "var(--background-primary)");
-      set_style(div, "--border", "var(--border-width) solid var(--background-modifier-border)");
-      set_style(div, "--border-focused", "var(--border-width) solid var(--background-modifier-border-focus)");
-      set_style(div, "--border-hover", "var(--border-width) solid var(--background-modifier-border-hover)");
-      set_style(div, "--border-radius", "var(--input-radius)");
-      set_style(div, "--item-hover-bg", "var(--background-modifier-hover)");
-      set_style(div, "--list-background", "var(--background-primary)");
-      set_style(div, "--list-border", "var(--border-width) solid var(--background-modifier-border)");
-      set_style(div, "--multi-item-bg", "var(--pill-background)");
-      set_style(div, "--multi-item-clear-icon-color", "var(--pill-color)");
-      set_style(div, "--multi-item-color", "var(--pill-color)");
-      set_style(div, "--multi-item-height", "auto");
-      set_style(div, "--multi-item-outline", "var(--border-width) solid var(--pill-border-color)");
-      set_style(div, "--multi-item-padding", "var(--pill-padding-y) var(--pill-padding-x)");
-      set_style(div, "--multi-select-input-padding", "var(--size-4-2)");
-      set_style(div, "--multi-select-input-margin", "var(--size-2-2) var(--size-4-4) var(--size-2-2) var(--size-2-2)");
-      set_style(div, "--input-color", "var(--text-normal)");
-      set_style(div, "--placeholder-color", "var(--text-muted)");
-      attr(div1, "class", "select-wrapper");
-      attr(button0, "class", "filter-action-btn save-btn svelte-1kbmpno");
-      button0.disabled = /*addButtonDisabled*/
-      ctx[2];
-      attr(button0, "aria-label", "Save filter");
-      attr(button1, "class", "filter-action-btn clear-btn svelte-1kbmpno");
-      button1.disabled = /*clearButtonDisabled*/
-      ctx[4];
-      attr(button1, "aria-label", "Clear filter");
-      attr(div2, "class", "filter-actions svelte-1kbmpno");
-    },
-    m(target, anchor) {
-      insert(target, div3, anchor);
-      append(div3, label_1);
-      append(label_1, t0);
-      append(label_1, t1);
-      append(div3, t2);
-      append(div3, div0);
-      append(div0, details);
-      append(details, summary);
-      append(details, t4);
-      append(details, ul);
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        if (each_blocks[i]) {
-          each_blocks[i].m(ul, null);
-        }
-      }
-      append(div3, t5);
-      append(div3, div1);
-      append(div1, div);
-      mount_component(select, div, null);
-      append(div3, t6);
-      append(div3, div2);
-      append(div2, button0);
-      append(button0, t7);
-      append(div2, t8);
-      append(div2, button1);
-      append(button1, t9);
-      current = true;
-      if (!mounted) {
-        dispose = [
-          listen(button0, "click", function() {
-            if (is_function(
-              /*onAddClick*/
-              ctx[3]
-            )) ctx[3].apply(this, arguments);
-          }),
-          listen(button1, "click", function() {
-            if (is_function(
-              /*onClearClick*/
-              ctx[5]
-            )) ctx[5].apply(this, arguments);
-          })
-        ];
-        mounted = true;
-      }
-    },
-    p(new_ctx, [dirty]) {
-      ctx = new_ctx;
-      if (!current || dirty & /*label*/
-      1) set_data(
-        t0,
-        /*label*/
-        ctx[0]
-      );
-      if (!current || dirty & /*fieldName*/
-      1024) {
-        attr(
-          label_1,
-          "for",
-          /*fieldName*/
-          ctx[10]
-        );
-      }
-      if (dirty & /*savedFilterOptions, activeFilterId, handleSavedFilterSelect, onDeleteClick*/
-      2752) {
-        each_value = ensure_array_like(
-          /*savedFilterOptions*/
-          ctx[9]
-        );
-        let i;
-        for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context4(ctx, each_value, i);
-          if (each_blocks[i]) {
-            each_blocks[i].p(child_ctx, dirty);
-          } else {
-            each_blocks[i] = create_each_block4(child_ctx);
-            each_blocks[i].c();
-            each_blocks[i].m(ul, null);
-          }
-        }
-        for (; i < each_blocks.length; i += 1) {
-          each_blocks[i].d(1);
-        }
-        each_blocks.length = each_value.length;
-      }
-      const select_changes = {};
-      if (dirty & /*fieldName*/
-      1024) select_changes.name = /*fieldName*/
-      ctx[10];
-      if (dirty & /*items*/
-      2) select_changes.items = /*items*/
-      ctx[1];
-      if (!updating_value && dirty & /*selectedItems*/
-      256) {
-        updating_value = true;
-        select_changes.value = /*selectedItems*/
-        ctx[8];
-        add_flush_callback(() => updating_value = false);
-      }
-      select.$set(select_changes);
-      if (!current || dirty & /*addButtonDisabled*/
-      4) {
-        button0.disabled = /*addButtonDisabled*/
-        ctx[2];
-      }
-      if (!current || dirty & /*clearButtonDisabled*/
-      16) {
-        button1.disabled = /*clearButtonDisabled*/
-        ctx[4];
-      }
-    },
-    i(local) {
-      if (current) return;
-      transition_in(select.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(select.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div3);
-      }
-      destroy_each(each_blocks, detaching);
-      destroy_component(select);
-      mounted = false;
-      run_all(dispose);
-    }
-  };
-}
-function instance6($$self, $$props, $$invalidate) {
-  let fieldName;
-  let savedFilterOptions;
-  let { label } = $$props;
-  let { items } = $$props;
-  let { value } = $$props;
-  let { savedFilters = [] } = $$props;
-  let { loadSavedFilter = void 0 } = $$props;
-  let { addButtonDisabled = false } = $$props;
-  let { onAddClick = void 0 } = $$props;
-  let { clearButtonDisabled = false } = $$props;
-  let { onClearClick = void 0 } = $$props;
-  let { activeFilterId = void 0 } = $$props;
-  let { onDeleteClick = void 0 } = $$props;
-  let selectedItems = items.filter((item) => value.includes(item.value));
+var root_22 = from_html(`<button class="delete-btn svelte-vdzxvu">\xD7</button>`);
+var root_14 = from_html(`<li class="svelte-vdzxvu"><!> <button> </button></li>`);
+var root8 = from_html(`<div><label class="svelte-vdzxvu"> </label> <div class="saved-filters svelte-vdzxvu"><details class="svelte-vdzxvu"><summary class="svelte-vdzxvu">Saved filters</summary> <ul role="list" class="svelte-vdzxvu"></ul></details></div> <div class="select-wrapper"><svelte-css-wrapper style="display: contents"><!></svelte-css-wrapper></div> <div class="filter-actions svelte-vdzxvu"><button class="filter-action-btn save-btn svelte-vdzxvu" aria-label="Save filter">Save</button> <button class="filter-action-btn clear-btn svelte-vdzxvu" aria-label="Clear filter">Clear</button></div></div>`);
+var $$css9 = {
+  hash: "svelte-vdzxvu",
+  code: "label.svelte-vdzxvu {display:inline-block;margin-bottom:var(--size-4-1);font-weight:600;}.saved-filters.svelte-vdzxvu {margin-top:var(--size-4-1);font-size:var(--font-ui-small);align-self:flex-start;}.saved-filters.svelte-vdzxvu details:where(.svelte-vdzxvu) summary:where(.svelte-vdzxvu) {cursor:pointer;color:var(--text-muted);padding:var(--size-2-1) 0;user-select:none;transition:color 0.15s ease;}.saved-filters.svelte-vdzxvu details:where(.svelte-vdzxvu) summary:where(.svelte-vdzxvu):hover {color:var(--text-normal);}.saved-filters.svelte-vdzxvu details:where(.svelte-vdzxvu) ul:where(.svelte-vdzxvu) {margin:0;padding:0;list-style:none;}.saved-filters.svelte-vdzxvu details:where(.svelte-vdzxvu) ul:where(.svelte-vdzxvu) li:where(.svelte-vdzxvu) {margin:0;display:flex;align-items:center;gap:var(--size-2-1);}.saved-filters.svelte-vdzxvu details:where(.svelte-vdzxvu) ul:where(.svelte-vdzxvu) li:where(.svelte-vdzxvu) button:where(.svelte-vdzxvu) {text-align:left;padding:var(--size-2-1) var(--size-2-2);background:transparent;border:none;cursor:pointer;color:var(--text-normal);border-radius:var(--radius-s);white-space:nowrap;transition:background 0.15s ease, color 0.15s ease;}.saved-filters.svelte-vdzxvu details:where(.svelte-vdzxvu) ul:where(.svelte-vdzxvu) li:where(.svelte-vdzxvu) button:where(.svelte-vdzxvu):hover {background:var(--background-modifier-hover);}.saved-filters.svelte-vdzxvu details:where(.svelte-vdzxvu) ul:where(.svelte-vdzxvu) li:where(.svelte-vdzxvu) button.active:where(.svelte-vdzxvu) {font-weight:700;color:var(--interactive-accent);}.saved-filters.svelte-vdzxvu details:where(.svelte-vdzxvu) ul:where(.svelte-vdzxvu) li:where(.svelte-vdzxvu) button.delete-btn:where(.svelte-vdzxvu) {padding:0;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:18px;line-height:1;color:var(--text-muted);}.saved-filters.svelte-vdzxvu details:where(.svelte-vdzxvu) ul:where(.svelte-vdzxvu) li:where(.svelte-vdzxvu) button.delete-btn:where(.svelte-vdzxvu):hover {color:var(--color-red);background:var(--background-modifier-error-hover);}.filter-actions.svelte-vdzxvu {display:flex;gap:var(--size-4-2);margin-top:var(--size-4-2);}.filter-action-btn.svelte-vdzxvu {padding:var(--size-2-2) var(--size-4-3);border-radius:var(--radius-s);cursor:pointer;font-size:var(--font-ui-small);transition:background 150ms ease, opacity 150ms ease;}.filter-action-btn.save-btn.svelte-vdzxvu {background:var(--interactive-accent);color:var(--text-on-accent);border:none;}.filter-action-btn.save-btn.svelte-vdzxvu:hover:not(:disabled) {background:var(--interactive-accent-hover);}.filter-action-btn.clear-btn.svelte-vdzxvu {background:transparent;color:var(--text-muted);border:1px solid var(--background-modifier-border);}.filter-action-btn.clear-btn.svelte-vdzxvu:hover:not(:disabled) {background:var(--background-modifier-hover);}.filter-action-btn.svelte-vdzxvu:disabled {opacity:0.5;cursor:not-allowed;}.svelte-select button > svg,\n.svelte-select .multi-item-clear > svg {cursor:pointer;}.svelte-select .multi-item {border:var(--border-width) solid var(--pill-border-color) !important;outline:none !important;}.svelte-select .svelte-select-list {z-index:5;}.svelte-select .clear-select {display:none !important;}.svelte-select.focused {transition:box-shadow 150ms ease;}.svelte-select input:focus-visible {outline:none;}"
+};
+function Base_select($$anchor, $$props) {
+  if (new.target) return createClassComponent({ component: Base_select, ...$$anchor });
+  push($$props, false);
+  append_styles($$anchor, $$css9);
+  const fieldName = mutable_source();
+  const availableValues = mutable_source();
+  const selectedItemsFromValue = mutable_source();
+  const savedFilterOptions = mutable_source();
+  let label = prop($$props, "label", 12);
+  let items = prop($$props, "items", 12);
+  let value = prop($$props, "value", 12);
+  let savedFilters = prop($$props, "savedFilters", 28, () => []);
+  let loadSavedFilter = prop($$props, "loadSavedFilter", 12, void 0);
+  let addButtonDisabled = prop($$props, "addButtonDisabled", 12, false);
+  let onAddClick = prop($$props, "onAddClick", 12, void 0);
+  let clearButtonDisabled = prop($$props, "clearButtonDisabled", 12, false);
+  let onClearClick = prop($$props, "onClearClick", 12, void 0);
+  let activeFilterId = prop($$props, "activeFilterId", 12, void 0);
+  let onDeleteClick = prop($$props, "onDeleteClick", 12, void 0);
+  let selectedItems = mutable_source(items().filter((item) => value().includes(item.value)));
   function clearSelection() {
-    $$invalidate(8, selectedItems = []);
+    set(selectedItems, []);
+    value([]);
   }
   async function handleSavedFilterSelect(option) {
-    if (loadSavedFilter) {
-      loadSavedFilter(option.filter);
+    if (loadSavedFilter()) {
+      loadSavedFilter()(option.filter);
       await tick();
-      $$invalidate(8, selectedItems = items.filter((item) => value.includes(item.value)));
+      set(selectedItems, items().filter((item) => value().includes(item.value)));
     }
   }
-  const click_handler = (option) => onDeleteClick == null ? void 0 : onDeleteClick(option.filter.id, option.displayText);
-  const click_handler_1 = (option) => handleSavedFilterSelect(option);
-  function select_value_binding(value2) {
-    selectedItems = value2;
-    $$invalidate(8, selectedItems);
+  function handleSelectInput(event2) {
+    set(selectedItems, toValidSelectedOptions(event2.detail, get(availableValues)));
+    value(get(selectedItems).map((option) => option.value));
   }
-  $$self.$$set = ($$props2) => {
-    if ("label" in $$props2) $$invalidate(0, label = $$props2.label);
-    if ("items" in $$props2) $$invalidate(1, items = $$props2.items);
-    if ("value" in $$props2) $$invalidate(12, value = $$props2.value);
-    if ("savedFilters" in $$props2) $$invalidate(13, savedFilters = $$props2.savedFilters);
-    if ("loadSavedFilter" in $$props2) $$invalidate(14, loadSavedFilter = $$props2.loadSavedFilter);
-    if ("addButtonDisabled" in $$props2) $$invalidate(2, addButtonDisabled = $$props2.addButtonDisabled);
-    if ("onAddClick" in $$props2) $$invalidate(3, onAddClick = $$props2.onAddClick);
-    if ("clearButtonDisabled" in $$props2) $$invalidate(4, clearButtonDisabled = $$props2.clearButtonDisabled);
-    if ("onClearClick" in $$props2) $$invalidate(5, onClearClick = $$props2.onClearClick);
-    if ("activeFilterId" in $$props2) $$invalidate(6, activeFilterId = $$props2.activeFilterId);
-    if ("onDeleteClick" in $$props2) $$invalidate(7, onDeleteClick = $$props2.onDeleteClick);
-  };
-  $$self.$$.update = () => {
-    if ($$self.$$.dirty & /*label*/
-    1) {
-      $: $$invalidate(10, fieldName = `field=${label}`);
+  legacy_pre_effect(() => deep_read_state(label()), () => {
+    set(fieldName, `field=${label()}`);
+  });
+  legacy_pre_effect(() => deep_read_state(items()), () => {
+    set(availableValues, new Set(items().map((item) => item.value)));
+  });
+  legacy_pre_effect(() => (deep_read_state(items()), deep_read_state(value())), () => {
+    set(selectedItemsFromValue, items().filter((item) => value().includes(item.value)));
+  });
+  legacy_pre_effect(() => (get(selectedItems), get(selectedItemsFromValue)), () => {
+    const currentValues = get(selectedItems).map((item) => item.value).sort().join(",");
+    const nextValues = get(selectedItemsFromValue).map((item) => item.value).sort().join(",");
+    if (currentValues !== nextValues) {
+      set(selectedItems, get(selectedItemsFromValue));
     }
-    if ($$self.$$.dirty & /*selectedItems*/
-    256) {
-      $: $$invalidate(12, value = (selectedItems != null ? selectedItems : []).map(({ value: value2 }) => value2));
-    }
-    if ($$self.$$.dirty & /*savedFilters*/
-    8192) {
-      $: $$invalidate(9, savedFilterOptions = savedFilters.map((filter2) => {
-        const displayText = filter2.tag ? filter2.tag.tags.join(", ") : "";
-        return { filter: filter2, displayText };
-      }));
-    }
-  };
-  return [
-    label,
-    items,
-    addButtonDisabled,
-    onAddClick,
-    clearButtonDisabled,
-    onClearClick,
-    activeFilterId,
-    onDeleteClick,
-    selectedItems,
-    savedFilterOptions,
-    fieldName,
-    handleSavedFilterSelect,
-    value,
-    savedFilters,
-    loadSavedFilter,
+  });
+  legacy_pre_effect(() => deep_read_state(savedFilters()), () => {
+    set(savedFilterOptions, savedFilters().map((filter2) => {
+      const displayText = filter2.tag ? filter2.tag.tags.join(", ") : "";
+      return { filter: filter2, displayText };
+    }));
+  });
+  legacy_pre_effect_reset();
+  var $$exports = {
     clearSelection,
-    click_handler,
-    click_handler_1,
-    select_value_binding
-  ];
-}
-var Base_select = class extends SvelteComponent {
-  constructor(options) {
-    super();
-    init(
-      this,
-      options,
-      instance6,
-      create_fragment9,
-      safe_not_equal,
-      {
-        label: 0,
-        items: 1,
-        value: 12,
-        savedFilters: 13,
-        loadSavedFilter: 14,
-        addButtonDisabled: 2,
-        onAddClick: 3,
-        clearButtonDisabled: 4,
-        onClearClick: 5,
-        activeFilterId: 6,
-        onDeleteClick: 7,
-        clearSelection: 15
+    get label() {
+      return label();
+    },
+    set label($$value) {
+      label($$value);
+      flushSync();
+    },
+    get items() {
+      return items();
+    },
+    set items($$value) {
+      items($$value);
+      flushSync();
+    },
+    get value() {
+      return value();
+    },
+    set value($$value) {
+      value($$value);
+      flushSync();
+    },
+    get savedFilters() {
+      return savedFilters();
+    },
+    set savedFilters($$value) {
+      savedFilters($$value);
+      flushSync();
+    },
+    get loadSavedFilter() {
+      return loadSavedFilter();
+    },
+    set loadSavedFilter($$value) {
+      loadSavedFilter($$value);
+      flushSync();
+    },
+    get addButtonDisabled() {
+      return addButtonDisabled();
+    },
+    set addButtonDisabled($$value) {
+      addButtonDisabled($$value);
+      flushSync();
+    },
+    get onAddClick() {
+      return onAddClick();
+    },
+    set onAddClick($$value) {
+      onAddClick($$value);
+      flushSync();
+    },
+    get clearButtonDisabled() {
+      return clearButtonDisabled();
+    },
+    set clearButtonDisabled($$value) {
+      clearButtonDisabled($$value);
+      flushSync();
+    },
+    get onClearClick() {
+      return onClearClick();
+    },
+    set onClearClick($$value) {
+      onClearClick($$value);
+      flushSync();
+    },
+    get activeFilterId() {
+      return activeFilterId();
+    },
+    set activeFilterId($$value) {
+      activeFilterId($$value);
+      flushSync();
+    },
+    get onDeleteClick() {
+      return onDeleteClick();
+    },
+    set onDeleteClick($$value) {
+      onDeleteClick($$value);
+      flushSync();
+    },
+    $set: update_legacy_props,
+    $on: ($$event_name, $$event_cb) => add_legacy_event_listener($$props, $$event_name, $$event_cb)
+  };
+  init();
+  var div = root8();
+  var label_1 = child(div);
+  var text2 = child(label_1);
+  reset(label_1);
+  var div_1 = sibling(label_1, 2);
+  var details = child(div_1);
+  var ul = sibling(child(details), 2);
+  each(ul, 5, () => get(savedFilterOptions), index, ($$anchor2, option) => {
+    var li = root_14();
+    var node = child(li);
+    {
+      var consequent = ($$anchor3) => {
+        var button = root_22();
+        template_effect(() => {
+          var _a5;
+          return set_attribute2(button, "aria-label", `Delete filter: ${(_a5 = (get(option), untrack(() => get(option).displayText))) != null ? _a5 : ""}`);
+        });
+        event("click", button, () => {
+          var _a5;
+          return (_a5 = onDeleteClick()) == null ? void 0 : _a5(get(option).filter.id, get(option).displayText);
+        });
+        append($$anchor3, button);
+      };
+      if_block(node, ($$render) => {
+        if (onDeleteClick()) $$render(consequent);
+      });
+    }
+    var button_1 = sibling(node, 2);
+    let classes;
+    var text_1 = child(button_1, true);
+    reset(button_1);
+    reset(li);
+    template_effect(() => {
+      var _a5;
+      set_attribute2(button_1, "aria-label", `Load saved filter: ${(_a5 = (get(option), untrack(() => get(option).displayText))) != null ? _a5 : ""}`);
+      set_attribute2(button_1, "aria-pressed", (get(option), deep_read_state(activeFilterId()), untrack(() => get(option).filter.id === activeFilterId())));
+      classes = set_class(button_1, 1, "svelte-vdzxvu", null, classes, { active: get(option).filter.id === activeFilterId() });
+      set_text(text_1, (get(option), untrack(() => get(option).displayText)));
+    });
+    event("click", button_1, () => handleSavedFilterSelect(get(option)));
+    append($$anchor2, li);
+  });
+  reset(ul);
+  reset(details);
+  reset(div_1);
+  var div_2 = sibling(div_1, 2);
+  var node_1 = child(div_2);
+  {
+    css_props(node_1, () => ({
+      "--background": "var(--background-primary)",
+      "--border": "var(--border-width) solid var(--background-modifier-border)",
+      "--border-focused": "var(--border-width) solid var(--background-modifier-border-focus)",
+      "--border-hover": "var(--border-width) solid var(--background-modifier-border-hover)",
+      "--border-radius": "var(--input-radius)",
+      "--item-hover-bg": "var(--background-modifier-hover)",
+      "--list-background": "var(--background-primary)",
+      "--list-border": "var(--border-width) solid var(--background-modifier-border)",
+      "--multi-item-bg": "var(--pill-background)",
+      "--multi-item-clear-icon-color": "var(--pill-color)",
+      "--multi-item-color": "var(--pill-color)",
+      "--multi-item-height": "auto",
+      "--multi-item-outline": "var(--border-width) solid var(--pill-border-color)",
+      "--multi-item-padding": "var(--pill-padding-y) var(--pill-padding-x)",
+      "--multi-select-input-padding": "var(--size-4-2)",
+      "--multi-select-input-margin": "var(--size-2-2) var(--size-4-4) var(--size-2-2) var(--size-2-2)",
+      "--input-color": "var(--text-normal)",
+      "--placeholder-color": "var(--text-muted)"
+    }));
+    Select(node_1.lastChild, {
+      get name() {
+        return get(fieldName);
       },
-      add_css8
-    );
+      multiple: true,
+      closeListOnChange: false,
+      listAutoWidth: true,
+      placeholder: "",
+      get items() {
+        return items();
+      },
+      get value() {
+        return get(selectedItems);
+      },
+      $$events: { input: handleSelectInput }
+    });
+    reset(node_1);
   }
-  get clearSelection() {
-    return this.$$.ctx[15];
-  }
-};
-var base_select_default = Base_select;
+  reset(div_2);
+  var div_3 = sibling(div_2, 2);
+  var button_2 = child(div_3);
+  var button_3 = sibling(button_2, 2);
+  reset(div_3);
+  reset(div);
+  template_effect(() => {
+    var _a5;
+    set_attribute2(label_1, "for", get(fieldName));
+    set_text(text2, `${(_a5 = label()) != null ? _a5 : ""}:`);
+    button_2.disabled = addButtonDisabled();
+    button_3.disabled = clearButtonDisabled();
+  });
+  event("click", button_2, function(...$$args) {
+    var _a5;
+    (_a5 = onAddClick()) == null ? void 0 : _a5.apply(this, $$args);
+  });
+  event("click", button_3, function(...$$args) {
+    var _a5;
+    (_a5 = onClearClick()) == null ? void 0 : _a5.apply(this, $$args);
+  });
+  append($$anchor, div);
+  bind_prop($$props, "clearSelection", clearSelection);
+  return pop($$exports);
+}
 
 // src/ui/components/select/select_tag.svelte
-function create_fragment10(ctx) {
-  let baseselect;
-  let updating_value;
-  let current;
-  function baseselect_value_binding(value) {
-    ctx[14](value);
-  }
-  let baseselect_props = {
-    items: (
-      /*tags*/
-      ctx[1].map(func)
-    ),
-    label: "Filter by tag",
-    savedFilters: (
-      /*savedFilters*/
-      ctx[2]
-    ),
-    loadSavedFilter: (
-      /*loadSavedFilter*/
-      ctx[9]
-    ),
-    addButtonDisabled: (
-      /*addButtonDisabled*/
-      ctx[3]
-    ),
-    onAddClick: (
-      /*onAddClick*/
-      ctx[4]
-    ),
-    clearButtonDisabled: (
-      /*clearButtonDisabled*/
-      ctx[5]
-    ),
-    onClearClick: (
-      /*handleClear*/
-      ctx[10]
-    ),
-    activeFilterId: (
-      /*activeFilterId*/
-      ctx[6]
-    ),
-    onDeleteClick: (
-      /*onDeleteClick*/
-      ctx[7]
-    )
-  };
-  if (
-    /*value*/
-    ctx[0] !== void 0
-  ) {
-    baseselect_props.value = /*value*/
-    ctx[0];
-  }
-  baseselect = new base_select_default({ props: baseselect_props });
-  ctx[13](baseselect);
-  binding_callbacks.push(() => bind(baseselect, "value", baseselect_value_binding));
-  return {
-    c() {
-      create_component(baseselect.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(baseselect, target, anchor);
-      current = true;
-    },
-    p(ctx2, [dirty]) {
-      const baseselect_changes = {};
-      if (dirty & /*tags*/
-      2) baseselect_changes.items = /*tags*/
-      ctx2[1].map(func);
-      if (dirty & /*savedFilters*/
-      4) baseselect_changes.savedFilters = /*savedFilters*/
-      ctx2[2];
-      if (dirty & /*addButtonDisabled*/
-      8) baseselect_changes.addButtonDisabled = /*addButtonDisabled*/
-      ctx2[3];
-      if (dirty & /*onAddClick*/
-      16) baseselect_changes.onAddClick = /*onAddClick*/
-      ctx2[4];
-      if (dirty & /*clearButtonDisabled*/
-      32) baseselect_changes.clearButtonDisabled = /*clearButtonDisabled*/
-      ctx2[5];
-      if (dirty & /*activeFilterId*/
-      64) baseselect_changes.activeFilterId = /*activeFilterId*/
-      ctx2[6];
-      if (dirty & /*onDeleteClick*/
-      128) baseselect_changes.onDeleteClick = /*onDeleteClick*/
-      ctx2[7];
-      if (!updating_value && dirty & /*value*/
-      1) {
-        updating_value = true;
-        baseselect_changes.value = /*value*/
-        ctx2[0];
-        add_flush_callback(() => updating_value = false);
-      }
-      baseselect.$set(baseselect_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(baseselect.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(baseselect.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      ctx[13](null);
-      destroy_component(baseselect, detaching);
-    }
-  };
-}
-var func = (tag) => ({ label: tag, value: tag });
-function instance7($$self, $$props, $$invalidate) {
-  let { tags } = $$props;
-  let { value } = $$props;
-  let { savedFilters = [] } = $$props;
-  let { onLoadFilter = void 0 } = $$props;
-  let { addButtonDisabled = false } = $$props;
-  let { onAddClick = void 0 } = $$props;
-  let { clearButtonDisabled = false } = $$props;
-  let { onClearClick = void 0 } = $$props;
-  let { activeFilterId = void 0 } = $$props;
-  let { onDeleteClick = void 0 } = $$props;
-  let baseSelectRef;
+function Select_tag($$anchor, $$props) {
+  if (new.target) return createClassComponent({ component: Select_tag, ...$$anchor });
+  push($$props, false);
+  let tags = prop($$props, "tags", 12);
+  let value = prop($$props, "value", 12);
+  let savedFilters = prop($$props, "savedFilters", 28, () => []);
+  let onLoadFilter = prop($$props, "onLoadFilter", 12, void 0);
+  let addButtonDisabled = prop($$props, "addButtonDisabled", 12, false);
+  let onAddClick = prop($$props, "onAddClick", 12, void 0);
+  let clearButtonDisabled = prop($$props, "clearButtonDisabled", 12, false);
+  let onClearClick = prop($$props, "onClearClick", 12, void 0);
+  let activeFilterId = prop($$props, "activeFilterId", 12, void 0);
+  let onDeleteClick = prop($$props, "onDeleteClick", 12, void 0);
+  let baseSelectRef = mutable_source();
   function loadSavedFilter(filter2) {
+    var _a5, _b3;
     if (filter2.tag) {
-      if (activeFilterId === filter2.id) {
-        baseSelectRef == null ? void 0 : baseSelectRef.clearSelection();
+      if (activeFilterId() === filter2.id) {
+        (_a5 = get(baseSelectRef)) == null ? void 0 : _a5.clearSelection();
       } else {
-        $$invalidate(0, value = [...filter2.tag.tags]);
+        value([...filter2.tag.tags]);
       }
-      onLoadFilter == null ? void 0 : onLoadFilter(filter2.id);
+      (_b3 = onLoadFilter()) == null ? void 0 : _b3(filter2.id);
     }
   }
   function handleClear() {
-    baseSelectRef == null ? void 0 : baseSelectRef.clearSelection();
-    onClearClick == null ? void 0 : onClearClick();
+    var _a5, _b3;
+    (_a5 = get(baseSelectRef)) == null ? void 0 : _a5.clearSelection();
+    (_b3 = onClearClick()) == null ? void 0 : _b3();
   }
-  function baseselect_binding($$value) {
-    binding_callbacks[$$value ? "unshift" : "push"](() => {
-      baseSelectRef = $$value;
-      $$invalidate(8, baseSelectRef);
-    });
-  }
-  function baseselect_value_binding(value$1) {
-    value = value$1;
-    $$invalidate(0, value);
-  }
-  $$self.$$set = ($$props2) => {
-    if ("tags" in $$props2) $$invalidate(1, tags = $$props2.tags);
-    if ("value" in $$props2) $$invalidate(0, value = $$props2.value);
-    if ("savedFilters" in $$props2) $$invalidate(2, savedFilters = $$props2.savedFilters);
-    if ("onLoadFilter" in $$props2) $$invalidate(11, onLoadFilter = $$props2.onLoadFilter);
-    if ("addButtonDisabled" in $$props2) $$invalidate(3, addButtonDisabled = $$props2.addButtonDisabled);
-    if ("onAddClick" in $$props2) $$invalidate(4, onAddClick = $$props2.onAddClick);
-    if ("clearButtonDisabled" in $$props2) $$invalidate(5, clearButtonDisabled = $$props2.clearButtonDisabled);
-    if ("onClearClick" in $$props2) $$invalidate(12, onClearClick = $$props2.onClearClick);
-    if ("activeFilterId" in $$props2) $$invalidate(6, activeFilterId = $$props2.activeFilterId);
-    if ("onDeleteClick" in $$props2) $$invalidate(7, onDeleteClick = $$props2.onDeleteClick);
+  var $$exports = {
+    get tags() {
+      return tags();
+    },
+    set tags($$value) {
+      tags($$value);
+      flushSync();
+    },
+    get value() {
+      return value();
+    },
+    set value($$value) {
+      value($$value);
+      flushSync();
+    },
+    get savedFilters() {
+      return savedFilters();
+    },
+    set savedFilters($$value) {
+      savedFilters($$value);
+      flushSync();
+    },
+    get onLoadFilter() {
+      return onLoadFilter();
+    },
+    set onLoadFilter($$value) {
+      onLoadFilter($$value);
+      flushSync();
+    },
+    get addButtonDisabled() {
+      return addButtonDisabled();
+    },
+    set addButtonDisabled($$value) {
+      addButtonDisabled($$value);
+      flushSync();
+    },
+    get onAddClick() {
+      return onAddClick();
+    },
+    set onAddClick($$value) {
+      onAddClick($$value);
+      flushSync();
+    },
+    get clearButtonDisabled() {
+      return clearButtonDisabled();
+    },
+    set clearButtonDisabled($$value) {
+      clearButtonDisabled($$value);
+      flushSync();
+    },
+    get onClearClick() {
+      return onClearClick();
+    },
+    set onClearClick($$value) {
+      onClearClick($$value);
+      flushSync();
+    },
+    get activeFilterId() {
+      return activeFilterId();
+    },
+    set activeFilterId($$value) {
+      activeFilterId($$value);
+      flushSync();
+    },
+    get onDeleteClick() {
+      return onDeleteClick();
+    },
+    set onDeleteClick($$value) {
+      onDeleteClick($$value);
+      flushSync();
+    },
+    $set: update_legacy_props,
+    $on: ($$event_name, $$event_cb) => add_legacy_event_listener($$props, $$event_name, $$event_cb)
   };
-  return [
-    value,
-    tags,
-    savedFilters,
-    addButtonDisabled,
-    onAddClick,
-    clearButtonDisabled,
-    activeFilterId,
-    onDeleteClick,
-    baseSelectRef,
-    loadSavedFilter,
-    handleClear,
-    onLoadFilter,
-    onClearClick,
-    baseselect_binding,
-    baseselect_value_binding
-  ];
-}
-var Select_tag = class extends SvelteComponent {
-  constructor(options) {
-    super();
-    init(this, options, instance7, create_fragment10, safe_not_equal, {
-      tags: 1,
-      value: 0,
-      savedFilters: 2,
-      onLoadFilter: 11,
-      addButtonDisabled: 3,
-      onAddClick: 4,
-      clearButtonDisabled: 5,
-      onClearClick: 12,
-      activeFilterId: 6,
-      onDeleteClick: 7
-    });
+  init();
+  {
+    let $0 = derived_safe_equal(() => (deep_read_state(tags()), untrack(() => tags().map((tag2) => ({ label: tag2, value: tag2 })))));
+    bind_this(
+      Base_select($$anchor, {
+        get items() {
+          return get($0);
+        },
+        label: "Filter by tag",
+        get savedFilters() {
+          return savedFilters();
+        },
+        loadSavedFilter,
+        get addButtonDisabled() {
+          return addButtonDisabled();
+        },
+        get onAddClick() {
+          return onAddClick();
+        },
+        get clearButtonDisabled() {
+          return clearButtonDisabled();
+        },
+        onClearClick: handleClear,
+        get activeFilterId() {
+          return activeFilterId();
+        },
+        get onDeleteClick() {
+          return onDeleteClick();
+        },
+        get value() {
+          return value();
+        },
+        set value($$value) {
+          value($$value);
+        },
+        $$legacy: true
+      }),
+      ($$value) => set(baseSelectRef, $$value),
+      () => get(baseSelectRef)
+    );
   }
-};
-var select_tag_default = Select_tag;
+  return pop($$exports);
+}
 
 // src/ui/components/delete_filter_modal.svelte
-function add_css9(target) {
-  append_styles(target, "svelte-tjv0og", ".modal-backdrop.svelte-tjv0og{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0, 0, 0, 0.5);display:flex;align-items:flex-start;justify-content:center;padding-top:20vh;z-index:1000}.modal.svelte-tjv0og{background:var(--background-primary);border:1px solid var(--background-modifier-border);border-radius:var(--radius-m);padding:var(--size-4-4);min-width:300px;max-width:500px;box-shadow:var(--shadow-l);pointer-events:auto}h3.svelte-tjv0og{margin:0 0 var(--size-4-3) 0;font-size:var(--font-ui-medium);font-weight:var(--font-semibold)}.filter-preview.svelte-tjv0og{padding:var(--size-4-2);background:var(--background-secondary);border-radius:var(--radius-s);margin-bottom:var(--size-4-4);font-family:var(--font-monospace);font-size:var(--font-ui-small)}.modal-actions.svelte-tjv0og{display:flex;gap:var(--size-4-2);justify-content:flex-end}button.svelte-tjv0og{padding:var(--size-4-1) var(--size-4-3);border-radius:var(--radius-s);cursor:pointer;font-size:var(--font-ui-small);transition:background 100ms linear}.cancel-btn.svelte-tjv0og{background:var(--background-secondary);border:1px solid var(--background-modifier-border);color:var(--text-normal)}.cancel-btn.svelte-tjv0og:hover{background:var(--background-secondary-alt)}.delete-btn.svelte-tjv0og{background:var(--color-red);border:none;color:white}.delete-btn.svelte-tjv0og:hover{background:var(--color-red);opacity:0.8}");
-}
-function create_fragment11(ctx) {
-  let div3;
-  let div2;
-  let h3;
-  let t1;
-  let div0;
-  let t2;
-  let t3;
-  let div1;
-  let button0;
-  let t5;
-  let button1;
-  let mounted;
-  let dispose;
-  return {
-    c() {
-      div3 = element("div");
-      div2 = element("div");
-      h3 = element("h3");
-      h3.textContent = "Delete saved filter?";
-      t1 = space();
-      div0 = element("div");
-      t2 = text(
-        /*filterText*/
-        ctx[0]
-      );
-      t3 = space();
-      div1 = element("div");
-      button0 = element("button");
-      button0.textContent = "Cancel";
-      t5 = space();
-      button1 = element("button");
-      button1.textContent = "Delete";
-      attr(h3, "id", "modal-title");
-      attr(h3, "class", "svelte-tjv0og");
-      attr(div0, "class", "filter-preview svelte-tjv0og");
-      attr(button0, "class", "cancel-btn svelte-tjv0og");
-      attr(button1, "class", "delete-btn svelte-tjv0og");
-      attr(div1, "class", "modal-actions svelte-tjv0og");
-      attr(div2, "class", "modal svelte-tjv0og");
-      attr(div2, "role", "dialog");
-      attr(div2, "aria-modal", "true");
-      attr(div2, "aria-labelledby", "modal-title");
-      attr(div3, "class", "modal-backdrop svelte-tjv0og");
-      attr(div3, "role", "presentation");
-    },
-    m(target, anchor) {
-      insert(target, div3, anchor);
-      append(div3, div2);
-      append(div2, h3);
-      append(div2, t1);
-      append(div2, div0);
-      append(div0, t2);
-      append(div2, t3);
-      append(div2, div1);
-      append(div1, button0);
-      append(div1, t5);
-      append(div1, button1);
-      ctx[6](button1);
-      ctx[7](div2);
-      if (!mounted) {
-        dispose = [
-          listen(
-            window,
-            "keydown",
-            /*handleKeydown*/
-            ctx[5]
-          ),
-          listen(button0, "click", function() {
-            if (is_function(
-              /*onCancel*/
-              ctx[2]
-            )) ctx[2].apply(this, arguments);
-          }),
-          listen(button1, "click", function() {
-            if (is_function(
-              /*onConfirm*/
-              ctx[1]
-            )) ctx[1].apply(this, arguments);
-          }),
-          listen(
-            div3,
-            "click",
-            /*click_handler*/
-            ctx[8]
-          )
-        ];
-        mounted = true;
-      }
-    },
-    p(new_ctx, [dirty]) {
-      ctx = new_ctx;
-      if (dirty & /*filterText*/
-      1) set_data(
-        t2,
-        /*filterText*/
-        ctx[0]
-      );
-    },
-    i: noop,
-    o: noop,
-    d(detaching) {
-      if (detaching) {
-        detach(div3);
-      }
-      ctx[6](null);
-      ctx[7](null);
-      mounted = false;
-      run_all(dispose);
-    }
-  };
-}
-function instance8($$self, $$props, $$invalidate) {
-  let { filterText } = $$props;
-  let { onConfirm } = $$props;
-  let { onCancel } = $$props;
-  let modalElement;
-  let deleteButton;
-  function handleKeydown(event) {
-    if (event.key === "Escape") {
-      onCancel();
+var root9 = from_html(`<div class="modal-backdrop svelte-z61jvf" role="presentation"><div class="modal svelte-z61jvf" role="dialog" aria-modal="true" aria-labelledby="modal-title"><h3 id="modal-title" class="svelte-z61jvf">Delete saved filter?</h3> <div class="filter-preview svelte-z61jvf"> </div> <div class="modal-actions svelte-z61jvf"><button class="cancel-btn svelte-z61jvf">Cancel</button> <button class="delete-btn svelte-z61jvf">Delete</button></div></div></div>`);
+var $$css10 = {
+  hash: "svelte-z61jvf",
+  code: ".modal-backdrop.svelte-z61jvf {position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0, 0, 0, 0.5);display:flex;align-items:flex-start;justify-content:center;padding-top:20vh;z-index:1000;}.modal.svelte-z61jvf {background:var(--background-primary);border:1px solid var(--background-modifier-border);border-radius:var(--radius-m);padding:var(--size-4-4);min-width:300px;max-width:500px;box-shadow:var(--shadow-l);pointer-events:auto;}h3.svelte-z61jvf {margin:0 0 var(--size-4-3) 0;font-size:var(--font-ui-medium);font-weight:var(--font-semibold);}.filter-preview.svelte-z61jvf {padding:var(--size-4-2);background:var(--background-secondary);border-radius:var(--radius-s);margin-bottom:var(--size-4-4);font-family:var(--font-monospace);font-size:var(--font-ui-small);}.modal-actions.svelte-z61jvf {display:flex;gap:var(--size-4-2);justify-content:flex-end;}button.svelte-z61jvf {padding:var(--size-4-1) var(--size-4-3);border-radius:var(--radius-s);cursor:pointer;font-size:var(--font-ui-small);transition:background 100ms linear;}.cancel-btn.svelte-z61jvf {background:var(--background-secondary);border:1px solid var(--background-modifier-border);color:var(--text-normal);}.cancel-btn.svelte-z61jvf:hover {background:var(--background-secondary-alt);}.delete-btn.svelte-z61jvf {background:var(--color-red);border:none;color:white;}.delete-btn.svelte-z61jvf:hover {background:var(--color-red);opacity:0.8;}"
+};
+function Delete_filter_modal($$anchor, $$props) {
+  if (new.target) return createClassComponent({ component: Delete_filter_modal, ...$$anchor });
+  push($$props, false);
+  append_styles($$anchor, $$css10);
+  let filterText = prop($$props, "filterText", 12);
+  let onConfirm = prop($$props, "onConfirm", 12);
+  let onCancel = prop($$props, "onCancel", 12);
+  let modalElement = mutable_source();
+  let deleteButton = mutable_source();
+  function handleKeydown(event2) {
+    if (event2.key === "Escape") {
+      onCancel()();
     }
   }
   onMount(() => {
-    deleteButton == null ? void 0 : deleteButton.focus();
-    const focusableElements = modalElement.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    var _a5;
+    (_a5 = get(deleteButton)) == null ? void 0 : _a5.focus();
+    const focusableElements = get(modalElement).querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
     const firstElement = focusableElements[0];
     const lastElement = focusableElements[focusableElements.length - 1];
     const handleTabKey = (e) => {
@@ -12177,46 +15535,62 @@ function instance8($$self, $$props, $$invalidate) {
         }
       }
     };
-    modalElement.addEventListener("keydown", handleTabKey);
-    return () => modalElement.removeEventListener("keydown", handleTabKey);
+    get(modalElement).addEventListener("keydown", handleTabKey);
+    return () => get(modalElement).removeEventListener("keydown", handleTabKey);
   });
-  function button1_binding($$value) {
-    binding_callbacks[$$value ? "unshift" : "push"](() => {
-      deleteButton = $$value;
-      $$invalidate(4, deleteButton);
-    });
-  }
-  function div2_binding($$value) {
-    binding_callbacks[$$value ? "unshift" : "push"](() => {
-      modalElement = $$value;
-      $$invalidate(3, modalElement);
-    });
-  }
-  const click_handler = (e) => e.target === e.currentTarget && onCancel();
-  $$self.$$set = ($$props2) => {
-    if ("filterText" in $$props2) $$invalidate(0, filterText = $$props2.filterText);
-    if ("onConfirm" in $$props2) $$invalidate(1, onConfirm = $$props2.onConfirm);
-    if ("onCancel" in $$props2) $$invalidate(2, onCancel = $$props2.onCancel);
+  var $$exports = {
+    get filterText() {
+      return filterText();
+    },
+    set filterText($$value) {
+      filterText($$value);
+      flushSync();
+    },
+    get onConfirm() {
+      return onConfirm();
+    },
+    set onConfirm($$value) {
+      onConfirm($$value);
+      flushSync();
+    },
+    get onCancel() {
+      return onCancel();
+    },
+    set onCancel($$value) {
+      onCancel($$value);
+      flushSync();
+    },
+    $set: update_legacy_props,
+    $on: ($$event_name, $$event_cb) => add_legacy_event_listener($$props, $$event_name, $$event_cb)
   };
-  return [
-    filterText,
-    onConfirm,
-    onCancel,
-    modalElement,
-    deleteButton,
-    handleKeydown,
-    button1_binding,
-    div2_binding,
-    click_handler
-  ];
+  init();
+  var div = root9();
+  event("keydown", $window, handleKeydown);
+  var div_1 = child(div);
+  var div_2 = sibling(child(div_1), 2);
+  var text2 = child(div_2, true);
+  reset(div_2);
+  var div_3 = sibling(div_2, 2);
+  var button = child(div_3);
+  var button_1 = sibling(button, 2);
+  bind_this(button_1, ($$value) => set(deleteButton, $$value), () => get(deleteButton));
+  reset(div_3);
+  reset(div_1);
+  bind_this(div_1, ($$value) => set(modalElement, $$value), () => get(modalElement));
+  reset(div);
+  template_effect(() => set_text(text2, filterText()));
+  event("click", button, function(...$$args) {
+    var _a5;
+    (_a5 = onCancel()) == null ? void 0 : _a5.apply(this, $$args);
+  });
+  event("click", button_1, function(...$$args) {
+    var _a5;
+    (_a5 = onConfirm()) == null ? void 0 : _a5.apply(this, $$args);
+  });
+  event("click", div, (e) => e.target === e.currentTarget && onCancel()());
+  append($$anchor, div);
+  return pop($$exports);
 }
-var Delete_filter_modal = class extends SvelteComponent {
-  constructor(options) {
-    super();
-    init(this, options, instance8, create_fragment11, safe_not_equal, { filterText: 0, onConfirm: 1, onCancel: 2 }, add_css9);
-  }
-};
-var delete_filter_modal_default = Delete_filter_modal;
 
 // node_modules/zod/lib/index.mjs
 var util;
@@ -12251,9 +15625,9 @@ var util;
   };
   util2.objectKeys = typeof Object.keys === "function" ? (obj) => Object.keys(obj) : (object) => {
     const keys = [];
-    for (const key in object) {
-      if (Object.prototype.hasOwnProperty.call(object, key)) {
-        keys.push(key);
+    for (const key2 in object) {
+      if (Object.prototype.hasOwnProperty.call(object, key2)) {
+        keys.push(key2);
       }
     }
     return keys;
@@ -12638,10 +16012,10 @@ var ParseStatus = class _ParseStatus {
   static async mergeObjectAsync(status, pairs) {
     const syncPairs = [];
     for (const pair of pairs) {
-      const key = await pair.key;
+      const key2 = await pair.key;
       const value = await pair.value;
       syncPairs.push({
-        key,
+        key: key2,
         value
       });
     }
@@ -12650,17 +16024,17 @@ var ParseStatus = class _ParseStatus {
   static mergeObjectSync(status, pairs) {
     const finalObject = {};
     for (const pair of pairs) {
-      const { key, value } = pair;
-      if (key.status === "aborted")
+      const { key: key2, value } = pair;
+      if (key2.status === "aborted")
         return INVALID;
       if (value.status === "aborted")
         return INVALID;
-      if (key.status === "dirty")
+      if (key2.status === "dirty")
         status.dirty();
       if (value.status === "dirty")
         status.dirty();
-      if (key.value !== "__proto__" && (typeof value.value !== "undefined" || pair.alwaysSet)) {
-        finalObject[key.value] = value.value;
+      if (key2.value !== "__proto__" && (typeof value.value !== "undefined" || pair.alwaysSet)) {
+        finalObject[key2.value] = value.value;
       }
     }
     return { status: status.value, value: finalObject };
@@ -12669,22 +16043,22 @@ var ParseStatus = class _ParseStatus {
 var INVALID = Object.freeze({
   status: "aborted"
 });
-var DIRTY = (value) => ({ status: "dirty", value });
+var DIRTY2 = (value) => ({ status: "dirty", value });
 var OK = (value) => ({ status: "valid", value });
 var isAborted = (x) => x.status === "aborted";
 var isDirty = (x) => x.status === "dirty";
 var isValid = (x) => x.status === "valid";
 var isAsync = (x) => typeof Promise !== "undefined" && x instanceof Promise;
-function __classPrivateFieldGet(receiver, state, kind, f) {
+function __classPrivateFieldGet(receiver, state2, kind, f) {
   if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
-  if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
-  return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+  if (typeof state2 === "function" ? receiver !== state2 || !f : !state2.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+  return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state2.get(receiver);
 }
-function __classPrivateFieldSet(receiver, state, value, kind, f) {
+function __classPrivateFieldSet(receiver, state2, value, kind, f) {
   if (kind === "m") throw new TypeError("Private method is not writable");
   if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
-  if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
-  return kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value), value;
+  if (typeof state2 === "function" ? receiver !== state2 || !f : !state2.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+  return kind === "a" ? f.call(receiver, value) : f ? f.value = value : state2.set(receiver, value), value;
 }
 var errorUtil;
 (function(errorUtil2) {
@@ -12694,12 +16068,12 @@ var errorUtil;
 var _ZodEnum_cache;
 var _ZodNativeEnum_cache;
 var ParseInputLazyPath = class {
-  constructor(parent, value, path, key) {
+  constructor(parent, value, path, key2) {
     this._cachedPath = [];
     this.parent = parent;
     this.data = value;
     this._path = path;
-    this._key = key;
+    this._key = key2;
   }
   get path() {
     if (!this._cachedPath.length) {
@@ -12741,17 +16115,17 @@ function processCreateParams(params) {
   if (errorMap2)
     return { errorMap: errorMap2, description };
   const customMap = (iss, ctx) => {
-    var _a, _b;
+    var _a5, _b3;
     const { message } = params;
     if (iss.code === "invalid_enum_value") {
       return { message: message !== null && message !== void 0 ? message : ctx.defaultError };
     }
     if (typeof ctx.data === "undefined") {
-      return { message: (_a = message !== null && message !== void 0 ? message : required_error) !== null && _a !== void 0 ? _a : ctx.defaultError };
+      return { message: (_a5 = message !== null && message !== void 0 ? message : required_error) !== null && _a5 !== void 0 ? _a5 : ctx.defaultError };
     }
     if (iss.code !== "invalid_type")
       return { message: ctx.defaultError };
-    return { message: (_b = message !== null && message !== void 0 ? message : invalid_type_error) !== null && _b !== void 0 ? _b : ctx.defaultError };
+    return { message: (_b3 = message !== null && message !== void 0 ? message : invalid_type_error) !== null && _b3 !== void 0 ? _b3 : ctx.defaultError };
   };
   return { errorMap: customMap, description };
 }
@@ -12831,11 +16205,11 @@ var ZodType = class {
     throw result.error;
   }
   safeParse(data, params) {
-    var _a;
+    var _a5;
     const ctx = {
       common: {
         issues: [],
-        async: (_a = params === null || params === void 0 ? void 0 : params.async) !== null && _a !== void 0 ? _a : false,
+        async: (_a5 = params === null || params === void 0 ? void 0 : params.async) !== null && _a5 !== void 0 ? _a5 : false,
         contextualErrorMap: params === null || params === void 0 ? void 0 : params.errorMap
       },
       path: (params === null || params === void 0 ? void 0 : params.path) || [],
@@ -13188,7 +16562,7 @@ var ZodString = class _ZodString extends ZodType {
       } else if (check.kind === "url") {
         try {
           new URL(input.data);
-        } catch (_a) {
+        } catch (_a5) {
           ctx = this._getOrReturnCtx(input, ctx);
           addIssueToContext(ctx, {
             validation: "url",
@@ -13358,7 +16732,7 @@ var ZodString = class _ZodString extends ZodType {
     return this._addCheck({ kind: "ip", ...errorUtil.errToObj(options) });
   }
   datetime(options) {
-    var _a, _b;
+    var _a5, _b3;
     if (typeof options === "string") {
       return this._addCheck({
         kind: "datetime",
@@ -13371,8 +16745,8 @@ var ZodString = class _ZodString extends ZodType {
     return this._addCheck({
       kind: "datetime",
       precision: typeof (options === null || options === void 0 ? void 0 : options.precision) === "undefined" ? null : options === null || options === void 0 ? void 0 : options.precision,
-      offset: (_a = options === null || options === void 0 ? void 0 : options.offset) !== null && _a !== void 0 ? _a : false,
-      local: (_b = options === null || options === void 0 ? void 0 : options.local) !== null && _b !== void 0 ? _b : false,
+      offset: (_a5 = options === null || options === void 0 ? void 0 : options.offset) !== null && _a5 !== void 0 ? _a5 : false,
+      local: (_b3 = options === null || options === void 0 ? void 0 : options.local) !== null && _b3 !== void 0 ? _b3 : false,
       ...errorUtil.errToObj(options === null || options === void 0 ? void 0 : options.message)
     });
   }
@@ -13535,11 +16909,11 @@ var ZodString = class _ZodString extends ZodType {
   }
 };
 ZodString.create = (params) => {
-  var _a;
+  var _a5;
   return new ZodString({
     checks: [],
     typeName: ZodFirstPartyTypeKind.ZodString,
-    coerce: (_a = params === null || params === void 0 ? void 0 : params.coerce) !== null && _a !== void 0 ? _a : false,
+    coerce: (_a5 = params === null || params === void 0 ? void 0 : params.coerce) !== null && _a5 !== void 0 ? _a5 : false,
     ...processCreateParams(params)
   });
 };
@@ -13940,11 +17314,11 @@ var ZodBigInt = class _ZodBigInt extends ZodType {
   }
 };
 ZodBigInt.create = (params) => {
-  var _a;
+  var _a5;
   return new ZodBigInt({
     checks: [],
     typeName: ZodFirstPartyTypeKind.ZodBigInt,
-    coerce: (_a = params === null || params === void 0 ? void 0 : params.coerce) !== null && _a !== void 0 ? _a : false,
+    coerce: (_a5 = params === null || params === void 0 ? void 0 : params.coerce) !== null && _a5 !== void 0 ? _a5 : false,
     ...processCreateParams(params)
   });
 };
@@ -14317,9 +17691,9 @@ ZodArray.create = (schema, params) => {
 function deepPartialify(schema) {
   if (schema instanceof ZodObject) {
     const newShape = {};
-    for (const key in schema.shape) {
-      const fieldSchema = schema.shape[key];
-      newShape[key] = ZodOptional.create(deepPartialify(fieldSchema));
+    for (const key2 in schema.shape) {
+      const fieldSchema = schema.shape[key2];
+      newShape[key2] = ZodOptional.create(deepPartialify(fieldSchema));
     }
     return new ZodObject({
       ...schema._def,
@@ -14369,29 +17743,29 @@ var ZodObject = class _ZodObject extends ZodType {
     const { shape, keys: shapeKeys } = this._getCached();
     const extraKeys = [];
     if (!(this._def.catchall instanceof ZodNever && this._def.unknownKeys === "strip")) {
-      for (const key in ctx.data) {
-        if (!shapeKeys.includes(key)) {
-          extraKeys.push(key);
+      for (const key2 in ctx.data) {
+        if (!shapeKeys.includes(key2)) {
+          extraKeys.push(key2);
         }
       }
     }
     const pairs = [];
-    for (const key of shapeKeys) {
-      const keyValidator = shape[key];
-      const value = ctx.data[key];
+    for (const key2 of shapeKeys) {
+      const keyValidator = shape[key2];
+      const value = ctx.data[key2];
       pairs.push({
-        key: { status: "valid", value: key },
-        value: keyValidator._parse(new ParseInputLazyPath(ctx, value, ctx.path, key)),
-        alwaysSet: key in ctx.data
+        key: { status: "valid", value: key2 },
+        value: keyValidator._parse(new ParseInputLazyPath(ctx, value, ctx.path, key2)),
+        alwaysSet: key2 in ctx.data
       });
     }
     if (this._def.catchall instanceof ZodNever) {
       const unknownKeys = this._def.unknownKeys;
       if (unknownKeys === "passthrough") {
-        for (const key of extraKeys) {
+        for (const key2 of extraKeys) {
           pairs.push({
-            key: { status: "valid", value: key },
-            value: { status: "valid", value: ctx.data[key] }
+            key: { status: "valid", value: key2 },
+            value: { status: "valid", value: ctx.data[key2] }
           });
         }
       } else if (unknownKeys === "strict") {
@@ -14408,15 +17782,15 @@ var ZodObject = class _ZodObject extends ZodType {
       }
     } else {
       const catchall = this._def.catchall;
-      for (const key of extraKeys) {
-        const value = ctx.data[key];
+      for (const key2 of extraKeys) {
+        const value = ctx.data[key2];
         pairs.push({
-          key: { status: "valid", value: key },
+          key: { status: "valid", value: key2 },
           value: catchall._parse(
-            new ParseInputLazyPath(ctx, value, ctx.path, key)
+            new ParseInputLazyPath(ctx, value, ctx.path, key2)
             //, ctx.child(key), value, getParsedType(value)
           ),
-          alwaysSet: key in ctx.data
+          alwaysSet: key2 in ctx.data
         });
       }
     }
@@ -14424,10 +17798,10 @@ var ZodObject = class _ZodObject extends ZodType {
       return Promise.resolve().then(async () => {
         const syncPairs = [];
         for (const pair of pairs) {
-          const key = await pair.key;
+          const key2 = await pair.key;
           const value = await pair.value;
           syncPairs.push({
-            key,
+            key: key2,
             value,
             alwaysSet: pair.alwaysSet
           });
@@ -14450,8 +17824,8 @@ var ZodObject = class _ZodObject extends ZodType {
       unknownKeys: "strict",
       ...message !== void 0 ? {
         errorMap: (issue, ctx) => {
-          var _a, _b, _c, _d;
-          const defaultError = (_c = (_b = (_a = this._def).errorMap) === null || _b === void 0 ? void 0 : _b.call(_a, issue, ctx).message) !== null && _c !== void 0 ? _c : ctx.defaultError;
+          var _a5, _b3, _c2, _d;
+          const defaultError = (_c2 = (_b3 = (_a5 = this._def).errorMap) === null || _b3 === void 0 ? void 0 : _b3.call(_a5, issue, ctx).message) !== null && _c2 !== void 0 ? _c2 : ctx.defaultError;
           if (issue.code === "unrecognized_keys")
             return {
               message: (_d = errorUtil.errToObj(message).message) !== null && _d !== void 0 ? _d : defaultError
@@ -14553,8 +17927,8 @@ var ZodObject = class _ZodObject extends ZodType {
   //   }) as any;
   //   return merged;
   // }
-  setKey(key, schema) {
-    return this.augment({ [key]: schema });
+  setKey(key2, schema) {
+    return this.augment({ [key2]: schema });
   }
   // merge<Incoming extends AnyZodObject>(
   //   merging: Incoming
@@ -14577,17 +17951,17 @@ var ZodObject = class _ZodObject extends ZodType {
   //   }) as any;
   //   return merged;
   // }
-  catchall(index) {
+  catchall(index2) {
     return new _ZodObject({
       ...this._def,
-      catchall: index
+      catchall: index2
     });
   }
   pick(mask) {
     const shape = {};
-    util.objectKeys(mask).forEach((key) => {
-      if (mask[key] && this.shape[key]) {
-        shape[key] = this.shape[key];
+    util.objectKeys(mask).forEach((key2) => {
+      if (mask[key2] && this.shape[key2]) {
+        shape[key2] = this.shape[key2];
       }
     });
     return new _ZodObject({
@@ -14597,9 +17971,9 @@ var ZodObject = class _ZodObject extends ZodType {
   }
   omit(mask) {
     const shape = {};
-    util.objectKeys(this.shape).forEach((key) => {
-      if (!mask[key]) {
-        shape[key] = this.shape[key];
+    util.objectKeys(this.shape).forEach((key2) => {
+      if (!mask[key2]) {
+        shape[key2] = this.shape[key2];
       }
     });
     return new _ZodObject({
@@ -14615,12 +17989,12 @@ var ZodObject = class _ZodObject extends ZodType {
   }
   partial(mask) {
     const newShape = {};
-    util.objectKeys(this.shape).forEach((key) => {
-      const fieldSchema = this.shape[key];
-      if (mask && !mask[key]) {
-        newShape[key] = fieldSchema;
+    util.objectKeys(this.shape).forEach((key2) => {
+      const fieldSchema = this.shape[key2];
+      if (mask && !mask[key2]) {
+        newShape[key2] = fieldSchema;
       } else {
-        newShape[key] = fieldSchema.optional();
+        newShape[key2] = fieldSchema.optional();
       }
     });
     return new _ZodObject({
@@ -14630,16 +18004,16 @@ var ZodObject = class _ZodObject extends ZodType {
   }
   required(mask) {
     const newShape = {};
-    util.objectKeys(this.shape).forEach((key) => {
-      if (mask && !mask[key]) {
-        newShape[key] = this.shape[key];
+    util.objectKeys(this.shape).forEach((key2) => {
+      if (mask && !mask[key2]) {
+        newShape[key2] = this.shape[key2];
       } else {
-        const fieldSchema = this.shape[key];
+        const fieldSchema = this.shape[key2];
         let newField = fieldSchema;
         while (newField instanceof ZodOptional) {
           newField = newField._def.innerType;
         }
-        newShape[key] = newField;
+        newShape[key2] = newField;
       }
     });
     return new _ZodObject({
@@ -14883,14 +18257,14 @@ function mergeValues(a, b) {
     return { valid: true, data: a };
   } else if (aType === ZodParsedType.object && bType === ZodParsedType.object) {
     const bKeys = util.objectKeys(b);
-    const sharedKeys = util.objectKeys(a).filter((key) => bKeys.indexOf(key) !== -1);
+    const sharedKeys = util.objectKeys(a).filter((key2) => bKeys.indexOf(key2) !== -1);
     const newObj = { ...a, ...b };
-    for (const key of sharedKeys) {
-      const sharedValue = mergeValues(a[key], b[key]);
+    for (const key2 of sharedKeys) {
+      const sharedValue = mergeValues(a[key2], b[key2]);
       if (!sharedValue.valid) {
         return { valid: false };
       }
-      newObj[key] = sharedValue.data;
+      newObj[key2] = sharedValue.data;
     }
     return { valid: true, data: newObj };
   } else if (aType === ZodParsedType.array && bType === ZodParsedType.array) {
@@ -14898,9 +18272,9 @@ function mergeValues(a, b) {
       return { valid: false };
     }
     const newArray = [];
-    for (let index = 0; index < a.length; index++) {
-      const itemA = a[index];
-      const itemB = b[index];
+    for (let index2 = 0; index2 < a.length; index2++) {
+      const itemA = a[index2];
+      const itemB = b[index2];
       const sharedValue = mergeValues(itemA, itemB);
       if (!sharedValue.valid) {
         return { valid: false };
@@ -15054,11 +18428,11 @@ var ZodRecord = class _ZodRecord extends ZodType {
     const pairs = [];
     const keyType = this._def.keyType;
     const valueType = this._def.valueType;
-    for (const key in ctx.data) {
+    for (const key2 in ctx.data) {
       pairs.push({
-        key: keyType._parse(new ParseInputLazyPath(ctx, key, ctx.path, key)),
-        value: valueType._parse(new ParseInputLazyPath(ctx, ctx.data[key], ctx.path, key)),
-        alwaysSet: key in ctx.data
+        key: keyType._parse(new ParseInputLazyPath(ctx, key2, ctx.path, key2)),
+        value: valueType._parse(new ParseInputLazyPath(ctx, ctx.data[key2], ctx.path, key2)),
+        alwaysSet: key2 in ctx.data
       });
     }
     if (ctx.common.async) {
@@ -15106,40 +18480,40 @@ var ZodMap = class extends ZodType {
     }
     const keyType = this._def.keyType;
     const valueType = this._def.valueType;
-    const pairs = [...ctx.data.entries()].map(([key, value], index) => {
+    const pairs = [...ctx.data.entries()].map(([key2, value], index2) => {
       return {
-        key: keyType._parse(new ParseInputLazyPath(ctx, key, ctx.path, [index, "key"])),
-        value: valueType._parse(new ParseInputLazyPath(ctx, value, ctx.path, [index, "value"]))
+        key: keyType._parse(new ParseInputLazyPath(ctx, key2, ctx.path, [index2, "key"])),
+        value: valueType._parse(new ParseInputLazyPath(ctx, value, ctx.path, [index2, "value"]))
       };
     });
     if (ctx.common.async) {
       const finalMap = /* @__PURE__ */ new Map();
       return Promise.resolve().then(async () => {
         for (const pair of pairs) {
-          const key = await pair.key;
+          const key2 = await pair.key;
           const value = await pair.value;
-          if (key.status === "aborted" || value.status === "aborted") {
+          if (key2.status === "aborted" || value.status === "aborted") {
             return INVALID;
           }
-          if (key.status === "dirty" || value.status === "dirty") {
+          if (key2.status === "dirty" || value.status === "dirty") {
             status.dirty();
           }
-          finalMap.set(key.value, value.value);
+          finalMap.set(key2.value, value.value);
         }
         return { status: status.value, value: finalMap };
       });
     } else {
       const finalMap = /* @__PURE__ */ new Map();
       for (const pair of pairs) {
-        const key = pair.key;
+        const key2 = pair.key;
         const value = pair.value;
-        if (key.status === "aborted" || value.status === "aborted") {
+        if (key2.status === "aborted" || value.status === "aborted") {
           return INVALID;
         }
-        if (key.status === "dirty" || value.status === "dirty") {
+        if (key2.status === "dirty" || value.status === "dirty") {
           status.dirty();
         }
-        finalMap.set(key.value, value.value);
+        finalMap.set(key2.value, value.value);
       }
       return { status: status.value, value: finalMap };
     }
@@ -15336,12 +18710,12 @@ var ZodFunction = class _ZodFunction extends ZodType {
       returns: returnType
     });
   }
-  implement(func2) {
-    const validatedFunc = this.parse(func2);
+  implement(func) {
+    const validatedFunc = this.parse(func);
     return validatedFunc;
   }
-  strictImplement(func2) {
-    const validatedFunc = this.parse(func2);
+  strictImplement(func) {
+    const validatedFunc = this.parse(func);
     return validatedFunc;
   }
   static create(args, returns, params) {
@@ -15553,7 +18927,7 @@ var ZodEffects = class extends ZodType {
   }
   _parse(input) {
     const { status, ctx } = this._processInputParams(input);
-    const effect = this._def.effect || null;
+    const effect2 = this._def.effect || null;
     const checkCtx = {
       addIssue: (arg) => {
         addIssueToContext(ctx, arg);
@@ -15568,8 +18942,8 @@ var ZodEffects = class extends ZodType {
       }
     };
     checkCtx.addIssue = checkCtx.addIssue.bind(checkCtx);
-    if (effect.type === "preprocess") {
-      const processed = effect.transform(ctx.data, checkCtx);
+    if (effect2.type === "preprocess") {
+      const processed = effect2.transform(ctx.data, checkCtx);
       if (ctx.common.async) {
         return Promise.resolve(processed).then(async (processed2) => {
           if (status.value === "aborted")
@@ -15582,9 +18956,9 @@ var ZodEffects = class extends ZodType {
           if (result.status === "aborted")
             return INVALID;
           if (result.status === "dirty")
-            return DIRTY(result.value);
+            return DIRTY2(result.value);
           if (status.value === "dirty")
-            return DIRTY(result.value);
+            return DIRTY2(result.value);
           return result;
         });
       } else {
@@ -15598,15 +18972,15 @@ var ZodEffects = class extends ZodType {
         if (result.status === "aborted")
           return INVALID;
         if (result.status === "dirty")
-          return DIRTY(result.value);
+          return DIRTY2(result.value);
         if (status.value === "dirty")
-          return DIRTY(result.value);
+          return DIRTY2(result.value);
         return result;
       }
     }
-    if (effect.type === "refinement") {
+    if (effect2.type === "refinement") {
       const executeRefinement = (acc) => {
-        const result = effect.refinement(acc, checkCtx);
+        const result = effect2.refinement(acc, checkCtx);
         if (ctx.common.async) {
           return Promise.resolve(result);
         }
@@ -15639,7 +19013,7 @@ var ZodEffects = class extends ZodType {
         });
       }
     }
-    if (effect.type === "transform") {
+    if (effect2.type === "transform") {
       if (ctx.common.async === false) {
         const base = this._def.schema._parseSync({
           data: ctx.data,
@@ -15648,7 +19022,7 @@ var ZodEffects = class extends ZodType {
         });
         if (!isValid(base))
           return base;
-        const result = effect.transform(base.value, checkCtx);
+        const result = effect2.transform(base.value, checkCtx);
         if (result instanceof Promise) {
           throw new Error(`Asynchronous transform encountered during synchronous parse operation. Use .parseAsync instead.`);
         }
@@ -15657,18 +19031,18 @@ var ZodEffects = class extends ZodType {
         return this._def.schema._parseAsync({ data: ctx.data, path: ctx.path, parent: ctx }).then((base) => {
           if (!isValid(base))
             return base;
-          return Promise.resolve(effect.transform(base.value, checkCtx)).then((result) => ({ status: status.value, value: result }));
+          return Promise.resolve(effect2.transform(base.value, checkCtx)).then((result) => ({ status: status.value, value: result }));
         });
       }
     }
-    util.assertNever(effect);
+    util.assertNever(effect2);
   }
 };
-ZodEffects.create = (schema, effect, params) => {
+ZodEffects.create = (schema, effect2, params) => {
   return new ZodEffects({
     schema,
     typeName: ZodFirstPartyTypeKind.ZodEffects,
-    effect,
+    effect: effect2,
     ...processCreateParams(params)
   });
 };
@@ -15846,7 +19220,7 @@ var ZodPipeline = class _ZodPipeline extends ZodType {
           return INVALID;
         if (inResult.status === "dirty") {
           status.dirty();
-          return DIRTY(inResult.value);
+          return DIRTY2(inResult.value);
         } else {
           return this._def.out._parseAsync({
             data: inResult.value,
@@ -15912,10 +19286,10 @@ ZodReadonly.create = (type, params) => {
 function custom(check, params = {}, fatal) {
   if (check)
     return ZodAny.create().superRefine((data, ctx) => {
-      var _a, _b;
+      var _a5, _b3;
       if (!check(data)) {
         const p = typeof params === "function" ? params(data) : typeof params === "string" ? { message: params } : params;
-        const _fatal = (_b = (_a = p.fatal) !== null && _a !== void 0 ? _a : fatal) !== null && _b !== void 0 ? _b : true;
+        const _fatal = (_b3 = (_a5 = p.fatal) !== null && _a5 !== void 0 ? _a5 : fatal) !== null && _b3 !== void 0 ? _b3 : true;
         const p2 = typeof p === "string" ? { message: p } : p;
         ctx.addIssue({ code: "custom", ...p2, fatal: _fatal });
       }
@@ -16025,7 +19399,7 @@ var z = /* @__PURE__ */ Object.freeze({
   addIssueToContext,
   ParseStatus,
   INVALID,
-  DIRTY,
+  DIRTY: DIRTY2,
   OK,
   isAborted,
   isDirty,
@@ -16146,12 +19520,16 @@ function getTagsFromContent(content) {
   }
   return tags;
 }
+function isValidTag(tag2) {
+  return /^[-_/\p{L}\p{N}]+$/u.test(tag2);
+}
 var tagsRegex = /#([-_/\p{L}\p{N}]+)/gu;
 var tagNonNumericTest = /\p{L}/u;
 
 // src/ui/tasks/task.ts
 var DEFAULT_DONE_STATUS_MARKERS = "xX";
 var DEFAULT_IGNORED_STATUS_MARKERS = "";
+var DEFAULT_CANCELLED_STATUS_MARKERS = "-";
 function validateStatusMarkers(markers) {
   const errors = [];
   const chars = Array.from(markers);
@@ -16173,17 +19551,20 @@ function validateStatusMarkers(markers) {
   }
   return errors;
 }
-function validateDoneStatusMarkers(markers) {
+function validateTypedStatusMarkers(markers, label, allowEmpty) {
   if (!markers || markers.length === 0) {
-    return ["Done status markers cannot be empty"];
+    return allowEmpty ? [] : [`${label} status markers cannot be empty`];
   }
   return validateStatusMarkers(markers);
 }
+function validateDoneStatusMarkers(markers) {
+  return validateTypedStatusMarkers(markers, "Done", false);
+}
 function validateIgnoredStatusMarkers(markers) {
-  if (!markers || markers.length === 0) {
-    return [];
-  }
-  return validateStatusMarkers(markers);
+  return validateTypedStatusMarkers(markers, "Ignored", true);
+}
+function validateCancelledStatusMarkers(markers) {
+  return validateTypedStatusMarkers(markers, "Cancelled", false);
 }
 function isStatusMatch(statusContent, markers) {
   if (!statusContent || !markers) return false;
@@ -16196,21 +19577,17 @@ function isStatusMatch(statusContent, markers) {
   if (!singleChar) return false;
   return markersChars.includes(singleChar);
 }
-function isDoneStatus(statusContent, doneStatusMarkers) {
-  return isStatusMatch(statusContent, doneStatusMarkers);
-}
-function isIgnoredStatus(statusContent, ignoredStatusMarkers) {
-  return isStatusMatch(statusContent, ignoredStatusMarkers);
-}
 var Task2 = class {
-  constructor(rawContent, fileHandle, rowIndex, columnTagTable, consolidateTags, doneStatusMarkers = DEFAULT_DONE_STATUS_MARKERS, ignoredStatusMarkers = DEFAULT_IGNORED_STATUS_MARKERS) {
+  constructor(rawContent, fileHandle, rowIndex, columnTagTable, consolidateTags, doneStatusMarkers = DEFAULT_DONE_STATUS_MARKERS, cancelledStatusMarkers = DEFAULT_CANCELLED_STATUS_MARKERS, ignoredStatusMarkers = DEFAULT_IGNORED_STATUS_MARKERS) {
     this.rowIndex = rowIndex;
+    this.columnTagTable = columnTagTable;
     this.consolidateTags = consolidateTags;
     this.doneStatusMarkers = doneStatusMarkers;
+    this.cancelledStatusMarkers = cancelledStatusMarkers;
     this.ignoredStatusMarkers = ignoredStatusMarkers;
     this._deleted = false;
-    var _a;
-    const [, blockLink] = (_a = rawContent.match(blockLinkRegexp)) != null ? _a : [];
+    var _a5;
+    const [, blockLink] = (_a5 = rawContent.match(blockLinkRegexp)) != null ? _a5 : [];
     this.blockLink = blockLink;
     const match = (blockLink ? rawContent.replace(blockLinkRegexp, "") : rawContent).match(taskStringRegex);
     if (!match) {
@@ -16226,22 +19603,22 @@ var Task2 = class {
     this._id = (0, import_sha256.default)(content + fileHandle.path + rowIndex).toString();
     this.content = content;
     this._displayStatus = status || " ";
-    this._done = isDoneStatus(this._displayStatus, this.doneStatusMarkers);
+    this._done = isStatusMatch(this._displayStatus, this.doneStatusMarkers);
     this._path = fileHandle.path;
     this._indentation = indentation || "";
-    for (const tag of tags) {
-      const kebabTag = kebab(tag);
-      if (kebabTag in columnTagTable || tag === "done") {
+    for (const tag2 of tags) {
+      const kebabTag = kebab(tag2);
+      if (kebabTag in columnTagTable || tag2 === "done") {
         if (!this._column) {
           this._column = kebabTag;
         }
-        tags.delete(tag);
+        tags.delete(tag2);
         if (!consolidateTags) {
-          this.content = this.content.replaceAll(`#${tag}`, "").trim();
+          this.content = this.content.replaceAll(`#${tag2}`, "").trim();
         }
       }
       if (consolidateTags) {
-        this.content = this.content.replaceAll(`#${tag}`, "").trim();
+        this.content = this.content.replaceAll(`#${tag2}`, "").trim();
       }
     }
     this.tags = tags;
@@ -16257,10 +19634,20 @@ var Task2 = class {
     return this._done;
   }
   set done(done) {
-    var _a;
+    var _a5;
     this._done = done;
     this._column = void 0;
-    this._displayStatus = (_a = Array.from(this.doneStatusMarkers)[0]) != null ? _a : "x";
+    this._displayStatus = (_a5 = Array.from(this.doneStatusMarkers)[0]) != null ? _a5 : "x";
+  }
+  get isCancelled() {
+    return isStatusMatch(this._displayStatus, this.cancelledStatusMarkers);
+  }
+  undone() {
+    this._done = false;
+    this._displayStatus = " ";
+  }
+  get displayStatus() {
+    return this._displayStatus;
   }
   get path() {
     return this._path;
@@ -16274,6 +19661,7 @@ var Task2 = class {
   set column(column) {
     this._column = column;
     this._done = false;
+    this._displayStatus = " ";
   }
   serialise() {
     if (this._deleted) {
@@ -16283,8 +19671,11 @@ var Task2 = class {
       this.indentation,
       `- [${this._displayStatus}] `,
       this.content.trim(),
-      this.consolidateTags && this.tags.size > 0 ? ` ${Array.from(this.tags).map((tag) => `#${tag}`).join(" ")}` : "",
-      this.column ? ` #${this.column}` : "",
+      this.consolidateTags && this.tags.size > 0 ? ` ${Array.from(this.tags).map((tag2) => `#${tag2}`).join(" ")}` : "",
+      this.column ? ` #${this.column === "archived" ? this.column : (() => {
+        const mapped = this.columnTagTable[this.column];
+        return mapped && isValidTag(mapped) ? mapped : this.column;
+      })()}` : "",
       this.blockLink ? ` ^${this.blockLink}` : ""
     ].join("").trimEnd();
   }
@@ -16294,6 +19685,13 @@ var Task2 = class {
     }
     this._done = true;
     this._column = "archived";
+  }
+  cancel() {
+    var _a5;
+    this._displayStatus = (_a5 = Array.from(this.cancelledStatusMarkers)[0]) != null ? _a5 : "-";
+  }
+  restore() {
+    this._displayStatus = " ";
   }
   delete() {
     this._deleted = true;
@@ -16309,7 +19707,7 @@ function isTrackedTaskString(input, ignoredStatusMarkers = DEFAULT_IGNORED_STATU
   const match = input.match(taskStringRegex);
   if (match) {
     const [, , status] = match;
-    if (isIgnoredStatus(status, ignoredStatusMarkers)) {
+    if (isStatusMatch(status, ignoredStatusMarkers)) {
       return false;
     }
   }
@@ -16328,8 +19726,16 @@ var VisibilityOption = /* @__PURE__ */ ((VisibilityOption2) => {
 var ScopeOption = /* @__PURE__ */ ((ScopeOption2) => {
   ScopeOption2["Folder"] = "folder";
   ScopeOption2["Everywhere"] = "everywhere";
+  ScopeOption2["SelectedFolders"] = "selectedFolders";
   return ScopeOption2;
 })(ScopeOption || {});
+var FlowDirection = /* @__PURE__ */ ((FlowDirection2) => {
+  FlowDirection2["LeftToRight"] = "ltr";
+  FlowDirection2["RightToLeft"] = "rtl";
+  FlowDirection2["TopToBottom"] = "ttb";
+  FlowDirection2["BottomToTop"] = "btt";
+  return FlowDirection2;
+})(FlowDirection || {});
 var contentValueSchema = z.object({
   text: z.string()
 });
@@ -16353,6 +19759,7 @@ var settingsObject = z.object({
   uncategorizedVisibility: z.nativeEnum(VisibilityOption).default("auto" /* Auto */).optional(),
   doneVisibility: z.nativeEnum(VisibilityOption).default("always" /* AlwaysShow */).optional(),
   doneStatusMarkers: z.string().default(DEFAULT_DONE_STATUS_MARKERS).optional(),
+  cancelledStatusMarkers: z.string().default(DEFAULT_CANCELLED_STATUS_MARKERS).optional(),
   ignoredStatusMarkers: z.string().default(DEFAULT_IGNORED_STATUS_MARKERS).optional(),
   savedFilters: z.array(savedFilterSchema).default([]).optional(),
   lastContentFilter: z.string().optional(),
@@ -16360,7 +19767,16 @@ var settingsObject = z.object({
   lastFileFilter: z.array(z.string()).optional(),
   filtersExpanded: z.boolean().default(true).optional(),
   filtersSidebarExpanded: z.boolean().default(true).optional(),
-  filtersSidebarWidth: z.number().default(280).optional()
+  filtersSidebarWidth: z.number().default(280).optional(),
+  columnWidth: z.number().min(200).max(600).default(300).optional(),
+  flowDirection: z.nativeEnum(FlowDirection).default("ltr" /* LeftToRight */).optional(),
+  collapsedColumns: z.array(z.string()).default([]).optional(),
+  defaultTaskFile: z.string().default("").optional(),
+  lastUsedTaskFile: z.string().default("").optional(),
+  scopeFolders: z.array(z.string()).default([]).optional(),
+  excludePaths: z.array(z.string()).default([]).optional(),
+  uncategorizedColumnName: z.string().default("Uncategorized").optional(),
+  doneColumnName: z.string().default("Done").optional()
 });
 var defaultSettings = {
   columns: ["Later", "Soonish", "Next week", "This week", "Today", "Pending"],
@@ -16370,14 +19786,28 @@ var defaultSettings = {
   uncategorizedVisibility: "auto" /* Auto */,
   doneVisibility: "always" /* AlwaysShow */,
   doneStatusMarkers: DEFAULT_DONE_STATUS_MARKERS,
+  cancelledStatusMarkers: DEFAULT_CANCELLED_STATUS_MARKERS,
   ignoredStatusMarkers: DEFAULT_IGNORED_STATUS_MARKERS,
-  savedFilters: []
+  savedFilters: [],
+  lastContentFilter: "",
+  lastTagFilter: [],
+  lastFileFilter: [],
+  columnWidth: 300,
+  flowDirection: "ltr" /* LeftToRight */,
+  collapsedColumns: [],
+  defaultTaskFile: "",
+  lastUsedTaskFile: "",
+  scopeFolders: [],
+  excludePaths: [],
+  uncategorizedColumnName: "Uncategorized",
+  doneColumnName: "Done"
 };
 var createSettingsStore = () => writable(defaultSettings);
 function parseSettingsString(str) {
-  var _a;
   try {
-    return (_a = settingsObject.safeParse(JSON.parse(str)).data) != null ? _a : defaultSettings;
+    const parsed = JSON.parse(str);
+    const partial = settingsObject.partial().parse(parsed);
+    return { ...defaultSettings, ...partial };
   } catch (e) {
     return defaultSettings;
   }
@@ -16387,2334 +19817,1397 @@ function toSettingsString(settings) {
 }
 
 // src/ui/main.svelte
-function add_css10(target) {
-  append_styles(target, "svelte-9s8fa9", ".main.svelte-9s8fa9.svelte-9s8fa9.svelte-9s8fa9{height:100%;display:flex;flex-direction:column}.main.svelte-9s8fa9 .sidebar-toggle-btn.svelte-9s8fa9.svelte-9s8fa9{position:fixed;top:50px;left:8px;padding:var(--size-2-1) var(--size-2-2);background:var(--background-primary);border:1px solid var(--background-modifier-border);border-radius:var(--radius-s);cursor:pointer;color:var(--text-muted);font-size:var(--font-ui-small);display:flex;align-items:center;gap:var(--size-2-1);z-index:100;transition:color 0.15s ease}.main.svelte-9s8fa9 .sidebar-toggle-btn.svelte-9s8fa9.svelte-9s8fa9:hover{background:var(--background-modifier-hover);color:var(--text-normal)}.main.svelte-9s8fa9 .sidebar-toggle-btn .toggle-icon.svelte-9s8fa9.svelte-9s8fa9{font-size:16px}.main.svelte-9s8fa9 .sidebar-toggle-btn .toggle-label.svelte-9s8fa9.svelte-9s8fa9{font-weight:500}.main.svelte-9s8fa9 .board-container.svelte-9s8fa9.svelte-9s8fa9{display:grid;grid-template-columns:1fr;height:100%}.main.svelte-9s8fa9 .board-container.sidebar-expanded.svelte-9s8fa9.svelte-9s8fa9{grid-template-columns:var(--sidebar-width, 280px) 1fr}.main.svelte-9s8fa9 .filters-sidebar.svelte-9s8fa9.svelte-9s8fa9{background:var(--background-primary);border-right:1px solid var(--background-modifier-border);overflow-y:auto;display:flex;flex-direction:column;position:relative}.main.svelte-9s8fa9 .filters-sidebar .resize-handle.svelte-9s8fa9.svelte-9s8fa9{position:absolute;top:0;right:0;width:4px;height:100%;cursor:col-resize;background:transparent;border:none;padding:0;z-index:10}.main.svelte-9s8fa9 .filters-sidebar .resize-handle.svelte-9s8fa9.svelte-9s8fa9:hover{background:var(--interactive-accent);opacity:0.5}.main.svelte-9s8fa9 .board-content.svelte-9s8fa9.svelte-9s8fa9{display:flex;flex-direction:column;height:100%;overflow:hidden;padding-left:var(--size-4-4)}.main.svelte-9s8fa9 .settings.svelte-9s8fa9.svelte-9s8fa9{display:flex;justify-content:flex-end;padding:var(--size-4-2) var(--size-4-4) var(--size-4-2) 0}.main.svelte-9s8fa9 .controls.svelte-9s8fa9.svelte-9s8fa9{display:flex;flex-direction:column;gap:var(--size-4-5);padding:var(--size-4-4);padding-top:50px}.main.svelte-9s8fa9 .controls .saved-filters.svelte-9s8fa9.svelte-9s8fa9{margin-top:0;margin-bottom:var(--size-4-2);font-size:var(--font-ui-small);align-self:flex-start}.main.svelte-9s8fa9 .controls .saved-filters details summary.svelte-9s8fa9.svelte-9s8fa9{cursor:pointer;color:var(--text-muted);padding:var(--size-2-1) 0;user-select:none;transition:color 0.15s ease}.main.svelte-9s8fa9 .controls .saved-filters details summary.svelte-9s8fa9.svelte-9s8fa9:hover{color:var(--text-normal)}.main.svelte-9s8fa9 .controls .saved-filters details ul.svelte-9s8fa9.svelte-9s8fa9{margin:0;padding:0;list-style:none}.main.svelte-9s8fa9 .controls .saved-filters details ul li.svelte-9s8fa9.svelte-9s8fa9{margin:0;display:flex;align-items:center;gap:var(--size-4-2)}.main.svelte-9s8fa9 .controls .saved-filters details ul li button.svelte-9s8fa9.svelte-9s8fa9{text-align:left;padding:var(--size-2-1) var(--size-2-2);background:transparent;border:none;cursor:pointer;color:var(--text-normal);border-radius:var(--radius-s);white-space:nowrap;transition:background 0.15s ease, color 0.15s ease}.main.svelte-9s8fa9 .controls .saved-filters details ul li button.svelte-9s8fa9.svelte-9s8fa9:hover{background:var(--background-modifier-hover)}.main.svelte-9s8fa9 .controls .saved-filters details ul li button.active.svelte-9s8fa9.svelte-9s8fa9{font-weight:700;color:var(--interactive-accent)}.main.svelte-9s8fa9 .controls .saved-filters details ul li button.delete-btn.svelte-9s8fa9.svelte-9s8fa9{padding:0;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:18px;line-height:1;color:var(--text-muted)}.main.svelte-9s8fa9 .controls .saved-filters details ul li button.delete-btn.svelte-9s8fa9.svelte-9s8fa9:hover{color:var(--color-red);background:var(--background-modifier-error-hover)}.main.svelte-9s8fa9 .controls .text-filter.svelte-9s8fa9.svelte-9s8fa9{display:flex;flex-direction:column}.main.svelte-9s8fa9 .controls .text-filter label.svelte-9s8fa9.svelte-9s8fa9{display:inline-block;margin-bottom:var(--size-2-3);font-weight:600}.main.svelte-9s8fa9 .controls .text-filter .filter-input-container input[type=search].svelte-9s8fa9.svelte-9s8fa9{display:block;width:100%;background:var(--background-primary);padding:var(--size-4-2);box-sizing:border-box;transition:box-shadow 150ms ease}.main.svelte-9s8fa9 .controls .text-filter .filter-input-container input[type=search].svelte-9s8fa9.svelte-9s8fa9:focus-visible{box-shadow:0 0 0 2px var(--background-modifier-border-focus)}.main.svelte-9s8fa9 .controls .text-filter .filter-input-container input[type=search].svelte-9s8fa9.svelte-9s8fa9::-webkit-calendar-picker-indicator,.main.svelte-9s8fa9 .controls .text-filter .filter-input-container input[type=search].svelte-9s8fa9.svelte-9s8fa9::-webkit-list-button{display:none !important;opacity:0 !important;pointer-events:none !important}.main.svelte-9s8fa9 .controls .text-filter .filter-actions.svelte-9s8fa9.svelte-9s8fa9{display:flex;gap:var(--size-4-2);margin-top:var(--size-4-2)}.main.svelte-9s8fa9 .controls .text-filter .filter-action-btn.svelte-9s8fa9.svelte-9s8fa9{padding:var(--size-2-2) var(--size-4-3);border-radius:var(--radius-s);cursor:pointer;font-size:var(--font-ui-small);transition:background 150ms ease, opacity 150ms ease}.main.svelte-9s8fa9 .controls .text-filter .filter-action-btn.save-btn.svelte-9s8fa9.svelte-9s8fa9{background:var(--interactive-accent);color:var(--text-on-accent);border:none}.main.svelte-9s8fa9 .controls .text-filter .filter-action-btn.save-btn.svelte-9s8fa9.svelte-9s8fa9:hover:not(:disabled){background:var(--interactive-accent-hover)}.main.svelte-9s8fa9 .controls .text-filter .filter-action-btn.clear-btn.svelte-9s8fa9.svelte-9s8fa9{background:transparent;color:var(--text-muted);border:1px solid var(--background-modifier-border)}.main.svelte-9s8fa9 .controls .text-filter .filter-action-btn.clear-btn.svelte-9s8fa9.svelte-9s8fa9:hover:not(:disabled){background:var(--background-modifier-hover)}.main.svelte-9s8fa9 .controls .text-filter .filter-action-btn.svelte-9s8fa9.svelte-9s8fa9:disabled{opacity:0.5;cursor:not-allowed}.main.svelte-9s8fa9 .controls .tag-filter.svelte-9s8fa9.svelte-9s8fa9{display:flex;flex-direction:column}.main.svelte-9s8fa9 .controls .file-filter.svelte-9s8fa9.svelte-9s8fa9{display:flex;flex-direction:column}.main.svelte-9s8fa9 .controls .file-filter label.svelte-9s8fa9.svelte-9s8fa9{display:inline-block;margin-bottom:var(--size-2-3);font-weight:600}.main.svelte-9s8fa9 .controls .file-filter .filter-input-container input[type=search].svelte-9s8fa9.svelte-9s8fa9{display:block;width:100%;background:var(--background-primary);padding:var(--size-4-2);box-sizing:border-box;transition:box-shadow 150ms ease}.main.svelte-9s8fa9 .controls .file-filter .filter-input-container input[type=search].svelte-9s8fa9.svelte-9s8fa9:focus-visible{box-shadow:0 0 0 2px var(--background-modifier-border-focus)}.main.svelte-9s8fa9 .controls .file-filter .filter-input-container input[type=search].svelte-9s8fa9.svelte-9s8fa9::-webkit-calendar-picker-indicator,.main.svelte-9s8fa9 .controls .file-filter .filter-input-container input[type=search].svelte-9s8fa9.svelte-9s8fa9::-webkit-list-button{display:none !important;opacity:0 !important;pointer-events:none !important}.main.svelte-9s8fa9 .controls .file-filter .filter-actions.svelte-9s8fa9.svelte-9s8fa9{display:flex;gap:var(--size-4-2);margin-top:var(--size-4-2)}.main.svelte-9s8fa9 .controls .file-filter .filter-action-btn.svelte-9s8fa9.svelte-9s8fa9{padding:var(--size-2-2) var(--size-4-3);border-radius:var(--radius-s);cursor:pointer;font-size:var(--font-ui-small);transition:background 150ms ease, opacity 150ms ease}.main.svelte-9s8fa9 .controls .file-filter .filter-action-btn.save-btn.svelte-9s8fa9.svelte-9s8fa9{background:var(--interactive-accent);color:var(--text-on-accent);border:none}.main.svelte-9s8fa9 .controls .file-filter .filter-action-btn.save-btn.svelte-9s8fa9.svelte-9s8fa9:hover:not(:disabled){background:var(--interactive-accent-hover)}.main.svelte-9s8fa9 .controls .file-filter .filter-action-btn.clear-btn.svelte-9s8fa9.svelte-9s8fa9{background:transparent;color:var(--text-muted);border:1px solid var(--background-modifier-border)}.main.svelte-9s8fa9 .controls .file-filter .filter-action-btn.clear-btn.svelte-9s8fa9.svelte-9s8fa9:hover:not(:disabled){background:var(--background-modifier-hover)}.main.svelte-9s8fa9 .controls .file-filter .filter-action-btn.svelte-9s8fa9.svelte-9s8fa9:disabled{opacity:0.5;cursor:not-allowed}.main.svelte-9s8fa9 .columns.svelte-9s8fa9.svelte-9s8fa9{height:100%;flex-grow:1;max-width:100vw;overflow-x:scroll;padding-bottom:var(--size-4-3)}.main.svelte-9s8fa9 .columns.svelte-9s8fa9>div.svelte-9s8fa9{display:flex;gap:var(--size-4-3)}");
-}
-function get_each_context5(ctx, list, i) {
-  const child_ctx = ctx.slice();
-  child_ctx[72] = list[i];
-  return child_ctx;
-}
-function get_each_context_12(ctx, list, i) {
-  const child_ctx = ctx.slice();
-  child_ctx[75] = list[i];
-  return child_ctx;
-}
-function get_each_context_2(ctx, list, i) {
-  const child_ctx = ctx.slice();
-  child_ctx[78] = list[i];
-  return child_ctx;
-}
-function get_each_context_3(ctx, list, i) {
-  const child_ctx = ctx.slice();
-  child_ctx[78] = list[i];
-  return child_ctx;
-}
-function get_each_context_4(ctx, list, i) {
-  const child_ctx = ctx.slice();
-  child_ctx[78] = list[i];
-  return child_ctx;
-}
-function create_if_block_32(ctx) {
-  let aside;
-  let button0;
-  let t0;
-  let div9;
-  let div3;
-  let label0;
-  let t2;
-  let div0;
-  let details0;
-  let summary0;
-  let t4;
-  let ul0;
-  let t5;
-  let div1;
-  let input0;
-  let input0_aria_describedby_value;
-  let t6;
-  let t7;
-  let div2;
-  let button1;
-  let t8;
-  let button1_disabled_value;
-  let t9;
-  let button2;
-  let t10;
-  let button2_disabled_value;
-  let t11;
-  let div4;
-  let selecttag;
-  let updating_value;
-  let t12;
-  let div8;
-  let label1;
-  let t14;
-  let div5;
-  let details1;
-  let summary1;
-  let t16;
-  let ul1;
-  let t17;
-  let div6;
-  let input1;
-  let t18;
-  let t19;
-  let div7;
-  let button3;
-  let t20;
-  let button3_disabled_value;
-  let t21;
-  let button4;
-  let t22;
-  let button4_disabled_value;
-  let current;
-  let mounted;
-  let dispose;
-  let each_value_4 = ensure_array_like(
-    /*contentFilters*/
-    ctx[10]
-  );
-  let each_blocks_1 = [];
-  for (let i = 0; i < each_value_4.length; i += 1) {
-    each_blocks_1[i] = create_each_block_4(get_each_context_4(ctx, each_value_4, i));
+var root_24 = from_html(`<li class="svelte-16qe0yp"><button class="delete-btn svelte-16qe0yp">\xD7</button> <button> </button></li>`);
+var root_43 = from_html(`<option> </option>`);
+var root_33 = from_html(`<datalist id="content-filters"></datalist>`);
+var root_53 = from_html(`<li class="svelte-16qe0yp"><button class="delete-btn svelte-16qe0yp">\xD7</button> <button> </button></li>`);
+var root_72 = from_html(`<option> </option>`);
+var root_63 = from_html(`<datalist id="file-paths"></datalist>`);
+var root_16 = from_html(`<aside class="filters-sidebar svelte-16qe0yp"><button class="resize-handle svelte-16qe0yp" aria-label="Resize sidebar"></button> <div class="controls svelte-16qe0yp"><div class="text-filter svelte-16qe0yp"><label for="filter" class="svelte-16qe0yp">Filter by content:</label> <div class="saved-filters svelte-16qe0yp"><details class="svelte-16qe0yp"><summary class="svelte-16qe0yp">Saved filters</summary> <ul role="list" class="svelte-16qe0yp"></ul></details></div> <div class="filter-input-container svelte-16qe0yp"><input id="filter" name="filter" type="search" placeholder="Type to search..." list="content-filters" class="svelte-16qe0yp"/> <!></div> <div class="filter-actions svelte-16qe0yp"><button class="filter-action-btn save-btn svelte-16qe0yp" aria-label="Save filter">Save</button> <button class="filter-action-btn clear-btn svelte-16qe0yp" aria-label="Clear filter">Clear</button></div></div> <div class="tag-filter svelte-16qe0yp"><!></div> <div class="file-filter svelte-16qe0yp"><label for="file-filter" class="svelte-16qe0yp">Filter by file:</label> <div class="saved-filters svelte-16qe0yp"><details class="svelte-16qe0yp"><summary class="svelte-16qe0yp">Saved filters</summary> <ul role="list" class="svelte-16qe0yp"></ul></details></div> <div class="filter-input-container svelte-16qe0yp"><input id="file-filter" name="file-filter" type="search" placeholder="Type to search files..." list="file-paths" aria-label="Filter by file path" class="svelte-16qe0yp"/> <!></div> <div class="filter-actions svelte-16qe0yp"><button class="filter-action-btn save-btn svelte-16qe0yp" aria-label="Save filter">Save</button> <button class="filter-action-btn clear-btn svelte-16qe0yp" aria-label="Clear file filter">Clear</button></div></div></div></aside>`);
+var root10 = from_html(`<div class="main svelte-16qe0yp"><button class="sidebar-toggle-btn svelte-16qe0yp"><span class="toggle-icon svelte-16qe0yp"> </span> <span class="toggle-label svelte-16qe0yp">Filters</span></button> <div><!> <div class="board-content svelte-16qe0yp"><div class="board-header svelte-16qe0yp"><span class="board-task-count svelte-16qe0yp" aria-live="polite"><!></span> <!></div> <div><div class="svelte-16qe0yp"></div></div></div></div></div> <!>`, 1);
+var $$css11 = {
+  hash: "svelte-16qe0yp",
+  code: ".main.svelte-16qe0yp {height:100%;display:flex;flex-direction:column;font-size:var(--font-text-size);}.main.svelte-16qe0yp .sidebar-toggle-btn:where(.svelte-16qe0yp) {position:fixed;top:50px;left:8px;padding:var(--size-2-1) var(--size-2-2);background:var(--background-primary);border:1px solid var(--background-modifier-border);border-radius:var(--radius-s);cursor:pointer;color:var(--text-muted);font-size:var(--font-ui-small);display:flex;align-items:center;gap:var(--size-2-1);z-index:100;transition:color 0.15s ease;}.main.svelte-16qe0yp .sidebar-toggle-btn:where(.svelte-16qe0yp):hover {background:var(--background-modifier-hover);color:var(--text-normal);}.main.svelte-16qe0yp .sidebar-toggle-btn:where(.svelte-16qe0yp) .toggle-icon:where(.svelte-16qe0yp) {font-size:16px;}.main.svelte-16qe0yp .sidebar-toggle-btn:where(.svelte-16qe0yp) .toggle-label:where(.svelte-16qe0yp) {font-weight:500;}.main.svelte-16qe0yp .board-container:where(.svelte-16qe0yp) {display:grid;grid-template-columns:1fr;height:100%;}.main.svelte-16qe0yp .board-container.sidebar-expanded:where(.svelte-16qe0yp) {grid-template-columns:var(--sidebar-width, 280px) 1fr;}.main.svelte-16qe0yp .filters-sidebar:where(.svelte-16qe0yp) {background:var(--background-primary);border-right:1px solid var(--background-modifier-border);overflow-y:auto;display:flex;flex-direction:column;position:relative;}.main.svelte-16qe0yp .filters-sidebar:where(.svelte-16qe0yp) .resize-handle:where(.svelte-16qe0yp) {position:absolute;top:0;right:0;width:4px;height:100%;cursor:col-resize;background:transparent;border:none;padding:0;z-index:10;}.main.svelte-16qe0yp .filters-sidebar:where(.svelte-16qe0yp) .resize-handle:where(.svelte-16qe0yp):hover {background:var(--interactive-accent);opacity:0.5;}.main.svelte-16qe0yp .board-content:where(.svelte-16qe0yp) {display:flex;flex-direction:column;height:100%;overflow:hidden;padding-left:var(--size-4-4);}.main.svelte-16qe0yp .board-header:where(.svelte-16qe0yp) {display:flex;justify-content:flex-end;align-items:center;padding:var(--size-4-2) var(--size-4-4) var(--size-4-2) 0;gap:var(--size-4-3);}.main.svelte-16qe0yp .board-header:where(.svelte-16qe0yp) .board-task-count:where(.svelte-16qe0yp) {font-size:var(--font-ui-medium);color:var(--text-muted);}.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) {display:flex;flex-direction:column;gap:var(--size-4-5);padding:var(--size-4-4);padding-top:50px;}.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .saved-filters:where(.svelte-16qe0yp) {margin-top:0;margin-bottom:var(--size-4-2);font-size:var(--font-ui-small);align-self:flex-start;}.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .saved-filters:where(.svelte-16qe0yp) details:where(.svelte-16qe0yp) summary:where(.svelte-16qe0yp) {cursor:pointer;color:var(--text-muted);padding:var(--size-2-1) 0;user-select:none;transition:color 0.15s ease;}.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .saved-filters:where(.svelte-16qe0yp) details:where(.svelte-16qe0yp) summary:where(.svelte-16qe0yp):hover {color:var(--text-normal);}.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .saved-filters:where(.svelte-16qe0yp) details:where(.svelte-16qe0yp) ul:where(.svelte-16qe0yp) {margin:0;padding:0;list-style:none;}.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .saved-filters:where(.svelte-16qe0yp) details:where(.svelte-16qe0yp) ul:where(.svelte-16qe0yp) li:where(.svelte-16qe0yp) {margin:0;display:flex;align-items:center;gap:var(--size-4-2);}.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .saved-filters:where(.svelte-16qe0yp) details:where(.svelte-16qe0yp) ul:where(.svelte-16qe0yp) li:where(.svelte-16qe0yp) button:where(.svelte-16qe0yp) {text-align:left;padding:var(--size-2-1) var(--size-2-2);background:transparent;border:none;cursor:pointer;color:var(--text-normal);border-radius:var(--radius-s);white-space:nowrap;transition:background 0.15s ease, color 0.15s ease;}.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .saved-filters:where(.svelte-16qe0yp) details:where(.svelte-16qe0yp) ul:where(.svelte-16qe0yp) li:where(.svelte-16qe0yp) button:where(.svelte-16qe0yp):hover {background:var(--background-modifier-hover);}.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .saved-filters:where(.svelte-16qe0yp) details:where(.svelte-16qe0yp) ul:where(.svelte-16qe0yp) li:where(.svelte-16qe0yp) button.active:where(.svelte-16qe0yp) {font-weight:700;color:var(--interactive-accent);}.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .saved-filters:where(.svelte-16qe0yp) details:where(.svelte-16qe0yp) ul:where(.svelte-16qe0yp) li:where(.svelte-16qe0yp) button.delete-btn:where(.svelte-16qe0yp) {padding:0;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:18px;line-height:1;color:var(--text-muted);}.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .saved-filters:where(.svelte-16qe0yp) details:where(.svelte-16qe0yp) ul:where(.svelte-16qe0yp) li:where(.svelte-16qe0yp) button.delete-btn:where(.svelte-16qe0yp):hover {color:var(--color-red);background:var(--background-modifier-error-hover);}.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .text-filter:where(.svelte-16qe0yp),\n.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .file-filter:where(.svelte-16qe0yp) {display:flex;flex-direction:column;}.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .text-filter:where(.svelte-16qe0yp) label:where(.svelte-16qe0yp),\n.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .file-filter:where(.svelte-16qe0yp) label:where(.svelte-16qe0yp) {display:inline-block;margin-bottom:var(--size-2-3);font-weight:600;}.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .text-filter:where(.svelte-16qe0yp) .filter-input-container:where(.svelte-16qe0yp) input[type=search]:where(.svelte-16qe0yp),\n.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .file-filter:where(.svelte-16qe0yp) .filter-input-container:where(.svelte-16qe0yp) input[type=search]:where(.svelte-16qe0yp) {display:block;width:100%;background:var(--background-primary);padding:var(--size-4-2);box-sizing:border-box;transition:box-shadow 150ms ease;}.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .text-filter:where(.svelte-16qe0yp) .filter-input-container:where(.svelte-16qe0yp) input[type=search]:where(.svelte-16qe0yp):focus-visible,\n.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .file-filter:where(.svelte-16qe0yp) .filter-input-container:where(.svelte-16qe0yp) input[type=search]:where(.svelte-16qe0yp):focus-visible {box-shadow:0 0 0 2px var(--background-modifier-border-focus);}.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .text-filter:where(.svelte-16qe0yp) .filter-input-container:where(.svelte-16qe0yp) input[type=search]:where(.svelte-16qe0yp)::-webkit-calendar-picker-indicator, .main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .text-filter:where(.svelte-16qe0yp) .filter-input-container:where(.svelte-16qe0yp) input[type=search]:where(.svelte-16qe0yp)::-webkit-list-button,\n.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .file-filter:where(.svelte-16qe0yp) .filter-input-container:where(.svelte-16qe0yp) input[type=search]:where(.svelte-16qe0yp)::-webkit-calendar-picker-indicator,\n.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .file-filter:where(.svelte-16qe0yp) .filter-input-container:where(.svelte-16qe0yp) input[type=search]:where(.svelte-16qe0yp)::-webkit-list-button {display:none !important;opacity:0 !important;pointer-events:none !important;}.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .text-filter:where(.svelte-16qe0yp) .filter-actions:where(.svelte-16qe0yp),\n.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .file-filter:where(.svelte-16qe0yp) .filter-actions:where(.svelte-16qe0yp) {display:flex;gap:var(--size-4-2);margin-top:var(--size-4-2);}.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .text-filter:where(.svelte-16qe0yp) .filter-action-btn:where(.svelte-16qe0yp),\n.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .file-filter:where(.svelte-16qe0yp) .filter-action-btn:where(.svelte-16qe0yp) {padding:var(--size-2-2) var(--size-4-3);border-radius:var(--radius-s);cursor:pointer;font-size:var(--font-ui-small);transition:background 150ms ease, opacity 150ms ease;}.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .text-filter:where(.svelte-16qe0yp) .filter-action-btn.save-btn:where(.svelte-16qe0yp),\n.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .file-filter:where(.svelte-16qe0yp) .filter-action-btn.save-btn:where(.svelte-16qe0yp) {background:var(--interactive-accent);color:var(--text-on-accent);border:none;}.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .text-filter:where(.svelte-16qe0yp) .filter-action-btn.save-btn:where(.svelte-16qe0yp):hover:not(:disabled),\n.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .file-filter:where(.svelte-16qe0yp) .filter-action-btn.save-btn:where(.svelte-16qe0yp):hover:not(:disabled) {background:var(--interactive-accent-hover);}.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .text-filter:where(.svelte-16qe0yp) .filter-action-btn.clear-btn:where(.svelte-16qe0yp),\n.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .file-filter:where(.svelte-16qe0yp) .filter-action-btn.clear-btn:where(.svelte-16qe0yp) {background:transparent;color:var(--text-muted);border:1px solid var(--background-modifier-border);}.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .text-filter:where(.svelte-16qe0yp) .filter-action-btn.clear-btn:where(.svelte-16qe0yp):hover:not(:disabled),\n.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .file-filter:where(.svelte-16qe0yp) .filter-action-btn.clear-btn:where(.svelte-16qe0yp):hover:not(:disabled) {background:var(--background-modifier-hover);}.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .text-filter:where(.svelte-16qe0yp) .filter-action-btn:where(.svelte-16qe0yp):disabled,\n.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .file-filter:where(.svelte-16qe0yp) .filter-action-btn:where(.svelte-16qe0yp):disabled {opacity:0.5;cursor:not-allowed;}.main.svelte-16qe0yp .controls:where(.svelte-16qe0yp) .tag-filter:where(.svelte-16qe0yp) {display:flex;flex-direction:column;}.main.svelte-16qe0yp .columns:where(.svelte-16qe0yp) {flex:1 1 0;min-height:0;max-width:100vw;overflow-x:scroll;overflow-y:auto;padding-bottom:var(--size-4-3);}.main.svelte-16qe0yp .columns:where(.svelte-16qe0yp) > div:where(.svelte-16qe0yp) {display:flex;gap:var(--size-4-3);}.main.svelte-16qe0yp .columns.vertical-flow:where(.svelte-16qe0yp) {overflow-x:hidden;overflow-y:scroll;}.main.svelte-16qe0yp .columns.vertical-flow:where(.svelte-16qe0yp) > div:where(.svelte-16qe0yp) {flex-direction:column;}"
+};
+function Main($$anchor, $$props) {
+  if (new.target) return createClassComponent({ component: Main, ...$$anchor });
+  push($$props, false);
+  append_styles($$anchor, $$css11);
+  const $collapsedColumnsStore = () => store_get(collapsedColumnsStore, "$collapsedColumnsStore", $$stores);
+  const $tasksStore = () => store_get(tasksStore(), "$tasksStore", $$stores);
+  const $settingsStore = () => store_get(settingsStore(), "$settingsStore", $$stores);
+  const $columnTagTableStore = () => store_get(columnTagTableStore(), "$columnTagTableStore", $$stores);
+  const [$$stores, $$cleanup] = setup_stores();
+  const tags = mutable_source();
+  const availableFiles = mutable_source();
+  const selectedTagsSet = mutable_source();
+  const savedFilters = mutable_source();
+  const contentFilters = mutable_source();
+  const tagFilters = mutable_source();
+  const fileFilters = mutable_source();
+  const contentFilterExists = mutable_source();
+  const tagFilterExists = mutable_source();
+  const fileFilterExists = mutable_source();
+  const filteredByText = mutable_source();
+  const filteredByTag = mutable_source();
+  const filteredByFile = mutable_source();
+  const tasksByColumn = mutable_source();
+  const totalTaskCount = mutable_source();
+  const filteredTaskCount = mutable_source();
+  const isFiltered = mutable_source();
+  const showFilepath = mutable_source();
+  const consolidateTags = mutable_source();
+  const uncategorizedVisibility = mutable_source();
+  const doneVisibility = mutable_source();
+  const filtersSidebarExpanded = mutable_source();
+  const filtersSidebarWidth = mutable_source();
+  const columnWidth = mutable_source();
+  const flowDirection = mutable_source();
+  const uncategorizedColumnName = mutable_source();
+  const doneColumnName = mutable_source();
+  const targetFileIsDefault = mutable_source();
+  const showUncategorizedColumn = mutable_source();
+  const showDoneColumn = mutable_source();
+  const orderedColumns = mutable_source();
+  const isVerticalFlow = mutable_source();
+  let app = prop($$props, "app", 12);
+  let tasksStore = prop($$props, "tasksStore", 12);
+  let taskActions = prop($$props, "taskActions", 12);
+  let openSettings = prop($$props, "openSettings", 12);
+  let columnTagTableStore = prop($$props, "columnTagTableStore", 12);
+  let columnColourTableStore = prop($$props, "columnColourTableStore", 12);
+  let settingsStore = prop($$props, "settingsStore", 12);
+  let requestSave = prop($$props, "requestSave", 12);
+  const collapsedColumnsStore = createCollapsedColumnsStore(settingsStore());
+  function toggleColumnCollapse(col) {
+    const isCurrentlyCollapsed = $collapsedColumnsStore().has(col);
+    settingsStore().update((s) => {
+      var _a5;
+      const collapsed = (_a5 = s.collapsedColumns) != null ? _a5 : [];
+      const tag2 = col;
+      return {
+        ...s,
+        collapsedColumns: isCurrentlyCollapsed ? collapsed.filter((c) => c !== tag2) : [...collapsed, tag2]
+      };
+    });
+    requestSave()();
   }
-  let if_block0 = (
-    /*contentFilters*/
-    ctx[10].length > 0 && create_if_block_52(ctx)
-  );
-  function selecttag_value_binding(value) {
-    ctx[64](value);
+  let selectedTags = mutable_source([]);
+  function tagsMatch(a, b) {
+    if (a.length !== b.length) return false;
+    const sortedA = [...a].sort();
+    const sortedB = [...b].sort();
+    return sortedA.every((tag2, i) => tag2 === sortedB[i]);
   }
-  let selecttag_props = {
-    tags: [.../*tags*/
-    ctx[29]],
-    savedFilters: (
-      /*tagFilters*/
-      ctx[27]
-    ),
-    onLoadFilter: (
-      /*func*/
-      ctx[62]
-    ),
-    addButtonDisabled: (
-      /*selectedTags*/
-      ctx[6].length === 0 || /*tagFilterExists*/
-      ctx[24]
-    ),
-    onAddClick: (
-      /*addTagFilter*/
-      ctx[36]
-    ),
-    clearButtonDisabled: (
-      /*selectedTags*/
-      ctx[6].length === 0
-    ),
-    onClearClick: (
-      /*clearTagFilter*/
-      ctx[37]
-    ),
-    activeFilterId: (
-      /*activeTagFilterId*/
-      ctx[12]
-    ),
-    onDeleteClick: (
-      /*func_1*/
-      ctx[63]
-    )
-  };
-  if (
-    /*selectedTags*/
-    ctx[6] !== void 0
-  ) {
-    selecttag_props.value = /*selectedTags*/
-    ctx[6];
-  }
-  selecttag = new select_tag_default({ props: selecttag_props });
-  binding_callbacks.push(() => bind(selecttag, "value", selecttag_value_binding));
-  let each_value_2 = ensure_array_like(
-    /*fileFilters*/
-    ctx[26]
-  );
-  let each_blocks = [];
-  for (let i = 0; i < each_value_2.length; i += 1) {
-    each_blocks[i] = create_each_block_2(get_each_context_2(ctx, each_value_2, i));
-  }
-  let if_block1 = (
-    /*availableFiles*/
-    ctx[28].length > 0 && create_if_block_42(ctx)
-  );
-  return {
-    c() {
-      aside = element("aside");
-      button0 = element("button");
-      t0 = space();
-      div9 = element("div");
-      div3 = element("div");
-      label0 = element("label");
-      label0.textContent = "Filter by content:";
-      t2 = space();
-      div0 = element("div");
-      details0 = element("details");
-      summary0 = element("summary");
-      summary0.textContent = "Saved filters";
-      t4 = space();
-      ul0 = element("ul");
-      for (let i = 0; i < each_blocks_1.length; i += 1) {
-        each_blocks_1[i].c();
-      }
-      t5 = space();
-      div1 = element("div");
-      input0 = element("input");
-      t6 = space();
-      if (if_block0) if_block0.c();
-      t7 = space();
-      div2 = element("div");
-      button1 = element("button");
-      t8 = text("Save");
-      t9 = space();
-      button2 = element("button");
-      t10 = text("Clear");
-      t11 = space();
-      div4 = element("div");
-      create_component(selecttag.$$.fragment);
-      t12 = space();
-      div8 = element("div");
-      label1 = element("label");
-      label1.textContent = "Filter by file:";
-      t14 = space();
-      div5 = element("div");
-      details1 = element("details");
-      summary1 = element("summary");
-      summary1.textContent = "Saved filters";
-      t16 = space();
-      ul1 = element("ul");
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].c();
-      }
-      t17 = space();
-      div6 = element("div");
-      input1 = element("input");
-      t18 = space();
-      if (if_block1) if_block1.c();
-      t19 = space();
-      div7 = element("div");
-      button3 = element("button");
-      t20 = text("Save");
-      t21 = space();
-      button4 = element("button");
-      t22 = text("Clear");
-      attr(button0, "class", "resize-handle svelte-9s8fa9");
-      attr(button0, "aria-label", "Resize sidebar");
-      attr(label0, "for", "filter");
-      attr(label0, "class", "svelte-9s8fa9");
-      attr(summary0, "class", "svelte-9s8fa9");
-      attr(ul0, "role", "list");
-      attr(ul0, "class", "svelte-9s8fa9");
-      attr(div0, "class", "saved-filters svelte-9s8fa9");
-      attr(input0, "id", "filter");
-      attr(input0, "name", "filter");
-      attr(input0, "type", "search");
-      attr(input0, "placeholder", "Type to search...");
-      attr(input0, "list", "content-filters");
-      attr(input0, "aria-describedby", input0_aria_describedby_value = /*contentFilters*/
-      ctx[10].length > 0 ? "content-filters" : void 0);
-      attr(input0, "class", "svelte-9s8fa9");
-      attr(div1, "class", "filter-input-container");
-      attr(button1, "class", "filter-action-btn save-btn svelte-9s8fa9");
-      button1.disabled = button1_disabled_value = /*filterText*/
-      ctx[7].trim() === "" || /*contentFilterExists*/
-      ctx[25];
-      attr(button1, "aria-label", "Save filter");
-      attr(button2, "class", "filter-action-btn clear-btn svelte-9s8fa9");
-      button2.disabled = button2_disabled_value = /*filterText*/
-      ctx[7].trim() === "";
-      attr(button2, "aria-label", "Clear filter");
-      attr(div2, "class", "filter-actions svelte-9s8fa9");
-      attr(div3, "class", "text-filter svelte-9s8fa9");
-      attr(div4, "class", "tag-filter svelte-9s8fa9");
-      attr(label1, "for", "file-filter");
-      attr(label1, "class", "svelte-9s8fa9");
-      attr(summary1, "class", "svelte-9s8fa9");
-      attr(ul1, "role", "list");
-      attr(ul1, "class", "svelte-9s8fa9");
-      attr(div5, "class", "saved-filters svelte-9s8fa9");
-      attr(input1, "id", "file-filter");
-      attr(input1, "name", "file-filter");
-      attr(input1, "type", "search");
-      attr(input1, "placeholder", "Type to search files...");
-      attr(input1, "list", "file-paths");
-      attr(input1, "aria-label", "Filter by file path");
-      attr(input1, "class", "svelte-9s8fa9");
-      attr(div6, "class", "filter-input-container");
-      attr(button3, "class", "filter-action-btn save-btn svelte-9s8fa9");
-      button3.disabled = button3_disabled_value = /*fileFilter*/
-      ctx[8].trim() === "" || /*fileFilterExists*/
-      ctx[23];
-      attr(button3, "aria-label", "Save filter");
-      attr(button4, "class", "filter-action-btn clear-btn svelte-9s8fa9");
-      button4.disabled = button4_disabled_value = /*fileFilter*/
-      ctx[8].trim() === "";
-      attr(button4, "aria-label", "Clear file filter");
-      attr(div7, "class", "filter-actions svelte-9s8fa9");
-      attr(div8, "class", "file-filter svelte-9s8fa9");
-      attr(div9, "class", "controls svelte-9s8fa9");
-      attr(aside, "class", "filters-sidebar svelte-9s8fa9");
-    },
-    m(target, anchor) {
-      insert(target, aside, anchor);
-      append(aside, button0);
-      append(aside, t0);
-      append(aside, div9);
-      append(div9, div3);
-      append(div3, label0);
-      append(div3, t2);
-      append(div3, div0);
-      append(div0, details0);
-      append(details0, summary0);
-      append(details0, t4);
-      append(details0, ul0);
-      for (let i = 0; i < each_blocks_1.length; i += 1) {
-        if (each_blocks_1[i]) {
-          each_blocks_1[i].m(ul0, null);
-        }
-      }
-      append(div3, t5);
-      append(div3, div1);
-      append(div1, input0);
-      set_input_value(
-        input0,
-        /*filterText*/
-        ctx[7]
-      );
-      append(div1, t6);
-      if (if_block0) if_block0.m(div1, null);
-      append(div3, t7);
-      append(div3, div2);
-      append(div2, button1);
-      append(button1, t8);
-      append(div2, t9);
-      append(div2, button2);
-      append(button2, t10);
-      append(div9, t11);
-      append(div9, div4);
-      mount_component(selecttag, div4, null);
-      append(div9, t12);
-      append(div9, div8);
-      append(div8, label1);
-      append(div8, t14);
-      append(div8, div5);
-      append(div5, details1);
-      append(details1, summary1);
-      append(details1, t16);
-      append(details1, ul1);
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        if (each_blocks[i]) {
-          each_blocks[i].m(ul1, null);
-        }
-      }
-      append(div8, t17);
-      append(div8, div6);
-      append(div6, input1);
-      set_input_value(
-        input1,
-        /*fileFilter*/
-        ctx[8]
-      );
-      append(div6, t18);
-      if (if_block1) if_block1.m(div6, null);
-      append(div8, t19);
-      append(div8, div7);
-      append(div7, button3);
-      append(button3, t20);
-      append(div7, t21);
-      append(div7, button4);
-      append(button4, t22);
-      current = true;
-      if (!mounted) {
-        dispose = [
-          listen(
-            button0,
-            "mousedown",
-            /*startResize*/
-            ctx[42]
-          ),
-          listen(
-            input0,
-            "input",
-            /*input0_input_handler*/
-            ctx[61]
-          ),
-          listen(
-            button1,
-            "click",
-            /*addContentFilter*/
-            ctx[30]
-          ),
-          listen(
-            button2,
-            "click",
-            /*clearContentFilter*/
-            ctx[32]
-          ),
-          listen(
-            input1,
-            "input",
-            /*input1_input_handler*/
-            ctx[67]
-          ),
-          listen(
-            button3,
-            "click",
-            /*addFileFilter*/
-            ctx[34]
-          ),
-          listen(
-            button4,
-            "click",
-            /*clearFileFilter*/
-            ctx[33]
-          )
-        ];
-        mounted = true;
-      }
-    },
-    p(ctx2, dirty) {
-      if (dirty[0] & /*contentFilters, activeContentFilterId*/
-      3072 | dirty[1] & /*loadContentFilter, openDeleteModal*/
-      129) {
-        each_value_4 = ensure_array_like(
-          /*contentFilters*/
-          ctx2[10]
-        );
-        let i;
-        for (i = 0; i < each_value_4.length; i += 1) {
-          const child_ctx = get_each_context_4(ctx2, each_value_4, i);
-          if (each_blocks_1[i]) {
-            each_blocks_1[i].p(child_ctx, dirty);
-          } else {
-            each_blocks_1[i] = create_each_block_4(child_ctx);
-            each_blocks_1[i].c();
-            each_blocks_1[i].m(ul0, null);
-          }
-        }
-        for (; i < each_blocks_1.length; i += 1) {
-          each_blocks_1[i].d(1);
-        }
-        each_blocks_1.length = each_value_4.length;
-      }
-      if (!current || dirty[0] & /*contentFilters*/
-      1024 && input0_aria_describedby_value !== (input0_aria_describedby_value = /*contentFilters*/
-      ctx2[10].length > 0 ? "content-filters" : void 0)) {
-        attr(input0, "aria-describedby", input0_aria_describedby_value);
-      }
-      if (dirty[0] & /*filterText*/
-      128 && input0.value !== /*filterText*/
-      ctx2[7]) {
-        set_input_value(
-          input0,
-          /*filterText*/
-          ctx2[7]
-        );
-      }
-      if (
-        /*contentFilters*/
-        ctx2[10].length > 0
-      ) {
-        if (if_block0) {
-          if_block0.p(ctx2, dirty);
-        } else {
-          if_block0 = create_if_block_52(ctx2);
-          if_block0.c();
-          if_block0.m(div1, null);
-        }
-      } else if (if_block0) {
-        if_block0.d(1);
-        if_block0 = null;
-      }
-      if (!current || dirty[0] & /*filterText, contentFilterExists*/
-      33554560 && button1_disabled_value !== (button1_disabled_value = /*filterText*/
-      ctx2[7].trim() === "" || /*contentFilterExists*/
-      ctx2[25])) {
-        button1.disabled = button1_disabled_value;
-      }
-      if (!current || dirty[0] & /*filterText*/
-      128 && button2_disabled_value !== (button2_disabled_value = /*filterText*/
-      ctx2[7].trim() === "")) {
-        button2.disabled = button2_disabled_value;
-      }
-      const selecttag_changes = {};
-      if (dirty[0] & /*tags*/
-      536870912) selecttag_changes.tags = [.../*tags*/
-      ctx2[29]];
-      if (dirty[0] & /*tagFilters*/
-      134217728) selecttag_changes.savedFilters = /*tagFilters*/
-      ctx2[27];
-      if (dirty[0] & /*activeTagFilterId*/
-      4096) selecttag_changes.onLoadFilter = /*func*/
-      ctx2[62];
-      if (dirty[0] & /*selectedTags, tagFilterExists*/
-      16777280) selecttag_changes.addButtonDisabled = /*selectedTags*/
-      ctx2[6].length === 0 || /*tagFilterExists*/
-      ctx2[24];
-      if (dirty[0] & /*selectedTags*/
-      64) selecttag_changes.clearButtonDisabled = /*selectedTags*/
-      ctx2[6].length === 0;
-      if (dirty[0] & /*activeTagFilterId*/
-      4096) selecttag_changes.activeFilterId = /*activeTagFilterId*/
-      ctx2[12];
-      if (!updating_value && dirty[0] & /*selectedTags*/
-      64) {
-        updating_value = true;
-        selecttag_changes.value = /*selectedTags*/
-        ctx2[6];
-        add_flush_callback(() => updating_value = false);
-      }
-      selecttag.$set(selecttag_changes);
-      if (dirty[0] & /*fileFilters, activeFileFilterId*/
-      67117056 | dirty[1] & /*loadFileFilter, openDeleteModal*/
-      144) {
-        each_value_2 = ensure_array_like(
-          /*fileFilters*/
-          ctx2[26]
-        );
-        let i;
-        for (i = 0; i < each_value_2.length; i += 1) {
-          const child_ctx = get_each_context_2(ctx2, each_value_2, i);
-          if (each_blocks[i]) {
-            each_blocks[i].p(child_ctx, dirty);
-          } else {
-            each_blocks[i] = create_each_block_2(child_ctx);
-            each_blocks[i].c();
-            each_blocks[i].m(ul1, null);
-          }
-        }
-        for (; i < each_blocks.length; i += 1) {
-          each_blocks[i].d(1);
-        }
-        each_blocks.length = each_value_2.length;
-      }
-      if (dirty[0] & /*fileFilter*/
-      256 && input1.value !== /*fileFilter*/
-      ctx2[8]) {
-        set_input_value(
-          input1,
-          /*fileFilter*/
-          ctx2[8]
-        );
-      }
-      if (
-        /*availableFiles*/
-        ctx2[28].length > 0
-      ) {
-        if (if_block1) {
-          if_block1.p(ctx2, dirty);
-        } else {
-          if_block1 = create_if_block_42(ctx2);
-          if_block1.c();
-          if_block1.m(div6, null);
-        }
-      } else if (if_block1) {
-        if_block1.d(1);
-        if_block1 = null;
-      }
-      if (!current || dirty[0] & /*fileFilter, fileFilterExists*/
-      8388864 && button3_disabled_value !== (button3_disabled_value = /*fileFilter*/
-      ctx2[8].trim() === "" || /*fileFilterExists*/
-      ctx2[23])) {
-        button3.disabled = button3_disabled_value;
-      }
-      if (!current || dirty[0] & /*fileFilter*/
-      256 && button4_disabled_value !== (button4_disabled_value = /*fileFilter*/
-      ctx2[8].trim() === "")) {
-        button4.disabled = button4_disabled_value;
-      }
-    },
-    i(local) {
-      if (current) return;
-      transition_in(selecttag.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(selecttag.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(aside);
-      }
-      destroy_each(each_blocks_1, detaching);
-      if (if_block0) if_block0.d();
-      destroy_component(selecttag);
-      destroy_each(each_blocks, detaching);
-      if (if_block1) if_block1.d();
-      mounted = false;
-      run_all(dispose);
-    }
-  };
-}
-function create_each_block_4(ctx) {
-  var _a;
-  let li;
-  let button0;
-  let t0;
-  let button0_aria_label_value;
-  let t1;
-  let button1;
-  let t2_value = (
-    /*filter*/
-    ((_a = ctx[78].content) == null ? void 0 : _a.text) + ""
-  );
-  let t2;
-  let button1_aria_label_value;
-  let button1_aria_pressed_value;
-  let t3;
-  let mounted;
-  let dispose;
-  function click_handler() {
-    return (
-      /*click_handler*/
-      ctx[59](
-        /*filter*/
-        ctx[78]
-      )
-    );
-  }
-  function click_handler_1() {
-    return (
-      /*click_handler_1*/
-      ctx[60](
-        /*filter*/
-        ctx[78]
-      )
-    );
-  }
-  return {
-    c() {
-      var _a2, _b;
-      li = element("li");
-      button0 = element("button");
-      t0 = text("\xD7");
-      t1 = space();
-      button1 = element("button");
-      t2 = text(t2_value);
-      t3 = space();
-      attr(button0, "class", "delete-btn svelte-9s8fa9");
-      attr(button0, "aria-label", button0_aria_label_value = "Delete filter: " + /*filter*/
-      ((_a2 = ctx[78].content) == null ? void 0 : _a2.text));
-      attr(button1, "aria-label", button1_aria_label_value = "Load saved filter: " + /*filter*/
-      ((_b = ctx[78].content) == null ? void 0 : _b.text));
-      attr(button1, "aria-pressed", button1_aria_pressed_value = /*filter*/
-      ctx[78].id === /*activeContentFilterId*/
-      ctx[11]);
-      attr(button1, "class", "svelte-9s8fa9");
-      toggle_class(
-        button1,
-        "active",
-        /*filter*/
-        ctx[78].id === /*activeContentFilterId*/
-        ctx[11]
-      );
-      attr(li, "class", "svelte-9s8fa9");
-    },
-    m(target, anchor) {
-      insert(target, li, anchor);
-      append(li, button0);
-      append(button0, t0);
-      append(li, t1);
-      append(li, button1);
-      append(button1, t2);
-      append(li, t3);
-      if (!mounted) {
-        dispose = [
-          listen(button0, "click", click_handler),
-          listen(button1, "click", click_handler_1)
-        ];
-        mounted = true;
-      }
-    },
-    p(new_ctx, dirty) {
-      var _a2, _b, _c;
-      ctx = new_ctx;
-      if (dirty[0] & /*contentFilters*/
-      1024 && button0_aria_label_value !== (button0_aria_label_value = "Delete filter: " + /*filter*/
-      ((_a2 = ctx[78].content) == null ? void 0 : _a2.text))) {
-        attr(button0, "aria-label", button0_aria_label_value);
-      }
-      if (dirty[0] & /*contentFilters*/
-      1024 && t2_value !== (t2_value = /*filter*/
-      ((_b = ctx[78].content) == null ? void 0 : _b.text) + "")) set_data(t2, t2_value);
-      if (dirty[0] & /*contentFilters*/
-      1024 && button1_aria_label_value !== (button1_aria_label_value = "Load saved filter: " + /*filter*/
-      ((_c = ctx[78].content) == null ? void 0 : _c.text))) {
-        attr(button1, "aria-label", button1_aria_label_value);
-      }
-      if (dirty[0] & /*contentFilters, activeContentFilterId*/
-      3072 && button1_aria_pressed_value !== (button1_aria_pressed_value = /*filter*/
-      ctx[78].id === /*activeContentFilterId*/
-      ctx[11])) {
-        attr(button1, "aria-pressed", button1_aria_pressed_value);
-      }
-      if (dirty[0] & /*contentFilters, activeContentFilterId*/
-      3072) {
-        toggle_class(
-          button1,
-          "active",
-          /*filter*/
-          ctx[78].id === /*activeContentFilterId*/
-          ctx[11]
-        );
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(li);
-      }
-      mounted = false;
-      run_all(dispose);
-    }
-  };
-}
-function create_if_block_52(ctx) {
-  let datalist;
-  let each_value_3 = ensure_array_like(
-    /*contentFilters*/
-    ctx[10]
-  );
-  let each_blocks = [];
-  for (let i = 0; i < each_value_3.length; i += 1) {
-    each_blocks[i] = create_each_block_3(get_each_context_3(ctx, each_value_3, i));
-  }
-  return {
-    c() {
-      datalist = element("datalist");
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].c();
-      }
-      attr(datalist, "id", "content-filters");
-    },
-    m(target, anchor) {
-      insert(target, datalist, anchor);
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        if (each_blocks[i]) {
-          each_blocks[i].m(datalist, null);
-        }
-      }
-    },
-    p(ctx2, dirty) {
-      if (dirty[0] & /*contentFilters*/
-      1024) {
-        each_value_3 = ensure_array_like(
-          /*contentFilters*/
-          ctx2[10]
-        );
-        let i;
-        for (i = 0; i < each_value_3.length; i += 1) {
-          const child_ctx = get_each_context_3(ctx2, each_value_3, i);
-          if (each_blocks[i]) {
-            each_blocks[i].p(child_ctx, dirty);
-          } else {
-            each_blocks[i] = create_each_block_3(child_ctx);
-            each_blocks[i].c();
-            each_blocks[i].m(datalist, null);
-          }
-        }
-        for (; i < each_blocks.length; i += 1) {
-          each_blocks[i].d(1);
-        }
-        each_blocks.length = each_value_3.length;
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(datalist);
-      }
-      destroy_each(each_blocks, detaching);
-    }
-  };
-}
-function create_each_block_3(ctx) {
-  var _a;
-  let option;
-  let t_value = (
-    /*filter*/
-    ((_a = ctx[78].content) == null ? void 0 : _a.text) + ""
-  );
-  let t;
-  let option_value_value;
-  return {
-    c() {
-      var _a2;
-      option = element("option");
-      t = text(t_value);
-      option.__value = option_value_value = /*filter*/
-      (_a2 = ctx[78].content) == null ? void 0 : _a2.text;
-      set_input_value(option, option.__value);
-    },
-    m(target, anchor) {
-      insert(target, option, anchor);
-      append(option, t);
-    },
-    p(ctx2, dirty) {
-      var _a2, _b;
-      if (dirty[0] & /*contentFilters*/
-      1024 && t_value !== (t_value = /*filter*/
-      ((_a2 = ctx2[78].content) == null ? void 0 : _a2.text) + "")) set_data(t, t_value);
-      if (dirty[0] & /*contentFilters*/
-      1024 && option_value_value !== (option_value_value = /*filter*/
-      (_b = ctx2[78].content) == null ? void 0 : _b.text)) {
-        option.__value = option_value_value;
-        set_input_value(option, option.__value);
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(option);
-      }
-    }
-  };
-}
-function create_each_block_2(ctx) {
-  var _a;
-  let li;
-  let button0;
-  let t0;
-  let button0_aria_label_value;
-  let t1;
-  let button1;
-  let t2_value = (
-    /*filter*/
-    ((_a = ctx[78].file) == null ? void 0 : _a.filepaths[0]) + ""
-  );
-  let t2;
-  let button1_aria_label_value;
-  let button1_aria_pressed_value;
-  let t3;
-  let mounted;
-  let dispose;
-  function click_handler_2() {
-    return (
-      /*click_handler_2*/
-      ctx[65](
-        /*filter*/
-        ctx[78]
-      )
-    );
-  }
-  function click_handler_3() {
-    return (
-      /*click_handler_3*/
-      ctx[66](
-        /*filter*/
-        ctx[78]
-      )
-    );
-  }
-  return {
-    c() {
-      var _a2, _b;
-      li = element("li");
-      button0 = element("button");
-      t0 = text("\xD7");
-      t1 = space();
-      button1 = element("button");
-      t2 = text(t2_value);
-      t3 = space();
-      attr(button0, "class", "delete-btn svelte-9s8fa9");
-      attr(button0, "aria-label", button0_aria_label_value = "Delete filter: " + /*filter*/
-      ((_a2 = ctx[78].file) == null ? void 0 : _a2.filepaths[0]));
-      attr(button1, "aria-label", button1_aria_label_value = "Load saved filter: " + /*filter*/
-      ((_b = ctx[78].file) == null ? void 0 : _b.filepaths[0]));
-      attr(button1, "aria-pressed", button1_aria_pressed_value = /*filter*/
-      ctx[78].id === /*activeFileFilterId*/
-      ctx[13]);
-      attr(button1, "class", "svelte-9s8fa9");
-      toggle_class(
-        button1,
-        "active",
-        /*filter*/
-        ctx[78].id === /*activeFileFilterId*/
-        ctx[13]
-      );
-      attr(li, "class", "svelte-9s8fa9");
-    },
-    m(target, anchor) {
-      insert(target, li, anchor);
-      append(li, button0);
-      append(button0, t0);
-      append(li, t1);
-      append(li, button1);
-      append(button1, t2);
-      append(li, t3);
-      if (!mounted) {
-        dispose = [
-          listen(button0, "click", click_handler_2),
-          listen(button1, "click", click_handler_3)
-        ];
-        mounted = true;
-      }
-    },
-    p(new_ctx, dirty) {
-      var _a2, _b, _c;
-      ctx = new_ctx;
-      if (dirty[0] & /*fileFilters*/
-      67108864 && button0_aria_label_value !== (button0_aria_label_value = "Delete filter: " + /*filter*/
-      ((_a2 = ctx[78].file) == null ? void 0 : _a2.filepaths[0]))) {
-        attr(button0, "aria-label", button0_aria_label_value);
-      }
-      if (dirty[0] & /*fileFilters*/
-      67108864 && t2_value !== (t2_value = /*filter*/
-      ((_b = ctx[78].file) == null ? void 0 : _b.filepaths[0]) + "")) set_data(t2, t2_value);
-      if (dirty[0] & /*fileFilters*/
-      67108864 && button1_aria_label_value !== (button1_aria_label_value = "Load saved filter: " + /*filter*/
-      ((_c = ctx[78].file) == null ? void 0 : _c.filepaths[0]))) {
-        attr(button1, "aria-label", button1_aria_label_value);
-      }
-      if (dirty[0] & /*fileFilters, activeFileFilterId*/
-      67117056 && button1_aria_pressed_value !== (button1_aria_pressed_value = /*filter*/
-      ctx[78].id === /*activeFileFilterId*/
-      ctx[13])) {
-        attr(button1, "aria-pressed", button1_aria_pressed_value);
-      }
-      if (dirty[0] & /*fileFilters, activeFileFilterId*/
-      67117056) {
-        toggle_class(
-          button1,
-          "active",
-          /*filter*/
-          ctx[78].id === /*activeFileFilterId*/
-          ctx[13]
-        );
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(li);
-      }
-      mounted = false;
-      run_all(dispose);
-    }
-  };
-}
-function create_if_block_42(ctx) {
-  let datalist;
-  let each_value_1 = ensure_array_like(
-    /*availableFiles*/
-    ctx[28]
-  );
-  let each_blocks = [];
-  for (let i = 0; i < each_value_1.length; i += 1) {
-    each_blocks[i] = create_each_block_12(get_each_context_12(ctx, each_value_1, i));
-  }
-  return {
-    c() {
-      datalist = element("datalist");
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].c();
-      }
-      attr(datalist, "id", "file-paths");
-    },
-    m(target, anchor) {
-      insert(target, datalist, anchor);
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        if (each_blocks[i]) {
-          each_blocks[i].m(datalist, null);
-        }
-      }
-    },
-    p(ctx2, dirty) {
-      if (dirty[0] & /*availableFiles*/
-      268435456) {
-        each_value_1 = ensure_array_like(
-          /*availableFiles*/
-          ctx2[28]
-        );
-        let i;
-        for (i = 0; i < each_value_1.length; i += 1) {
-          const child_ctx = get_each_context_12(ctx2, each_value_1, i);
-          if (each_blocks[i]) {
-            each_blocks[i].p(child_ctx, dirty);
-          } else {
-            each_blocks[i] = create_each_block_12(child_ctx);
-            each_blocks[i].c();
-            each_blocks[i].m(datalist, null);
-          }
-        }
-        for (; i < each_blocks.length; i += 1) {
-          each_blocks[i].d(1);
-        }
-        each_blocks.length = each_value_1.length;
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(datalist);
-      }
-      destroy_each(each_blocks, detaching);
-    }
-  };
-}
-function create_each_block_12(ctx) {
-  let option;
-  let t_value = (
-    /*filePath*/
-    ctx[75] + ""
-  );
-  let t;
-  let option_value_value;
-  return {
-    c() {
-      option = element("option");
-      t = text(t_value);
-      option.__value = option_value_value = /*filePath*/
-      ctx[75];
-      set_input_value(option, option.__value);
-    },
-    m(target, anchor) {
-      insert(target, option, anchor);
-      append(option, t);
-    },
-    p(ctx2, dirty) {
-      if (dirty[0] & /*availableFiles*/
-      268435456 && t_value !== (t_value = /*filePath*/
-      ctx2[75] + "")) set_data(t, t_value);
-      if (dirty[0] & /*availableFiles*/
-      268435456 && option_value_value !== (option_value_value = /*filePath*/
-      ctx2[75])) {
-        option.__value = option_value_value;
-        set_input_value(option, option.__value);
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(option);
-      }
-    }
-  };
-}
-function create_if_block_24(ctx) {
-  let column_1;
-  let current;
-  column_1 = new column_default({
-    props: {
-      app: (
-        /*app*/
-        ctx[0]
-      ),
-      column: "uncategorised",
-      hideOnEmpty: false,
-      tasks: (
-        /*tasksByColumn*/
-        ctx[9]["uncategorised"]
-      ),
-      taskActions: (
-        /*taskActions*/
-        ctx[2]
-      ),
-      columnTagTableStore: (
-        /*columnTagTableStore*/
-        ctx[3]
-      ),
-      columnColourTableStore: (
-        /*columnColourTableStore*/
-        ctx[4]
-      ),
-      showFilepath: (
-        /*showFilepath*/
-        ctx[22]
-      ),
-      consolidateTags: (
-        /*consolidateTags*/
-        ctx[21]
-      )
-    }
-  });
-  return {
-    c() {
-      create_component(column_1.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(column_1, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      const column_1_changes = {};
-      if (dirty[0] & /*app*/
-      1) column_1_changes.app = /*app*/
-      ctx2[0];
-      if (dirty[0] & /*tasksByColumn*/
-      512) column_1_changes.tasks = /*tasksByColumn*/
-      ctx2[9]["uncategorised"];
-      if (dirty[0] & /*taskActions*/
-      4) column_1_changes.taskActions = /*taskActions*/
-      ctx2[2];
-      if (dirty[0] & /*columnTagTableStore*/
-      8) column_1_changes.columnTagTableStore = /*columnTagTableStore*/
-      ctx2[3];
-      if (dirty[0] & /*columnColourTableStore*/
-      16) column_1_changes.columnColourTableStore = /*columnColourTableStore*/
-      ctx2[4];
-      if (dirty[0] & /*showFilepath*/
-      4194304) column_1_changes.showFilepath = /*showFilepath*/
-      ctx2[22];
-      if (dirty[0] & /*consolidateTags*/
-      2097152) column_1_changes.consolidateTags = /*consolidateTags*/
-      ctx2[21];
-      column_1.$set(column_1_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(column_1.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(column_1.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(column_1, detaching);
-    }
-  };
-}
-function create_each_block5(ctx) {
-  var _a;
-  let column_1;
-  let current;
-  column_1 = new column_default({
-    props: {
-      app: (
-        /*app*/
-        ctx[0]
-      ),
-      column: (
-        /*column*/
-        ctx[72]
-      ),
-      tasks: (
-        /*tasksByColumn*/
-        (_a = ctx[9][
-          /*column*/
-          ctx[72]
-        ]) != null ? _a : []
-      ),
-      taskActions: (
-        /*taskActions*/
-        ctx[2]
-      ),
-      columnTagTableStore: (
-        /*columnTagTableStore*/
-        ctx[3]
-      ),
-      columnColourTableStore: (
-        /*columnColourTableStore*/
-        ctx[4]
-      ),
-      showFilepath: (
-        /*showFilepath*/
-        ctx[22]
-      ),
-      consolidateTags: (
-        /*consolidateTags*/
-        ctx[21]
-      )
-    }
-  });
-  return {
-    c() {
-      create_component(column_1.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(column_1, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      var _a2;
-      const column_1_changes = {};
-      if (dirty[0] & /*app*/
-      1) column_1_changes.app = /*app*/
-      ctx2[0];
-      if (dirty[0] & /*columns*/
-      65536) column_1_changes.column = /*column*/
-      ctx2[72];
-      if (dirty[0] & /*tasksByColumn, columns*/
-      66048) column_1_changes.tasks = /*tasksByColumn*/
-      (_a2 = ctx2[9][
-        /*column*/
-        ctx2[72]
-      ]) != null ? _a2 : [];
-      if (dirty[0] & /*taskActions*/
-      4) column_1_changes.taskActions = /*taskActions*/
-      ctx2[2];
-      if (dirty[0] & /*columnTagTableStore*/
-      8) column_1_changes.columnTagTableStore = /*columnTagTableStore*/
-      ctx2[3];
-      if (dirty[0] & /*columnColourTableStore*/
-      16) column_1_changes.columnColourTableStore = /*columnColourTableStore*/
-      ctx2[4];
-      if (dirty[0] & /*showFilepath*/
-      4194304) column_1_changes.showFilepath = /*showFilepath*/
-      ctx2[22];
-      if (dirty[0] & /*consolidateTags*/
-      2097152) column_1_changes.consolidateTags = /*consolidateTags*/
-      ctx2[21];
-      column_1.$set(column_1_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(column_1.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(column_1.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(column_1, detaching);
-    }
-  };
-}
-function create_if_block_15(ctx) {
-  var _a;
-  let column_1;
-  let current;
-  column_1 = new column_default({
-    props: {
-      app: (
-        /*app*/
-        ctx[0]
-      ),
-      column: "done",
-      hideOnEmpty: false,
-      tasks: (
-        /*tasksByColumn*/
-        (_a = ctx[9]["done"]) != null ? _a : []
-      ),
-      taskActions: (
-        /*taskActions*/
-        ctx[2]
-      ),
-      columnTagTableStore: (
-        /*columnTagTableStore*/
-        ctx[3]
-      ),
-      columnColourTableStore: (
-        /*columnColourTableStore*/
-        ctx[4]
-      ),
-      showFilepath: (
-        /*showFilepath*/
-        ctx[22]
-      ),
-      consolidateTags: (
-        /*consolidateTags*/
-        ctx[21]
-      )
-    }
-  });
-  return {
-    c() {
-      create_component(column_1.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(column_1, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      var _a2;
-      const column_1_changes = {};
-      if (dirty[0] & /*app*/
-      1) column_1_changes.app = /*app*/
-      ctx2[0];
-      if (dirty[0] & /*tasksByColumn*/
-      512) column_1_changes.tasks = /*tasksByColumn*/
-      (_a2 = ctx2[9]["done"]) != null ? _a2 : [];
-      if (dirty[0] & /*taskActions*/
-      4) column_1_changes.taskActions = /*taskActions*/
-      ctx2[2];
-      if (dirty[0] & /*columnTagTableStore*/
-      8) column_1_changes.columnTagTableStore = /*columnTagTableStore*/
-      ctx2[3];
-      if (dirty[0] & /*columnColourTableStore*/
-      16) column_1_changes.columnColourTableStore = /*columnColourTableStore*/
-      ctx2[4];
-      if (dirty[0] & /*showFilepath*/
-      4194304) column_1_changes.showFilepath = /*showFilepath*/
-      ctx2[22];
-      if (dirty[0] & /*consolidateTags*/
-      2097152) column_1_changes.consolidateTags = /*consolidateTags*/
-      ctx2[21];
-      column_1.$set(column_1_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(column_1.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(column_1.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(column_1, detaching);
-    }
-  };
-}
-function create_if_block5(ctx) {
-  let deletefiltermodal;
-  let current;
-  deletefiltermodal = new delete_filter_modal_default({
-    props: {
-      filterText: (
-        /*filterToDelete*/
-        ctx[15].text
-      ),
-      onConfirm: (
-        /*confirmDelete*/
-        ctx[40]
-      ),
-      onCancel: (
-        /*closeDeleteModal*/
-        ctx[39]
-      )
-    }
-  });
-  return {
-    c() {
-      create_component(deletefiltermodal.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(deletefiltermodal, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      const deletefiltermodal_changes = {};
-      if (dirty[0] & /*filterToDelete*/
-      32768) deletefiltermodal_changes.filterText = /*filterToDelete*/
-      ctx2[15].text;
-      deletefiltermodal.$set(deletefiltermodal_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(deletefiltermodal.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(deletefiltermodal.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(deletefiltermodal, detaching);
-    }
-  };
-}
-function create_fragment12(ctx) {
-  let div5;
-  let button;
-  let span0;
-  let t0_value = (
-    /*filtersSidebarExpanded*/
-    ctx[18] ? "\u25C2" : "\u25B8"
-  );
-  let t0;
-  let t1;
-  let span1;
-  let button_aria_label_value;
-  let t3;
-  let div4;
-  let t4;
-  let div3;
-  let div0;
-  let iconbutton;
-  let t5;
-  let div2;
-  let div1;
-  let t6;
-  let t7;
-  let t8;
-  let if_block3_anchor;
-  let current;
-  let mounted;
-  let dispose;
-  let if_block0 = (
-    /*filtersSidebarExpanded*/
-    ctx[18] && create_if_block_32(ctx)
-  );
-  iconbutton = new icon_button_default({ props: { icon: "lucide-settings" } });
-  iconbutton.$on(
-    "click",
-    /*handleOpenSettings*/
-    ctx[45]
-  );
-  let if_block1 = (
-    /*showUncategorizedColumn*/
-    ctx[20] && create_if_block_24(ctx)
-  );
-  let each_value = ensure_array_like(
-    /*columns*/
-    ctx[16]
-  );
-  let each_blocks = [];
-  for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block5(get_each_context5(ctx, each_value, i));
-  }
-  const out = (i) => transition_out(each_blocks[i], 1, 1, () => {
-    each_blocks[i] = null;
-  });
-  let if_block2 = (
-    /*showDoneColumn*/
-    ctx[19] && create_if_block_15(ctx)
-  );
-  let if_block3 = (
-    /*deleteModalOpen*/
-    ctx[14] && /*filterToDelete*/
-    ctx[15] && create_if_block5(ctx)
-  );
-  return {
-    c() {
-      div5 = element("div");
-      button = element("button");
-      span0 = element("span");
-      t0 = text(t0_value);
-      t1 = space();
-      span1 = element("span");
-      span1.textContent = "Filters";
-      t3 = space();
-      div4 = element("div");
-      if (if_block0) if_block0.c();
-      t4 = space();
-      div3 = element("div");
-      div0 = element("div");
-      create_component(iconbutton.$$.fragment);
-      t5 = space();
-      div2 = element("div");
-      div1 = element("div");
-      if (if_block1) if_block1.c();
-      t6 = space();
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].c();
-      }
-      t7 = space();
-      if (if_block2) if_block2.c();
-      t8 = space();
-      if (if_block3) if_block3.c();
-      if_block3_anchor = empty();
-      attr(span0, "class", "toggle-icon svelte-9s8fa9");
-      attr(span1, "class", "toggle-label svelte-9s8fa9");
-      attr(button, "class", "sidebar-toggle-btn svelte-9s8fa9");
-      attr(button, "aria-label", button_aria_label_value = /*filtersSidebarExpanded*/
-      ctx[18] ? "Hide filters" : "Show filters");
-      attr(div0, "class", "settings svelte-9s8fa9");
-      attr(div1, "class", "svelte-9s8fa9");
-      attr(div2, "class", "columns svelte-9s8fa9");
-      attr(div3, "class", "board-content svelte-9s8fa9");
-      attr(div4, "class", "board-container svelte-9s8fa9");
-      set_style(
-        div4,
-        "--sidebar-width",
-        /*filtersSidebarWidth*/
-        ctx[17] + "px"
-      );
-      toggle_class(
-        div4,
-        "sidebar-expanded",
-        /*filtersSidebarExpanded*/
-        ctx[18]
-      );
-      attr(div5, "class", "main svelte-9s8fa9");
-    },
-    m(target, anchor) {
-      insert(target, div5, anchor);
-      append(div5, button);
-      append(button, span0);
-      append(span0, t0);
-      append(button, t1);
-      append(button, span1);
-      append(div5, t3);
-      append(div5, div4);
-      if (if_block0) if_block0.m(div4, null);
-      append(div4, t4);
-      append(div4, div3);
-      append(div3, div0);
-      mount_component(iconbutton, div0, null);
-      append(div3, t5);
-      append(div3, div2);
-      append(div2, div1);
-      if (if_block1) if_block1.m(div1, null);
-      append(div1, t6);
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        if (each_blocks[i]) {
-          each_blocks[i].m(div1, null);
-        }
-      }
-      append(div1, t7);
-      if (if_block2) if_block2.m(div1, null);
-      insert(target, t8, anchor);
-      if (if_block3) if_block3.m(target, anchor);
-      insert(target, if_block3_anchor, anchor);
-      current = true;
-      if (!mounted) {
-        dispose = [
-          listen(
-            window,
-            "mousemove",
-            /*handleMouseMove*/
-            ctx[43]
-          ),
-          listen(
-            window,
-            "mouseup",
-            /*stopResize*/
-            ctx[44]
-          ),
-          listen(
-            button,
-            "click",
-            /*toggleSidebar*/
-            ctx[41]
-          )
-        ];
-        mounted = true;
-      }
-    },
-    p(ctx2, dirty) {
-      if ((!current || dirty[0] & /*filtersSidebarExpanded*/
-      262144) && t0_value !== (t0_value = /*filtersSidebarExpanded*/
-      ctx2[18] ? "\u25C2" : "\u25B8")) set_data(t0, t0_value);
-      if (!current || dirty[0] & /*filtersSidebarExpanded*/
-      262144 && button_aria_label_value !== (button_aria_label_value = /*filtersSidebarExpanded*/
-      ctx2[18] ? "Hide filters" : "Show filters")) {
-        attr(button, "aria-label", button_aria_label_value);
-      }
-      if (
-        /*filtersSidebarExpanded*/
-        ctx2[18]
-      ) {
-        if (if_block0) {
-          if_block0.p(ctx2, dirty);
-          if (dirty[0] & /*filtersSidebarExpanded*/
-          262144) {
-            transition_in(if_block0, 1);
-          }
-        } else {
-          if_block0 = create_if_block_32(ctx2);
-          if_block0.c();
-          transition_in(if_block0, 1);
-          if_block0.m(div4, t4);
-        }
-      } else if (if_block0) {
-        group_outros();
-        transition_out(if_block0, 1, 1, () => {
-          if_block0 = null;
-        });
-        check_outros();
-      }
-      if (
-        /*showUncategorizedColumn*/
-        ctx2[20]
-      ) {
-        if (if_block1) {
-          if_block1.p(ctx2, dirty);
-          if (dirty[0] & /*showUncategorizedColumn*/
-          1048576) {
-            transition_in(if_block1, 1);
-          }
-        } else {
-          if_block1 = create_if_block_24(ctx2);
-          if_block1.c();
-          transition_in(if_block1, 1);
-          if_block1.m(div1, t6);
-        }
-      } else if (if_block1) {
-        group_outros();
-        transition_out(if_block1, 1, 1, () => {
-          if_block1 = null;
-        });
-        check_outros();
-      }
-      if (dirty[0] & /*app, columns, tasksByColumn, taskActions, columnTagTableStore, columnColourTableStore, showFilepath, consolidateTags*/
-      6357533) {
-        each_value = ensure_array_like(
-          /*columns*/
-          ctx2[16]
-        );
-        let i;
-        for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context5(ctx2, each_value, i);
-          if (each_blocks[i]) {
-            each_blocks[i].p(child_ctx, dirty);
-            transition_in(each_blocks[i], 1);
-          } else {
-            each_blocks[i] = create_each_block5(child_ctx);
-            each_blocks[i].c();
-            transition_in(each_blocks[i], 1);
-            each_blocks[i].m(div1, t7);
-          }
-        }
-        group_outros();
-        for (i = each_value.length; i < each_blocks.length; i += 1) {
-          out(i);
-        }
-        check_outros();
-      }
-      if (
-        /*showDoneColumn*/
-        ctx2[19]
-      ) {
-        if (if_block2) {
-          if_block2.p(ctx2, dirty);
-          if (dirty[0] & /*showDoneColumn*/
-          524288) {
-            transition_in(if_block2, 1);
-          }
-        } else {
-          if_block2 = create_if_block_15(ctx2);
-          if_block2.c();
-          transition_in(if_block2, 1);
-          if_block2.m(div1, null);
-        }
-      } else if (if_block2) {
-        group_outros();
-        transition_out(if_block2, 1, 1, () => {
-          if_block2 = null;
-        });
-        check_outros();
-      }
-      if (!current || dirty[0] & /*filtersSidebarWidth*/
-      131072) {
-        set_style(
-          div4,
-          "--sidebar-width",
-          /*filtersSidebarWidth*/
-          ctx2[17] + "px"
-        );
-      }
-      if (!current || dirty[0] & /*filtersSidebarExpanded*/
-      262144) {
-        toggle_class(
-          div4,
-          "sidebar-expanded",
-          /*filtersSidebarExpanded*/
-          ctx2[18]
-        );
-      }
-      if (
-        /*deleteModalOpen*/
-        ctx2[14] && /*filterToDelete*/
-        ctx2[15]
-      ) {
-        if (if_block3) {
-          if_block3.p(ctx2, dirty);
-          if (dirty[0] & /*deleteModalOpen, filterToDelete*/
-          49152) {
-            transition_in(if_block3, 1);
-          }
-        } else {
-          if_block3 = create_if_block5(ctx2);
-          if_block3.c();
-          transition_in(if_block3, 1);
-          if_block3.m(if_block3_anchor.parentNode, if_block3_anchor);
-        }
-      } else if (if_block3) {
-        group_outros();
-        transition_out(if_block3, 1, 1, () => {
-          if_block3 = null;
-        });
-        check_outros();
-      }
-    },
-    i(local) {
-      if (current) return;
-      transition_in(if_block0);
-      transition_in(iconbutton.$$.fragment, local);
-      transition_in(if_block1);
-      for (let i = 0; i < each_value.length; i += 1) {
-        transition_in(each_blocks[i]);
-      }
-      transition_in(if_block2);
-      transition_in(if_block3);
-      current = true;
-    },
-    o(local) {
-      transition_out(if_block0);
-      transition_out(iconbutton.$$.fragment, local);
-      transition_out(if_block1);
-      each_blocks = each_blocks.filter(Boolean);
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        transition_out(each_blocks[i]);
-      }
-      transition_out(if_block2);
-      transition_out(if_block3);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div5);
-        detach(t8);
-        detach(if_block3_anchor);
-      }
-      if (if_block0) if_block0.d();
-      destroy_component(iconbutton);
-      if (if_block1) if_block1.d();
-      destroy_each(each_blocks, detaching);
-      if (if_block2) if_block2.d();
-      if (if_block3) if_block3.d(detaching);
-      mounted = false;
-      run_all(dispose);
-    }
-  };
-}
-var MIN_SIDEBAR_WIDTH = 200;
-var MAX_SIDEBAR_WIDTH = 600;
-function groupByColumnTag(tasks) {
-  var _a;
-  const output = { uncategorised: [], done: [] };
-  for (const task of tasks) {
-    if (task.done || task.column === "done") {
-      output["done"] = output["done"].concat(task);
-    } else if (task.column === "archived") {
-    } else if (task.column) {
-      output[task.column] = ((_a = output[task.column]) != null ? _a : []).concat(
-        task
-      );
-    } else {
-      output["uncategorised"] = output["uncategorised"].concat(task);
-    }
-  }
-  return output;
-}
-function instance9($$self, $$props, $$invalidate) {
-  let tags;
-  let availableFiles;
-  let selectedTagsSet;
-  let savedFilters;
-  let contentFilters;
-  let tagFilters;
-  let fileFilters;
-  let contentFilterExists;
-  let tagFilterExists;
-  let fileFilterExists;
-  let filteredByText;
-  let filteredByTag;
-  let filteredByFile;
-  let tasksByColumn;
-  let showFilepath;
-  let consolidateTags;
-  let uncategorizedVisibility;
-  let doneVisibility;
-  let filtersSidebarExpanded;
-  let filtersSidebarWidth;
-  let showUncategorizedColumn;
-  let showDoneColumn;
-  let $settingsStore, $$unsubscribe_settingsStore = noop, $$subscribe_settingsStore = () => ($$unsubscribe_settingsStore(), $$unsubscribe_settingsStore = subscribe(settingsStore, ($$value) => $$invalidate(56, $settingsStore = $$value)), settingsStore);
-  let $tasksStore, $$unsubscribe_tasksStore = noop, $$subscribe_tasksStore = () => ($$unsubscribe_tasksStore(), $$unsubscribe_tasksStore = subscribe(tasksStore, ($$value) => $$invalidate(57, $tasksStore = $$value)), tasksStore);
-  let $columnTagTableStore, $$unsubscribe_columnTagTableStore = noop, $$subscribe_columnTagTableStore = () => ($$unsubscribe_columnTagTableStore(), $$unsubscribe_columnTagTableStore = subscribe(columnTagTableStore, ($$value) => $$invalidate(58, $columnTagTableStore = $$value)), columnTagTableStore);
-  $$self.$$.on_destroy.push(() => $$unsubscribe_settingsStore());
-  $$self.$$.on_destroy.push(() => $$unsubscribe_tasksStore());
-  $$self.$$.on_destroy.push(() => $$unsubscribe_columnTagTableStore());
-  let { app } = $$props;
-  let { tasksStore } = $$props;
-  $$subscribe_tasksStore();
-  let { taskActions } = $$props;
-  let { openSettings } = $$props;
-  let { columnTagTableStore } = $$props;
-  $$subscribe_columnTagTableStore();
-  let { columnColourTableStore } = $$props;
-  let { settingsStore } = $$props;
-  $$subscribe_settingsStore();
-  let { requestSave } = $$props;
-  let selectedTags = [];
-  let activeContentFilterId = void 0;
-  let activeTagFilterId = void 0;
-  let activeFileFilterId = void 0;
-  let deleteModalOpen = false;
-  let filterToDelete = null;
+  let activeContentFilterId = mutable_source(void 0);
+  let activeTagFilterId = mutable_source(void 0);
+  let activeFileFilterId = mutable_source(void 0);
+  let deleteModalOpen = mutable_source(false);
+  let filterToDelete = mutable_source(null);
   function addContentFilter() {
-    const normalized = filterText.trim();
-    const existingFilterIndex = savedFilters.findIndex((f) => {
-      var _a;
-      return ((_a = f.content) == null ? void 0 : _a.text) === normalized;
+    const normalized = get(filterText).trim();
+    const existingFilterIndex = get(savedFilters).findIndex((f) => {
+      var _a5;
+      return ((_a5 = f.content) == null ? void 0 : _a5.text) === normalized;
     });
     if (existingFilterIndex >= 0) {
       return;
     }
-    const newFilter = {
-      id: crypto.randomUUID(),
-      content: { text: normalized }
-    };
-    set_store_value(settingsStore, $settingsStore.savedFilters = [...savedFilters, newFilter], $settingsStore);
-    requestSave();
+    const newFilter = { id: crypto.randomUUID(), content: { text: normalized } };
+    store_mutate(settingsStore(), untrack($settingsStore).savedFilters = [...get(savedFilters), newFilter], untrack($settingsStore));
+    requestSave()();
   }
   function loadContentFilter(filterId, text2) {
-    if (activeContentFilterId === filterId) {
+    if (get(activeContentFilterId) === filterId) {
       clearContentFilter();
     } else {
-      $$invalidate(7, filterText = text2);
-      $$invalidate(11, activeContentFilterId = filterId);
+      set(filterText, text2);
+      set(activeContentFilterId, filterId);
     }
   }
   function clearContentFilter() {
-    $$invalidate(7, filterText = "");
-    $$invalidate(11, activeContentFilterId = void 0);
+    set(filterText, "");
+    set(activeContentFilterId, void 0);
   }
   function clearFileFilter() {
-    $$invalidate(8, fileFilter = "");
-    $$invalidate(13, activeFileFilterId = void 0);
+    set(fileFilter, "");
+    set(activeFileFilterId, void 0);
   }
   function addFileFilter() {
-    const normalized = fileFilter.trim();
+    const normalized = get(fileFilter).trim();
     if (!normalized) return;
-    const existingFilterIndex = savedFilters.findIndex((f) => {
-      var _a;
-      return ((_a = f.file) == null ? void 0 : _a.filepaths[0]) === normalized;
+    const existingFilterIndex = get(savedFilters).findIndex((f) => {
+      var _a5;
+      return ((_a5 = f.file) == null ? void 0 : _a5.filepaths[0]) === normalized;
     });
     if (existingFilterIndex >= 0) {
       return;
     }
-    const newFilter = {
-      id: crypto.randomUUID(),
-      file: { filepaths: [normalized] }
-    };
-    set_store_value(settingsStore, $settingsStore.savedFilters = [...savedFilters, newFilter], $settingsStore);
-    requestSave();
+    const newFilter = { id: crypto.randomUUID(), file: { filepaths: [normalized] } };
+    store_mutate(settingsStore(), untrack($settingsStore).savedFilters = [...get(savedFilters), newFilter], untrack($settingsStore));
+    requestSave()();
   }
   function loadFileFilter(filterId, filepath) {
-    if (activeFileFilterId === filterId) {
+    if (get(activeFileFilterId) === filterId) {
       clearFileFilter();
     } else {
-      $$invalidate(8, fileFilter = filepath);
-      $$invalidate(13, activeFileFilterId = filterId);
+      set(fileFilter, filepath);
+      set(activeFileFilterId, filterId);
     }
   }
   function addTagFilter() {
-    if (selectedTags.length === 0) {
-      return;
-    }
-    const sortedTags = [...selectedTags].sort();
-    const existingFilterIndex = savedFilters.findIndex((f) => {
-      var _a, _b;
-      const filterTags = (_b = (_a = f.tag) == null ? void 0 : _a.tags) != null ? _b : [];
-      if (filterTags.length !== sortedTags.length) return false;
-      const sortedFilterTags = [...filterTags].sort();
-      return sortedFilterTags.every((tag, i) => tag === sortedTags[i]);
-    });
-    if (existingFilterIndex >= 0) {
+    if (get(selectedTags).length === 0 || get(tagFilterExists)) {
       return;
     }
     const newFilter = {
       id: crypto.randomUUID(),
-      tag: { tags: sortedTags }
+      tag: { tags: [...get(selectedTags)].sort() }
     };
-    set_store_value(settingsStore, $settingsStore.savedFilters = [...savedFilters, newFilter], $settingsStore);
-    requestSave();
+    store_mutate(settingsStore(), untrack($settingsStore).savedFilters = [...get(savedFilters), newFilter], untrack($settingsStore));
+    requestSave()();
   }
   function clearTagFilter() {
-    $$invalidate(6, selectedTags = []);
-    $$invalidate(12, activeTagFilterId = void 0);
+    set(selectedTags, []);
+    set(activeTagFilterId, void 0);
   }
   function openDeleteModal(filterId, filterText2, type) {
-    $$invalidate(15, filterToDelete = { id: filterId, text: filterText2, type });
-    $$invalidate(14, deleteModalOpen = true);
+    set(filterToDelete, { id: filterId, text: filterText2, type });
+    set(deleteModalOpen, true);
   }
   function closeDeleteModal() {
-    $$invalidate(14, deleteModalOpen = false);
-    $$invalidate(15, filterToDelete = null);
+    set(deleteModalOpen, false);
+    set(filterToDelete, null);
   }
   function confirmDelete() {
-    if (!filterToDelete) return;
-    const filterId = filterToDelete.id;
-    const filterType = filterToDelete.type;
-    const wasActive = filterType === "content" ? activeContentFilterId === filterId : filterType === "tag" ? activeTagFilterId === filterId : activeFileFilterId === filterId;
-    set_store_value(settingsStore, $settingsStore.savedFilters = savedFilters.filter((f) => f.id !== filterId), $settingsStore);
+    if (!get(filterToDelete)) return;
+    const filterId = get(filterToDelete).id;
+    const filterType = get(filterToDelete).type;
+    const wasActive = filterType === "content" ? get(activeContentFilterId) === filterId : filterType === "tag" ? get(activeTagFilterId) === filterId : get(activeFileFilterId) === filterId;
+    store_mutate(settingsStore(), untrack($settingsStore).savedFilters = get(savedFilters).filter((f) => f.id !== filterId), untrack($settingsStore));
     if (wasActive) {
       if (filterType === "content") {
-        $$invalidate(11, activeContentFilterId = void 0);
+        set(activeContentFilterId, void 0);
       } else if (filterType === "tag") {
-        $$invalidate(12, activeTagFilterId = void 0);
+        set(activeTagFilterId, void 0);
       } else {
-        $$invalidate(13, activeFileFilterId = void 0);
+        set(activeFileFilterId, void 0);
       }
     }
-    requestSave();
+    requestSave()();
     closeDeleteModal();
   }
-  let columns;
-  let filterText = "";
-  let fileFilter = "";
-  let hasInitialized = false;
+  function groupByColumnTag(tasks) {
+    var _a5;
+    const output = { uncategorised: [], done: [] };
+    for (const task of tasks) {
+      if (task.done || task.column === "done") {
+        output["done"] = output["done"].concat(task);
+      } else if (task.column === "archived") {
+      } else if (task.column) {
+        output[task.column] = ((_a5 = output[task.column]) != null ? _a5 : []).concat(task);
+      } else {
+        output["uncategorised"] = output["uncategorised"].concat(task);
+      }
+    }
+    return output;
+  }
+  let columns = mutable_source();
+  let filterText = mutable_source("");
+  let fileFilter = mutable_source("");
+  let hydrated = mutable_source(false);
+  let subscriptionCount = 0;
   onMount(() => {
-    const unsubscribe = settingsStore.subscribe((settings) => {
-      var _a, _b, _c, _d;
-      if (!hasInitialized && (settings.lastContentFilter || settings.lastTagFilter || settings.lastFileFilter)) {
-        $$invalidate(7, filterText = (_a = settings.lastContentFilter) != null ? _a : "");
-        $$invalidate(6, selectedTags = (_b = settings.lastTagFilter) != null ? _b : []);
-        $$invalidate(8, fileFilter = (_d = (_c = settings.lastFileFilter) == null ? void 0 : _c[0]) != null ? _d : "");
-        $$invalidate(48, hasInitialized = true);
+    const unsubscribe = settingsStore().subscribe((settings) => {
+      var _a5, _b3, _c2;
+      subscriptionCount++;
+      if (subscriptionCount === 1) {
+        return;
+      }
+      if (!get(hydrated)) {
+        set(filterText, (_a5 = settings.lastContentFilter) != null ? _a5 : "");
+        set(fileFilter, (_c2 = (_b3 = settings.lastFileFilter) == null ? void 0 : _b3[0]) != null ? _c2 : "");
+        if (settings.lastTagFilter && settings.lastTagFilter.length > 0) {
+          const checkTags = setInterval(
+            () => {
+              var _a6;
+              if (get(tags).size > 0) {
+                set(selectedTags, (_a6 = settings.lastTagFilter) != null ? _a6 : []);
+                clearInterval(checkTags);
+              }
+            },
+            100
+          );
+        }
+        set(hydrated, true);
       }
     });
     return unsubscribe;
   });
   function saveFilterState() {
-    if (hasInitialized) {
-      settingsStore.update((settings) => ({
+    if (get(hydrated)) {
+      settingsStore().update((settings) => ({
         ...settings,
-        lastContentFilter: filterText,
-        lastTagFilter: selectedTags,
-        lastFileFilter: fileFilter ? [fileFilter] : []
+        lastContentFilter: get(filterText),
+        lastTagFilter: get(selectedTags),
+        lastFileFilter: get(fileFilter) ? [get(fileFilter)] : []
       }));
-      requestSave();
+      requestSave()();
     }
   }
+  let targetTaskFile = mutable_source(null);
   function toggleSidebar() {
-    set_store_value(settingsStore, $settingsStore.filtersSidebarExpanded = !filtersSidebarExpanded, $settingsStore);
-    requestSave();
+    store_mutate(settingsStore(), untrack($settingsStore).filtersSidebarExpanded = !get(filtersSidebarExpanded), untrack($settingsStore));
+    requestSave()();
   }
   let isResizing = false;
   let resizeStartX = 0;
   let resizeStartWidth = 0;
+  const MIN_SIDEBAR_WIDTH = 200;
+  const MAX_SIDEBAR_WIDTH = 600;
   function startResize(e) {
     e.preventDefault();
     isResizing = true;
     resizeStartX = e.clientX;
-    resizeStartWidth = filtersSidebarWidth;
+    resizeStartWidth = get(filtersSidebarWidth);
   }
   function handleMouseMove(e) {
     if (!isResizing) return;
     const delta = e.clientX - resizeStartX;
     const newWidth = Math.min(MAX_SIDEBAR_WIDTH, Math.max(MIN_SIDEBAR_WIDTH, resizeStartWidth + delta));
-    set_store_value(settingsStore, $settingsStore.filtersSidebarWidth = newWidth, $settingsStore);
+    store_mutate(settingsStore(), untrack($settingsStore).filtersSidebarWidth = newWidth, untrack($settingsStore));
   }
   function stopResize() {
     if (isResizing) {
       isResizing = false;
-      requestSave();
+      requestSave()();
     }
   }
   async function handleOpenSettings() {
-    openSettings();
+    openSettings()();
   }
-  const click_handler = (filter2) => {
-    var _a, _b;
-    return openDeleteModal(filter2.id, (_b = (_a = filter2.content) == null ? void 0 : _a.text) != null ? _b : "", "content");
-  };
-  const click_handler_1 = (filter2) => {
-    var _a, _b;
-    return loadContentFilter(filter2.id, (_b = (_a = filter2.content) == null ? void 0 : _a.text) != null ? _b : "");
-  };
-  function input0_input_handler() {
-    filterText = this.value;
-    $$invalidate(7, filterText);
-  }
-  const func2 = (filterId) => {
-    if (activeTagFilterId === filterId) {
-      clearTagFilter();
+  legacy_pre_effect(() => $tasksStore(), () => {
+    set(tags, $tasksStore().reduce(
+      (acc, curr) => {
+        for (const tag2 of curr.tags) {
+          acc.add(tag2);
+        }
+        return acc;
+      },
+      /* @__PURE__ */ new Set()
+    ));
+  });
+  legacy_pre_effect(() => $tasksStore(), () => {
+    set(availableFiles, [...new Set($tasksStore().map((task) => task.path))].sort((a, b) => {
+      const aParts = a.split("/");
+      const bParts = b.split("/");
+      const minLength = Math.min(aParts.length, bParts.length);
+      for (let i = 0; i < minLength; i++) {
+        const aIsLast = i === aParts.length - 1;
+        const bIsLast = i === bParts.length - 1;
+        if (aIsLast && !bIsLast) return -1;
+        if (bIsLast && !aIsLast) return 1;
+        const aPart = aParts[i];
+        const bPart = bParts[i];
+        if (aPart === void 0 || bPart === void 0) continue;
+        const comparison = aPart.localeCompare(bPart);
+        if (comparison !== 0) return comparison;
+      }
+      return aParts.length - bParts.length;
+    }));
+  });
+  legacy_pre_effect(() => get(selectedTags), () => {
+    set(selectedTagsSet, new Set(get(selectedTags)));
+  });
+  legacy_pre_effect(() => $settingsStore(), () => {
+    var _a5;
+    set(savedFilters, (_a5 = $settingsStore().savedFilters) != null ? _a5 : []);
+  });
+  legacy_pre_effect(() => (get(filterText), get(savedFilters)), () => {
+    var _a5;
+    set(activeContentFilterId, get(filterText).trim() ? (_a5 = get(savedFilters).find((f) => {
+      var _a6;
+      return ((_a6 = f.content) == null ? void 0 : _a6.text) === get(filterText).trim();
+    })) == null ? void 0 : _a5.id : void 0);
+  });
+  legacy_pre_effect(() => (get(selectedTags), get(savedFilters)), () => {
+    if (get(selectedTags).length > 0) {
+      const matchingFilter = get(savedFilters).find((f) => f.tag ? tagsMatch(get(selectedTags), f.tag.tags) : false);
+      set(activeTagFilterId, matchingFilter == null ? void 0 : matchingFilter.id);
     } else {
-      $$invalidate(12, activeTagFilterId = filterId);
+      set(activeTagFilterId, void 0);
     }
-  };
-  const func_1 = (filterId, filterText2) => openDeleteModal(filterId, filterText2, "tag");
-  function selecttag_value_binding(value) {
-    selectedTags = value;
-    $$invalidate(6, selectedTags);
-  }
-  const click_handler_2 = (filter2) => {
-    var _a, _b;
-    return openDeleteModal(filter2.id, (_b = (_a = filter2.file) == null ? void 0 : _a.filepaths[0]) != null ? _b : "", "file");
-  };
-  const click_handler_3 = (filter2) => {
-    var _a, _b;
-    return loadFileFilter(filter2.id, (_b = (_a = filter2.file) == null ? void 0 : _a.filepaths[0]) != null ? _b : "");
-  };
-  function input1_input_handler() {
-    fileFilter = this.value;
-    $$invalidate(8, fileFilter);
-  }
-  $$self.$$set = ($$props2) => {
-    if ("app" in $$props2) $$invalidate(0, app = $$props2.app);
-    if ("tasksStore" in $$props2) $$subscribe_tasksStore($$invalidate(1, tasksStore = $$props2.tasksStore));
-    if ("taskActions" in $$props2) $$invalidate(2, taskActions = $$props2.taskActions);
-    if ("openSettings" in $$props2) $$invalidate(46, openSettings = $$props2.openSettings);
-    if ("columnTagTableStore" in $$props2) $$subscribe_columnTagTableStore($$invalidate(3, columnTagTableStore = $$props2.columnTagTableStore));
-    if ("columnColourTableStore" in $$props2) $$invalidate(4, columnColourTableStore = $$props2.columnColourTableStore);
-    if ("settingsStore" in $$props2) $$subscribe_settingsStore($$invalidate(5, settingsStore = $$props2.settingsStore));
-    if ("requestSave" in $$props2) $$invalidate(47, requestSave = $$props2.requestSave);
-  };
-  $$self.$$.update = () => {
-    var _a, _b, _c;
-    if ($$self.$$.dirty[1] & /*$tasksStore*/
-    67108864) {
-      $: $$invalidate(29, tags = $tasksStore.reduce(
-        (acc, curr) => {
-          for (const tag of curr.tags) {
-            acc.add(tag);
-          }
-          return acc;
-        },
-        /* @__PURE__ */ new Set()
-      ));
-    }
-    if ($$self.$$.dirty[1] & /*$tasksStore*/
-    67108864) {
-      $: $$invalidate(28, availableFiles = [...new Set($tasksStore.map((task) => task.path))].sort((a, b) => {
-        const aParts = a.split("/");
-        const bParts = b.split("/");
-        const minLength = Math.min(aParts.length, bParts.length);
-        for (let i = 0; i < minLength; i++) {
-          const aIsLast = i === aParts.length - 1;
-          const bIsLast = i === bParts.length - 1;
-          if (aIsLast && !bIsLast) return -1;
-          if (bIsLast && !aIsLast) return 1;
-          const aPart = aParts[i];
-          const bPart = bParts[i];
-          if (aPart === void 0 || bPart === void 0) continue;
-          const comparison = aPart.localeCompare(bPart);
-          if (comparison !== 0) return comparison;
-        }
-        return aParts.length - bParts.length;
-      }));
-    }
-    if ($$self.$$.dirty[0] & /*selectedTags*/
-    64) {
-      $: $$invalidate(54, selectedTagsSet = new Set(selectedTags));
-    }
-    if ($$self.$$.dirty[1] & /*$settingsStore*/
-    33554432) {
-      $: $$invalidate(55, savedFilters = (_a = $settingsStore.savedFilters) != null ? _a : []);
-    }
-    if ($$self.$$.dirty[0] & /*filterText*/
-    128 | $$self.$$.dirty[1] & /*savedFilters*/
-    16777216) {
-      $: {
-        const trimmedText = filterText.trim();
-        if (trimmedText) {
-          const matchingFilter = savedFilters.find((f) => {
-            var _a2;
-            return ((_a2 = f.content) == null ? void 0 : _a2.text) === trimmedText;
-          });
-          if (matchingFilter) {
-            $$invalidate(11, activeContentFilterId = matchingFilter.id);
-          } else {
-            $$invalidate(11, activeContentFilterId = void 0);
-          }
-        } else {
-          $$invalidate(11, activeContentFilterId = void 0);
-        }
-      }
-    }
-    if ($$self.$$.dirty[0] & /*selectedTags*/
-    64 | $$self.$$.dirty[1] & /*savedFilters*/
-    16777216) {
-      $: {
-        if (selectedTags.length > 0) {
-          const sortedCurrent = [...selectedTags].sort();
-          const matchingFilter = savedFilters.find((f) => {
-            if (!f.tag) return false;
-            const sortedSaved = [...f.tag.tags].sort();
-            return sortedCurrent.length === sortedSaved.length && sortedCurrent.every((tag, i) => tag === sortedSaved[i]);
-          });
-          if (matchingFilter) {
-            $$invalidate(12, activeTagFilterId = matchingFilter.id);
-          } else {
-            $$invalidate(12, activeTagFilterId = void 0);
-          }
-        } else {
-          $$invalidate(12, activeTagFilterId = void 0);
-        }
-      }
-    }
-    if ($$self.$$.dirty[0] & /*fileFilter*/
-    256 | $$self.$$.dirty[1] & /*savedFilters*/
-    16777216) {
-      $: {
-        const trimmedPath = fileFilter.trim();
-        if (trimmedPath) {
-          const matchingFilter = savedFilters.find((f) => {
-            var _a2;
-            return ((_a2 = f.file) == null ? void 0 : _a2.filepaths[0]) === trimmedPath;
-          });
-          if (matchingFilter) {
-            $$invalidate(13, activeFileFilterId = matchingFilter.id);
-          } else {
-            $$invalidate(13, activeFileFilterId = void 0);
-          }
-        } else {
-          $$invalidate(13, activeFileFilterId = void 0);
-        }
-      }
-    }
-    if ($$self.$$.dirty[1] & /*savedFilters*/
-    16777216) {
-      $: $$invalidate(10, contentFilters = savedFilters.filter((f) => f.content !== void 0).sort((a, b) => {
-        var _a2, _b2, _c2, _d;
-        const textA = (_b2 = (_a2 = a.content) == null ? void 0 : _a2.text.toLowerCase()) != null ? _b2 : "";
-        const textB = (_d = (_c2 = b.content) == null ? void 0 : _c2.text.toLowerCase()) != null ? _d : "";
-        return textA.localeCompare(textB);
-      }));
-    }
-    if ($$self.$$.dirty[1] & /*savedFilters*/
-    16777216) {
-      $: $$invalidate(27, tagFilters = savedFilters.filter((f) => f.tag !== void 0).sort((a, b) => {
-        var _a2, _b2, _c2, _d;
-        const tagsA = ((_b2 = (_a2 = a.tag) == null ? void 0 : _a2.tags) != null ? _b2 : []).join(", ").toLowerCase();
-        const tagsB = ((_d = (_c2 = b.tag) == null ? void 0 : _c2.tags) != null ? _d : []).join(", ").toLowerCase();
-        return tagsA.localeCompare(tagsB);
-      }));
-    }
-    if ($$self.$$.dirty[1] & /*savedFilters*/
-    16777216) {
-      $: $$invalidate(26, fileFilters = savedFilters.filter((f) => f.file !== void 0).sort((a, b) => {
-        var _a2, _b2, _c2, _d;
-        const pathA = (_b2 = (_a2 = a.file) == null ? void 0 : _a2.filepaths[0]) != null ? _b2 : "";
-        const pathB = (_d = (_c2 = b.file) == null ? void 0 : _c2.filepaths[0]) != null ? _d : "";
-        return pathA.localeCompare(pathB);
-      }));
-    }
-    if ($$self.$$.dirty[0] & /*contentFilters, filterText*/
-    1152) {
-      $: $$invalidate(25, contentFilterExists = contentFilters.some((f) => {
-        var _a2;
-        return ((_a2 = f.content) == null ? void 0 : _a2.text) === filterText.trim();
-      }));
-    }
-    if ($$self.$$.dirty[0] & /*selectedTags*/
-    64 | $$self.$$.dirty[1] & /*savedFilters*/
-    16777216) {
-      $: $$invalidate(24, tagFilterExists = (() => {
-        if (selectedTags.length === 0) return false;
-        const sortedTags = [...selectedTags].sort();
-        return savedFilters.some((f) => {
-          var _a2, _b2;
-          const filterTags = (_b2 = (_a2 = f.tag) == null ? void 0 : _a2.tags) != null ? _b2 : [];
-          if (filterTags.length !== sortedTags.length) return false;
-          const sortedFilterTags = [...filterTags].sort();
-          return sortedFilterTags.every((tag, i) => tag === sortedTags[i]);
-        });
-      })());
-    }
-    if ($$self.$$.dirty[0] & /*fileFilter*/
-    256 | $$self.$$.dirty[1] & /*savedFilters*/
-    16777216) {
-      $: $$invalidate(23, fileFilterExists = savedFilters.some((f) => {
-        var _a2;
-        return ((_a2 = f.file) == null ? void 0 : _a2.filepaths[0]) === fileFilter.trim();
-      }));
-    }
-    if ($$self.$$.dirty[1] & /*$columnTagTableStore*/
-    134217728) {
-      $: $$invalidate(16, columns = Object.keys($columnTagTableStore));
-    }
-    if ($$self.$$.dirty[0] & /*filterText, selectedTags, fileFilter*/
-    448 | $$self.$$.dirty[1] & /*hasInitialized*/
-    131072) {
-      $: if (hasInitialized) {
-        filterText;
-        selectedTags;
-        fileFilter;
+  });
+  legacy_pre_effect(() => (get(fileFilter), get(savedFilters)), () => {
+    var _a5;
+    set(activeFileFilterId, get(fileFilter).trim() ? (_a5 = get(savedFilters).find((f) => {
+      var _a6;
+      return ((_a6 = f.file) == null ? void 0 : _a6.filepaths[0]) === get(fileFilter).trim();
+    })) == null ? void 0 : _a5.id : void 0);
+  });
+  legacy_pre_effect(() => get(savedFilters), () => {
+    set(contentFilters, get(savedFilters).filter((f) => f.content !== void 0).sort((a, b) => {
+      var _a5, _b3, _c2, _d;
+      const textA = (_b3 = (_a5 = a.content) == null ? void 0 : _a5.text.toLowerCase()) != null ? _b3 : "";
+      const textB = (_d = (_c2 = b.content) == null ? void 0 : _c2.text.toLowerCase()) != null ? _d : "";
+      return textA.localeCompare(textB);
+    }));
+  });
+  legacy_pre_effect(() => get(savedFilters), () => {
+    set(tagFilters, get(savedFilters).filter((f) => f.tag !== void 0).sort((a, b) => {
+      var _a5, _b3, _c2, _d;
+      const tagsA = ((_b3 = (_a5 = a.tag) == null ? void 0 : _a5.tags) != null ? _b3 : []).join(", ").toLowerCase();
+      const tagsB = ((_d = (_c2 = b.tag) == null ? void 0 : _c2.tags) != null ? _d : []).join(", ").toLowerCase();
+      return tagsA.localeCompare(tagsB);
+    }));
+  });
+  legacy_pre_effect(() => get(savedFilters), () => {
+    set(fileFilters, get(savedFilters).filter((f) => f.file !== void 0).sort((a, b) => {
+      var _a5, _b3, _c2, _d;
+      const pathA = (_b3 = (_a5 = a.file) == null ? void 0 : _a5.filepaths[0]) != null ? _b3 : "";
+      const pathB = (_d = (_c2 = b.file) == null ? void 0 : _c2.filepaths[0]) != null ? _d : "";
+      return pathA.localeCompare(pathB);
+    }));
+  });
+  legacy_pre_effect(() => (get(contentFilters), get(filterText)), () => {
+    set(contentFilterExists, get(contentFilters).some((f) => {
+      var _a5;
+      return ((_a5 = f.content) == null ? void 0 : _a5.text) === get(filterText).trim();
+    }));
+  });
+  legacy_pre_effect(() => (get(selectedTags), get(savedFilters)), () => {
+    set(tagFilterExists, get(selectedTags).length > 0 && get(savedFilters).some((f) => f.tag ? tagsMatch(get(selectedTags), f.tag.tags) : false));
+  });
+  legacy_pre_effect(() => (get(savedFilters), get(fileFilter)), () => {
+    set(fileFilterExists, get(savedFilters).some((f) => {
+      var _a5;
+      return ((_a5 = f.file) == null ? void 0 : _a5.filepaths[0]) === get(fileFilter).trim();
+    }));
+  });
+  legacy_pre_effect(() => $columnTagTableStore(), () => {
+    set(columns, Object.keys($columnTagTableStore()));
+  });
+  legacy_pre_effect(
+    () => (get(hydrated), get(filterText), get(selectedTags), get(fileFilter)),
+    () => {
+      if (get(hydrated)) {
+        get(filterText);
+        get(selectedTags);
+        get(fileFilter);
         saveFilterState();
       }
     }
-    if ($$self.$$.dirty[0] & /*filterText*/
-    128 | $$self.$$.dirty[1] & /*$tasksStore*/
-    67108864) {
-      $: $$invalidate(53, filteredByText = filterText ? $tasksStore.filter((task) => task.content.toLowerCase().includes(filterText.toLowerCase())) : $tasksStore);
-    }
-    if ($$self.$$.dirty[1] & /*selectedTagsSet, filteredByText*/
-    12582912) {
-      $: $$invalidate(52, filteredByTag = selectedTagsSet.size ? filteredByText.filter((task) => {
-        for (const tag of task.tags) {
-          if (selectedTagsSet.has(tag)) {
-            return true;
-          }
+  );
+  legacy_pre_effect(() => (get(filterText), $tasksStore()), () => {
+    set(filteredByText, get(filterText) ? $tasksStore().filter((task) => task.content.toLowerCase().includes(get(filterText).toLowerCase())) : $tasksStore());
+  });
+  legacy_pre_effect(() => (get(selectedTagsSet), get(filteredByText)), () => {
+    set(filteredByTag, get(selectedTagsSet).size ? get(filteredByText).filter((task) => {
+      for (const tag2 of task.tags) {
+        if (get(selectedTagsSet).has(tag2)) {
+          return true;
         }
-        return false;
-      }) : filteredByText);
+      }
+      return false;
+    }) : get(filteredByText));
+  });
+  legacy_pre_effect(() => (get(fileFilter), get(filteredByTag)), () => {
+    set(filteredByFile, get(fileFilter) ? get(filteredByTag).filter((task) => task.path.toLowerCase().includes(get(fileFilter).toLowerCase())) : get(filteredByTag));
+  });
+  legacy_pre_effect(() => get(filteredByFile), () => {
+    set(tasksByColumn, groupByColumnTag(get(filteredByFile)));
+  });
+  legacy_pre_effect(() => $tasksStore(), () => {
+    set(totalTaskCount, $tasksStore().filter((t) => t.column !== "archived").length);
+  });
+  legacy_pre_effect(() => get(filteredByFile), () => {
+    set(filteredTaskCount, get(filteredByFile).filter((t) => t.column !== "archived").length);
+  });
+  legacy_pre_effect(() => (get(filterText), get(selectedTags), get(fileFilter)), () => {
+    set(isFiltered, get(filterText).trim() !== "" || get(selectedTags).length > 0 || get(fileFilter).trim() !== "");
+  });
+  legacy_pre_effect(
+    () => (get(showFilepath), get(consolidateTags), get(uncategorizedVisibility), VisibilityOption, get(doneVisibility), get(filtersSidebarExpanded), get(filtersSidebarWidth), get(columnWidth), get(flowDirection), FlowDirection, get(uncategorizedColumnName), get(doneColumnName), $settingsStore()),
+    () => {
+      (($$value) => {
+        set(showFilepath, fallback($$value.showFilepath, true));
+        set(consolidateTags, fallback($$value.consolidateTags, false));
+        set(uncategorizedVisibility, fallback($$value.uncategorizedVisibility, () => "auto" /* Auto */, true));
+        set(doneVisibility, fallback($$value.doneVisibility, () => "always" /* AlwaysShow */, true));
+        set(filtersSidebarExpanded, fallback($$value.filtersSidebarExpanded, true));
+        set(filtersSidebarWidth, fallback($$value.filtersSidebarWidth, 280));
+        set(columnWidth, fallback($$value.columnWidth, 300));
+        set(flowDirection, fallback($$value.flowDirection, () => "ltr" /* LeftToRight */, true));
+        set(uncategorizedColumnName, $$value.uncategorizedColumnName);
+        set(doneColumnName, $$value.doneColumnName);
+      })($settingsStore());
     }
-    if ($$self.$$.dirty[0] & /*fileFilter*/
-    256 | $$self.$$.dirty[1] & /*filteredByTag*/
-    2097152) {
-      $: $$invalidate(51, filteredByFile = fileFilter ? filteredByTag.filter((task) => task.path.toLowerCase().includes(fileFilter.toLowerCase())) : filteredByTag);
+  );
+  legacy_pre_effect(() => ($settingsStore(), deep_read_state(taskActions())), () => {
+    void $settingsStore(), set(targetTaskFile, taskActions().getTargetFile());
+  });
+  legacy_pre_effect(() => (get(targetTaskFile), $settingsStore()), () => {
+    set(targetFileIsDefault, !!get(targetTaskFile) && !!$settingsStore().defaultTaskFile && get(targetTaskFile).path === $settingsStore().defaultTaskFile);
+  });
+  legacy_pre_effect(
+    () => (get(uncategorizedVisibility), VisibilityOption, $collapsedColumnsStore(), get(tasksByColumn)),
+    () => {
+      var _a5;
+      set(showUncategorizedColumn, get(uncategorizedVisibility) === "always" /* AlwaysShow */ || $collapsedColumnsStore().has("uncategorised") || get(uncategorizedVisibility) === "auto" /* Auto */ && ((_a5 = get(tasksByColumn)["uncategorised"]) == null ? void 0 : _a5.length) > 0);
     }
-    if ($$self.$$.dirty[1] & /*filteredByFile*/
-    1048576) {
-      $: $$invalidate(9, tasksByColumn = groupByColumnTag(filteredByFile));
+  );
+  legacy_pre_effect(
+    () => (get(doneVisibility), VisibilityOption, $collapsedColumnsStore(), get(tasksByColumn)),
+    () => {
+      var _a5;
+      set(showDoneColumn, get(doneVisibility) === "always" /* AlwaysShow */ || $collapsedColumnsStore().has("done") || get(doneVisibility) === "auto" /* Auto */ && ((_a5 = get(tasksByColumn)["done"]) == null ? void 0 : _a5.length) > 0);
     }
-    if ($$self.$$.dirty[1] & /*$settingsStore*/
-    33554432) {
-      $: $$invalidate(22, { showFilepath = true, consolidateTags = false, uncategorizedVisibility = "auto" /* Auto */, doneVisibility = "always" /* AlwaysShow */, filtersSidebarExpanded = true, filtersSidebarWidth = 280 } = $settingsStore, showFilepath, ($$invalidate(21, consolidateTags), $$invalidate(56, $settingsStore)), ($$invalidate(50, uncategorizedVisibility), $$invalidate(56, $settingsStore)), ($$invalidate(49, doneVisibility), $$invalidate(56, $settingsStore)), ($$invalidate(18, filtersSidebarExpanded), $$invalidate(56, $settingsStore)), ($$invalidate(17, filtersSidebarWidth), $$invalidate(56, $settingsStore)));
+  );
+  legacy_pre_effect(
+    () => (get(showUncategorizedColumn), get(columns), get(showDoneColumn), get(flowDirection), FlowDirection),
+    () => {
+      set(orderedColumns, (() => {
+        const allColumns = [];
+        if (get(showUncategorizedColumn)) allColumns.push("uncategorised");
+        allColumns.push(...get(columns));
+        if (get(showDoneColumn)) allColumns.push("done");
+        const shouldReverse = get(flowDirection) === "rtl" /* RightToLeft */ || get(flowDirection) === "btt" /* BottomToTop */;
+        return shouldReverse ? allColumns.reverse() : allColumns;
+      })());
     }
-    if ($$self.$$.dirty[0] & /*tasksByColumn*/
-    512 | $$self.$$.dirty[1] & /*uncategorizedVisibility*/
-    524288) {
-      $: $$invalidate(20, showUncategorizedColumn = uncategorizedVisibility === "always" /* AlwaysShow */ || uncategorizedVisibility === "auto" /* Auto */ && ((_b = tasksByColumn["uncategorised"]) == null ? void 0 : _b.length) > 0);
-    }
-    if ($$self.$$.dirty[0] & /*tasksByColumn*/
-    512 | $$self.$$.dirty[1] & /*doneVisibility*/
-    262144) {
-      $: $$invalidate(19, showDoneColumn = doneVisibility === "always" /* AlwaysShow */ || doneVisibility === "auto" /* Auto */ && ((_c = tasksByColumn["done"]) == null ? void 0 : _c.length) > 0);
-    }
+  );
+  legacy_pre_effect(() => (get(flowDirection), FlowDirection), () => {
+    set(isVerticalFlow, get(flowDirection) === "ttb" /* TopToBottom */ || get(flowDirection) === "btt" /* BottomToTop */);
+  });
+  legacy_pre_effect_reset();
+  var $$exports = {
+    get app() {
+      return app();
+    },
+    set app($$value) {
+      app($$value);
+      flushSync();
+    },
+    get tasksStore() {
+      return tasksStore();
+    },
+    set tasksStore($$value) {
+      tasksStore($$value);
+      flushSync();
+    },
+    get taskActions() {
+      return taskActions();
+    },
+    set taskActions($$value) {
+      taskActions($$value);
+      flushSync();
+    },
+    get openSettings() {
+      return openSettings();
+    },
+    set openSettings($$value) {
+      openSettings($$value);
+      flushSync();
+    },
+    get columnTagTableStore() {
+      return columnTagTableStore();
+    },
+    set columnTagTableStore($$value) {
+      columnTagTableStore($$value);
+      flushSync();
+    },
+    get columnColourTableStore() {
+      return columnColourTableStore();
+    },
+    set columnColourTableStore($$value) {
+      columnColourTableStore($$value);
+      flushSync();
+    },
+    get settingsStore() {
+      return settingsStore();
+    },
+    set settingsStore($$value) {
+      settingsStore($$value);
+      flushSync();
+    },
+    get requestSave() {
+      return requestSave();
+    },
+    set requestSave($$value) {
+      requestSave($$value);
+      flushSync();
+    },
+    $set: update_legacy_props,
+    $on: ($$event_name, $$event_cb) => add_legacy_event_listener($$props, $$event_name, $$event_cb)
   };
-  return [
-    app,
-    tasksStore,
-    taskActions,
-    columnTagTableStore,
-    columnColourTableStore,
-    settingsStore,
-    selectedTags,
-    filterText,
-    fileFilter,
-    tasksByColumn,
-    contentFilters,
-    activeContentFilterId,
-    activeTagFilterId,
-    activeFileFilterId,
-    deleteModalOpen,
-    filterToDelete,
-    columns,
-    filtersSidebarWidth,
-    filtersSidebarExpanded,
-    showDoneColumn,
-    showUncategorizedColumn,
-    consolidateTags,
-    showFilepath,
-    fileFilterExists,
-    tagFilterExists,
-    contentFilterExists,
-    fileFilters,
-    tagFilters,
-    availableFiles,
-    tags,
-    addContentFilter,
-    loadContentFilter,
-    clearContentFilter,
-    clearFileFilter,
-    addFileFilter,
-    loadFileFilter,
-    addTagFilter,
-    clearTagFilter,
-    openDeleteModal,
-    closeDeleteModal,
-    confirmDelete,
-    toggleSidebar,
-    startResize,
-    handleMouseMove,
-    stopResize,
-    handleOpenSettings,
-    openSettings,
-    requestSave,
-    hasInitialized,
-    doneVisibility,
-    uncategorizedVisibility,
-    filteredByFile,
-    filteredByTag,
-    filteredByText,
-    selectedTagsSet,
-    savedFilters,
-    $settingsStore,
-    $tasksStore,
-    $columnTagTableStore,
-    click_handler,
-    click_handler_1,
-    input0_input_handler,
-    func2,
-    func_1,
-    selecttag_value_binding,
-    click_handler_2,
-    click_handler_3,
-    input1_input_handler
-  ];
-}
-var Main = class extends SvelteComponent {
-  constructor(options) {
-    super();
-    init(
-      this,
-      options,
-      instance9,
-      create_fragment12,
-      safe_not_equal,
+  init();
+  var fragment = root10();
+  event("mousemove", $window, handleMouseMove);
+  event("mouseup", $window, stopResize);
+  var div = first_child(fragment);
+  var button = child(div);
+  var span = child(button);
+  var text_1 = child(span, true);
+  reset(span);
+  next(2);
+  reset(button);
+  var div_1 = sibling(button, 2);
+  let classes;
+  var node = child(div_1);
+  {
+    var consequent_2 = ($$anchor2) => {
+      var aside = root_16();
+      var button_1 = child(aside);
+      var div_2 = sibling(button_1, 2);
+      var div_3 = child(div_2);
+      var div_4 = sibling(child(div_3), 2);
+      var details = child(div_4);
+      var ul = sibling(child(details), 2);
+      each(ul, 5, () => get(contentFilters), index, ($$anchor3, filter2) => {
+        var li = root_24();
+        var button_2 = child(li);
+        var button_3 = sibling(button_2, 2);
+        let classes_1;
+        var text_2 = child(button_3, true);
+        reset(button_3);
+        reset(li);
+        template_effect(() => {
+          var _a5, _b3;
+          set_attribute2(button_2, "aria-label", `Delete filter: ${(_a5 = (get(filter2), untrack(() => {
+            var _a6;
+            return (_a6 = get(filter2).content) == null ? void 0 : _a6.text;
+          }))) != null ? _a5 : ""}`);
+          set_attribute2(button_3, "aria-label", `Load saved filter: ${(_b3 = (get(filter2), untrack(() => {
+            var _a6;
+            return (_a6 = get(filter2).content) == null ? void 0 : _a6.text;
+          }))) != null ? _b3 : ""}`);
+          set_attribute2(button_3, "aria-pressed", (get(filter2), get(activeContentFilterId), untrack(() => get(filter2).id === get(activeContentFilterId))));
+          classes_1 = set_class(button_3, 1, "svelte-16qe0yp", null, classes_1, { active: get(filter2).id === get(activeContentFilterId) });
+          set_text(text_2, (get(filter2), untrack(() => {
+            var _a6;
+            return (_a6 = get(filter2).content) == null ? void 0 : _a6.text;
+          })));
+        });
+        event("click", button_2, () => {
+          var _a5, _b3;
+          return openDeleteModal(get(filter2).id, (_b3 = (_a5 = get(filter2).content) == null ? void 0 : _a5.text) != null ? _b3 : "", "content");
+        });
+        event("click", button_3, () => {
+          var _a5, _b3;
+          return loadContentFilter(get(filter2).id, (_b3 = (_a5 = get(filter2).content) == null ? void 0 : _a5.text) != null ? _b3 : "");
+        });
+        append($$anchor3, li);
+      });
+      reset(ul);
+      reset(details);
+      reset(div_4);
+      var div_5 = sibling(div_4, 2);
+      var input = child(div_5);
+      remove_input_defaults(input);
+      var node_1 = sibling(input, 2);
       {
-        app: 0,
-        tasksStore: 1,
-        taskActions: 2,
-        openSettings: 46,
-        columnTagTableStore: 3,
-        columnColourTableStore: 4,
-        settingsStore: 5,
-        requestSave: 47
-      },
-      add_css10,
-      [-1, -1, -1]
-    );
+        var consequent = ($$anchor3) => {
+          var datalist = root_33();
+          each(datalist, 5, () => get(contentFilters), index, ($$anchor4, filter2) => {
+            var option = root_43();
+            var text_3 = child(option, true);
+            reset(option);
+            var option_value = {};
+            template_effect(() => {
+              var _a5;
+              set_text(text_3, (get(filter2), untrack(() => {
+                var _a6;
+                return (_a6 = get(filter2).content) == null ? void 0 : _a6.text;
+              })));
+              if (option_value !== (option_value = (get(filter2), untrack(() => {
+                var _a6;
+                return (_a6 = get(filter2).content) == null ? void 0 : _a6.text;
+              })))) {
+                option.value = (_a5 = option.__value = (get(filter2), untrack(() => {
+                  var _a6;
+                  return (_a6 = get(filter2).content) == null ? void 0 : _a6.text;
+                }))) != null ? _a5 : "";
+              }
+            });
+            append($$anchor4, option);
+          });
+          reset(datalist);
+          append($$anchor3, datalist);
+        };
+        if_block(node_1, ($$render) => {
+          if (get(contentFilters), untrack(() => get(contentFilters).length > 0)) $$render(consequent);
+        });
+      }
+      reset(div_5);
+      var div_6 = sibling(div_5, 2);
+      var button_4 = child(div_6);
+      var button_5 = sibling(button_4, 2);
+      reset(div_6);
+      reset(div_3);
+      var div_7 = sibling(div_3, 2);
+      var node_2 = child(div_7);
+      {
+        let $0 = derived_safe_equal(() => (get(tags), untrack(() => [...get(tags)])));
+        let $1 = derived_safe_equal(() => (get(selectedTags), get(tagFilterExists), untrack(() => get(selectedTags).length === 0 || get(tagFilterExists))));
+        let $2 = derived_safe_equal(() => (get(selectedTags), untrack(() => get(selectedTags).length === 0)));
+        Select_tag(node_2, {
+          get tags() {
+            return get($0);
+          },
+          get savedFilters() {
+            return get(tagFilters);
+          },
+          onLoadFilter: (filterId) => {
+            if (get(activeTagFilterId) === filterId) {
+              clearTagFilter();
+            } else {
+              set(activeTagFilterId, filterId);
+            }
+          },
+          get addButtonDisabled() {
+            return get($1);
+          },
+          onAddClick: addTagFilter,
+          get clearButtonDisabled() {
+            return get($2);
+          },
+          onClearClick: clearTagFilter,
+          get activeFilterId() {
+            return get(activeTagFilterId);
+          },
+          onDeleteClick: (filterId, filterText2) => openDeleteModal(filterId, filterText2, "tag"),
+          get value() {
+            return get(selectedTags);
+          },
+          set value($$value) {
+            set(selectedTags, $$value);
+          },
+          $$legacy: true
+        });
+      }
+      reset(div_7);
+      var div_8 = sibling(div_7, 2);
+      var div_9 = sibling(child(div_8), 2);
+      var details_1 = child(div_9);
+      var ul_1 = sibling(child(details_1), 2);
+      each(ul_1, 5, () => get(fileFilters), index, ($$anchor3, filter2) => {
+        var li_1 = root_53();
+        var button_6 = child(li_1);
+        var button_7 = sibling(button_6, 2);
+        let classes_2;
+        var text_4 = child(button_7, true);
+        reset(button_7);
+        reset(li_1);
+        template_effect(() => {
+          var _a5, _b3;
+          set_attribute2(button_6, "aria-label", `Delete filter: ${(_a5 = (get(filter2), untrack(() => {
+            var _a6;
+            return (_a6 = get(filter2).file) == null ? void 0 : _a6.filepaths[0];
+          }))) != null ? _a5 : ""}`);
+          set_attribute2(button_7, "aria-label", `Load saved filter: ${(_b3 = (get(filter2), untrack(() => {
+            var _a6;
+            return (_a6 = get(filter2).file) == null ? void 0 : _a6.filepaths[0];
+          }))) != null ? _b3 : ""}`);
+          set_attribute2(button_7, "aria-pressed", (get(filter2), get(activeFileFilterId), untrack(() => get(filter2).id === get(activeFileFilterId))));
+          classes_2 = set_class(button_7, 1, "svelte-16qe0yp", null, classes_2, { active: get(filter2).id === get(activeFileFilterId) });
+          set_text(text_4, (get(filter2), untrack(() => {
+            var _a6;
+            return (_a6 = get(filter2).file) == null ? void 0 : _a6.filepaths[0];
+          })));
+        });
+        event("click", button_6, () => {
+          var _a5, _b3;
+          return openDeleteModal(get(filter2).id, (_b3 = (_a5 = get(filter2).file) == null ? void 0 : _a5.filepaths[0]) != null ? _b3 : "", "file");
+        });
+        event("click", button_7, () => {
+          var _a5, _b3;
+          return loadFileFilter(get(filter2).id, (_b3 = (_a5 = get(filter2).file) == null ? void 0 : _a5.filepaths[0]) != null ? _b3 : "");
+        });
+        append($$anchor3, li_1);
+      });
+      reset(ul_1);
+      reset(details_1);
+      reset(div_9);
+      var div_10 = sibling(div_9, 2);
+      var input_1 = child(div_10);
+      remove_input_defaults(input_1);
+      var node_3 = sibling(input_1, 2);
+      {
+        var consequent_1 = ($$anchor3) => {
+          var datalist_1 = root_63();
+          each(datalist_1, 5, () => get(availableFiles), index, ($$anchor4, filePath) => {
+            var option_1 = root_72();
+            var text_5 = child(option_1, true);
+            reset(option_1);
+            var option_1_value = {};
+            template_effect(() => {
+              var _a5;
+              set_text(text_5, get(filePath));
+              if (option_1_value !== (option_1_value = get(filePath))) {
+                option_1.value = (_a5 = option_1.__value = get(filePath)) != null ? _a5 : "";
+              }
+            });
+            append($$anchor4, option_1);
+          });
+          reset(datalist_1);
+          append($$anchor3, datalist_1);
+        };
+        if_block(node_3, ($$render) => {
+          if (get(availableFiles), untrack(() => get(availableFiles).length > 0)) $$render(consequent_1);
+        });
+      }
+      reset(div_10);
+      var div_11 = sibling(div_10, 2);
+      var button_8 = child(div_11);
+      var button_9 = sibling(button_8, 2);
+      reset(div_11);
+      reset(div_8);
+      reset(div_2);
+      reset(aside);
+      template_effect(
+        ($0, $1, $2, $3) => {
+          set_attribute2(input, "aria-describedby", (get(contentFilters), untrack(() => get(contentFilters).length > 0 ? "content-filters" : void 0)));
+          button_4.disabled = $0;
+          button_5.disabled = $1;
+          button_8.disabled = $2;
+          button_9.disabled = $3;
+        },
+        [
+          () => (get(filterText), get(contentFilterExists), untrack(() => get(filterText).trim() === "" || get(contentFilterExists))),
+          () => (get(filterText), untrack(() => get(filterText).trim() === "")),
+          () => (get(fileFilter), get(fileFilterExists), untrack(() => get(fileFilter).trim() === "" || get(fileFilterExists))),
+          () => (get(fileFilter), untrack(() => get(fileFilter).trim() === ""))
+        ]
+      );
+      event("mousedown", button_1, startResize);
+      bind_value(input, () => get(filterText), ($$value) => set(filterText, $$value));
+      event("click", button_4, addContentFilter);
+      event("click", button_5, clearContentFilter);
+      bind_value(input_1, () => get(fileFilter), ($$value) => set(fileFilter, $$value));
+      event("click", button_8, addFileFilter);
+      event("click", button_9, clearFileFilter);
+      append($$anchor2, aside);
+    };
+    if_block(node, ($$render) => {
+      if (get(filtersSidebarExpanded)) $$render(consequent_2);
+    });
   }
-};
-var main_default = Main;
+  var div_12 = sibling(node, 2);
+  var div_13 = child(div_12);
+  var span_1 = child(div_13);
+  var node_4 = child(span_1);
+  {
+    var consequent_3 = ($$anchor2) => {
+      var text_6 = text();
+      template_effect(() => {
+        var _a5, _b3;
+        return set_text(text_6, `${(_a5 = get(filteredTaskCount)) != null ? _a5 : ""} of ${(_b3 = get(totalTaskCount)) != null ? _b3 : ""} tasks`);
+      });
+      append($$anchor2, text_6);
+    };
+    var alternate = ($$anchor2) => {
+      var text_7 = text();
+      template_effect(() => {
+        var _a5;
+        return set_text(text_7, `Total: ${(_a5 = get(totalTaskCount)) != null ? _a5 : ""} tasks`);
+      });
+      append($$anchor2, text_7);
+    };
+    if_block(node_4, ($$render) => {
+      if (get(isFiltered)) $$render(consequent_3);
+      else $$render(alternate, -1);
+    });
+  }
+  reset(span_1);
+  var node_5 = sibling(span_1, 2);
+  Icon_button(node_5, {
+    icon: "lucide-settings",
+    $$events: { click: handleOpenSettings }
+  });
+  reset(div_13);
+  var div_14 = sibling(div_13, 2);
+  let classes_3;
+  var div_15 = child(div_14);
+  each(div_15, 5, () => get(orderedColumns), (column) => column, ($$anchor2, column) => {
+    {
+      let $0 = derived_safe_equal(() => (get(tasksByColumn), get(column), untrack(() => {
+        var _a5;
+        return (_a5 = get(tasksByColumn)[get(column)]) != null ? _a5 : [];
+      })));
+      let $1 = derived_safe_equal(() => ($collapsedColumnsStore(), get(column), untrack(() => $collapsedColumnsStore().has(get(column)))));
+      Column($$anchor2, {
+        get app() {
+          return app();
+        },
+        get column() {
+          return get(column);
+        },
+        hideOnEmpty: false,
+        get tasks() {
+          return get($0);
+        },
+        get taskActions() {
+          return taskActions();
+        },
+        get columnTagTableStore() {
+          return columnTagTableStore();
+        },
+        get columnColourTableStore() {
+          return columnColourTableStore();
+        },
+        get showFilepath() {
+          return get(showFilepath);
+        },
+        get consolidateTags() {
+          return get(consolidateTags);
+        },
+        get isVerticalFlow() {
+          return get(isVerticalFlow);
+        },
+        get targetTaskFile() {
+          return get(targetTaskFile);
+        },
+        get targetFileIsDefault() {
+          return get(targetFileIsDefault);
+        },
+        get isCollapsed() {
+          return get($1);
+        },
+        onToggleCollapse: () => toggleColumnCollapse(get(column)),
+        get uncategorizedColumnName() {
+          return get(uncategorizedColumnName);
+        },
+        get doneColumnName() {
+          return get(doneColumnName);
+        }
+      });
+    }
+  });
+  reset(div_15);
+  reset(div_14);
+  reset(div_12);
+  reset(div_1);
+  reset(div);
+  var node_6 = sibling(div, 2);
+  {
+    var consequent_4 = ($$anchor2) => {
+      Delete_filter_modal($$anchor2, {
+        get filterText() {
+          return get(filterToDelete), untrack(() => get(filterToDelete).text);
+        },
+        onConfirm: confirmDelete,
+        onCancel: closeDeleteModal
+      });
+    };
+    if_block(node_6, ($$render) => {
+      if (get(deleteModalOpen) && get(filterToDelete)) $$render(consequent_4);
+    });
+  }
+  template_effect(() => {
+    var _a5, _b3;
+    set_attribute2(button, "aria-label", get(filtersSidebarExpanded) ? "Hide filters" : "Show filters");
+    set_text(text_1, get(filtersSidebarExpanded) ? "\u25C2" : "\u25B8");
+    classes = set_class(div_1, 1, "board-container svelte-16qe0yp", null, classes, { "sidebar-expanded": get(filtersSidebarExpanded) });
+    set_style(div_1, `--sidebar-width: ${(_a5 = get(filtersSidebarWidth)) != null ? _a5 : ""}px;`);
+    classes_3 = set_class(div_14, 1, "columns svelte-16qe0yp", null, classes_3, { "vertical-flow": get(isVerticalFlow) });
+    set_style(div_14, `--column-width: ${(_b3 = get(columnWidth)) != null ? _b3 : ""}px;`);
+  });
+  event("click", button, toggleSidebar);
+  append($$anchor, fragment);
+  var $$pop = pop($$exports);
+  $$cleanup();
+  return $$pop;
+}
 
 // src/ui/settings/settings.ts
-var import_obsidian5 = require("obsidian");
+var import_obsidian6 = require("obsidian");
+
+// src/ui/tasks/scope.ts
+function normalizePath(path) {
+  return path.replace(/^\//, "").replace(/\/$/, "");
+}
+function pathMatchesFilter(filePath, filterPath) {
+  const normalized = normalizePath(filterPath);
+  return filePath === normalized || filePath.startsWith(`${normalized}/`);
+}
+function shouldIncludeFilePath(filePath, filenameFilter, excludeFilter, boardFolderPath) {
+  if (filenameFilter !== null) {
+    const included = filenameFilter.some(
+      (folder) => pathMatchesFilter(filePath, folder)
+    );
+    if (!included) {
+      return false;
+    }
+  }
+  if (excludeFilter && excludeFilter.length > 0) {
+    const normalizedBoard = boardFolderPath ? normalizePath(boardFolderPath) : null;
+    const isExcluded = excludeFilter.some((excludePath) => {
+      if (!pathMatchesFilter(filePath, excludePath)) {
+        return false;
+      }
+      if (normalizedBoard) {
+        const normalizedExclude = normalizePath(excludePath);
+        const excludeCoversBoard = normalizedBoard === normalizedExclude || normalizedBoard.startsWith(`${normalizedExclude}/`);
+        if (excludeCoversBoard) {
+          const fileInBoardFolder = filePath === normalizedBoard || filePath.startsWith(`${normalizedBoard}/`);
+          if (fileInBoardFolder) {
+            return false;
+          }
+        }
+      }
+      return true;
+    });
+    if (isExcluded) {
+      return false;
+    }
+  }
+  return true;
+}
+
+// src/ui/settings/settings.ts
 var VisibilityOptionSchema = z.nativeEnum(VisibilityOption);
 var ScopeOptionSchema = z.nativeEnum(ScopeOption);
-var SettingsModal = class extends import_obsidian5.Modal {
-  constructor(app, settings, onSubmit) {
+var FlowDirectionSchema = z.nativeEnum(FlowDirection);
+var SettingsModal = class extends import_obsidian6.Modal {
+  constructor(app, settings, onSubmit, boardFolderPath) {
     super(app);
     this.settings = settings;
     this.onSubmit = onSubmit;
+    this.boardFolderPath = boardFolderPath;
+    this.dirtyBanner = null;
+    this.validationError = null;
+    this.validationBanner = null;
+    this.saveBtn = null;
+    this.originalSettingsSnapshot = JSON.stringify(settings);
+  }
+  isDirty() {
+    return JSON.stringify(this.settings) !== this.originalSettingsSnapshot;
+  }
+  validateColumns() {
+    var _a5;
+    const reserved = ((_a5 = this.settings.columns) != null ? _a5 : []).filter((col) => col.trim() !== "").filter((col) => RESERVED_COLUMN_KEYS.has(kebab(parseColumnSpec(col).label)));
+    if (reserved.length > 0) {
+      const names = reserved.map((c) => `"${parseColumnSpec(c).label}"`).join(", ");
+      this.validationError = `Column name ${names} conflicts with a built-in column. Please choose a different name.`;
+    } else {
+      this.validationError = null;
+    }
+    this.updateValidationBanner();
+  }
+  updateValidationBanner() {
+    if (this.validationError) {
+      if (!this.validationBanner) {
+        this.validationBanner = this.scrollWrapper.createDiv({ cls: "settings-dirty-banner" });
+        this.scrollWrapper.insertBefore(this.validationBanner, this.scrollWrapper.firstChild);
+      }
+      this.validationBanner.setText(this.validationError);
+      if (this.saveBtn) this.saveBtn.disabled = true;
+    } else {
+      if (this.validationBanner) {
+        this.validationBanner.remove();
+        this.validationBanner = null;
+      }
+      if (this.saveBtn) this.saveBtn.disabled = false;
+    }
+  }
+  updateDirtyBanner() {
+    if (this.isDirty()) {
+      if (this.dirtyBanner) return;
+      this.dirtyBanner = this.scrollWrapper.createDiv({ cls: "settings-dirty-banner" });
+      this.scrollWrapper.insertBefore(this.dirtyBanner, this.scrollWrapper.firstChild);
+      this.dirtyBanner.createSpan({ text: "You have unsaved changes." });
+    } else {
+      if (!this.dirtyBanner) return;
+      this.dirtyBanner.remove();
+      this.dirtyBanner = null;
+    }
   }
   onOpen() {
-    this.contentEl.createEl("h1", { text: "Settings" });
-    new import_obsidian5.Setting(this.contentEl).setName("Columns").setDesc('The column names separated by a comma ","').setClass("column").addText((text2) => {
+    this.modalEl.addClass("task-list-kanban-settings-modal-container");
+    this.contentEl.addClass("task-list-kanban-settings-modal");
+    this.scrollWrapper = this.contentEl.createDiv({ cls: "settings-scroll-wrapper" });
+    this.scrollWrapper.createEl("h1", { text: "Settings" });
+    new import_obsidian6.Setting(this.scrollWrapper).setName("Columns").setDesc('The column names separated by a comma ","').setClass("column").addText((text2) => {
       text2.setValue(this.settings.columns.join(", "));
       text2.onChange((value) => {
         this.settings.columns = value.split(",").map((column) => column.trim());
+        this.validateColumns();
+        this.updateDirtyBanner();
       });
     });
-    new import_obsidian5.Setting(this.contentEl).setName("Folder scope").setDesc("Where should we try to find tasks for this Kanban?").addDropdown((dropdown) => {
+    this.validateColumns();
+    let uncategorizedNameInput = null;
+    new import_obsidian6.Setting(this.scrollWrapper).setName("Uncategorized column").setDesc("Visibility and display name for untagged tasks").addDropdown((dropdown) => {
+      var _a5;
+      dropdown.addOption("always" /* AlwaysShow */, "Always show").addOption("auto" /* Auto */, "Hide when empty").addOption("never" /* NeverShow */, "Never show").setValue(
+        (_a5 = this.settings.uncategorizedVisibility) != null ? _a5 : "auto" /* Auto */
+      ).onChange((value) => {
+        const validatedValue = VisibilityOptionSchema.safeParse(value);
+        this.settings.uncategorizedVisibility = validatedValue.success ? validatedValue.data : defaultSettings.uncategorizedVisibility;
+        if (uncategorizedNameInput) {
+          const hidden = this.settings.uncategorizedVisibility === "never" /* NeverShow */;
+          uncategorizedNameInput.style.visibility = hidden ? "hidden" : "";
+        }
+        this.updateDirtyBanner();
+      });
+    }).addText((text2) => {
+      var _a5, _b3;
+      uncategorizedNameInput = text2.inputEl;
+      text2.setPlaceholder("Uncategorized");
+      text2.setValue((_a5 = this.settings.uncategorizedColumnName) != null ? _a5 : "");
+      if (((_b3 = this.settings.uncategorizedVisibility) != null ? _b3 : "auto" /* Auto */) === "never" /* NeverShow */) {
+        text2.inputEl.style.visibility = "hidden";
+      }
+      text2.onChange((value) => {
+        this.settings.uncategorizedColumnName = value;
+        this.updateDirtyBanner();
+      });
+    });
+    let doneNameInput = null;
+    new import_obsidian6.Setting(this.scrollWrapper).setName("Done column").setDesc("Visibility and display name for completed tasks").addDropdown((dropdown) => {
+      var _a5;
+      dropdown.addOption("always" /* AlwaysShow */, "Always show").addOption("auto" /* Auto */, "Hide when empty").addOption("never" /* NeverShow */, "Never show").setValue(
+        (_a5 = this.settings.doneVisibility) != null ? _a5 : "auto" /* Auto */
+      ).onChange((value) => {
+        const validatedValue = VisibilityOptionSchema.safeParse(value);
+        this.settings.doneVisibility = validatedValue.success ? validatedValue.data : defaultSettings.doneVisibility;
+        if (doneNameInput) {
+          const hidden = this.settings.doneVisibility === "never" /* NeverShow */;
+          doneNameInput.style.visibility = hidden ? "hidden" : "";
+        }
+        this.updateDirtyBanner();
+      });
+    }).addText((text2) => {
+      var _a5, _b3;
+      doneNameInput = text2.inputEl;
+      text2.setPlaceholder("Done");
+      text2.setValue((_a5 = this.settings.doneColumnName) != null ? _a5 : "");
+      if (((_b3 = this.settings.doneVisibility) != null ? _b3 : "always" /* AlwaysShow */) === "never" /* NeverShow */) {
+        text2.inputEl.style.visibility = "hidden";
+      }
+      text2.onChange((value) => {
+        this.settings.doneColumnName = value;
+        this.updateDirtyBanner();
+      });
+    });
+    new import_obsidian6.Setting(this.scrollWrapper).setName("Column width").setDesc("Width of task cards in pixels (200-600)").addSlider((slider) => {
+      var _a5;
+      slider.setLimits(200, 600, 10).setValue((_a5 = this.settings.columnWidth) != null ? _a5 : 300).setDynamicTooltip().onChange((value) => {
+        this.settings.columnWidth = value;
+        this.updateDirtyBanner();
+      });
+    });
+    new import_obsidian6.Setting(this.scrollWrapper).setName("Flow direction").setDesc("Direction columns flow across the board").addDropdown((dropdown) => {
+      var _a5;
+      dropdown.addOption("ltr" /* LeftToRight */, "Left to right").addOption("rtl" /* RightToLeft */, "Right to left").addOption("ttb" /* TopToBottom */, "Top to bottom").addOption("btt" /* BottomToTop */, "Bottom to top").setValue(
+        (_a5 = this.settings.flowDirection) != null ? _a5 : "ltr" /* LeftToRight */
+      ).onChange((value) => {
+        const validatedValue = FlowDirectionSchema.safeParse(value);
+        this.settings.flowDirection = validatedValue.success ? validatedValue.data : defaultSettings.flowDirection;
+        this.updateDirtyBanner();
+      });
+    });
+    let defaultTaskFileInputEl = null;
+    let defaultTaskFileErrorEl = null;
+    const setDefaultTaskFileError = (message) => {
+      if (!defaultTaskFileInputEl) return;
+      if (message) {
+        defaultTaskFileInputEl.style.outline = "2px solid var(--text-error)";
+        defaultTaskFileInputEl.style.outlineOffset = "-1px";
+        defaultTaskFileInputEl.title = message;
+        if (defaultTaskFileErrorEl) {
+          defaultTaskFileErrorEl.setText(message);
+          defaultTaskFileErrorEl.style.visibility = "visible";
+        }
+      } else {
+        defaultTaskFileInputEl.style.outline = "";
+        defaultTaskFileInputEl.style.outlineOffset = "";
+        defaultTaskFileInputEl.title = "";
+        if (defaultTaskFileErrorEl) {
+          defaultTaskFileErrorEl.setText("");
+          defaultTaskFileErrorEl.style.visibility = "hidden";
+        }
+      }
+    };
+    const validateDefaultTaskFile = () => {
+      var _a5, _b3, _c2, _d;
+      const value = (_a5 = this.settings.defaultTaskFile) != null ? _a5 : "";
+      if (!value) {
+        setDefaultTaskFileError("");
+        return;
+      }
+      const abstractFile = this.app.vault.getAbstractFileByPath(value);
+      if (!(abstractFile instanceof import_obsidian6.TFile)) {
+        setDefaultTaskFileError("File not found");
+        return;
+      }
+      let scopeFilter;
+      switch (this.settings.scope) {
+        case "folder" /* Folder */:
+          scopeFilter = this.boardFolderPath ? [this.boardFolderPath] : null;
+          break;
+        case "selectedFolders" /* SelectedFolders */:
+          scopeFilter = (_b3 = this.settings.scopeFolders) != null ? _b3 : [];
+          break;
+        default:
+          scopeFilter = null;
+          break;
+      }
+      if (!shouldIncludeFilePath(value, scopeFilter, (_c2 = this.settings.excludePaths) != null ? _c2 : [], this.boardFolderPath)) {
+        const excludePaths = (_d = this.settings.excludePaths) != null ? _d : [];
+        const isExcludedByPath = excludePaths.length > 0 && shouldIncludeFilePath(value, scopeFilter) && !shouldIncludeFilePath(value, scopeFilter, excludePaths, this.boardFolderPath);
+        setDefaultTaskFileError(
+          isExcludedByPath ? "File is excluded from the board's scope" : "File is outside the board's folder scope"
+        );
+        return;
+      }
+      setDefaultTaskFileError("");
+    };
+    const scopeContainer = this.scrollWrapper.createDiv();
+    let folderListContainer;
+    let folderListEl;
+    const renderFolderRow = (container, folder, removable) => {
+      const row = container.createDiv();
+      row.style.display = "flex";
+      row.style.alignItems = "center";
+      row.style.justifyContent = "space-between";
+      row.style.padding = "4px 8px";
+      row.style.borderBottom = "1px solid var(--background-modifier-border)";
+      const label = row.createSpan();
+      label.setText(folder);
+      label.style.flexGrow = "1";
+      if (!removable) {
+        const badge = row.createSpan();
+        badge.setText(" (this board)");
+        badge.style.color = "var(--text-muted)";
+        badge.style.fontStyle = "italic";
+        badge.style.fontSize = "var(--font-smallest)";
+      } else {
+        const abstractFolder = this.app.vault.getAbstractFileByPath(folder);
+        if (!abstractFolder) {
+          const warning = row.createSpan();
+          warning.setText(" (not found)");
+          warning.style.color = "var(--text-error)";
+          warning.style.fontStyle = "italic";
+          warning.style.fontSize = "var(--font-smallest)";
+        }
+        const removeBtn = row.createEl("button");
+        removeBtn.setText("\u2715");
+        removeBtn.style.marginLeft = "8px";
+        removeBtn.style.cursor = "pointer";
+        removeBtn.style.background = "none";
+        removeBtn.style.border = "none";
+        removeBtn.style.color = "var(--text-muted)";
+        removeBtn.style.padding = "2px 6px";
+        removeBtn.addEventListener("click", () => {
+          var _a5;
+          this.settings.scopeFolders = ((_a5 = this.settings.scopeFolders) != null ? _a5 : []).filter((f) => f !== folder);
+          renderFolderList();
+          validateDefaultTaskFile();
+          this.updateDirtyBanner();
+        });
+      }
+    };
+    const renderFolderList = () => {
+      var _a5;
+      folderListEl.empty();
+      if (this.boardFolderPath) {
+        renderFolderRow(folderListEl, this.boardFolderPath, false);
+      }
+      const folders = ((_a5 = this.settings.scopeFolders) != null ? _a5 : []).filter(
+        (f) => f !== this.boardFolderPath
+      );
+      for (const folder of folders) {
+        renderFolderRow(folderListEl, folder, true);
+      }
+    };
+    const updateFolderListVisibility = () => {
+      folderListContainer.style.display = this.settings.scope === "selectedFolders" /* SelectedFolders */ ? "block" : "none";
+    };
+    new import_obsidian6.Setting(scopeContainer).setName("Folder scope").setDesc("Where should we try to find tasks for this Kanban?").addDropdown((dropdown) => {
       dropdown.addOption("folder" /* Folder */, "This folder");
       dropdown.addOption("everywhere" /* Everywhere */, "Every folder");
+      dropdown.addOption(
+        "selectedFolders" /* SelectedFolders */,
+        "Selected folders"
+      );
       dropdown.setValue(this.settings.scope);
       dropdown.onChange((value) => {
         const validatedValue = ScopeOptionSchema.safeParse(value);
         this.settings.scope = validatedValue.success ? validatedValue.data : defaultSettings.scope;
+        updateFolderListVisibility();
+        validateDefaultTaskFile();
+        this.updateDirtyBanner();
       });
     });
-    new import_obsidian5.Setting(this.contentEl).setName("Show filepath").setDesc("Show the filepath on each task in Kanban?").addToggle((toggle) => {
-      var _a;
-      toggle.setValue((_a = this.settings.showFilepath) != null ? _a : true);
+    folderListContainer = scopeContainer.createDiv();
+    folderListContainer.style.marginLeft = "16px";
+    folderListContainer.style.marginBottom = "12px";
+    const addFolderRow = folderListContainer.createDiv();
+    addFolderRow.style.display = "flex";
+    addFolderRow.style.gap = "8px";
+    addFolderRow.style.marginBottom = "8px";
+    const folderInput = addFolderRow.createEl("input", {
+      type: "text",
+      placeholder: "e.g., projects/active"
+    });
+    folderInput.style.flexGrow = "1";
+    folderInput.addClass("setting-input");
+    const addFolder = () => {
+      var _a5;
+      const raw = folderInput.value.trim().replace(/^\//, "").replace(/\/$/, "");
+      if (!raw) return;
+      if (raw === this.boardFolderPath) return;
+      const folders = (_a5 = this.settings.scopeFolders) != null ? _a5 : [];
+      if (folders.includes(raw)) return;
+      this.settings.scopeFolders = [...folders, raw];
+      folderInput.value = "";
+      renderFolderList();
+      validateDefaultTaskFile();
+      this.updateDirtyBanner();
+    };
+    const addBtn = addFolderRow.createEl("button", { text: "Add" });
+    addBtn.addEventListener("click", addFolder);
+    folderInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        addFolder();
+      }
+    });
+    folderListEl = folderListContainer.createDiv();
+    renderFolderList();
+    updateFolderListVisibility();
+    let excludeListEl;
+    const renderExcludeRow = (container, path) => {
+      const row = container.createDiv();
+      row.style.display = "flex";
+      row.style.alignItems = "center";
+      row.style.justifyContent = "space-between";
+      row.style.padding = "4px 8px";
+      row.style.borderBottom = "1px solid var(--background-modifier-border)";
+      const label = row.createSpan();
+      label.setText(path);
+      label.style.flexGrow = "1";
+      const abstractPath = this.app.vault.getAbstractFileByPath(path);
+      if (!abstractPath) {
+        const warning = row.createSpan();
+        warning.setText(" (not found)");
+        warning.style.color = "var(--text-error)";
+        warning.style.fontStyle = "italic";
+        warning.style.fontSize = "var(--font-smallest)";
+      }
+      const removeBtn = row.createEl("button");
+      removeBtn.setText("\u2715");
+      removeBtn.style.marginLeft = "8px";
+      removeBtn.style.cursor = "pointer";
+      removeBtn.style.background = "none";
+      removeBtn.style.border = "none";
+      removeBtn.style.color = "var(--text-muted)";
+      removeBtn.style.padding = "2px 6px";
+      removeBtn.addEventListener("click", () => {
+        var _a5;
+        this.settings.excludePaths = ((_a5 = this.settings.excludePaths) != null ? _a5 : []).filter((p) => p !== path);
+        renderExcludeList();
+        validateDefaultTaskFile();
+        this.updateDirtyBanner();
+      });
+    };
+    const renderExcludeList = () => {
+      var _a5;
+      excludeListEl.empty();
+      const paths = (_a5 = this.settings.excludePaths) != null ? _a5 : [];
+      for (const path of paths) {
+        renderExcludeRow(excludeListEl, path);
+      }
+    };
+    const excludeContainer = this.scrollWrapper.createDiv();
+    excludeContainer.style.marginBottom = "12px";
+    new import_obsidian6.Setting(excludeContainer).setName("Excluded paths").setDesc(
+      "Directories and files excluded from the scope above. The board's own folder is always included."
+    );
+    const excludeInputContainer = excludeContainer.createDiv();
+    excludeInputContainer.style.marginLeft = "16px";
+    const addExcludeRow = excludeInputContainer.createDiv();
+    addExcludeRow.style.display = "flex";
+    addExcludeRow.style.gap = "8px";
+    addExcludeRow.style.marginBottom = "8px";
+    const excludeInput = addExcludeRow.createEl("input", {
+      type: "text",
+      placeholder: "e.g., templates or notes/scratch.md"
+    });
+    excludeInput.style.flexGrow = "1";
+    excludeInput.addClass("setting-input");
+    const addExcludePath = () => {
+      var _a5;
+      const raw = excludeInput.value.trim().replace(/^\//, "").replace(/\/$/, "");
+      if (!raw) return;
+      if (raw === this.boardFolderPath) return;
+      const paths = (_a5 = this.settings.excludePaths) != null ? _a5 : [];
+      if (paths.includes(raw)) return;
+      this.settings.excludePaths = [...paths, raw];
+      excludeInput.value = "";
+      renderExcludeList();
+      validateDefaultTaskFile();
+      this.updateDirtyBanner();
+    };
+    const addExcludeBtn = addExcludeRow.createEl("button", { text: "Add" });
+    addExcludeBtn.addEventListener("click", addExcludePath);
+    excludeInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        addExcludePath();
+      }
+    });
+    excludeListEl = excludeInputContainer.createDiv();
+    renderExcludeList();
+    const defaultTaskFileSetting = new import_obsidian6.Setting(this.scrollWrapper).setName("Default task file").setDesc(
+      "New tasks from 'Add new' will be created in this file by default. Use the vault-relative path (e.g., 'folder/tasks.md'). Leave empty to always show the full file picker."
+    ).addText((text2) => {
+      var _a5;
+      defaultTaskFileInputEl = text2.inputEl;
+      text2.setPlaceholder("e.g., notes/tasks.md");
+      text2.setValue((_a5 = this.settings.defaultTaskFile) != null ? _a5 : "");
+      text2.onChange((value) => {
+        this.settings.defaultTaskFile = value;
+        validateDefaultTaskFile();
+        this.updateDirtyBanner();
+      });
+    });
+    defaultTaskFileSetting.controlEl.style.flexDirection = "column";
+    defaultTaskFileSetting.controlEl.style.alignItems = "flex-end";
+    defaultTaskFileErrorEl = createEl("div", {
+      cls: "setting-error-message"
+    });
+    defaultTaskFileErrorEl.style.color = "var(--text-error)";
+    defaultTaskFileErrorEl.style.fontSize = "var(--font-smallest)";
+    defaultTaskFileErrorEl.style.fontStyle = "italic";
+    defaultTaskFileErrorEl.style.marginTop = "4px";
+    defaultTaskFileErrorEl.style.minHeight = "1.2em";
+    defaultTaskFileErrorEl.style.visibility = "hidden";
+    defaultTaskFileSetting.controlEl.appendChild(defaultTaskFileErrorEl);
+    validateDefaultTaskFile();
+    new import_obsidian6.Setting(this.scrollWrapper).setName("Show filepath").setDesc("Show the filepath on each task in Kanban?").addToggle((toggle) => {
+      var _a5;
+      toggle.setValue((_a5 = this.settings.showFilepath) != null ? _a5 : true);
       toggle.onChange((value) => {
         this.settings.showFilepath = value;
+        this.updateDirtyBanner();
       });
     });
-    new import_obsidian5.Setting(this.contentEl).setName("Uncategorized column visibility").setDesc("When to show the Uncategorized column").addDropdown((dropdown) => {
-      var _a;
-      dropdown.addOption("always" /* AlwaysShow */, "Always show").addOption("auto" /* Auto */, "Hide when empty").addOption("never" /* NeverShow */, "Never show").setValue(
-        (_a = this.settings.uncategorizedVisibility) != null ? _a : "auto" /* Auto */
-      ).onChange((value) => {
-        const validatedValue = VisibilityOptionSchema.safeParse(value);
-        this.settings.uncategorizedVisibility = validatedValue.success ? validatedValue.data : defaultSettings.uncategorizedVisibility;
-      });
-    });
-    new import_obsidian5.Setting(this.contentEl).setName("Done column visibility").setDesc("When to show the Done column").addDropdown((dropdown) => {
-      var _a;
-      dropdown.addOption("always" /* AlwaysShow */, "Always show").addOption("auto" /* Auto */, "Hide when empty").addOption("never" /* NeverShow */, "Never show").setValue(
-        (_a = this.settings.doneVisibility) != null ? _a : "auto" /* Auto */
-      ).onChange((value) => {
-        const validatedValue = VisibilityOptionSchema.safeParse(value);
-        this.settings.doneVisibility = validatedValue.success ? validatedValue.data : defaultSettings.doneVisibility;
-      });
-    });
-    new import_obsidian5.Setting(this.contentEl).setName("Consolidate tags").setDesc(
+    new import_obsidian6.Setting(this.scrollWrapper).setName("Consolidate tags").setDesc(
       "Consolidate the tags on each task in Kanban into the footer?"
     ).addToggle((toggle) => {
-      var _a;
-      toggle.setValue((_a = this.settings.consolidateTags) != null ? _a : false);
+      var _a5;
+      toggle.setValue((_a5 = this.settings.consolidateTags) != null ? _a5 : false);
       toggle.onChange((value) => {
         this.settings.consolidateTags = value;
+        this.updateDirtyBanner();
       });
     });
-    new import_obsidian5.Setting(this.contentEl).setName("Done status markers").setDesc(
+    new import_obsidian6.Setting(this.scrollWrapper).setName("Done status markers").setDesc(
       "Characters that mark a task as done (e.g., 'xX' for [x] and [X]). Each character should be a single Unicode character without spaces."
     ).addText((text2) => {
-      var _a;
-      text2.setValue((_a = this.settings.doneStatusMarkers) != null ? _a : DEFAULT_DONE_STATUS_MARKERS);
+      var _a5;
+      text2.setValue((_a5 = this.settings.doneStatusMarkers) != null ? _a5 : DEFAULT_DONE_STATUS_MARKERS);
       text2.onChange((value) => {
         const errors = validateDoneStatusMarkers(value);
         if (errors.length > 0) {
@@ -18724,14 +21217,33 @@ var SettingsModal = class extends import_obsidian5.Modal {
           text2.inputEl.style.borderColor = "";
           text2.inputEl.title = "Valid done status markers";
           this.settings.doneStatusMarkers = value;
+          this.updateDirtyBanner();
         }
       });
     });
-    new import_obsidian5.Setting(this.contentEl).setName("Ignored status markers").setDesc(
+    new import_obsidian6.Setting(this.scrollWrapper).setName("Cancelled status markers").setDesc(
+      "Characters that mark a task as cancelled (e.g., '-' for [-]). Each character should be a single Unicode character without spaces."
+    ).addText((text2) => {
+      var _a5;
+      text2.setValue((_a5 = this.settings.cancelledStatusMarkers) != null ? _a5 : DEFAULT_CANCELLED_STATUS_MARKERS);
+      text2.onChange((value) => {
+        const errors = validateCancelledStatusMarkers(value);
+        if (errors.length > 0) {
+          text2.inputEl.style.borderColor = "var(--text-error)";
+          text2.inputEl.title = `Invalid: ${errors.join(", ")}`;
+        } else {
+          text2.inputEl.style.borderColor = "";
+          text2.inputEl.title = "Valid cancelled status markers";
+          this.settings.cancelledStatusMarkers = value;
+          this.updateDirtyBanner();
+        }
+      });
+    });
+    new import_obsidian6.Setting(this.scrollWrapper).setName("Ignored status markers").setDesc(
       "Characters that mark tasks to be completely ignored by the kanban (e.g., '-' for [-] cancelled tasks). Leave empty to process all task-like strings. Each character should be a single Unicode character without spaces."
     ).addText((text2) => {
-      var _a;
-      text2.setValue((_a = this.settings.ignoredStatusMarkers) != null ? _a : DEFAULT_IGNORED_STATUS_MARKERS);
+      var _a5;
+      text2.setValue((_a5 = this.settings.ignoredStatusMarkers) != null ? _a5 : DEFAULT_IGNORED_STATUS_MARKERS);
       text2.onChange((value) => {
         const errors = validateIgnoredStatusMarkers(value);
         if (errors.length > 0) {
@@ -18741,15 +21253,23 @@ var SettingsModal = class extends import_obsidian5.Modal {
           text2.inputEl.style.borderColor = "";
           text2.inputEl.title = "Valid ignored status markers";
           this.settings.ignoredStatusMarkers = value;
+          this.updateDirtyBanner();
         }
       });
     });
-    new import_obsidian5.Setting(this.contentEl).addButton(
-      (btn) => btn.setButtonText("Save").onClick(() => {
-        this.close();
-        this.onSubmit(this.settings);
-      })
-    );
+    const buttonBar = this.contentEl.createDiv({ cls: "settings-button-bar" });
+    const cancelBtn = buttonBar.createEl("button", { text: "Cancel" });
+    cancelBtn.addEventListener("click", () => {
+      this.close();
+    });
+    this.saveBtn = buttonBar.createEl("button", { text: "Save", cls: "mod-cta" });
+    this.saveBtn.addEventListener("click", () => {
+      this.onSubmit(this.settings);
+      this.close();
+    });
+    if (this.validationError) {
+      this.saveBtn.disabled = true;
+    }
   }
   onClose() {
     this.contentEl.empty();
@@ -18757,7 +21277,7 @@ var SettingsModal = class extends import_obsidian5.Modal {
 };
 
 // src/ui/tasks/store.ts
-var import_obsidian7 = require("obsidian");
+var import_obsidian8 = require("obsidian");
 
 // src/ui/tasks/tasks.ts
 async function updateMapsFromFile({
@@ -18769,15 +21289,16 @@ async function updateMapsFromFile({
   columnTagTableStore,
   consolidateTags,
   doneStatusMarkers,
+  cancelledStatusMarkers,
   ignoredStatusMarkers
 }) {
-  var _a;
+  var _a5;
   try {
-    const previousTaskIds = (_a = taskIdsByFileHandle.get(fileHandle)) != null ? _a : /* @__PURE__ */ new Set();
+    const previousTaskIds = (_a5 = taskIdsByFileHandle.get(fileHandle)) != null ? _a5 : /* @__PURE__ */ new Set();
     const newTaskIds = /* @__PURE__ */ new Set();
     const contents = await vault.read(fileHandle);
     const rows = contents.split("\n");
-    const columnTagTable = get_store_value(columnTagTableStore);
+    const columnTagTable = get2(columnTagTableStore);
     for (let i = 0; i < rows.length; i++) {
       const row = rows[i];
       if (!row) {
@@ -18791,6 +21312,7 @@ async function updateMapsFromFile({
           columnTagTable,
           consolidateTags,
           doneStatusMarkers,
+          cancelledStatusMarkers,
           ignoredStatusMarkers
         );
         newTaskIds.add(task.id);
@@ -18809,13 +21331,39 @@ async function updateMapsFromFile({
 }
 
 // src/ui/tasks/actions.ts
-var import_obsidian6 = require("obsidian");
+var import_obsidian7 = require("obsidian");
+
+// src/ui/tasks/duplicate.ts
+var blockLinkRegexp2 = /\s\^[a-zA-Z0-9-]+$/;
+var checkboxRegexp = /^(\s*[-*+]\s)\[([^\[\]]*)\]/;
+function createDuplicateLine(rawLine) {
+  return rawLine.replace(blockLinkRegexp2, "").replace(checkboxRegexp, "$1[ ]");
+}
+
+// src/ui/tasks/actions.ts
 function createTaskActions({
   tasksByTaskId,
   metadataByTaskId,
   vault,
-  workspace
+  workspace,
+  getFilenameFilter,
+  getExcludeFilter,
+  getBoardFolderPath,
+  getDefaultTaskFile,
+  getLastUsedTaskFile,
+  setLastUsedTaskFile
 }) {
+  function resolveFileIfValid(filePath) {
+    if (!filePath) return null;
+    const abstractFile = vault.getAbstractFileByPath(filePath);
+    if (!(abstractFile instanceof import_obsidian7.TFile)) return null;
+    if (!shouldIncludeFilePath(filePath, getFilenameFilter(), getExcludeFilter(), getBoardFolderPath())) return null;
+    return abstractFile;
+  }
+  function getTargetFile() {
+    var _a5;
+    return (_a5 = resolveFileIfValid(getDefaultTaskFile())) != null ? _a5 : resolveFileIfValid(getLastUsedTaskFile());
+  }
   async function updateRowWithTask(id, updater) {
     const metadata = metadataByTaskId.get(id);
     const task = tasksByTaskId.get(id);
@@ -18838,6 +21386,15 @@ function createTaskActions({
     async markDone(id) {
       await updateRowWithTask(id, (task) => task.done = true);
     },
+    async toggleDone(id) {
+      await updateRowWithTask(id, (task) => {
+        if (task.done) {
+          task.undone();
+        } else {
+          task.done = true;
+        }
+      });
+    },
     async updateContent(id, content) {
       await updateRowWithTask(id, (task) => task.content = content);
     },
@@ -18846,22 +21403,59 @@ function createTaskActions({
         await updateRowWithTask(id, (task) => task.archive());
       }
     },
+    async cancelTasks(ids) {
+      for (const id of ids) {
+        await updateRowWithTask(id, (task) => task.cancel());
+      }
+    },
+    async restoreTasks(ids) {
+      for (const id of ids) {
+        await updateRowWithTask(id, (task) => task.restore());
+      }
+    },
     async deleteTask(id) {
       await updateRowWithTask(id, (task) => task.delete());
     },
-    async viewFile(id) {
+    async duplicateTask(id) {
+      const metadata = metadataByTaskId.get(id);
+      if (!metadata) return;
+      const { fileHandle, rowIndex } = metadata;
+      const file = await vault.read(fileHandle);
+      const rows = file.split("\n");
+      if (rowIndex >= rows.length) return;
+      const originalLine = rows[rowIndex];
+      if (!originalLine) return;
+      const newLine = createDuplicateLine(originalLine);
+      rows.splice(rowIndex + 1, 0, newLine);
+      await vault.modify(fileHandle, rows.join("\n"));
+    },
+    async viewFile(id, event2) {
       const metadata = metadataByTaskId.get(id);
       if (!metadata) {
         return;
       }
       const { fileHandle, rowIndex } = metadata;
-      const leaf = workspace.getLeaf("tab");
+      const leaf = workspace.getLeaf(import_obsidian7.Keymap.isModEvent(event2));
       await leaf.openFile(fileHandle);
-      const editorView = workspace.getActiveViewOfType(import_obsidian6.MarkdownView);
+      const editorView = workspace.getActiveViewOfType(import_obsidian7.MarkdownView);
       editorView == null ? void 0 : editorView.editor.setCursor(rowIndex);
     },
-    async addNew(column, e) {
-      const files = vault.getMarkdownFiles().sort((a, b) => a.path.localeCompare(b.path));
+    getTargetFile,
+    pickFileForNewTask(column, e, onFileSelected, forceShowPicker = false) {
+      if (!forceShowPicker) {
+        const targetFile = getTargetFile();
+        if (targetFile) {
+          onFileSelected(targetFile);
+          return;
+        }
+      }
+      const onFileSelectedWithPersist = (file) => {
+        setLastUsedTaskFile(file.path);
+        onFileSelected(file);
+      };
+      const files = vault.getMarkdownFiles().filter(
+        (file) => shouldIncludeFilePath(file.path, getFilenameFilter(), getExcludeFilter(), getBoardFolderPath())
+      ).sort((a, b) => a.path.localeCompare(b.path));
       const target = e.target;
       if (!target) {
         return;
@@ -18869,25 +21463,58 @@ function createTaskActions({
       const boundingRect = target.getBoundingClientRect();
       const y = boundingRect.top + boundingRect.height / 2;
       const x = boundingRect.left + boundingRect.width / 2;
+      const defaultTaskFilePath = getDefaultTaskFile();
+      let defaultFileState = null;
+      if (defaultTaskFilePath) {
+        const abstractFile = vault.getAbstractFileByPath(defaultTaskFilePath);
+        if (!(abstractFile instanceof import_obsidian7.TFile)) {
+          defaultFileState = {
+            error: `\u2605 ${defaultTaskFilePath} (not found)`
+          };
+        } else if (!shouldIncludeFilePath(
+          defaultTaskFilePath,
+          getFilenameFilter(),
+          getExcludeFilter(),
+          getBoardFolderPath()
+        )) {
+          defaultFileState = {
+            error: `\u2605 ${defaultTaskFilePath} (outside scope)`
+          };
+        } else {
+          defaultFileState = { file: abstractFile };
+        }
+      }
       function createMenu(folder2, parentMenu) {
-        const menu = new import_obsidian6.Menu();
+        const menu = new import_obsidian7.Menu();
         menu.addItem((i) => {
           i.setTitle(parentMenu ? `\u2190 back` : "Choose a file").setDisabled(!parentMenu).onClick(() => {
             parentMenu == null ? void 0 : parentMenu.showAtPosition({ x, y });
           });
         });
+        if (!parentMenu && defaultFileState) {
+          if ("file" in defaultFileState) {
+            const df = defaultFileState.file;
+            menu.addItem((i) => {
+              i.setTitle(`\u2605 ${df.path}`).onClick(() => {
+                onFileSelectedWithPersist(df);
+              });
+            });
+          } else {
+            menu.addItem((i) => {
+              i.setTitle(defaultFileState.error).setDisabled(
+                true
+              );
+            });
+          }
+          menu.addSeparator();
+        }
         for (const [label, folderItem] of Object.entries(folder2)) {
           menu.addItem((i) => {
             i.setTitle(
-              folderItem instanceof import_obsidian6.TFile ? label : label + " \u2192"
+              folderItem instanceof import_obsidian7.TFile ? label : label + " \u2192"
             ).onClick(() => {
-              if (folderItem instanceof import_obsidian6.TFile) {
-                updateRow(
-                  vault,
-                  folderItem,
-                  void 0,
-                  `- [ ]  #${column}`
-                );
+              if (folderItem instanceof import_obsidian7.TFile) {
+                onFileSelectedWithPersist(folderItem);
               } else {
                 createMenu(folderItem, menu);
               }
@@ -18905,7 +21532,7 @@ function createTaskActions({
             currFolder[segment] = file;
           } else {
             const nextFolder = currFolder[segment] || {};
-            if (nextFolder instanceof import_obsidian6.TFile) {
+            if (nextFolder instanceof import_obsidian7.TFile) {
               continue;
             }
             currFolder[segment] = nextFolder;
@@ -18914,6 +21541,14 @@ function createTaskActions({
         }
       }
       createMenu(folder, void 0);
+    },
+    async createTask(file, content, column) {
+      await updateRow(
+        vault,
+        file,
+        void 0,
+        `- [ ] ${content} #${column}`
+      );
     }
   };
 }
@@ -18936,7 +21571,16 @@ async function updateRow(vault, fileHandle, row, newText) {
 }
 
 // src/ui/tasks/store.ts
-function createTasksStore(vault, workspace, registerEvent, columnTagTableStore, getFilenameFilter, settingsStore) {
+function getMarkerSettings(settings) {
+  var _a5, _b3, _c2, _d;
+  return {
+    consolidateTags: (_a5 = settings.consolidateTags) != null ? _a5 : false,
+    doneStatusMarkers: (_b3 = settings.doneStatusMarkers) != null ? _b3 : DEFAULT_DONE_STATUS_MARKERS,
+    cancelledStatusMarkers: (_c2 = settings.cancelledStatusMarkers) != null ? _c2 : DEFAULT_CANCELLED_STATUS_MARKERS,
+    ignoredStatusMarkers: (_d = settings.ignoredStatusMarkers) != null ? _d : DEFAULT_IGNORED_STATUS_MARKERS
+  };
+}
+function createTasksStore(vault, workspace, registerEvent, columnTagTableStore, getFilenameFilter, getExcludeFilter, getBoardFolderPath, settingsStore, requestSave) {
   const tasksStore = writable([]);
   let timer;
   const tasksByTaskId = /* @__PURE__ */ new Map();
@@ -18959,89 +21603,49 @@ function createTasksStore(vault, workspace, registerEvent, columnTagTableStore, 
     }
   }
   function shouldHandle(file) {
-    var _a;
-    const filenameFilter = (_a = getFilenameFilter()) == null ? void 0 : _a.replace(/^\//, "");
-    return !filenameFilter || file.path.startsWith(filenameFilter);
+    return shouldIncludeFilePath(file.path, getFilenameFilter(), getExcludeFilter(), getBoardFolderPath());
+  }
+  function processFile(fileHandle) {
+    updateMapsFromFile({
+      fileHandle,
+      tasksByTaskId,
+      metadataByTaskId,
+      taskIdsByFileHandle,
+      vault,
+      columnTagTableStore,
+      ...getMarkerSettings(get2(settingsStore))
+    }).then(() => {
+      debounceSetTasks();
+    });
   }
   function initialise() {
-    var _a, _b, _c;
     tasksByTaskId.clear();
     metadataByTaskId.clear();
     taskIdsByFileHandle.clear();
-    const settings = get_store_value(settingsStore);
-    const consolidateTags = (_a = settings.consolidateTags) != null ? _a : false;
-    const doneStatusMarkers = (_b = settings.doneStatusMarkers) != null ? _b : DEFAULT_DONE_STATUS_MARKERS;
-    const ignoredStatusMarkers = (_c = settings.ignoredStatusMarkers) != null ? _c : DEFAULT_IGNORED_STATUS_MARKERS;
     for (const fileHandle of fileHandles) {
       if (!shouldHandle(fileHandle)) {
         continue;
       }
-      updateMapsFromFile({
-        fileHandle,
-        tasksByTaskId,
-        metadataByTaskId,
-        taskIdsByFileHandle,
-        vault,
-        columnTagTableStore,
-        consolidateTags,
-        doneStatusMarkers,
-        ignoredStatusMarkers
-      }).then(() => {
-        debounceSetTasks();
-      });
+      processFile(fileHandle);
     }
   }
   registerEvent(
     vault.on("modify", (fileHandle) => {
-      var _a, _b, _c;
-      if (fileHandle instanceof import_obsidian7.TFile && shouldHandle(fileHandle)) {
-        const settings = get_store_value(settingsStore);
-        const consolidateTags = (_a = settings.consolidateTags) != null ? _a : false;
-        const doneStatusMarkers = (_b = settings.doneStatusMarkers) != null ? _b : DEFAULT_DONE_STATUS_MARKERS;
-        const ignoredStatusMarkers = (_c = settings.ignoredStatusMarkers) != null ? _c : DEFAULT_IGNORED_STATUS_MARKERS;
-        updateMapsFromFile({
-          fileHandle,
-          tasksByTaskId,
-          metadataByTaskId,
-          taskIdsByFileHandle,
-          vault,
-          columnTagTableStore,
-          consolidateTags,
-          doneStatusMarkers,
-          ignoredStatusMarkers
-        }).then(() => {
-          debounceSetTasks();
-        });
+      if (fileHandle instanceof import_obsidian8.TFile && shouldHandle(fileHandle)) {
+        processFile(fileHandle);
       }
     })
   );
   registerEvent(
     vault.on("create", (fileHandle) => {
-      var _a, _b, _c;
-      if (fileHandle instanceof import_obsidian7.TFile && shouldHandle(fileHandle)) {
-        const settings = get_store_value(settingsStore);
-        const consolidateTags = (_a = settings.consolidateTags) != null ? _a : false;
-        const doneStatusMarkers = (_b = settings.doneStatusMarkers) != null ? _b : DEFAULT_DONE_STATUS_MARKERS;
-        const ignoredStatusMarkers = (_c = settings.ignoredStatusMarkers) != null ? _c : DEFAULT_IGNORED_STATUS_MARKERS;
-        updateMapsFromFile({
-          fileHandle,
-          tasksByTaskId,
-          metadataByTaskId,
-          taskIdsByFileHandle,
-          vault,
-          columnTagTableStore,
-          consolidateTags,
-          doneStatusMarkers,
-          ignoredStatusMarkers
-        }).then(() => {
-          debounceSetTasks();
-        });
+      if (fileHandle instanceof import_obsidian8.TFile && shouldHandle(fileHandle)) {
+        processFile(fileHandle);
       }
     })
   );
   registerEvent(
     vault.on("delete", (fileHandle) => {
-      if (fileHandle instanceof import_obsidian7.TFile) {
+      if (fileHandle instanceof import_obsidian8.TFile) {
         const tasksToDelete = taskIdsByFileHandle.get(fileHandle);
         if (!tasksToDelete) return;
         for (const taskId of tasksToDelete) {
@@ -19054,7 +21658,7 @@ function createTasksStore(vault, workspace, registerEvent, columnTagTableStore, 
   );
   registerEvent(
     vault.on("rename", (fileHandle) => {
-      if (fileHandle instanceof import_obsidian7.TFile) {
+      if (fileHandle instanceof import_obsidian8.TFile) {
         initialise();
       }
     })
@@ -19063,32 +21667,52 @@ function createTasksStore(vault, workspace, registerEvent, columnTagTableStore, 
     tasksByTaskId,
     metadataByTaskId,
     vault,
-    workspace
+    workspace,
+    getFilenameFilter,
+    getExcludeFilter,
+    getBoardFolderPath,
+    getDefaultTaskFile: () => get2(settingsStore).defaultTaskFile || null,
+    getLastUsedTaskFile: () => get2(settingsStore).lastUsedTaskFile || null,
+    setLastUsedTaskFile: (path) => {
+      settingsStore.update((s) => ({ ...s, lastUsedTaskFile: path }));
+      requestSave();
+    }
   });
   return { tasksStore, taskActions, initialise };
 }
 
 // src/ui/text_view.ts
 var KANBAN_VIEW_NAME = "kanban-view";
-var KanbanView = class extends import_obsidian8.TextFileView {
+var KanbanView = class extends import_obsidian9.TextFileView {
   constructor(leaf) {
     super(leaf);
     this.filenameFilter = null;
+    this.excludeFilter = null;
+    this.boardFolderPath = null;
     this.icon = "kanban-square";
     this.settingsStore = createSettingsStore();
     this.destroySettingsStore = this.settingsStore.subscribe((settings) => {
-      var _a, _b, _c;
+      var _a5, _b3, _c2, _d, _e;
+      this.boardFolderPath = (_c2 = (_b3 = (_a5 = this.file) == null ? void 0 : _a5.parent) == null ? void 0 : _b3.path) != null ? _c2 : null;
       switch (settings.scope) {
         case "everywhere" /* Everywhere */:
           this.filenameFilter = null;
           break;
-        case "folder" /* Folder */:
-          this.filenameFilter = (_c = (_b = (_a = this.file) == null ? void 0 : _a.parent) == null ? void 0 : _b.path) != null ? _c : null;
+        case "folder" /* Folder */: {
+          this.filenameFilter = this.boardFolderPath ? [this.boardFolderPath] : null;
           break;
+        }
+        case "selectedFolders" /* SelectedFolders */: {
+          const selected = (_d = settings.scopeFolders) != null ? _d : [];
+          this.filenameFilter = this.boardFolderPath ? [this.boardFolderPath, ...selected.filter((f) => f !== this.boardFolderPath)] : selected;
+          break;
+        }
         default:
           this.filenameFilter = null;
           break;
       }
+      const excludePaths = (_e = settings.excludePaths) != null ? _e : [];
+      this.excludeFilter = excludePaths.length > 0 ? excludePaths : null;
     });
     const { columnTagTable, columnColourTable } = createColumnStores(
       this.settingsStore
@@ -19101,7 +21725,10 @@ var KanbanView = class extends import_obsidian8.TextFileView {
       this.registerEvent.bind(this),
       this.columnTagTableStore,
       () => this.filenameFilter,
-      this.settingsStore
+      () => this.excludeFilter,
+      () => this.boardFolderPath,
+      this.settingsStore,
+      () => this.requestSave()
     );
     this.tasksStore = tasksStore;
     this.taskActions = taskActions;
@@ -19113,10 +21740,12 @@ var KanbanView = class extends import_obsidian8.TextFileView {
     this.requestSave();
   }
   openSettingsModal() {
+    var _a5, _b3, _c2;
     const settingsModal = new SettingsModal(
       this.app,
-      structuredClone(get_store_value(this.settingsStore)),
-      (newSettings) => this.onLocalSettingsChange(newSettings)
+      structuredClone(get2(this.settingsStore)),
+      (newSettings) => this.onLocalSettingsChange(newSettings),
+      (_c2 = (_b3 = (_a5 = this.file) == null ? void 0 : _a5.parent) == null ? void 0 : _b3.path) != null ? _c2 : null
     );
     settingsModal.open();
     return new Promise((resolve) => {
@@ -19133,27 +21762,28 @@ var KanbanView = class extends import_obsidian8.TextFileView {
   getViewData() {
     const parsed = (0, import_front_matter.default)(this.data + "\n");
     parsed.attributes["kanban_plugin"] = toSettingsString(
-      get_store_value(this.settingsStore)
+      get2(this.settingsStore)
     );
     return `---
-${Object.entries(parsed.attributes).map(([key, value]) => `${key}: '${value}'`).join("\n")}
+${Object.entries(parsed.attributes).map(([key2, value]) => `${key2}: '${value}'`).join("\n")}
 ---
 ${parsed.body}
 `;
   }
-  setViewData(data) {
+  setViewData(data, clear) {
+    this.data = data;
     this.settingsStore.set(this.getInitialSettings(data));
     this.initialiseTasksStore();
   }
   getInitialSettings(data) {
-    var _a;
+    var _a5;
     const parsed = (0, import_front_matter.default)(data + "\n");
-    return parseSettingsString((_a = parsed.attributes.kanban_plugin) != null ? _a : "");
+    return parseSettingsString((_a5 = parsed.attributes.kanban_plugin) != null ? _a5 : "");
   }
   clear() {
   }
   async onOpen() {
-    this.component = new main_default({
+    this.component = new Main({
       target: this.contentEl,
       props: {
         app: this.app,
@@ -19168,14 +21798,14 @@ ${parsed.body}
     });
   }
   async onClose() {
-    var _a;
-    (_a = this.component) == null ? void 0 : _a.$destroy();
+    var _a5;
+    (_a5 = this.component) == null ? void 0 : _a5.$destroy();
     this.destroySettingsStore();
   }
 };
 
 // src/entry.ts
-var Base = class extends import_obsidian9.Plugin {
+var Base = class extends import_obsidian10.Plugin {
   async onload() {
     this.registerView(KANBAN_VIEW_NAME, (leaf) => new KanbanView(leaf));
     this.registerHoverLinkSource("kanban-view", {
@@ -19192,7 +21822,7 @@ var Base = class extends import_obsidian9.Plugin {
       this.app.workspace.on("file-menu", (menu, file) => {
         menu.addItem((item) => {
           item.setTitle("New kanban").setIcon("square-kanban").onClick(async () => {
-            var _a;
+            var _a5;
             const newFile = await this.app.vault.create(
               file.path + "/Kanban-" + Date.now() + ".md",
               `---
@@ -19200,7 +21830,7 @@ kanban_plugin: {}
 ---
 `
             );
-            (_a = this.app.workspace.getActiveViewOfType(import_obsidian9.MarkdownView)) == null ? void 0 : _a.leaf.openFile(newFile);
+            (_a5 = this.app.workspace.getActiveViewOfType(import_obsidian10.MarkdownView)) == null ? void 0 : _a5.leaf.openFile(newFile);
           });
         });
       })
@@ -19212,7 +21842,7 @@ kanban_plugin: {}
     this.app.workspace.onLayoutReady(() => {
       let leaf;
       for (leaf of this.app.workspace.getLeavesOfType("markdown")) {
-        if (leaf.view instanceof import_obsidian9.MarkdownView && this.isKanbanFile(leaf.view.file)) {
+        if (leaf.view instanceof import_obsidian10.MarkdownView && this.isKanbanFile(leaf.view.file)) {
           this.setKanbanView(leaf);
         }
       }

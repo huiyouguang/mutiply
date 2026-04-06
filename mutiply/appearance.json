@@ -1,6 +1,6 @@
 {
   "baseFontSize": 16,
-  "theme": "obsidian",
+  "theme": "moonstone",
   "cssTheme": "AnuPpuccin",
   "enabledCssSnippets": [
     "【图标】预览网址加图标 - External Link Icons",
@@ -49,5 +49,6 @@
   "monospaceFontFamily": "",
   "interfaceFontFamily": "",
   "accentColor": "",
-  "showRibbon": false
+  "showRibbon": true,
+  "nativeMenus": false
 }

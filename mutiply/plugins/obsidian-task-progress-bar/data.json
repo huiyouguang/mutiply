@@ -1,7 +1,7 @@
 {
   "changelog": {
     "enabled": true,
-    "lastVersion": "9.9.7"
+    "lastVersion": "9.13.1"
   },
   "progressBarDisplayMode": "both",
   "supportHoverToShowProgressInfo": true,
@@ -143,6 +143,29 @@
     "win",
     "pro",
     "con"
+  ],
+  "statusCycles": [
+    {
+      "id": "default-cycle",
+      "name": "Default Cycle",
+      "description": "Standard task lifecycle with all states",
+      "priority": 0,
+      "cycle": [
+        "Not Started",
+        "In Progress",
+        "Completed",
+        "Abandoned",
+        "Planned"
+      ],
+      "marks": {
+        "Not Started": " ",
+        "In Progress": "/",
+        "Completed": "x",
+        "Abandoned": "-",
+        "Planned": "?"
+      },
+      "enabled": true
+    }
   ],
   "enableTaskGeniusIcons": false,
   "enablePriorityPicker": false,
@@ -664,6 +687,16 @@
           "notUrgentNotImportant": "#6c757d"
         }
       }
+    },
+    {
+      "id": "working-on",
+      "name": "进行中",
+      "icon": "timer",
+      "type": "default",
+      "visible": true,
+      "hideCompletedAndAbandonedTasks": true,
+      "filterRules": {},
+      "filterBlanks": false
     }
   ],
   "reviewSettings": {},
@@ -999,6 +1032,7 @@
     },
     "useWorkspaceSideLeaves": true
   },
+  "customCalendarViews": [],
   "workspaces": {
     "version": 2,
     "defaultWorkspaceId": "ws_1762178755605_n9uo2fpvn",
