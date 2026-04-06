@@ -1,21 +1,16 @@
-# 安全规则：仅忽略 包含密钥的 remotely-save 插件
-# 保留所有其他 Obsidian 插件、主题、配置到云端
+# 仅排除含密钥的插件（安全必须）
 .obsidian/plugins/remotely-save/
 
-# macOS 系统文件
+# 系统垃圾文件（不影响插件）
 .DS_Store
 .Spotlight-V100
 .Trashes
-
-# Windows 系统文件
 Thumbs.db
 Desktop.ini
 
-# 编辑器临时文件
+# 临时/日志文件
 *.tmp
 *.swp
 *.swo
 *~
-
-# 日志缓存
 *.log
