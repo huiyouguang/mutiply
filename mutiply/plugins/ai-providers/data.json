@@ -1,0 +1,19 @@
+{
+  "_version": 1,
+  "debugLogging": false,
+  "useNativeFetch": false,
+  "providers": [
+    {
+      "id": "id-1760491657777",
+      "name": "OpenAI",
+      "apiKey": "sk-cba09a3e7a9c4da08cf12d290f269cf4",
+      "url": "https://api.deepseek.com",
+      "type": "openai",
+      "model": "deepseek-chat",
+      "availableModels": [
+        "deepseek-chat",
+        "deepseek-reasoner"
+      ]
+    }
+  ]
+}

@@ -14,3 +14,7 @@ Desktop.ini
 *.swo
 *~
 *.log
+
+/.keep-the-rhythm
+/.obsidian.DS_Store
+.obsidian/

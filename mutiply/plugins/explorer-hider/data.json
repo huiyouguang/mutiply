@@ -1,0 +1,17 @@
+{
+  "useSnippets": true,
+  "compatSpf": false,
+  "showAll": false,
+  "snippets": [
+    {
+      "path": "edtz",
+      "type": "string",
+      "selector": "$",
+      "hiddenInNav": true,
+      "hiddenInBookmarks": true
+    }
+  ],
+  "alwaysHideInBookmarks": true,
+  "buttonInContextBookmark": true,
+  "obsidianExclude": true
+}
