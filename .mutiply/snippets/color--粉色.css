@@ -1,0 +1,11 @@
+/* 深色模式下正文颜色 */
+body.theme-dark {
+  --text-normal:  #FF69B4; /* 正文颜色，浅青色，可替换为喜欢的亮色 */
+  color: var(--text-normal);
+}
+
+/* 深色模式下引用块（quote line）颜色 */
+body.theme-dark .cm-quote {
+  color: #66ccff; /* 引用块颜色，比正文稍淡的蓝色，突出层次 */
+  border-left-color: #66ccff; /* 引用块左侧边框颜色同步 */
+}

@@ -1,0 +1,10 @@
+{
+    "id": "edit-history",
+    "name": "Edit History",
+    "version": "0.3.0",
+    "minAppVersion": "0.15.0",
+    "description": "Obsidian 保存文件时自动保存文件编辑历史记录，并允许查看编辑之间的差异、从上次编辑中复制文本或完全回滚到上次编辑。",
+    "author": "Antonio Tejada",
+    "authorUrl": "https://github.com/antoniotejada/",
+    "isDesktopOnly": false
+}

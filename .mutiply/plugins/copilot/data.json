@@ -1,0 +1,403 @@
+{
+  "userId": "a6efe185-ca7d-48c8-9c42-8078c5f74de1",
+  "isPlusUser": false,
+  "plusLicenseKey": "",
+  "openAIApiKey": "",
+  "openAIOrgId": "",
+  "huggingfaceApiKey": "",
+  "cohereApiKey": "",
+  "anthropicApiKey": "",
+  "azureOpenAIApiKey": "",
+  "azureOpenAIApiInstanceName": "",
+  "azureOpenAIApiDeploymentName": "",
+  "azureOpenAIApiVersion": "",
+  "azureOpenAIApiEmbeddingDeploymentName": "",
+  "googleApiKey": "",
+  "openRouterAiApiKey": "",
+  "xaiApiKey": "",
+  "mistralApiKey": "",
+  "deepseekApiKey": "",
+  "defaultChainType": "llm_chain",
+  "defaultModelKey": "google/gemini-2.5-flash|openrouterai",
+  "embeddingModelKey": "text-embedding-3-small|openai",
+  "temperature": 0.1,
+  "maxTokens": 6000,
+  "contextTurns": 15,
+  "userSystemPrompt": "# Obsidian知识管理AI角色提示词（系统管理版）\n## 核心定位\n你是专为Obsidian知识管理场景服务的AI助手，需以“结构化梳理+精准适配+高效辅助”为核心，帮助用户将零散信息转化为Obsidian可直接复用的、符合知识管理逻辑的内容，尤其聚焦税务、考试高频考点等专业领域，同时兼容多类型知识的整理需求。\n\n\n## 核心能力要求\n### 1. 知识结构化处理（适配Obsidian层级逻辑）\n- 严格遵循“总标题-分级章节-子模块-关键要点”的层级框架，使用Markdown格式（# 一级标题、## 二级标题、### 三级标题、列表、表格、加粗标注）排版，确保内容可直接复制到Obsidian后，目录结构清晰、无格式错乱。\n- 对专业领域知识（如税务、法律、考试考点等），需按“核心概念-核心要素（如纳税人/征税范围/计税方法）-特殊规定-案例/提示”的逻辑拆解，适配Obsidian“笔记原子化+关联化”的管理需求，避免信息堆砌。\n- 涉及“挖空版”“考点版”等特定形式时，需在关键知识点处预留清晰挖空位置（如`______`），并确保挖空内容为该知识点的核心关键词/公式/规定，贴合用户记忆强化需求。\n\n### 2. 专业内容精准适配（基于历史税务领域经验延伸）\n- 若用户提供专业领域资料（如税务、会计、法律等），需先识别内容所属细分领域（如“资源税”“车辆购置税”“非税收入”），再参照该领域的行业规范/考试高频考点，补充“提示”“解题高手”“典例研习”等辅助模块（如税务知识需标注“★”考点星级、计税公式推导、优惠政策时效）。\n- 对非专业类知识（如读书笔记、项目文档、生活常识），需先询问用户核心需求（如“用于快速查阅”“用于深度理解”“用于复习记忆”），再按需求匹配结构（如读书笔记按“核心观点-案例摘录-个人思考”；项目文档按“目标-进度-待办-风险”）。\n\n### 3. 知识关联与复用辅助\n- 整理内容时，需在章节末尾或关键模块处，主动标注“Obsidian关联建议”，提示用户可关联的已有笔记标签（如整理“关税计税价格”时，标注“建议关联标签：#税务/关税 #考试/高频考点 #计税方法对比”），助力知识网络搭建。\n- 若用户提供零散信息（如碎片化知识点、错题、灵感），需先提炼核心主题，再询问用户“是否需要按‘原子化笔记’拆分（单条知识点单条笔记）”或“按‘主题聚合’整合（同类知识点合并为一条笔记）”，适配Obsidian不同管理习惯。\n\n### 4. 格式与细节规范\n- 所有输出内容需规避冗余表述，关键信息（如公式、政策时效、核心定义）用**加粗**标注，并列内容用无序列表，对比类内容用表格（如不同税种的“纳税人-计税依据-税率”对比），提升Obsidian内的阅读效率。\n- 若用户后续对已整理笔记提出修改需求（如“补充某考点案例”“调整层级结构”“转换为挖空版”），需快速响应并保持格式一致性，不破坏原有Obsidian笔记的结构逻辑。\n\n\n## 响应优先级\n1. 优先满足“Obsidian适配性”：所有内容需先确保格式可直接复用、层级清晰，再补充专业细节。\n2. 其次满足“用户核心需求”：若用户明确标注“考试用”“复习用”“工作用”，需侧重对应模块（如考试用侧重考点标注、解题技巧；工作用侧重实操流程、注意事项）。\n3. 最后补充“知识延伸价值”：在不增加内容冗余的前提下，提供关联建议、记忆技巧（如税务公式口诀），但需以“备注”或“延伸提示”模块区分，不干扰核心知识。",
+  "openAIProxyBaseUrl": "",
+  "openAIEmbeddingProxyBaseUrl": "",
+  "stream": true,
+  "defaultSaveFolder": "copilot/copilot-conversations",
+  "defaultConversationTag": "copilot-conversation",
+  "autosaveChat": false,
+  "generateAIChatTitleOnSave": true,
+  "includeActiveNoteAsContext": true,
+  "defaultOpenArea": "view",
+  "customPromptsFolder": "copilot/copilot-custom-prompts",
+  "indexVaultToVectorStore": "ON MODE SWITCH",
+  "qaExclusions": "copilot",
+  "qaInclusions": "",
+  "chatNoteContextPath": "",
+  "chatNoteContextTags": [],
+  "enableIndexSync": true,
+  "debug": false,
+  "enableEncryption": false,
+  "maxSourceChunks": 15,
+  "groqApiKey": "",
+  "activeModels": [
+    {
+      "name": "copilot-plus-flash",
+      "provider": "copilot-plus",
+      "enabled": false,
+      "isBuiltIn": true,
+      "core": true,
+      "plusExclusive": true,
+      "projectEnabled": false,
+      "capabilities": [
+        "vision"
+      ]
+    },
+    {
+      "name": "google/gemini-2.5-flash-lite",
+      "provider": "openrouterai",
+      "enabled": false,
+      "isBuiltIn": true,
+      "core": true,
+      "projectEnabled": true,
+      "capabilities": [
+        "vision"
+      ]
+    },
+    {
+      "name": "google/gemini-2.5-flash",
+      "provider": "openrouterai",
+      "enabled": false,
+      "isBuiltIn": true,
+      "core": true,
+      "projectEnabled": true,
+      "capabilities": [
+        "vision"
+      ]
+    },
+    {
+      "name": "google/gemini-2.5-pro",
+      "provider": "openrouterai",
+      "enabled": false,
+      "isBuiltIn": true,
+      "core": true,
+      "projectEnabled": true,
+      "capabilities": [
+        "vision"
+      ]
+    },
+    {
+      "name": "gpt-5",
+      "provider": "openai",
+      "enabled": false,
+      "isBuiltIn": true,
+      "core": true,
+      "capabilities": [
+        "vision"
+      ]
+    },
+    {
+      "name": "gpt-5-mini",
+      "provider": "openai",
+      "enabled": false,
+      "isBuiltIn": true,
+      "core": true,
+      "capabilities": [
+        "vision"
+      ]
+    },
+    {
+      "name": "gpt-4.1",
+      "provider": "openai",
+      "enabled": false,
+      "isBuiltIn": true,
+      "core": true,
+      "projectEnabled": true,
+      "capabilities": [
+        "vision"
+      ]
+    },
+    {
+      "name": "gpt-4.1-mini",
+      "provider": "openai",
+      "enabled": false,
+      "isBuiltIn": true,
+      "core": true,
+      "projectEnabled": true,
+      "capabilities": [
+        "vision"
+      ]
+    },
+    {
+      "name": "gpt-5-nano",
+      "provider": "openai",
+      "enabled": false,
+      "isBuiltIn": true,
+      "core": true,
+      "capabilities": [
+        "vision"
+      ]
+    },
+    {
+      "name": "openai/gpt-4.1",
+      "provider": "openrouterai",
+      "enabled": false,
+      "isBuiltIn": true,
+      "core": false,
+      "projectEnabled": true,
+      "capabilities": [
+        "vision"
+      ]
+    },
+    {
+      "name": "openai/gpt-4.1-mini",
+      "provider": "openrouterai",
+      "enabled": false,
+      "isBuiltIn": true,
+      "core": false,
+      "projectEnabled": true,
+      "capabilities": [
+        "vision"
+      ]
+    },
+    {
+      "name": "x-ai/grok-4-fast:free",
+      "provider": "openrouterai",
+      "enabled": false,
+      "isBuiltIn": true,
+      "core": false,
+      "projectEnabled": true
+    },
+    {
+      "name": "gpt-4.1-nano",
+      "provider": "openai",
+      "enabled": false,
+      "isBuiltIn": true,
+      "capabilities": [
+        "vision"
+      ]
+    },
+    {
+      "name": "claude-sonnet-4-20250514",
+      "provider": "anthropic",
+      "enabled": false,
+      "isBuiltIn": true,
+      "capabilities": [
+        "reasoning",
+        "vision"
+      ]
+    },
+    {
+      "name": "claude-3-7-sonnet-latest",
+      "provider": "anthropic",
+      "enabled": false,
+      "isBuiltIn": true,
+      "capabilities": [
+        "reasoning",
+        "vision"
+      ]
+    },
+    {
+      "name": "grok-3-beta",
+      "provider": "xai",
+      "enabled": false,
+      "isBuiltIn": true
+    },
+    {
+      "name": "grok-3-mini-beta",
+      "provider": "xai",
+      "enabled": false,
+      "isBuiltIn": true
+    },
+    {
+      "name": "gemini-2.5-flash",
+      "provider": "google",
+      "enabled": false,
+      "isBuiltIn": true,
+      "projectEnabled": true,
+      "capabilities": [
+        "vision"
+      ]
+    },
+    {
+      "name": "gemini-2.5-flash-lite",
+      "provider": "google",
+      "enabled": false,
+      "isBuiltIn": true,
+      "projectEnabled": true,
+      "capabilities": [
+        "vision"
+      ]
+    },
+    {
+      "name": "gemini-2.5-pro",
+      "provider": "google",
+      "enabled": false,
+      "isBuiltIn": true,
+      "projectEnabled": true,
+      "capabilities": [
+        "vision"
+      ]
+    },
+    {
+      "name": "azure-openai",
+      "provider": "azure openai",
+      "enabled": false,
+      "isBuiltIn": true
+    },
+    {
+      "name": "deepseek-reasoner",
+      "provider": "deepseek",
+      "enabled": false,
+      "isBuiltIn": true,
+      "capabilities": [
+        "reasoning"
+      ],
+      "apiKey": "deepseek-chat"
+    },
+    {
+      "name": "deepseek-chat",
+      "provider": "deepseek",
+      "enabled": true,
+      "isBuiltIn": false,
+      "baseUrl": "",
+      "apiKey": "sk-cba09a3e7a9c4da08cf12d290f269cf4",
+      "isEmbeddingModel": false,
+      "capabilities": [
+        "websearch"
+      ],
+      "stream": true,
+      "displayName": "deepseek-chat"
+    }
+  ],
+  "activeEmbeddingModels": [
+    {
+      "name": "copilot-plus-small",
+      "provider": "copilot-plus",
+      "enabled": true,
+      "isBuiltIn": true,
+      "isEmbeddingModel": true,
+      "core": true,
+      "plusExclusive": true
+    },
+    {
+      "name": "copilot-plus-large",
+      "provider": "copilot-plus-jina",
+      "enabled": true,
+      "isBuiltIn": true,
+      "isEmbeddingModel": true,
+      "core": true,
+      "plusExclusive": true,
+      "believerExclusive": true,
+      "dimensions": 1024
+    },
+    {
+      "name": "copilot-plus-multilingual",
+      "provider": "copilot-plus-jina",
+      "enabled": true,
+      "isBuiltIn": true,
+      "isEmbeddingModel": true,
+      "core": true,
+      "plusExclusive": true,
+      "dimensions": 512
+    },
+    {
+      "name": "text-embedding-3-small",
+      "provider": "openai",
+      "enabled": true,
+      "isBuiltIn": true,
+      "isEmbeddingModel": true,
+      "core": true
+    },
+    {
+      "name": "gemini-embedding-001",
+      "provider": "google",
+      "enabled": true,
+      "isBuiltIn": true,
+      "isEmbeddingModel": true,
+      "core": true
+    },
+    {
+      "name": "Qwen/Qwen3-Embedding-0.6B",
+      "provider": "siliconflow",
+      "enabled": true,
+      "isBuiltIn": true,
+      "isEmbeddingModel": true,
+      "core": true,
+      "baseUrl": "https://api.siliconflow.com/v1"
+    },
+    {
+      "name": "text-embedding-3-large",
+      "provider": "openai",
+      "enabled": true,
+      "isBuiltIn": true,
+      "isEmbeddingModel": true
+    },
+    {
+      "name": "embed-multilingual-light-v3.0",
+      "provider": "cohereai",
+      "enabled": true,
+      "isBuiltIn": true,
+      "isEmbeddingModel": true
+    },
+    {
+      "name": "text-embedding-004",
+      "provider": "google",
+      "enabled": true,
+      "isBuiltIn": true,
+      "isEmbeddingModel": true
+    },
+    {
+      "name": "azure-openai",
+      "provider": "azure openai",
+      "enabled": true,
+      "isBuiltIn": true,
+      "isEmbeddingModel": true
+    }
+  ],
+  "embeddingRequestsPerMin": 60,
+  "embeddingBatchSize": 16,
+  "disableIndexOnMobile": true,
+  "showSuggestedPrompts": true,
+  "showRelevantNotes": true,
+  "numPartitions": 1,
+  "lexicalSearchRamLimit": 100,
+  "promptUsageTimestamps": {},
+  "promptSortStrategy": "timestamp",
+  "defaultConversationNoteName": "{$topic}@{$date}_{$time}",
+  "inlineEditCommands": [],
+  "projectList": [],
+  "enableAutocomplete": false,
+  "autocompleteAcceptKey": "Tab",
+  "allowAdditionalContext": true,
+  "enableWordCompletion": false,
+  "lastDismissedVersion": null,
+  "passMarkdownImages": true,
+  "enableAutonomousAgent": false,
+  "enableCustomPromptTemplating": true,
+  "enableSemanticSearchV3": false,
+  "enableLexicalBoosts": true,
+  "suggestedDefaultCommands": true,
+  "autonomousAgentMaxIterations": 4,
+  "autonomousAgentEnabledToolIds": [
+    "localSearch",
+    "webSearch",
+    "pomodoro",
+    "youtubeTranscription",
+    "writeToFile",
+    "replaceInFile"
+  ],
+  "reasoningEffort": "low",
+  "verbosity": "medium",
+  "enableInlineCitations": true,
+  "memoryFolderName": "copilot/memory",
+  "enableRecentConversations": false,
+  "enableSavedMemory": false,
+  "maxRecentConversations": 30,
+  "quickCommandIncludeNoteContext": true,
+  "defaultSendShortcut": "enter"
+}

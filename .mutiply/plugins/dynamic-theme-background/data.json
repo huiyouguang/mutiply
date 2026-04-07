@@ -1,0 +1,1153 @@
+{
+  "enabled": true,
+  "statusBarEnabled": true,
+  "blurDepth": 0,
+  "brightness4Bg": 1,
+  "saturate4Bg": 2,
+  "bgColor": "#1f1e1e",
+  "bgColorOpacity": 0.36,
+  "bgSize": "cover",
+  "mode": "manual",
+  "timeRules": [
+    {
+      "id": "morning",
+      "name": "清晨",
+      "startTime": "06:00",
+      "endTime": "09:00",
+      "backgroundId": "blue-purple-gradient",
+      "enabled": true
+    },
+    {
+      "id": "later-morning",
+      "name": "上午",
+      "startTime": "09:00",
+      "endTime": "11:00",
+      "backgroundId": "pink-gradient",
+      "enabled": true
+    },
+    {
+      "id": "noon",
+      "name": "中午",
+      "startTime": "11:00",
+      "endTime": "13:00",
+      "backgroundId": "blue-cyan-gradient",
+      "enabled": true
+    },
+    {
+      "id": "afternoon",
+      "name": "下午",
+      "startTime": "13:00",
+      "endTime": "17:00",
+      "backgroundId": "green-cyan-gradient",
+      "enabled": true
+    },
+    {
+      "id": "dusk",
+      "name": "黄昏",
+      "startTime": "17:00",
+      "endTime": "18:00",
+      "backgroundId": "pink-yellow-gradient",
+      "enabled": true
+    },
+    {
+      "id": "evening",
+      "name": "傍晚",
+      "startTime": "18:00",
+      "endTime": "22:00",
+      "backgroundId": "cyan-pink-gradient",
+      "enabled": true
+    },
+    {
+      "id": "night",
+      "name": "夜晚",
+      "startTime": "22:00",
+      "endTime": "06:00",
+      "backgroundId": "dark-blue-gray-gradient",
+      "enabled": true
+    }
+  ],
+  "intervalMinutes": 60,
+  "localBackgroundFolder": "000 life os/30-Reading",
+  "backgrounds": [
+    {
+      "id": "api-qihoo360-default-1757860341030",
+      "name": "360壁纸 API (Default) - 2025/9/14 22:32:21",
+      "type": "image",
+      "value": "https://p18.qhimg.com/t0143abdea07c8f6f6a.jpg"
+    },
+    {
+      "id": "api-1758894516986-1758894545296",
+      "name": "未命名的 API - 2025/9/26 21:49:05",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/9m/wallhaven-9mjoy1.png"
+    },
+    {
+      "id": "api-1758894516986-1758894555511",
+      "name": "未命名的 API - 2025/9/26 21:49:15",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/28/wallhaven-281d5y.png"
+    },
+    {
+      "id": "api-1758894516986-1758894558998",
+      "name": "未命名的 API - 2025/9/26 21:49:18",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/rd/wallhaven-rdwjj7.jpg"
+    },
+    {
+      "id": "api-1758894516986-1758894561845",
+      "name": "未命名的 API - 2025/9/26 21:49:21",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/96/wallhaven-96w8e8.png"
+    },
+    {
+      "id": "api-1758894516986-1758894571288",
+      "name": "未命名的 API - 2025/9/26 21:49:31",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/13/wallhaven-13vym3.jpg"
+    },
+    {
+      "id": "api-1758894516986-1758894573109",
+      "name": "未命名的 API - 2025/9/26 21:49:33",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/pk/wallhaven-pkgkkp.png"
+    },
+    {
+      "id": "api-1758894516986-1758894575313",
+      "name": "未命名的 API - 2025/9/26 21:49:35",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/rd/wallhaven-rddgwm.jpg"
+    },
+    {
+      "id": "api-1758894516986-1758894577979",
+      "name": "未命名的 API - 2025/9/26 21:49:37",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/ym/wallhaven-ymz61d.jpg"
+    },
+    {
+      "id": "api-1758894516986-1758894581217",
+      "name": "未命名的 API - 2025/9/26 21:49:41",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/y8/wallhaven-y8622k.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540090103",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:54:50",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/d8/wallhaven-d8gygl.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540103222",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:55:03",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/e8/wallhaven-e873x8.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540104693",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:55:04",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/yq/wallhaven-yq8k2d.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540106493",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:55:06",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/8g/wallhaven-8g3l7j.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540107905",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:55:07",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/qr/wallhaven-qr27rq.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540109646",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:55:09",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/9o/wallhaven-9omydx.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540111595",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:55:11",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/qr/wallhaven-qrz9wl.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540112836",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:55:12",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/yq/wallhaven-yqmlmx.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540114788",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:55:14",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/rq/wallhaven-rq2v8j.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540116317",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:55:16",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/ml/wallhaven-mld559.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540125978",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:55:25",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/ly/wallhaven-ly35rr.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540128737",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:55:28",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/k8/wallhaven-k87gxm.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540130739",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:55:30",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/6l/wallhaven-6lkrow.png",
+      "remoteUrl": "https://w.wallhaven.cc/full/6l/wallhaven-6lkrow.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540134679",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:55:34",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/ml/wallhaven-ml91l9.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540142649",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:55:42",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/9o/wallhaven-9omyq1.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540147891",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:55:47",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/og/wallhaven-og33jl.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540149394",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:55:49",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/zp/wallhaven-zpmrlj.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540150500",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:55:50",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/zp/wallhaven-zp8o3j.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540153155",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:55:53",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/og/wallhaven-og3p6m.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540154417",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:55:54",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/e8/wallhaven-e87w1r.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540155646",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:55:55",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/yq/wallhaven-yq8w5k.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540158780",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:55:58",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/3q/wallhaven-3qz6m3.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540163745",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:56:03",
+      "type": "image",
+      "value": "000 life os/30-Reading/Wallhaven API (Default) - 2025_10_15 22_56_03.jpg",
+      "remoteUrl": "000 life os/30-Reading/Wallhaven API (Default) - 2025_10_15 22_56_03.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540168409",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:56:08",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/e8/wallhaven-e87wpw.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540172442",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:56:12",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/8g/wallhaven-8gop1j.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540174094",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:56:14",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/7j/wallhaven-7j3y7y.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540175724",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:56:15",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/yq/wallhaven-yqm1pl.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540177855",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:56:17",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/yq/wallhaven-yq8mok.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540179857",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:56:19",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/5y/wallhaven-5y7381.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540181450",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:56:21",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/yq/wallhaven-yq8yex.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540183425",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:56:23",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/21/wallhaven-21evdy.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540184792",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:56:24",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/rq/wallhaven-rqdv21.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540186050",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:56:26",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/9o/wallhaven-9omr8k.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540190056",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:56:30",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/21/wallhaven-21el7m.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540191423",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:56:31",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/21/wallhaven-218yvy.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540194375",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:56:34",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/zp/wallhaven-zp85do.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540196759",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:56:36",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/je/wallhaven-je5j65.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540198859",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:56:38",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/og/wallhaven-og3qjp.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540200959",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:56:40",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/d8/wallhaven-d8g9ro.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540203645",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:56:43",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/qr/wallhaven-qr25vl.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540205218",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:56:45",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/w5/wallhaven-w5q8px.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540207276",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:56:47",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/k8/wallhaven-k8w5gd.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540208368",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:56:48",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/je/wallhaven-je3rzw.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540210259",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:56:50",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/rq/wallhaven-rqddem.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540217417",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:56:57",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/yq/wallhaven-yq8x8d.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540219618",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:56:59",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/9o/wallhaven-9omq61.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540221658",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:57:01",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/gw/wallhaven-gw8663.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540223429",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:57:03",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/w5/wallhaven-w5qlo6.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540234345",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:57:14",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/7j/wallhaven-7jp25v.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540236333",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:57:16",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/e8/wallhaven-e87pmw.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540239523",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:57:19",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/po/wallhaven-pokg2e.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540242539",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:57:22",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/d8/wallhaven-d8gmmm.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540244367",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:57:24",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/yq/wallhaven-yq8grx.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540246201",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:57:26",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/xe/wallhaven-xe86w3.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540248088",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:57:28",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/e8/wallhaven-e87zwr.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540249967",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:57:29",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/21/wallhaven-218x7m.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540251223",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:57:31",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/og/wallhaven-og3d99.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540253178",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:57:33",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/5y/wallhaven-5y7yz9.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540255107",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:57:35",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/gw/wallhaven-gw7z33.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540256883",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:57:36",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/po/wallhaven-po8vkp.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540258182",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:57:38",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/xe/wallhaven-xe87dd.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540259322",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:57:39",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/xe/wallhaven-xe8l7d.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540261106",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:57:41",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/xe/wallhaven-xe8z6z.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540263990",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:57:43",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/21/wallhaven-21emyg.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540265367",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:57:45",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/ml/wallhaven-ml981y.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540266671",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:57:46",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/7j/wallhaven-7j2qde.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540275899",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:57:55",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/w5/wallhaven-w5ykwx.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540277819",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:57:57",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/qr/wallhaven-qr67vd.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540279153",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:57:59",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/xe/wallhaven-xe8ggz.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540280203",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:58:00",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/9o/wallhaven-9om6q8.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540282272",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:58:02",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/d8/wallhaven-d8p7w3.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540283262",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:58:03",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/e8/wallhaven-e8717l.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540288255",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:58:08",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/1q/wallhaven-1qp8w3.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540289666",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:58:09",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/w5/wallhaven-w5qdw7.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540291690",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:58:11",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/ml/wallhaven-ml96zk.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540293354",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:58:13",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/yq/wallhaven-yq8o5k.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540294287",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:58:14",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/je/wallhaven-je39mm.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540296536",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:58:16",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/9o/wallhaven-9omylw.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540297948",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:58:17",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/gw/wallhaven-gw7xrq.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540300289",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:58:20",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/e8/wallhaven-e878kk.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540301740",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:58:21",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/po/wallhaven-pokok9.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540303479",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:58:23",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/og/wallhaven-og32ql.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540304431",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:58:24",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/w5/wallhaven-w5qk77.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540305510",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:58:25",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/po/wallhaven-po9239.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540335581",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:58:55",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/ml/wallhaven-ml9g38.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540343638",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:59:03",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/21/wallhaven-218qvx.jpg",
+      "remoteUrl": "https://w.wallhaven.cc/full/21/wallhaven-218qvx.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540363759",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:59:23",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/rq/wallhaven-rq25zw.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540372704",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:59:32",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/og/wallhaven-og3q6m.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540376093",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:59:36",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/d8/wallhaven-d8g9vg.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540380266",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:59:40",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/e8/wallhaven-e8y118.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540386353",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:59:46",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/e8/wallhaven-e8xoz8.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540392629",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:59:52",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/21/wallhaven-218m3y.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540396450",
+      "name": "Wallhaven API (Default) - 2025/10/15 22:59:56",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/ml/wallhaven-mldm71.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540404517",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:00:04",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/1q/wallhaven-1qkod1.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540410700",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:00:10",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/5y/wallhaven-5ywx77.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540411643",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:00:11",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/gw/wallhaven-gw723l.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540418869",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:00:18",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/5y/wallhaven-5y7k87.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540428549",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:00:28",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/5y/wallhaven-5y7g51.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540441841",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:00:41",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/og/wallhaven-og51zm.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540455340",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:00:55",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/vp/wallhaven-vp9pzl.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540461593",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:01:01",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/ly/wallhaven-ly329r.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540463016",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:01:03",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/je/wallhaven-je335m.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540464416",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:01:04",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/po/wallhaven-pokxqm.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540467507",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:01:07",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/1q/wallhaven-1qk68w.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540468912",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:01:08",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/k8/wallhaven-k87lz1.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540471072",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:01:11",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/ly/wallhaven-ly3gmr.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540473066",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:01:13",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/1q/wallhaven-1qkrww.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540479666",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:01:19",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/zp/wallhaven-zp8m8o.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540481289",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:01:21",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/ly/wallhaven-ly3jkl.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540488685",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:01:28",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/yq/wallhaven-yq89dx.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540494847",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:01:34",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/gw/wallhaven-gw7zo3.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540496120",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:01:36",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/xe/wallhaven-xe83v3.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540501671",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:01:41",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/w5/wallhaven-w5qmjp.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540513851",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:01:53",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/ly/wallhaven-lymvrl.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540514978",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:01:54",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/ly/wallhaven-ly369q.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540535598",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:02:15",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/1q/wallhaven-1qk1pg.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540537041",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:02:17",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/e8/wallhaven-e872w8.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540538921",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:02:18",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/po/wallhaven-po98jm.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540540330",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:02:20",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/1q/wallhaven-1qkgzv.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540582315",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:03:02",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/vp/wallhaven-vp9go8.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540584680",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:03:04",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/qr/wallhaven-qr681q.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540587639",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:03:07",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/je/wallhaven-je3qeq.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540648961",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:04:08",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/je/wallhaven-je3wem.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540650867",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:04:10",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/og/wallhaven-og3wv9.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540652419",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:04:12",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/rq/wallhaven-rq2xwj.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540654207",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:04:14",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/5y/wallhaven-5ywxz7.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540656080",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:04:16",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/ly/wallhaven-ly3gjl.png"
+    },
+    {
+      "id": "api-wallhaven-default-1760540657554",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:04:17",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/e8/wallhaven-e8yqkw.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540658693",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:04:18",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/w5/wallhaven-w5q817.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1760540660053",
+      "name": "Wallhaven API (Default) - 2025/10/15 23:04:20",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/xe/wallhaven-xe85j3.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1761176696136",
+      "name": "Wallhaven API (Default) - 2025/10/23 07:44:56",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/nk/wallhaven-nklwz7.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1761176700725",
+      "name": "Wallhaven API (Default) - 2025/10/23 07:45:00",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/49/wallhaven-49o6d1.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1761176704151",
+      "name": "Wallhaven API (Default) - 2025/10/23 07:45:04",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/ne/wallhaven-ne9zgw.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1761176712191",
+      "name": "Wallhaven API (Default) - 2025/10/23 07:45:12",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/nm/wallhaven-nmgzdy.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1761176715033",
+      "name": "Wallhaven API (Default) - 2025/10/23 07:45:15",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/q6/wallhaven-q6w7d5.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1761176719520",
+      "name": "Wallhaven API (Default) - 2025/10/23 07:45:19",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/n6/wallhaven-n67qgl.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1761176722800",
+      "name": "Wallhaven API (Default) - 2025/10/23 07:45:22",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/nr/wallhaven-nr653w.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1761176726741",
+      "name": "Wallhaven API (Default) - 2025/10/23 07:45:26",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/6q/wallhaven-6qzod6.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1761176730042",
+      "name": "Wallhaven API (Default) - 2025/10/23 07:45:30",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/r7/wallhaven-r716q7.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1761176738441",
+      "name": "Wallhaven API (Default) - 2025/10/23 07:45:38",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/l3/wallhaven-l3qdxy.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1761176741902",
+      "name": "Wallhaven API (Default) - 2025/10/23 07:45:41",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/4l/wallhaven-4lx3kl.png"
+    },
+    {
+      "id": "api-wallhaven-default-1761176744899",
+      "name": "Wallhaven API (Default) - 2025/10/23 07:45:44",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/5w/wallhaven-5wy6d3.png"
+    },
+    {
+      "id": "api-wallhaven-default-1761176749154",
+      "name": "Wallhaven API (Default) - 2025/10/23 07:45:49",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/45/wallhaven-45gq81.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1761176753042",
+      "name": "Wallhaven API (Default) - 2025/10/23 07:45:53",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/4v/wallhaven-4v2gwm.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1761176757234",
+      "name": "Wallhaven API (Default) - 2025/10/23 07:45:57",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/4o/wallhaven-4odvrl.png"
+    },
+    {
+      "id": "api-wallhaven-default-1761176760466",
+      "name": "Wallhaven API (Default) - 2025/10/23 07:46:00",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/5w/wallhaven-5wjjw1.png"
+    },
+    {
+      "id": "api-wallhaven-default-1761176764277",
+      "name": "Wallhaven API (Default) - 2025/10/23 07:46:04",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/j8/wallhaven-j8ry3w.png"
+    },
+    {
+      "id": "api-wallhaven-default-1761176768438",
+      "name": "Wallhaven API (Default) - 2025/10/23 07:46:08",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/ne/wallhaven-neg97k.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1761176772118",
+      "name": "Wallhaven API (Default) - 2025/10/23 07:46:12",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/qd/wallhaven-qd82rd.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1761176775454",
+      "name": "Wallhaven API (Default) - 2025/10/23 07:46:15",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/6d/wallhaven-6dlo66.png"
+    },
+    {
+      "id": "api-wallhaven-default-1761176779513",
+      "name": "Wallhaven API (Default) - 2025/10/23 07:46:19",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/ym/wallhaven-ymqz5g.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1761176784476",
+      "name": "Wallhaven API (Default) - 2025/10/23 07:46:24",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/73/wallhaven-73vmky.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1761176788416",
+      "name": "Wallhaven API (Default) - 2025/10/23 07:46:28",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/zm/wallhaven-zmv5dw.jpg"
+    },
+    {
+      "id": "api-wallhaven-default-1761176798952",
+      "name": "Wallhaven API (Default) - 2025/10/23 07:46:38",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/95/wallhaven-95gq3x.png"
+    },
+    {
+      "id": "api-wallhaven-default-1761176803282",
+      "name": "Wallhaven API (Default) - 2025/10/23 07:46:43",
+      "type": "image",
+      "value": "https://w.wallhaven.cc/full/0p/wallhaven-0p85w9.jpg"
+    }
+  ],
+  "currentIndex": 37,
+  "enableRandomWallpaper": false,
+  "wallpaperApis": [
+    {
+      "id": "api-wallhaven-default",
+      "name": "Wallhaven API (Default)",
+      "description": "",
+      "type": "Wallhaven",
+      "baseUrl": "https://wallhaven.cc/api/v1",
+      "enabled": false,
+      "params": {
+        "categories": "111",
+        "purity": "110",
+        "sorting": "favorites",
+        "order": "asc",
+        "topRange": "1W",
+        "page": 1,
+        "apikey": "7YkiszctWgOSZsFABWDvrlegnc0SJSiq",
+        "atleast": "1920x1080"
+      },
+      "endpoints": {
+        "search": "/search",
+        "detail": "/w/{id}",
+        "tag": "/search/tags"
+      }
+    },
+    {
+      "id": "api-qihoo360-default",
+      "name": "360壁纸 API (Default)",
+      "description": "",
+      "type": "Qihoo360",
+      "baseUrl": "http://wallpaper.apc.360.cn",
+      "enabled": false,
+      "params": {
+        "cid": "6",
+        "start": 0,
+        "count": 24,
+        "kw": "美女",
+        "from": "360chrome",
+        "order": "create_time",
+        "searchMode": "search",
+        "preferredResolution": "auto"
+      },
+      "endpoints": {
+        "categories": "/index.php?c=WallPaperAndroid&a=getAllCategories",
+        "categoriesV2": "/index.php?c=WallPaper&a=getAllCategoriesV2&from=360chrome",
+        "search": "/index.php?c=WallPaper&a=search",
+        "category": "/index.php?c=WallPaperAndroid&a=getAppsByCategory",
+        "newest": "/index.php?c=WallPaper&a=getAppsByOrder&order=create_time&from=360chrome",
+        "hotSearch": "http://openbox.mobilem.360.cn/html/api/wallpaperhot.html"
+      }
+    },
+    {
+      "id": "api-peapix-bing-cn",
+      "type": "Custom",
+      "enabled": false,
+      "name": "Peapix API (Bing CN)",
+      "description": "For details, see https://peapix.com/api",
+      "baseUrl": "https://peapix.com/bing/feed?country=cn",
+      "params": {},
+      "customSettings": {
+        "imageUrlJsonPath": "$[*].imageUrl"
+      },
+      "endpoints": {}
+    },
+    {
+      "id": "api-1758894516986",
+      "name": "未命名的 API",
+      "description": "",
+      "type": "Wallhaven",
+      "baseUrl": "https://wallhaven.cc/api/v1",
+      "enabled": false,
+      "params": {
+        "categories": "111",
+        "purity": "110",
+        "sorting": "favorites",
+        "order": "desc",
+        "topRange": "6M",
+        "page": 1
+      },
+      "endpoints": {
+        "search": "/search",
+        "detail": "/w/{id}",
+        "tag": "/search/tags"
+      }
+    }
+  ]
+}

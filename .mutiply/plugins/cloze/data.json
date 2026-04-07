@@ -1,0 +1,18 @@
+{
+  "defaultHide": true,
+  "hoverToReveal": true,
+  "selectorTag": "#",
+  "includeHighlighted": true,
+  "includeUnderlined": true,
+  "includeBolded": true,
+  "includeItalics": true,
+  "includeBracketed": true,
+  "includeCurlyBrackets": true,
+  "fixedClozeWidth": true,
+  "editorMenuAddCloze": true,
+  "editorMenuAddClozeWithHint": true,
+  "editorMenuRemoveCloze": false,
+  "hintStrategy": 1,
+  "hintCount": 20,
+  "hintPercentage": 0
+}

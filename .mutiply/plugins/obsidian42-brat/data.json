@@ -1,0 +1,38 @@
+{
+  "pluginList": [
+    "Quorafind/Obsidian-Task-Genius",
+    "sean2077/obsidian-dynamic-theme-background",
+    "ted-marozzi/task-list",
+    "mdelobelle/obsidian_supercharged_links"
+  ],
+  "pluginSubListFrozenVersion": [
+    {
+      "repo": "Quorafind/Obsidian-Task-Genius",
+      "version": "9.9.4"
+    },
+    {
+      "repo": "sean2077/obsidian-dynamic-theme-background",
+      "version": "2.7.2"
+    },
+    {
+      "repo": "ted-marozzi/task-list",
+      "version": ""
+    },
+    {
+      "repo": "mdelobelle/obsidian_supercharged_links",
+      "version": "latest"
+    }
+  ],
+  "themesList": [],
+  "updateAtStartup": true,
+  "updateThemesAtStartup": true,
+  "enableAfterInstall": true,
+  "loggingEnabled": false,
+  "loggingPath": "BRAT-log",
+  "loggingVerboseEnabled": false,
+  "debuggingMode": false,
+  "notificationsEnabled": true,
+  "personalAccessToken": "",
+  "selectLatestPluginVersionByDefault": false,
+  "allowIncompatiblePlugins": false
+}
