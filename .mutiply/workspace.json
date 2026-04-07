@@ -11,10 +11,12 @@
             "id": "3e23bde63f7fd7a5",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "新标签页"
+              "type": "css-editor-view",
+              "state": {
+                "file": "自定义背景-比较正常72.css"
+              },
+              "icon": "css-editor-logo",
+              "title": "自定义背景-比较正常72"
             }
           }
         ]
@@ -313,11 +315,13 @@
       "daily-notes:打开/创建今天的日记": false,
       "copilot:打开 Copilot 对话": false,
       "obsidian-git:打开Git源代码管理": false,
-      "obsidian-task-progress-bar:打开 Task Genius 视图": false
+      "obsidian-task-progress-bar:打开 Task Genius 视图": false,
+      "css-editor:Open CSS editor quick switcher": false
     }
   },
   "active": "3e23bde63f7fd7a5",
   "lastOpenFiles": [
+    "04成长/知识管理/004 注会/002 审计/审计职业道德.md",
     "模板/T-电影模板.md",
     "模板/T-笔记模板.md",
     "模板/Obsidian_日记系统_周回顾.md",

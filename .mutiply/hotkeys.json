@@ -104,15 +104,6 @@
       "key": "K"
     }
   ],
-  "mysnippets-plugin:open-snippets-menu": [
-    {
-      "modifiers": [
-        "Alt",
-        "Mod"
-      ],
-      "key": "C"
-    }
-  ],
   "editor:insert-horizontal-rule": [
     {
       "modifiers": [
@@ -160,6 +151,15 @@
         "Mod"
       ],
       "key": "J"
+    }
+  ],
+  "css-editor:open-quick-switcher": [
+    {
+      "modifiers": [
+        "Alt",
+        "Mod"
+      ],
+      "key": "C"
     }
   ]
 }

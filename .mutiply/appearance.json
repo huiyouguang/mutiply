@@ -1,7 +1,7 @@
 {
   "baseFontSize": 16,
   "theme": "obsidian",
-  "cssTheme": "AnuPpuccin",
+  "cssTheme": "PLN",
   "enabledCssSnippets": [
     "【图标】预览网址加图标 - External Link Icons",
     "B - Heatmap",
@@ -42,7 +42,8 @@
     "002 挖空",
     "002 专注模块",
     "002 多行标签",
-    "彩色分割线"
+    "彩色分割线",
+    "003 預覽表格全"
   ],
   "translucency": true,
   "textFontFamily": "",
