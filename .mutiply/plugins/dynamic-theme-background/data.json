@@ -1,5 +1,5 @@
 {
-  "enabled": false,
+  "enabled": true,
   "statusBarEnabled": true,
   "blurDepth": 0,
   "brightness4Bg": 1,
@@ -1063,7 +1063,7 @@
       "value": "https://w.wallhaven.cc/full/0p/wallhaven-0p85w9.jpg"
     }
   ],
-  "currentIndex": 37,
+  "currentIndex": 42,
   "enableRandomWallpaper": false,
   "wallpaperApis": [
     {

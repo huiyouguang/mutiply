@@ -4,19 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "f2a94342fe5a6f16",
+        "id": "e2be22812689d25c",
         "type": "tabs",
         "children": [
           {
-            "id": "3e23bde63f7fd7a5",
+            "id": "c66b9e8788db320a",
             "type": "leaf",
             "state": {
-              "type": "css-editor-view",
-              "state": {
-                "file": "自定义背景-比较正常72.css"
-              },
-              "icon": "css-editor-logo",
-              "title": "自定义背景-比较正常72"
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "新标签页"
             }
           }
         ]
@@ -319,8 +317,9 @@
       "css-editor:Open CSS editor quick switcher": false
     }
   },
-  "active": "3e23bde63f7fd7a5",
+  "active": "7aab200267640af4",
   "lastOpenFiles": [
+    "工作/亚马逊站点.md",
     "04成长/知识管理/004 注会/002 审计/审计职业道德.md",
     "模板/T-电影模板.md",
     "模板/T-笔记模板.md",
@@ -357,7 +356,6 @@
     "模板/T-人物模板.md",
     "05Books/T-人物模板.md",
     "T-Daily.md",
-    "T-项目模板.md",
     "未命名 1.canvas",
     "005 注册税务师/税一/刷题/未命名 3.canvas",
     "005 注册税务师/税一/刷题/未命名 2.canvas",
