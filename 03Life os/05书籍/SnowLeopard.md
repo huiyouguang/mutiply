@@ -1,31 +1,10 @@
 ---
-书名: SnowLeopard
 状态: 想读
-作者:
-  - CategoryPirates
-  - NicolasCole
-  - ChristopherLochhead
-出版社: 
-出版时间: 2022
-开始时间: 2025-02-07
-读完时间: 
-总页数: 200
-已读页数:
-  - 0
+读完时间:
 我的评分: 🌟🌟🌟🌟
-复读: 0
-介质: 电子书
-封面: https://img2.doubanio.com/view/subject/l/public/s34815621.jpg
-豆瓣页面: https://book.douban.com/subject/36819781/
-豆瓣评分: 
-ISBN: 9781956934458
 tags:
   - book
   - 书籍
-领域: 
-分类: 
-书库现存: 无
-modified date: 2025-04-23 02:00:41
 ---
 ## 1 书籍信息
 

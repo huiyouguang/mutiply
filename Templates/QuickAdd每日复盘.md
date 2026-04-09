@@ -1,7 +1,3 @@
----
-name: 每日复盘
-description: 创建每日复盘笔记
----
 
 # 📅 {{date:YYYY年MM月DD日}} 每日复盘
 

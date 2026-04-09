@@ -1,12 +1,5 @@
 ---
-文件分类: "有哪些是你慢慢想明白了的道理？ - Hello-BJ 的回答"
-平台: "平台"
-核心主题:
-链接: "https://www.zhihu.com/question/350870631/answer/2951839969"
-完成状态:
-收藏标签: "clippings"
-类型:
-"mindmap-plugin": "basic"
+收藏标签: clippings
 cssclasses:
 ---
 1.4 万人赞同了该回答

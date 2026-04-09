@@ -1,12 +1,5 @@
 ---
-文件分类: "How to fix your entire life in 1 day"
-平台: "平台"
-核心主题: "人生"
-链接: "https://letters.thedankoe.com/p/how-to-fix-your-entire-life-in-1"
-完成状态:
-收藏标签: "clippings"
-类型: "思维默写"
-"mindmap-plugin": "basic"
+收藏标签: clippings
 cssclasses:
 ---
 

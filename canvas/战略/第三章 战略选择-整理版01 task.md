@@ -1,11 +1,7 @@
 ---
-subject: 战略
-chapter: "003"
-name: 战略选择
-importance:
-"difficulty":
-"review_status":
-"tags":
+章节: "003"
+主要程度:
+tags:
 创建时间:
 科目类别: 注册会计师-战略
 分值:

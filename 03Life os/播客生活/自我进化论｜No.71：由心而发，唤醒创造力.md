@@ -1,13 +1,6 @@
 ---
-平台:
-  - 自我进化论
 cssclasses:
   - kanban-stack
-科目: 2025-05-29
-类型: 播客
-核心主题: 由心而发，唤醒创造力
-链接: https://www.youtube.com/watch?v=70ZLzPNxsXI
-sticker: emoji//1f3c3-200d-2642-fe0f
 ---
 以下是为你整理好的Markdown文档，标注了章节和金句（金句以**加粗**的形式呈现），保留了原文稿顺序：
 # 自我进化论

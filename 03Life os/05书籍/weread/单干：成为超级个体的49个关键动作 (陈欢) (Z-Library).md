@@ -1,19 +1,6 @@
 ---
-doc_type: weread-highlights-reviews
-bookId: CB_7a35Jf5JoFVa6uw6sx96J3GS
-reviewCount: 6
-noteCount: 206
-author: 陈欢
-cover: https://res.weread.qq.com/wrepub/CB_2a9DZRDYg9BK6iY6gYG0Z84B_parsecover
-progress: 100%
-readingTime: 6小时31分钟
-readingDate: 2025-03-25
-finishedDate: 2025-03-29
-isbn: 
-category: 
-lastReadDate: 2025-03-29
+isbn:
 tags: weread
-modified date: 2025-05-12 21:17:23
 ---
 >[!rnb|noicon] 
 ># 单干：成为超级个体的49个关键动作 (陈欢) (Z-Library)

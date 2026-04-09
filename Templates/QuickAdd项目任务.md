@@ -1,7 +1,3 @@
----
-name: 项目任务
-description: 创建项目任务清单
----
 
 # 📋 {{title}}
 

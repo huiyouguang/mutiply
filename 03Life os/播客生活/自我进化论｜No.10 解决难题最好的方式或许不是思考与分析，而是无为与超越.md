@@ -1,13 +1,6 @@
 ---
-平台:
-  - 自我进化论
 cssclasses:
   - kanban-stack
-创建日期: 2026-04-06
-类型: 播客
-核心主题: 由心而发，唤醒创造力
-链接: https://www.youtube.com/watch?v=70ZLzPNxsXI
-sticker: emoji//1f3c3-200d-2642-fe0f
 ---
 
 # 自我进化论｜No.10: 解决难题最好的方式或许不是思考与分析，而是无为与超越

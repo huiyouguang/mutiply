@@ -1,7 +1,3 @@
----
-name: 快速笔记
-description: 使用 QuickAdd 快速创建笔记
----
 
 # {{title}}
 

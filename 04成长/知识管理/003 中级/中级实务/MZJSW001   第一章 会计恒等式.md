@@ -1,16 +1,12 @@
 ---
-subject:
-  - 中级实务
-chapter: "01"
-name: 第一章 总论
-importance: 一般
-"difficulty:": 一般
-"review_status:":
-"tags:": 中级经济法
+章节: "01"
+主要程度: 一般
+困难程度: 一般
+复习次数:
+标签: 中级经济法
 创建时间: 2025-11-10T00:00:00
 科目类别: 中级实务
 分值: 3
-mindmap-plugin: basic
 ---
 
 # 第一章 总论 - 中级会计实务学习笔记

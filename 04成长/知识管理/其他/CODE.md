@@ -1,18 +1,10 @@
 ---
-area: 个人成长
-category:
-  - 知识管理
-status:
-  - 进行中
 tags:
   - note
   - 知识管理
   - 第二大脑
   - 知识管理/PARA
-aliases: 
-stars: 3星级
-number headings: auto, first-level 2, max 6, contents ^toc, skip ^skipped, start-at 1, _.1.1
-modified date: 2025-05-10 17:06:23
+aliases:
 ---
 
 ## 1 CODE 四步法
