@@ -1,7 +1,3 @@
----
-cssclasses:
-  - kanban-stack
----
 
 # 自我进化论｜No.10: 解决难题最好的方式或许不是思考与分析，而是无为与超越
 **配乐**：坂本龙一 *Merry Christmas Mr.Lawrence*

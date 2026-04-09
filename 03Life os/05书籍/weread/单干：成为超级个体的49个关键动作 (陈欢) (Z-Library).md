@@ -1,5 +1,4 @@
 ---
-isbn:
 tags: weread
 ---
 >[!rnb|noicon] 
